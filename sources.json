@@ -1,0 +1,7 @@
+[
+  {"id":"hf","name":"Hugging Face","feed":"https://huggingface.co/blog/feed.xml","domains":["huggingface.co"]},
+  {"id":"deepmind","name":"Google DeepMind","feed":"https://deepmind.google/blog/rss.xml","domains":["deepmind.google"]},
+  {"id":"willison","name":"Simon Willison","feed":"https://simonwillison.net/atom/everything/","domains":["simonwillison.net"]},
+  {"id":"claude-code","name":"Claude Code (releases)","feed":"https://github.com/anthropics/claude-code/releases.atom","domains":["github.com"]},
+  {"id":"arxiv-cl","name":"arXiv cs.CL","feed":"https://rss.arxiv.org/rss/cs.CL","domains":["arxiv.org"],"max":80}
+]

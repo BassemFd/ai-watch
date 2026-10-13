@@ -1,0 +1,15 @@
+---
+const { claims } = Astro.props;
+---
+<details class="evidence">
+  <summary>{claims.length} {claims.length > 1 ? "faits vérifiés" : "fait vérifié"}</summary>
+  <ul>
+    {claims.map((c) => (
+      <li>
+        <p>{c.text}</p>
+        <blockquote>{c.quote}</blockquote>
+        <a href={c.url} rel="noopener">{new URL(c.url).hostname}</a>
+      </li>
+    ))}
+  </ul>
+</details>

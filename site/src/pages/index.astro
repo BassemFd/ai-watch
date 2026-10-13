@@ -1,0 +1,56 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Evidence from "../components/Evidence.astro";
+import { briefs, runs, frDate, usd, STATUS } from "../lib/data.ts";
+const [last] = runs;
+const [today, ...earlier] = briefs;
+---
+<Layout>
+  <h1>L'actualité de l'IA, écrite et vérifiée par des agents.</h1>
+  <p class="lede">
+    Chaque matin, un pipeline lit les sources, rédige cette page et refuse de publier toute phrase qu'il ne peut pas
+    rattacher à une citation exacte. Personne ne relit. Tout est tracé.
+  </p>
+
+  {last ? (
+    <a class="panel stats" href={`/runs/${last.date}/`} style="text-decoration:none;color:inherit;margin-top:2rem">
+      <div><b class={last.status}>{STATUS[last.status]}</b><span>dernier run · {frDate(last.date)}</span></div>
+      <div><b>{last.counts.nouveaux ?? 0}</b><span>items lus</span></div>
+      <div><b>{last.counts.faitsCites ?? 0}/{last.counts.faitsProposes ?? 0}</b><span>citations retrouvées</span></div>
+      <div><b>{last.rejected.length}</b><span>éléments rejetés</span></div>
+      <div><b>{usd(last.costUsd)}</b><span>coût du run</span></div>
+    </a>
+  ) : (
+    <p class="panel dim">Le pipeline n'a pas encore tourné.</p>
+  )}
+
+  {today && (
+    <section>
+      <p class="mono dim" style="margin-top:3rem">Édition du {frDate(today.date)}</p>
+      <h2 style="margin-top:0">{today.headline}</h2>
+      {today.items.map((item) => (
+        <article class="panel">
+          <h3><a href={item.url} rel="noopener">{item.title}</a></h3>
+          <p class="mono dim">{item.source}</p>
+          <p>{item.summary}</p>
+          <p><em>{item.why}</em></p>
+          <Evidence claims={item.claims} />
+        </article>
+      ))}
+    </section>
+  )}
+
+  {earlier.length > 0 && (
+    <section>
+      <h2>Éditions précédentes</h2>
+      {earlier.slice(0, 14).map((b) => (
+        <details class="panel">
+          <summary><span class="mono dim">{frDate(b.date)}</span> — {b.headline}</summary>
+          {b.items.map((item) => (
+            <p style="margin-top:0.8rem"><a href={item.url} rel="noopener">{item.title}</a>. {item.summary}</p>
+          ))}
+        </details>
+      ))}
+    </section>
+  )}
+</Layout>

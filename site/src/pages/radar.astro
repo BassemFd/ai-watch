@@ -1,0 +1,34 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Evidence from "../components/Evidence.astro";
+import { radar, frDate, RING_LABELS } from "../lib/data.ts";
+import { RINGS } from "../../../pipeline/schema.ts";
+const HINTS = { adopter: "À utiliser par défaut.", essayer: "Vaut un pilote.", evaluer: "À suivre de près.", attendre: "Pas encore, ou à éviter." };
+---
+<Layout title="Radar">
+  <h1>Les recommandations du moment.</h1>
+  <p class="lede">
+    Quatre anneaux, du plus sûr au plus prudent. Le pipeline ne peut ajouter ou déplacer que trois entrées par run, et
+    chaque mouvement doit citer les faits qui le justifient.
+  </p>
+  {RINGS.map((ring) => {
+    const entries = radar.entries.filter((e) => e.ring === ring);
+    return (
+      <section>
+        <h2>{RING_LABELS[ring]} <span class="mono dim">{HINTS[ring]}</span></h2>
+        {entries.length === 0 && <p class="dim">Aucune entrée.</p>}
+        {entries.map((e) => (
+          <div class="panel">
+            <h3>{e.name}</h3>
+            <p>{e.rationale}</p>
+            <span class="mono dim">
+              depuis le {frDate(e.since)}
+              {e.history.length > 1 && ` · parcours : ${e.history.map((h) => RING_LABELS[h.ring]).join(" → ")}`}
+            </span>
+            <Evidence claims={e.evidence} />
+          </div>
+        ))}
+      </section>
+    );
+  })}
+</Layout>

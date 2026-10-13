@@ -1,0 +1,26 @@
+{
+  "name": "veille-ia",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "pipeline": "node pipeline/run.ts",
+    "test": "node --test pipeline/*.test.ts",
+    "typecheck": "tsc --noEmit",
+    "evals": "node evals/run.ts",
+    "dev": "astro dev --root site",
+    "build": "astro build --root site"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0",
+    "astro": "^7.3.8",
+    "fast-xml-parser": "^5.11.2",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.5",
+    "typescript": "^7.0.2"
+  }
+}
