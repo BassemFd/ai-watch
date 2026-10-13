@@ -12,16 +12,19 @@ const [today, ...earlier] = briefs;
 const specimen = today?.items[0]?.claims[0];
 ---
 <Layout lang={lang} path="/">
-  <h1>{t.home.h1}</h1>
-  <p class="lede">{t.home.lede}</p>
-
-  {specimen && (
-    <figure class="specimen">
-      <p class="claim">{specimen.text[lang]}</p>
-      <blockquote><mark>{specimen.quote}</mark></blockquote>
-      <figcaption>{t.home.proofCaption} <a href={specimen.url} rel="noopener">{new URL(specimen.url).hostname}</a></figcaption>
-    </figure>
-  )}
+  <div class="hero">
+    <div>
+      <h1>{t.home.h1}</h1>
+      <p class="lede">{t.home.lede}</p>
+    </div>
+    {specimen && (
+      <figure class="specimen">
+        <p class="claim">{specimen.text[lang]}</p>
+        <blockquote><mark>{specimen.quote}</mark></blockquote>
+        <figcaption>{t.home.proofCaption} <a href={specimen.url} rel="noopener">{new URL(specimen.url).hostname}</a></figcaption>
+      </figure>
+    )}
+  </div>
 
   {last ? (
     <p class="runline">
@@ -67,12 +70,14 @@ const specimen = today?.items[0]?.claims[0];
 </Layout>
 
 <style>
-  .specimen { margin: clamp(2.5rem, 6vw, 4.5rem) 0 0; display: grid; gap: 1rem 3rem; grid-template-columns: minmax(0, 1fr); align-items: start; }
-  @media (min-width: 58rem) { .specimen { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
-  .specimen .claim { font-size: clamp(1.35rem, 2.6vw, 1.9rem); line-height: 1.22; font-weight: 600; letter-spacing: -0.015em; margin: 0; max-width: 26ch; }
-  .specimen blockquote { margin: 0; font: 400 clamp(1rem, 1.6vw, 1.2rem)/1.8 var(--typed); }
-  .specimen figcaption { grid-column: 1 / -1; color: var(--muted); font-size: 0.92rem; }
-  .runline { margin: 3rem 0 0; padding-top: 1.25rem; border-top: 2px solid var(--ink); max-width: none; }
+  /* L'accroche à gauche, la pièce à conviction à droite : une phrase du jour et sa preuve. */
+  .hero { display: grid; gap: 1.75rem 3.5rem; grid-template-columns: minmax(0, 1fr); align-items: start; }
+  @media (min-width: 58rem) { .hero { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); } }
+  .specimen { margin: 0; padding: 1.4rem 1.5rem; background: var(--sheet); border: 1px solid var(--line); border-radius: 6px; display: grid; gap: 1rem; }
+  .specimen .claim { font-size: clamp(1.1rem, 1.7vw, 1.3rem); line-height: 1.3; font-weight: 600; letter-spacing: -0.01em; margin: 0; max-width: none; }
+  .specimen blockquote { margin: 0; font: 400 0.98rem/1.8 var(--typed); }
+  .specimen figcaption { color: var(--muted); font-size: 0.88rem; }
+  .runline { margin: 2.25rem 0 0; padding-top: 1rem; border-top: 2px solid var(--ink); max-width: none; }
   .runline .stamp { margin-right: 0.6rem; }
   .earlier { border-top: 1px solid var(--line); padding-block: 0.9rem; }
   .earlier summary { cursor: pointer; font-weight: 600; }

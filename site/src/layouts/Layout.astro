@@ -19,20 +19,40 @@ const nav = [
     <title>{title ? `${title} · ${t.siteTitle.split(" — ")[0]}` : t.siteTitle}</title>
     <meta name="description" content={t.description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <script is:inline>
+      // Avant le premier rendu, pour éviter un éclair de l'autre thème.
+      try { const t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch {}
+    </script>
     <link rel="alternate" hreflang={other} href={href(other, path)} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" />
   </head>
   <body>
     <header>
       <a class="brand" href={href(lang, "/")}>{t.brand[0]}<span>/</span>{t.brand[1]}</a>
       <nav>
         {nav.map(([p, label]) => <a href={href(lang, p)} aria-current={p === path ? "page" : undefined}>{label}</a>)}
-        <a class="lang" href={href(other, path)} lang={other} hreflang={other}>{t.switchTo}</a>
       </nav>
+      <div class="tools">
+        <a class="lang" href={href(other, path)} lang={other} hreflang={other}>{t.switchTo}</a>
+        <button class="theme" type="button" data-dark={t.theme.dark} data-light={t.theme.light}>{t.theme.dark}</button>
+      </div>
     </header>
     <main><slot /></main>
+    <script is:inline>
+      (() => {
+        const root = document.documentElement, button = document.querySelector(".theme");
+        const isDark = () => (root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches);
+        const label = () => { button.textContent = isDark() ? button.dataset.light : button.dataset.dark; };
+        button.addEventListener("click", () => {
+          root.dataset.theme = isDark() ? "light" : "dark";
+          try { localStorage.setItem("theme", root.dataset.theme); } catch {}
+          label();
+        });
+        label();
+      })();
+    </script>
     <footer>
       <p>{t.footer} <a href={href(lang, "/pipeline/")}>{t.footerLink}</a></p>
       <p class="signature">
@@ -56,25 +76,32 @@ const nav = [
   :root {
     --paper: #f3f5f7; --sheet: #ffffff; --ink: #14213d; --muted: #556072; --line: #d3d9e1;
     --marker: #ffe45c; --marker-ink: #14213d; --red: #c8102e;
-    --sans: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --sans: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
     --typed: "Courier Prime", "Courier New", monospace;
   }
+  /* Sombre : choix explicite du lecteur, sinon réglage du système. */
+  :root[data-theme="dark"] { --paper: #0e131d; --sheet: #171e2d; --ink: #e8ecf3; --muted: #9ba6b8; --line: #2a3447; --red: #ff7582; color-scheme: dark; }
   @media (prefers-color-scheme: dark) {
-    :root { --paper: #0f1420; --sheet: #161d2c; --ink: #e6eaf2; --muted: #9aa4b5; --line: #2b3548; --red: #ff6b7a; }
+    :root:not([data-theme="light"]) { --paper: #0e131d; --sheet: #171e2d; --ink: #e8ecf3; --muted: #9ba6b8; --line: #2a3447; --red: #ff7582; color-scheme: dark; }
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
-  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1.0625rem/1.55 var(--sans); font-variant-numeric: tabular-nums; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1.0625rem/1.55 var(--sans); overflow-wrap: break-word; }
   header, main, footer { max-width: 72rem; margin: 0 auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
-  header { display: flex; flex-wrap: wrap; gap: 0.75rem 2.5rem; align-items: baseline; padding-block: 1.5rem; }
+  header { display: flex; flex-wrap: wrap; gap: 0.6rem 2rem; align-items: baseline; padding-block: 1.1rem; border-bottom: 1px solid var(--line); }
   .brand { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
   .brand span { background: var(--marker); color: var(--marker-ink); padding: 0 0.15em; }
   nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; flex: 1; }
   nav a { color: var(--muted); text-decoration: none; }
   nav a:hover { color: var(--ink); }
   nav a[aria-current] { color: var(--ink); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.35em; }
-  nav .lang { margin-left: auto; color: var(--ink); text-decoration: underline; text-underline-offset: 0.2em; }
-  main { padding-block: clamp(2rem, 6vw, 4.5rem) 5rem; }
+  .tools { display: flex; align-items: baseline; gap: 1rem; margin-left: auto; }
+  .lang { color: var(--ink); text-decoration: underline; text-underline-offset: 0.2em; }
+  /* Petit écran : le nom et les réglages sur une ligne, les rubriques dessous. */
+  @media (max-width: 40rem) { nav { order: 3; flex-basis: 100%; gap: 0.4rem 1.25rem; } }
+  .theme { font: inherit; color: var(--ink); background: none; border: 1px solid var(--line); border-radius: 99px; padding: 0.1rem 0.7rem; cursor: pointer; }
+  .theme:hover { border-color: var(--ink); }
+  main { padding-block: clamp(1.25rem, 3.5vw, 2.75rem) 4rem; }
   footer { padding-block: 1.5rem 3rem; border-top: 1px solid var(--line); color: var(--muted); max-width: 72rem; }
   footer p { max-width: none; }
   .signature { color: var(--ink); display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.5rem; margin-top: 0.75rem; }
@@ -86,8 +113,8 @@ const nav = [
   a:hover { text-decoration-thickness: 2px; }
   :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
 
-  h1 { font-weight: 750; font-stretch: 82%; font-size: clamp(2.5rem, 7.5vw, 5rem); line-height: 0.98; letter-spacing: -0.035em; margin: 0 0 1.5rem; max-width: 16ch; text-wrap: balance; }
-  h2 { font-weight: 700; font-stretch: 88%; font-size: clamp(1.6rem, 3.5vw, 2.3rem); line-height: 1.08; letter-spacing: -0.02em; margin: 4rem 0 1.25rem; text-wrap: balance; }
+  h1 { font-weight: 700; font-size: clamp(2.1rem, 5.2vw, 3.6rem); line-height: 1.04; letter-spacing: -0.03em; margin: 0 0 1.1rem; max-width: 20ch; text-wrap: balance; }
+  h2 { font-weight: 700; font-size: clamp(1.45rem, 3vw, 2rem); line-height: 1.12; letter-spacing: -0.02em; margin: 3rem 0 1rem; text-wrap: balance; }
   h3 { font-weight: 650; font-size: 1.3rem; line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 0.5rem; text-wrap: balance; }
   p { margin: 0 0 0.9rem; max-width: 62ch; }
   .lede { font-size: 1.25rem; line-height: 1.45; max-width: 46ch; }
@@ -95,6 +122,8 @@ const nav = [
   .small { font-size: 0.9rem; }
 
   /* Un texte publié et, dans la marge, ce qui le prouve. */
+  .pair > *, .hero > * { min-width: 0; }
+  blockquote, td.url, .proof figcaption { overflow-wrap: anywhere; }
   .pair { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem 3rem; padding-block: 1.75rem; border-top: 1px solid var(--line); }
   @media (min-width: 58rem) { .pair { grid-template-columns: minmax(0, 38rem) minmax(0, 1fr); } }
   .proofs { display: grid; gap: 1.1rem; align-content: start; }
@@ -111,7 +140,7 @@ const nav = [
   s { text-decoration-color: var(--red); text-decoration-thickness: 2px; }
 
   .scroll { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.95rem; font-variant-numeric: tabular-nums; }
   th, td { text-align: left; vertical-align: top; padding: 0.6rem 1.25rem 0.6rem 0; border-top: 1px solid var(--line); }
   th { font-weight: 400; color: var(--muted); border-top: 0; }
   td.num, th.num { text-align: right; white-space: nowrap; }
