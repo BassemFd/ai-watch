@@ -1,7 +1,6 @@
-// Site statique servi par Cloudflare Workers (assets seuls, aucun code côté serveur).
-// Sans ce fichier, `wrangler deploy` tente de configurer Astro lui-même et se trompe de dossier.
+// Site statique servi par Cloudflare Pages : le dossier construit par `npm run build`.
 {
   "name": "ai-watch",
   "compatibility_date": "2025-09-01",
-  "assets": { "directory": "./site/dist" }
+  "pages_build_output_dir": "./site/dist"
 }

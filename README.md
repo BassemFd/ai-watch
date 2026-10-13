@@ -65,4 +65,4 @@ Deux façons d'appeler les modèles : `ANTHROPIC_API_KEY` (API, utilisée par le
 ## Mise en ligne
 
 - GitHub : secret `ANTHROPIC_API_KEY` ; `.github/workflows/daily.yml` lance le run et committe le résultat.
-- Cloudflare Pages : commande de build `npm run build`, dossier de sortie `site/dist`.
+- Cloudflare Pages : projet `ai-watch` relié au repo, commande de build `npm run build`, dossier de sortie `site/dist` (repris dans `wrangler.jsonc`). Chaque push sur `main` redéploie.
