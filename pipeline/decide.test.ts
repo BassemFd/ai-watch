@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import type { z } from "zod";
-import { decide, toStatements } from "./decide.ts";
+import { decide, pickTopics, toStatements } from "./decide.ts";
 import type { Claim, Item, Radar, State, VerifyOut, WriteOut } from "./schema.ts";
 
 type Draft = z.infer<typeof WriteOut>;
@@ -495,4 +495,32 @@ test("pureté : les faits et les articles reçus ne sont pas modifiés par un ru
   const before = structuredClone([given.claims, given.items]);
   assert.equal(decide(given).status, "published");
   assert.deepEqual([given.claims, given.items], before);
+});
+
+// --- Choix des sujets : la diversité des sources est une règle, pas un espoir.
+
+const topic = (id: string, source: string) => ({ id, url: `https://example.org/${id}`, title: id, source, summary: "" });
+const topics = new Map(
+  [topic("a1", "A"), topic("a2", "A"), topic("a3", "A"), topic("b1", "B"), topic("c1", "C")].map((i) => [i.id, i]),
+);
+const scored = (...ids: string[]) => ids.map((id, i) => ({ id, score: 10 - i, reason: "" }));
+const capOf = (caps: Record<string, number>) => (source: string) => caps[source] ?? 2;
+
+test("sujets : une source ne peut pas dépasser son plafond, même avec les meilleurs scores", () => {
+  const picked = pickTopics(scored("a1", "a2", "a3", "b1", "c1"), topics, capOf({}), 6);
+  assert.deepEqual(picked.map((i) => i.id), ["a1", "a2", "b1", "c1"]);
+});
+
+test("sujets : le plafond se règle source par source", () => {
+  const picked = pickTopics(scored("a1", "a2", "b1"), topics, capOf({ A: 1 }), 6);
+  assert.deepEqual(picked.map((i) => i.id), ["a1", "b1"]);
+});
+
+test("sujets : les mieux notés passent d'abord, quel que soit l'ordre reçu", () => {
+  const picks = [{ id: "c1", score: 3, reason: "" }, { id: "b1", score: 9, reason: "" }, { id: "a1", score: 6, reason: "" }];
+  assert.deepEqual(pickTopics(picks, topics, capOf({}), 2).map((i) => i.id), ["b1", "a1"]);
+});
+
+test("sujets : un identifiant inconnu est ignoré", () => {
+  assert.deepEqual(pickTopics(scored("zz", "b1"), topics, capOf({}), 6).map((i) => i.id), ["b1"]);
 });
