@@ -14,6 +14,9 @@ jobs:
   run:
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      # Sans clé, le run est sauté au lieu de committer une trace d'erreur chaque jour.
+      HAS_KEY: ${{ secrets.ANTHROPIC_API_KEY != '' }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -22,12 +25,13 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
-      - run: npm run pipeline
+      - if: env.HAS_KEY == 'true'
+        run: npm run pipeline
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           RUN_BUDGET_USD: "2"
       # La trace est commitée même si le run a échoué : les erreurs se voient sur le site.
-      - if: always()
+      - if: always() && env.HAS_KEY == 'true'
         run: |
           git config user.name "veille-ia-bot"
           git config user.email "veille-ia-bot@users.noreply.github.com"
