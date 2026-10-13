@@ -1,35 +1,49 @@
 // La décision de publier : du code pur, aucun modèle, aucune écriture. Les entrées ne sont pas modifiées.
 import { statementProblem } from "./gates.ts";
-import { Brief, type Claim, type Item, type Radar, type State, type Statement, type Trace, type VerifyOut, type WriteOut } from "./schema.ts";
+import { Brief, type Claim, type Item, type Radar, type State, type Statement, type Text, type Trace, type VerifyOut, type WriteOut } from "./schema.ts";
 
 const MAX_OPS = 3; // ajouts au radar et à l'état de l'art par run
 const MIN_JUDGE_RATIO = 0.7;
 
+/** Les deux versions d'un énoncé, telles que lues par le vérificateur. */
+const both = (fr: string, en: string) => `FR : ${fr}\nEN : ${en}`;
+
 export const toStatements = (draft: WriteOut): Statement[] => [
-  ...draft.items.map((x, i) => ({ id: `item:${i}`, text: `${x.title}. ${x.summary} ${x.why}`, claimIds: x.claimIds })),
-  ...draft.radar.map((x, i) => ({ id: `radar:${i}`, text: `${x.name} (${x.ring}). ${x.rationale}`, claimIds: x.claimIds })),
-  ...draft.state.map((x, i) => ({ id: `state:${i}`, text: x.text, claimIds: x.claimIds })),
+  ...draft.items.map((x, i) => ({
+    id: `item:${i}`,
+    text: both(`${x.title.fr}. ${x.summary.fr} ${x.why.fr}`, `${x.title.en}. ${x.summary.en} ${x.why.en}`),
+    claimIds: x.claimIds,
+  })),
+  ...draft.radar.map((x, i) => ({ id: `radar:${i}`, text: both(`${x.name} (${x.ring}). ${x.rationale.fr}`, `${x.name} (${x.ring}). ${x.rationale.en}`), claimIds: x.claimIds })),
+  ...draft.state.map((x, i) => ({ id: `state:${i}`, text: both(x.text.fr, x.text.en), claimIds: x.claimIds })),
+];
+
+/** Ce qui désigne chaque énoncé dans les rejets, dans l'ordre de `toStatements`. */
+const labels = (draft: WriteOut): Text[] => [
+  ...draft.items.map((x) => x.title),
+  ...draft.radar.map((x) => ({ fr: x.name, en: x.name })),
+  ...draft.state.map((x) => x.text),
 ];
 
 // 5. Vérification — tout ce qui n'est pas explicitement validé est refusé
-function judgeStatements(statements: Statement[], verdict: VerifyOut, literal: ReadonlySet<string>) {
+function judgeStatements(statements: Statement[], what: Text[], verdict: VerifyOut, literal: ReadonlySet<string>) {
   const okClaims = new Set(verdict.claims.filter((v) => v.supported).map((v) => v.id));
   const okStatements = new Set(verdict.statements.filter((v) => v.supported).map((v) => v.id));
   const publishable = new Set<string>();
   const rejected: Trace["rejected"] = [];
-  for (const s of statements) {
+  statements.forEach((s, i) => {
     const problem = statementProblem(s, literal, okClaims, okStatements);
-    if (problem) rejected.push({ what: s.text.slice(0, 200), reason: problem });
+    if (problem) rejected.push({ what: what[i], reason: problem });
     else publishable.add(s.id);
-  }
+  });
   return { publishable, rejected };
 }
 
 // 6. Portes — toutes obligatoires
 const evaluateGates = (validated: number, total: number, draft: WriteOut, spentUsd: number, budgetUsd: number): Trace["gates"] => [
-  { name: "vérificateur", pass: validated / total >= MIN_JUDGE_RATIO, detail: `${validated}/${total} énoncés validés (seuil ${MIN_JUDGE_RATIO * 100} %)` },
-  { name: "volume", pass: draft.radar.length <= MAX_OPS && draft.state.length <= MAX_OPS, detail: `${draft.radar.length} radar, ${draft.state.length} état de l'art (max ${MAX_OPS})` },
-  { name: "budget", pass: spentUsd <= budgetUsd, detail: `${spentUsd.toFixed(3)} $ sur ${budgetUsd} $` },
+  { name: "verifier", pass: validated / total >= MIN_JUDGE_RATIO, detail: `${validated}/${total} (>= ${MIN_JUDGE_RATIO * 100}%)` },
+  { name: "volume", pass: draft.radar.length <= MAX_OPS && draft.state.length <= MAX_OPS, detail: `radar ${draft.radar.length}, state ${draft.state.length} (max ${MAX_OPS})` },
+  { name: "budget", pass: spentUsd <= budgetUsd, detail: `${spentUsd.toFixed(3)}/${budgetUsd} USD` },
 ];
 
 /** Met à jour l'entrée du même nom (casse ignorée) ou en ajoute une. Modifie `radar` : lui passer une copie. */
@@ -61,7 +75,7 @@ export function decide(o: {
 } {
   const { date, draft, claims } = o;
   const statements = toStatements(draft);
-  const { publishable, rejected } = judgeStatements(statements, o.verdict, new Set(claims.keys()));
+  const { publishable, rejected } = judgeStatements(statements, labels(draft), o.verdict, new Set(claims.keys()));
   const gates = evaluateGates(publishable.size, statements.length, draft, o.spentUsd, o.budgetUsd);
   const radar = structuredClone(o.radar);
   const state = structuredClone(o.state);

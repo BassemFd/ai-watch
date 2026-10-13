@@ -3,7 +3,7 @@ import { join } from "node:path";
 import Anthropic from "@anthropic-ai/sdk";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import type { z } from "zod";
-import { VerifyOut, type Statement } from "./schema.ts";
+import { VerifyOut, type Statement, type Text } from "./schema.ts";
 
 export type Stage = "triage" | "research" | "write" | "verify";
 export type Call = { stage: string; model: string; ms: number; inputTokens: number; outputTokens: number; costUsd: number };
@@ -36,7 +36,7 @@ export function makeLlm(budgetUsd: number): Llm {
     },
     async call(stage, user, schema) {
       // ponytail: le plafond est vérifié avant chaque appel, donc dépassable d'un appel au plus.
-      if (spent >= budgetUsd) throw new Error(`budget du run dépassé (${spent.toFixed(2)} $)`);
+      if (spent >= budgetUsd) throw new Error(`run budget exceeded (${spent.toFixed(2)} USD)`);
       const role = ROLES[stage];
       const t0 = Date.now();
       const res = await client.messages.parse({
@@ -58,7 +58,7 @@ export function makeLlm(budgetUsd: number): Llm {
       });
       // Refus, troncature ou JSON invalide : l'étape échoue, rien n'est publié.
       if (res.stop_reason !== "end_turn" || !res.parsed_output) {
-        throw new Error(`étape ${stage} : réponse inexploitable (${res.stop_reason})`);
+        throw new Error(`stage ${stage}: unusable response (${res.stop_reason})`);
       }
       return res.parsed_output;
     },
@@ -68,7 +68,7 @@ export function makeLlm(budgetUsd: number): Llm {
 /** Vérificateur : contexte neuf, il ne voit ni les pages ni le raisonnement du rédacteur. */
 export function judge(
   llm: Llm,
-  claims: { id: string; text: string; quote: string }[],
+  claims: { id: string; text: Text; quote: string }[],
   statements: Statement[],
 ): Promise<VerifyOut> {
   return llm.call("verify", JSON.stringify({ claims, statements }), VerifyOut);

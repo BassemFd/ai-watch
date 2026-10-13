@@ -3,8 +3,9 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { judge, makeLlm } from "../pipeline/agents.ts";
+import type { Text } from "../pipeline/schema.ts";
 
-type Case = { id: string; expect: boolean; text: string; quote: string };
+type Case = { id: string; expect: boolean; text: Text; quote: string };
 const dir = import.meta.dirname;
 const cases: Case[] = JSON.parse(readFileSync(join(dir, "cases.json"), "utf8"));
 

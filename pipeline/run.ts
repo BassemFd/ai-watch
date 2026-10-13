@@ -43,12 +43,12 @@ export type Options = {
 export async function collect(o: Pick<Options, "root" | "date" | "fetchText" | "sources">) {
   const seen = new Set(readJson<string[]>(join(o.root, "data/seen.json"), []));
   const all = new Map<string, Item>();
-  const failures: { what: string; reason: string }[] = [];
+  const failures: Trace["rejected"] = [];
   for (const source of o.sources) {
     try {
       for (const item of parseFeed(await o.fetchText(source.feed), source, o.date)) all.set(item.id, item);
     } catch (e) {
-      failures.push({ what: source.name, reason: `flux illisible : ${msg(e)}` });
+      failures.push({ what: { fr: source.name, en: source.name }, reason: "feed_unreadable", detail: msg(e) });
     }
   }
   const fresh = [...all.values()].filter((i) => !seen.has(i.id)).slice(0, MAX_TRIAGE);
@@ -73,7 +73,7 @@ type Sheet = { item: Item; claims: Claim[] };
 
 // 3. Recherche — un appel par sujet, en parallèle. Le code télécharge la page ; le modèle n'a
 // aucun outil. Porte : chaque citation doit figurer mot pour mot dans cette même page.
-async function research(o: Pick<Options, "llm" | "fetchText">, picked: Item[], reject: (what: string, reason: string) => void) {
+async function research(o: Pick<Options, "llm" | "fetchText">, picked: Item[], reject: (r: Trace["rejected"][number]) => void) {
   const claims = new Map<string, Claim>();
   let proposed = 0;
   const sheets = (
@@ -90,14 +90,14 @@ async function research(o: Pick<Options, "llm" | "fetchText">, picked: Item[], r
           out.claims.forEach((c, i) => {
             proposed++;
             const problem = quoteProblem(c.quote, page);
-            if (problem) return reject(c.text, problem);
+            if (problem) return reject({ what: c.text, reason: problem });
             const claim = { id: `${item.id}-${i}`, text: c.text, quote: c.quote, url: item.url };
             claims.set(claim.id, claim);
             kept.push(claim);
           });
           return kept.length ? { item, claims: kept } : null;
         } catch (e) {
-          reject(item.title, `sujet abandonné : ${msg(e)}`);
+          reject({ what: { fr: item.title, en: item.title }, reason: "item_failed", detail: msg(e) });
           return null;
         }
       }),
@@ -137,10 +137,9 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
     rejected: [],
     costUsd: 0,
   };
-  const reject = (what: string, reason: string) => {
-    trace.rejected.push({ what: what.slice(0, 200), reason });
+  const reject = (r: Trace["rejected"][number]) => {
+    trace.rejected.push(r);
   };
-  const gate = (name: string, pass: boolean, detail: string) => (trace.gates.push({ name, pass, detail }), pass);
   let seen = new Set<string>();
   let fresh: Item[] = [];
 
@@ -168,7 +167,8 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
     const { sheets, claims, proposed } = await research(o, picked, reject);
     trace.counts.faitsProposes = proposed;
     trace.counts.faitsCites = claims.size;
-    if (!gate("citations littérales", claims.size > 0, `${claims.size}/${proposed} citations retrouvées mot pour mot`)) {
+    trace.gates.push({ name: "literal_quotes", pass: claims.size > 0, detail: `${claims.size}/${proposed}` });
+    if (!claims.size) {
       trace.status = "rejected";
       return { trace };
     }

@@ -9,8 +9,27 @@ export const SECTIONS = [
 ] as const;
 export const RINGS = ["adopter", "essayer", "evaluer", "attendre"] as const;
 
+/** Codes des raisons de rejet et des portes : le site les traduit. */
+export const REASONS = [
+  "quote_too_short",
+  "quote_too_long",
+  "quote_not_found",
+  "no_claim_cited",
+  "unknown_claim",
+  "claim_unsupported",
+  "statement_unsupported",
+  "feed_unreadable",
+  "item_failed",
+] as const;
+export type Reason = (typeof REASONS)[number];
+export const GATES = ["literal_quotes", "verifier", "volume", "budget"] as const;
+
 const SectionId = z.enum(["modeles", "agents", "outils", "evals", "open"]);
 const Ring = z.enum(RINGS);
+
+/** Un texte publié : la même chose dite en français et en anglais. */
+export const Text = z.object({ fr: z.string(), en: z.string() });
+export type Text = z.infer<typeof Text>;
 
 export const Source = z.object({
   id: z.string(),
@@ -23,7 +42,7 @@ export type Source = z.infer<typeof Source>;
 
 export type Item = { id: string; url: string; title: string; source: string; summary: string };
 
-export const Claim = z.object({ id: z.string(), text: z.string(), quote: z.string(), url: z.string() });
+export const Claim = z.object({ id: z.string(), text: Text, quote: z.string(), url: z.string() });
 export type Claim = z.infer<typeof Claim>;
 
 /** Un énoncé du brouillon, tel que soumis au vérificateur. */
@@ -35,21 +54,21 @@ export const TriageOut = z.object({
   picks: z.array(z.object({ id: z.string(), score: z.number(), reason: z.string() })),
 });
 export const ResearchOut = z.object({
-  claims: z.array(z.object({ text: z.string(), quote: z.string() })),
+  claims: z.array(z.object({ text: Text, quote: z.string() })),
 });
 export const WriteOut = z.object({
-  headline: z.string(),
+  headline: Text,
   items: z.array(
     z.object({
       itemId: z.string(),
-      title: z.string(),
-      summary: z.string(),
-      why: z.string(),
+      title: Text,
+      summary: Text,
+      why: Text,
       claimIds: z.array(z.string()),
     }),
   ),
-  radar: z.array(z.object({ name: z.string(), ring: Ring, rationale: z.string(), claimIds: z.array(z.string()) })),
-  state: z.array(z.object({ sectionId: SectionId, text: z.string(), claimIds: z.array(z.string()) })),
+  radar: z.array(z.object({ name: z.string(), ring: Ring, rationale: Text, claimIds: z.array(z.string()) })),
+  state: z.array(z.object({ sectionId: SectionId, text: Text, claimIds: z.array(z.string()) })),
 });
 export type WriteOut = z.infer<typeof WriteOut>;
 export const VerifyOut = z.object({
@@ -62,14 +81,14 @@ export type VerifyOut = z.infer<typeof VerifyOut>;
 
 export const Brief = z.object({
   date: z.string(),
-  headline: z.string(),
+  headline: Text,
   items: z.array(
     z.object({
-      title: z.string(),
+      title: Text,
       url: z.string(),
       source: z.string(),
-      summary: z.string(),
-      why: z.string(),
+      summary: Text,
+      why: Text,
       claims: z.array(Claim),
     }),
   ),
@@ -81,7 +100,7 @@ export const Radar = z.object({
     z.object({
       name: z.string(),
       ring: Ring,
-      rationale: z.string(),
+      rationale: Text,
       evidence: z.array(Claim),
       since: z.string(),
       history: z.array(z.object({ date: z.string(), ring: Ring })),
@@ -91,7 +110,7 @@ export const Radar = z.object({
 export type Radar = z.infer<typeof Radar>;
 
 export const State = z.object({
-  points: z.array(z.object({ date: z.string(), sectionId: SectionId, text: z.string(), evidence: z.array(Claim) })),
+  points: z.array(z.object({ date: z.string(), sectionId: SectionId, text: Text, evidence: z.array(Claim) })),
 });
 export type State = z.infer<typeof State>;
 
@@ -112,8 +131,8 @@ export const Trace = z.object({
       costUsd: z.number(),
     }),
   ),
-  gates: z.array(z.object({ name: z.string(), pass: z.boolean(), detail: z.string() })),
-  rejected: z.array(z.object({ what: z.string(), reason: z.string() })),
+  gates: z.array(z.object({ name: z.enum(GATES), pass: z.boolean(), detail: z.string() })),
+  rejected: z.array(z.object({ what: Text, reason: z.enum(REASONS), detail: z.string().optional() })),
   costUsd: z.number(),
 });
 export type Trace = z.infer<typeof Trace>;

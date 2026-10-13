@@ -1,4 +1,5 @@
 // Les portes : du code pur, aucun modèle. Tout ce qui est publié passe par ici.
+import type { Reason } from "./schema.ts";
 
 export const normalize = (s: string) =>
   s
@@ -10,12 +11,12 @@ export const normalize = (s: string) =>
     .trim()
     .toLowerCase();
 
-/** null si la citation figure mot pour mot dans la page, sinon la raison du rejet. */
-export function quoteProblem(quote: string, page: string): string | null {
+/** null si la citation figure mot pour mot dans la page, sinon le code de la raison du rejet. */
+export function quoteProblem(quote: string, page: string): Reason | null {
   const q = normalize(quote);
-  if (q.length < 20) return "citation trop courte";
-  if (q.length > 300) return "citation trop longue";
-  if (!normalize(page).includes(q)) return "citation introuvable dans la source";
+  if (q.length < 20) return "quote_too_short";
+  if (q.length > 300) return "quote_too_long";
+  if (!normalize(page).includes(q)) return "quote_not_found";
   return null;
 }
 
@@ -28,10 +29,10 @@ export function statementProblem(
   literalClaims: ReadonlySet<string>,
   judgedClaims: ReadonlySet<string>,
   judgedStatements: ReadonlySet<string>,
-): string | null {
-  if (!s.claimIds.length) return "aucune source citée";
-  if (s.claimIds.some((id) => !literalClaims.has(id))) return "cite un fait absent des fiches vérifiées";
-  if (s.claimIds.some((id) => !judgedClaims.has(id))) return "s'appuie sur un fait que sa citation ne soutient pas";
-  if (!judgedStatements.has(s.id)) return "le vérificateur ne valide pas cet énoncé";
+): Reason | null {
+  if (!s.claimIds.length) return "no_claim_cited";
+  if (s.claimIds.some((id) => !literalClaims.has(id))) return "unknown_claim";
+  if (s.claimIds.some((id) => !judgedClaims.has(id))) return "claim_unsupported";
+  if (!judgedStatements.has(s.id)) return "statement_unsupported";
   return null;
 }
