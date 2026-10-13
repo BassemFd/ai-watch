@@ -195,3 +195,31 @@ test("téléchargement en échec : rien n'est gardé pour cette adresse", async 
   await assert.rejects(tool({ url: A }));
   assert.equal(pages.has(A), false);
 });
+
+// --- Chemins : sur un hôte partagé (github.com, huggingface.co), le domaine ne suffit pas.
+
+test("chemins : une adresse sous un préfixe autorisé passe", () => {
+  assert.equal(isAllowed("https://github.com/anthropics/claude-code/releases/tag/v1", ["github.com"], ["/anthropics/claude-code/"]), true);
+});
+
+test("chemins : une adresse du même domaine hors des préfixes est refusée", () => {
+  assert.equal(isAllowed("https://github.com/someone/else", ["github.com"], ["/anthropics/claude-code/"]), false);
+});
+
+test("chemins : sans préfixe déclaré, tout le domaine reste lisible", () => {
+  assert.equal(isAllowed("https://github.com/someone/else", ["github.com"]), true);
+  assert.equal(isAllowed("https://github.com/someone/else", ["github.com"], []), true);
+});
+
+test("chemins : l'outil refuse une page hors préfixe sans la télécharger", async () => {
+  const asked: string[] = [];
+  const { tool } = makeFetchTool({
+    domains: ["github.com"],
+    paths: ["/anthropics/claude-code/"],
+    maxFetches: 3,
+    maxChars: 1000,
+    fetchText: async (url) => (asked.push(url), "<p>x</p>"),
+  });
+  await assert.rejects(tool({ url: "https://github.com/someone/else" }), /not allowed/);
+  assert.deepEqual(asked, []);
+});

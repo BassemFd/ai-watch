@@ -601,9 +601,20 @@ test("adresse hors liste : le run publie quand même à partir de la page autori
   assert.deepEqual(publishedClaims(root), [[TRUE_FACT, A]]);
 });
 
-test("liste blanche : les domaines de toutes les sources sont acceptés, pas seulement celui du sujet", async () => {
-  const { root } = await play({ sources: [...sources, OTHER], script: script(fetchPage(OTHER_PAGE), finish(claimB(OTHER_PAGE))) });
-  assert.deepEqual(publishedClaims(root), [[FACT_B, OTHER_PAGE]]);
+test("liste blanche : un sujet ne peut lire que les domaines de sa propre source", async () => {
+  const { trace, fetched } = await play({ sources: [...sources, OTHER], script: script(fetchPage(OTHER_PAGE), finish()) });
+  const [call] = toolCalls(trace);
+  assert.equal(call.ok, false);
+  assert.match(String(call.detail), /not allowed/);
+  assert.equal(fetched.includes(OTHER_PAGE), false);
+});
+
+test("liste blanche : une source peut restreindre les chemins lisibles sur son domaine", async () => {
+  const narrow = [{ ...sources[0], paths: ["/a"] }];
+  const outside = "https://example.org/someone-else/page";
+  const { trace, fetched } = await play({ sources: narrow, script: script(fetchPage(outside), finish()) });
+  assert.equal(toolCalls(trace)[0].ok, false);
+  assert.equal(fetched.includes(outside), false);
 });
 
 test("limite : la quatrième page demandée pour un sujet est refusée avec « fetch limit »", async () => {
