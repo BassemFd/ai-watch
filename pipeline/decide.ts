@@ -1,27 +1,27 @@
 // La décision de publier : du code pur, aucun modèle, aucune écriture. Les entrées ne sont pas modifiées.
 import { statementProblem } from "./gates.ts";
-import { Brief, type Claim, type Item, type Radar, type State, type Statement, type Text, type Trace, type VerifyOut, type WriteOut } from "./schema.ts";
+import { Brief, untranslated, type Claim, type Item, type Radar, type State, type Statement, type Text, type Trace, type VerifyOut, type WriteOut } from "./schema.ts";
 
 const MAX_OPS = 3; // ajouts au radar et à l'état de l'art par run
 const MIN_JUDGE_RATIO = 0.7;
 
 /** Les deux versions d'un énoncé, telles que lues par le vérificateur. */
-const both = (fr: string, en: string) => `FR : ${fr}\nEN : ${en}`;
+const both = (say: (lang: keyof Text) => string) => `FR : ${say("fr")}\nEN : ${say("en")}`;
 
 export const toStatements = (draft: WriteOut): Statement[] => [
   ...draft.items.map((x, i) => ({
     id: `item:${i}`,
-    text: both(`${x.title.fr}. ${x.summary.fr} ${x.why.fr}`, `${x.title.en}. ${x.summary.en} ${x.why.en}`),
+    text: both((l) => `${x.title[l]}. ${x.summary[l]} ${x.why[l]}`),
     claimIds: x.claimIds,
   })),
-  ...draft.radar.map((x, i) => ({ id: `radar:${i}`, text: both(`${x.name} (${x.ring}). ${x.rationale.fr}`, `${x.name} (${x.ring}). ${x.rationale.en}`), claimIds: x.claimIds })),
-  ...draft.state.map((x, i) => ({ id: `state:${i}`, text: both(x.text.fr, x.text.en), claimIds: x.claimIds })),
+  ...draft.radar.map((x, i) => ({ id: `radar:${i}`, text: both((l) => `${x.name} (${x.ring}). ${x.rationale[l]}`), claimIds: x.claimIds })),
+  ...draft.state.map((x, i) => ({ id: `state:${i}`, text: both((l) => x.text[l]), claimIds: x.claimIds })),
 ];
 
 /** Ce qui désigne chaque énoncé dans les rejets, dans l'ordre de `toStatements`. */
 const labels = (draft: WriteOut): Text[] => [
   ...draft.items.map((x) => x.title),
-  ...draft.radar.map((x) => ({ fr: x.name, en: x.name })),
+  ...draft.radar.map((x) => untranslated(x.name)),
   ...draft.state.map((x) => x.text),
 ];
 

@@ -12,6 +12,7 @@ import {
   TriageOut,
   WriteOut,
   SECTIONS,
+  untranslated,
   type Brief,
   type Claim,
   type Item,
@@ -48,7 +49,7 @@ export async function collect(o: Pick<Options, "root" | "date" | "fetchText" | "
     try {
       for (const item of parseFeed(await o.fetchText(source.feed), source, o.date)) all.set(item.id, item);
     } catch (e) {
-      failures.push({ what: { fr: source.name, en: source.name }, reason: "feed_unreadable", detail: msg(e) });
+      failures.push({ what: untranslated(source.name), reason: "feed_unreadable", detail: msg(e) });
     }
   }
   const fresh = [...all.values()].filter((i) => !seen.has(i.id)).slice(0, MAX_TRIAGE);
@@ -97,7 +98,7 @@ async function research(o: Pick<Options, "llm" | "fetchText">, picked: Item[], r
           });
           return kept.length ? { item, claims: kept } : null;
         } catch (e) {
-          reject({ what: { fr: item.title, en: item.title }, reason: "item_failed", detail: msg(e) });
+          reject({ what: untranslated(item.title), reason: "item_failed", detail: msg(e) });
           return null;
         }
       }),

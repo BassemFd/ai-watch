@@ -24,12 +24,14 @@ export const REASONS = [
 export type Reason = (typeof REASONS)[number];
 export const GATES = ["literal_quotes", "verifier", "volume", "budget"] as const;
 
-const SectionId = z.enum(["modeles", "agents", "outils", "evals", "open"]);
+const SectionId = z.enum(SECTIONS.map((s) => s.id));
 const Ring = z.enum(RINGS);
 
 /** Un texte publié : la même chose dite en français et en anglais. */
 export const Text = z.object({ fr: z.string(), en: z.string() });
 export type Text = z.infer<typeof Text>;
+/** Un nom propre ou un titre d'origine : identique dans les deux langues. */
+export const untranslated = (s: string): Text => ({ fr: s, en: s });
 
 export const Source = z.object({
   id: z.string(),
