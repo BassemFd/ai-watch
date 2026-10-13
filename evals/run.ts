@@ -2,14 +2,15 @@
 // Appelle l'API (quelques centimes). Les portes en code pur sont testées par `npm test`.
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { judge, makeLlm } from "../pipeline/agents.ts";
+import { judge } from "../pipeline/agents.ts";
+import { llmFromEnv } from "../pipeline/cli.ts";
 import type { Text } from "../pipeline/schema.ts";
 
 type Case = { id: string; expect: boolean; text: Text; quote: string };
 const dir = import.meta.dirname;
 const cases: Case[] = JSON.parse(readFileSync(join(dir, "cases.json"), "utf8"));
 
-const llm = makeLlm(0.5);
+const llm = llmFromEnv(0.5);
 const verdict = await judge(llm, cases.map(({ id, text, quote }) => ({ id, text, quote })), []);
 const got = new Map(verdict.claims.map((v) => [v.id, v.supported]));
 // Un verdict manquant vaut un refus, comme dans le pipeline.

@@ -23,14 +23,14 @@ export interface Llm {
 }
 
 // Un modèle par rôle : le moins cher qui tient le rôle. Prix en $ par million de tokens (entrée, sortie).
-const ROLES = {
+export const ROLES = {
   triage: { model: "claude-haiku-5-5", effort: "low", price: [0.1, 0.5] },
   research: { model: "claude-sonnet-5-5", effort: "medium", price: [2, 10] },
   write: { model: "claude-opus-5-5", effort: "high", price: [4, 20] },
   verify: { model: "claude-sonnet-5-5", effort: "medium", price: [2, 10] },
 } as const;
 
-const prompt = (stage: Stage) => readFileSync(join(import.meta.dirname, "prompts", `${stage}.md`), "utf8");
+export const prompt = (stage: Stage) => readFileSync(join(import.meta.dirname, "prompts", `${stage}.md`), "utf8");
 
 export function makeLlm(budgetUsd: number): Llm {
   const client = new Anthropic();

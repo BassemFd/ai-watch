@@ -1,6 +1,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { judge, makeLlm, type Llm } from "./agents.ts";
+import { judge, type Llm } from "./agents.ts";
+import { llmFromEnv } from "./cli.ts";
 import { fetchText, parseFeed } from "./collect.ts";
 import { decide, toStatements } from "./decide.ts";
 import { capped, quoteProblem } from "./gates.ts";
@@ -256,7 +257,7 @@ if (import.meta.main) {
   } else {
     const dryRun = process.argv.includes("--dry-run");
     const budgetUsd = Number(process.env.RUN_BUDGET_USD ?? 2);
-    const { trace, brief } = await run({ root, date, llm: makeLlm(budgetUsd), fetchText, sources, budgetUsd, dryRun });
+    const { trace, brief } = await run({ root, date, llm: llmFromEnv(budgetUsd), fetchText, sources, budgetUsd, dryRun });
     console.log(JSON.stringify(dryRun ? { trace, brief } : { status: trace.status, error: trace.error, counts: trace.counts, gates: trace.gates, costUsd: trace.costUsd }, null, 2));
     if (trace.status === "error") process.exit(1);
   }
