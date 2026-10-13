@@ -1,6 +1,6 @@
 // Site statique servi par Cloudflare Pages : le dossier construit par `npm run build`.
 {
-  "name": "ai-watch",
+  "name": "ai-watch-by-bf",
   "compatibility_date": "2025-09-01",
   "pages_build_output_dir": "./site/dist"
 }
