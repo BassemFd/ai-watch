@@ -9,11 +9,15 @@ type Input = Parameters<typeof decide>[0];
 
 const DATE = "2026-10-13";
 
+/** Texte bilingue : les deux versions diffèrent toujours, pour qu'un test puisse les distinguer. */
+type Text = { fr: string; en: string };
+const t = (fr: string, en: string): Text => ({ fr, en });
+
 // --- Fabriques : tout est valide par défaut, chaque test ne dérègle qu'une chose.
 
 const claim = (id: string): Claim => ({
   id,
-  text: `Fait ${id}`,
+  text: t(`Fait ${id}`, `Fact ${id}`),
   quote: `Citation littérale du fait ${id}`,
   url: `https://example.org/${id}`,
 });
@@ -22,20 +26,20 @@ const item = (id: string): Item => ({ id, url: `https://example.org/${id}`, titl
 
 const briefItem = (claimIds = ["c1"], itemId = "i1"): Draft["items"][number] => ({
   itemId,
-  title: "Un modèle",
-  summary: "91 %.",
-  why: "Utile.",
+  title: t("Un modèle", "A model"),
+  summary: t("Il atteint 91 %.", "It reaches 91 percent."),
+  why: t("Utile en production.", "Useful in production."),
   claimIds,
 });
 const radarEntry = (name = "Modèle X", ring: Draft["radar"][number]["ring"] = "essayer", claimIds = ["c1"]): Draft["radar"][number] => ({
   name,
   ring,
-  rationale: "91 % sur le benchmark.",
+  rationale: t("91 % sur le benchmark.", "91 percent on the benchmark."),
   claimIds,
 });
-const statePoint = (claimIds = ["c1"], text = "91 % est atteint."): Draft["state"][number] => ({ sectionId: "modeles", text, claimIds });
+const statePoint = (claimIds = ["c1"], text = t("91 % est atteint.", "91 percent is reached.")): Draft["state"][number] => ({ sectionId: "modeles", text, claimIds });
 const draftOf = (over: Partial<Draft> = {}): Draft => ({
-  headline: "Édition test",
+  headline: t("Édition test", "Test edition"),
   items: [briefItem()],
   radar: [radarEntry()],
   state: [statePoint()],
@@ -89,7 +93,7 @@ const existingRadar = (): Radar => ({
     {
       name: "Modèle X",
       ring: "evaluer",
-      rationale: "Ancienne justification.",
+      rationale: t("Ancienne justification.", "Former rationale."),
       evidence: [claim("c0")],
       since: "2026-09-01",
       history: [{ date: "2026-09-01", ring: "evaluer" }],
@@ -97,7 +101,7 @@ const existingRadar = (): Radar => ({
   ],
 });
 const existingState = (): State => ({
-  points: [{ date: "2026-09-01", sectionId: "agents", text: "Point ancien.", evidence: [claim("c0")] }],
+  points: [{ date: "2026-09-01", sectionId: "agents", text: t("Point ancien.", "Former point."), evidence: [claim("c0")] }],
 });
 
 // --- Règle 1 : toStatements
@@ -122,6 +126,28 @@ test("énoncés : chacun a un texte non vide", () => {
   for (const s of toStatements(draftOf())) assert.ok(s.text.trim().length > 0, `texte vide pour ${s.id}`);
 });
 
+test("énoncés : le texte soumis au vérificateur est une chaîne, pas un objet bilingue", () => {
+  for (const s of toStatements(draftOf())) assert.equal(typeof s.text, "string", `texte non textuel pour ${s.id}`);
+});
+
+const statementText = (id: string) => toStatements(draftOf()).find((s) => s.id === id)!.text;
+const assertContainsBoth = (text: string, ...proses: Text[]) => {
+  for (const prose of proses) for (const version of [prose.fr, prose.en]) assert.ok(String(text).includes(version), `« ${version} » absent de « ${text} »`);
+};
+
+test("énoncés : une brève soumet son titre, son résumé et son intérêt dans les deux langues", () => {
+  const { title, summary, why } = briefItem();
+  assertContainsBoth(statementText("item:0"), title, summary, why);
+});
+
+test("énoncés : une entrée radar soumet sa justification dans les deux langues", () => {
+  assertContainsBoth(statementText("radar:0"), radarEntry().rationale);
+});
+
+test("énoncés : un point d'état de l'art soumet son texte dans les deux langues", () => {
+  assertContainsBoth(statementText("state:0"), statePoint().text);
+});
+
 // --- Règle 2 : énoncé publiable
 
 test("publiable : un brouillon entièrement validé est publié en entier, sans rejet", () => {
@@ -132,14 +158,15 @@ test("publiable : un brouillon entièrement validé est publié en entier, sans 
 
 // Chaque cas refuse le seul point d'état de l'art d'un brouillon de 4 énoncés : 3/4 reste au-dessus du seuil.
 const fourWith = (point: Draft["state"][number]) => draftOf({ items: [briefItem(), briefItem()], state: [point] });
-const assertOneRefusal = (result: ReturnType<typeof decide>) => {
+const assertOneRefusal = (result: ReturnType<typeof decide>, reason: string) => {
   assert.equal(result.published, 3);
   assert.equal(result.rejected.length, 1);
+  assert.equal(result.rejected[0].reason, reason);
   assert.deepEqual(result.state.points, []);
 };
 
 test("publiable : un énoncé qui ne cite aucun fait est refusé", () => {
-  assertOneRefusal(decide(input({ draft: fourWith(statePoint([])) })));
+  assertOneRefusal(decide(input({ draft: fourWith(statePoint([])) })), "no_claim_cited");
 });
 
 test("publiable : un énoncé qui cite un fait absent des fiches est refusé", () => {
@@ -147,13 +174,13 @@ test("publiable : un énoncé qui cite un fait absent des fiches est refusé", (
   const claims = claimsOf("c1");
   const verdict = verdictOf(draft, claims);
   verdict.claims.push({ id: "inventé", supported: true, reason: "" });
-  assertOneRefusal(decide(input({ draft, claims, verdict })));
+  assertOneRefusal(decide(input({ draft, claims, verdict })), "unknown_claim");
 });
 
 test("publiable : un énoncé qui cite un fait refusé par le vérificateur est refusé", () => {
   const draft = fourWith(statePoint(["c1", "c2"]));
   const claims = claimsOf("c1", "c2");
-  assertOneRefusal(decide(input({ draft, claims, verdict: verdictOf(draft, claims, ["c2"]) })));
+  assertOneRefusal(decide(input({ draft, claims, verdict: verdictOf(draft, claims, ["c2"]) })), "claim_unsupported");
 });
 
 test("publiable : un fait sans verdict vaut un refus", () => {
@@ -161,13 +188,13 @@ test("publiable : un fait sans verdict vaut un refus", () => {
   const claims = claimsOf("c1", "c2");
   const verdict = verdictOf(draft, claims);
   verdict.claims = verdict.claims.filter((c) => c.id !== "c2");
-  assertOneRefusal(decide(input({ draft, claims, verdict })));
+  assertOneRefusal(decide(input({ draft, claims, verdict })), "claim_unsupported");
 });
 
 test("publiable : un énoncé refusé par le vérificateur est refusé", () => {
   const draft = fourWith(statePoint());
   const claims = claimsOf("c1");
-  assertOneRefusal(decide(input({ draft, claims, verdict: verdictOf(draft, claims, ["state:0"]) })));
+  assertOneRefusal(decide(input({ draft, claims, verdict: verdictOf(draft, claims, ["state:0"]) })), "statement_unsupported");
 });
 
 test("publiable : un énoncé sans verdict vaut un refus", () => {
@@ -175,7 +202,7 @@ test("publiable : un énoncé sans verdict vaut un refus", () => {
   const claims = claimsOf("c1");
   const verdict = verdictOf(draft, claims);
   verdict.statements = verdict.statements.filter((s) => s.id !== "state:0");
-  assertOneRefusal(decide(input({ draft, claims, verdict })));
+  assertOneRefusal(decide(input({ draft, claims, verdict })), "statement_unsupported");
 });
 
 test("publiable : chaque énoncé refusé ajoute une entrée aux rejets, avec sa raison", () => {
@@ -184,24 +211,41 @@ test("publiable : chaque énoncé refusé ajoute une entrée aux rejets, avec sa
   for (const r of result.rejected) assert.ok(r.what && r.reason);
 });
 
+test("rejets : une brève refusée est désignée par son titre bilingue", () => {
+  const refused = { ...briefItem([]), title: t("Brève refusée", "Refused item") };
+  const { rejected } = decide(input({ draft: draftOf({ items: [briefItem(), refused, briefItem(), briefItem()] }) }));
+  assert.deepEqual(rejected.map((r) => r.what), [t("Brève refusée", "Refused item")]);
+});
+
+test("rejets : une entrée radar refusée est désignée par son nom, identique dans les deux langues", () => {
+  const draft = draftOf({ items: [briefItem(), briefItem()], radar: [radarEntry("Outil Y", "essayer", [])] });
+  assert.deepEqual(decide(input({ draft })).rejected.map((r) => r.what), [t("Outil Y", "Outil Y")]);
+});
+
+test("rejets : un point d'état de l'art refusé est désigné par son texte bilingue", () => {
+  const text = t("Point refusé.", "Refused point.");
+  const { rejected } = decide(input({ draft: fourWith(statePoint([], text)) }));
+  assert.deepEqual(rejected.map((r) => r.what), [text]);
+});
+
 // --- Règle 3 : les trois portes
 
 test("portes : les trois portes sont rapportées quand le run est publié", () => {
-  assert.deepEqual(decide(input()).gates.map((g) => g.name).sort(), ["budget", "volume", "vérificateur"]);
+  assert.deepEqual(decide(input()).gates.map((g) => g.name).sort(), ["budget", "verifier", "volume"]);
 });
 
 test("portes : les trois portes sont rapportées quand le run est rejeté", () => {
-  assert.deepEqual(decide(input({ spentUsd: 3 })).gates.map((g) => g.name).sort(), ["budget", "volume", "vérificateur"]);
+  assert.deepEqual(decide(input({ spentUsd: 3 })).gates.map((g) => g.name).sort(), ["budget", "verifier", "volume"]);
 });
 
-test("porte vérificateur : passe à exactement 70 % d'énoncés publiables", () => {
+test("porte verifier : passe à exactement 70 % d'énoncés publiables", () => {
   const result = decide(tenStatements(3));
   assert.equal(result.published, 7);
-  assert.equal(gate(result, "vérificateur")?.pass, true);
+  assert.equal(gate(result, "verifier")?.pass, true);
 });
 
-test("porte vérificateur : échoue sous 70 % d'énoncés publiables", () => {
-  assert.equal(gate(decide(tenStatements(4)), "vérificateur")?.pass, false);
+test("porte verifier : échoue sous 70 % d'énoncés publiables", () => {
+  assert.equal(gate(decide(tenStatements(4)), "verifier")?.pass, false);
 });
 
 test("porte volume : passe avec 3 entrées radar et 3 points d'état de l'art", () => {
@@ -224,6 +268,27 @@ test("porte budget : passe quand la dépense atteint exactement le budget", () =
 
 test("porte budget : échoue quand la dépense dépasse le budget", () => {
   assert.equal(gate(decide(input({ spentUsd: 2.01, budgetUsd: 2 })), "budget")?.pass, false);
+});
+
+// Le détail d'une porte est lu dans les deux langues : chiffres, symboles et quelques mots neutres seulement.
+const NEUTRAL_WORDS = new Set(["radar", "state", "USD", "max"]);
+function assertNeutralDetail(detail: string | undefined) {
+  assert.equal(typeof detail, "string");
+  assert.doesNotMatch(detail!, /[\u00C0-\u024F]/, "caractère accentué");
+  assert.doesNotMatch(detail!, /citations|énoncés|validés|seuil|retrouvées/i, "mot français");
+  assert.deepEqual((detail!.match(/\p{L}+/gu) ?? []).filter((word) => !NEUTRAL_WORDS.has(word)), [], "mot hors vocabulaire neutre");
+}
+
+test("porte verifier : son détail est neutre en langue", () => {
+  assertNeutralDetail(gate(decide(tenStatements(3)), "verifier")?.detail);
+});
+
+test("porte volume : son détail est neutre en langue", () => {
+  assertNeutralDetail(gate(decide(tenStatements(0)), "volume")?.detail);
+});
+
+test("porte budget : son détail est neutre en langue", () => {
+  assertNeutralDetail(gate(decide(input({ spentUsd: 0.012, budgetUsd: 2 })), "budget")?.detail);
 });
 
 // --- Règle 4 : une porte échoue
@@ -261,12 +326,15 @@ test("publication : le run est publié quand les trois portes passent", () => {
 
 test("brève : porte la date du run et le titre du brouillon", () => {
   const { brief } = decide(input());
-  assert.deepEqual([brief?.date, brief?.headline], [DATE, "Édition test"]);
+  assert.deepEqual([brief?.date, brief?.headline], [DATE, t("Édition test", "Test edition")]);
 });
 
 test("brève : le titre, le résumé et l'intérêt viennent du brouillon", () => {
   const [entry] = decide(input()).brief!.items;
-  assert.deepEqual([entry.title, entry.summary, entry.why], ["Un modèle", "91 %.", "Utile."]);
+  assert.deepEqual(
+    [entry.title, entry.summary, entry.why],
+    [t("Un modèle", "A model"), t("Il atteint 91 %.", "It reaches 91 percent."), t("Utile en production.", "Useful in production.")],
+  );
 });
 
 test("brève : l'adresse et la source viennent de l'article collecté", () => {
@@ -300,7 +368,7 @@ test("radar : un nouveau nom entre avec son anneau, sa justification, ses preuve
     {
       name: "Modèle X",
       ring: "essayer",
-      rationale: "91 % sur le benchmark.",
+      rationale: t("91 % sur le benchmark.", "91 percent on the benchmark."),
       evidence: [claim("c1")],
       since: DATE,
       history: [{ date: DATE, ring: "essayer" }],
@@ -316,7 +384,7 @@ test("radar : un nom déjà présent, écrit dans une autre casse, ne crée pas 
 test("radar : un mouvement remplace l'anneau, la justification et les preuves", () => {
   const draft = draftOf({ radar: [radarEntry("MODÈLE x", "adopter")] });
   const [entry] = decide(input({ draft, radar: existingRadar() })).radar.entries;
-  assert.deepEqual([entry.ring, entry.rationale, entry.evidence], ["adopter", "91 % sur le benchmark.", [claim("c1")]]);
+  assert.deepEqual([entry.ring, entry.rationale, entry.evidence], ["adopter", t("91 % sur le benchmark.", "91 percent on the benchmark."), [claim("c1")]]);
 });
 
 test("radar : un mouvement garde la date d'entrée d'origine", () => {
@@ -345,13 +413,13 @@ test("radar : une entrée refusée n'y entre pas", () => {
 
 test("état de l'art : un point publiable est ajouté avec sa date, sa section, son texte et ses preuves", () => {
   assert.deepEqual(decide(input()).state.points, [
-    { date: DATE, sectionId: "modeles", text: "91 % est atteint.", evidence: [claim("c1")] },
+    { date: DATE, sectionId: "modeles", text: t("91 % est atteint.", "91 percent is reached."), evidence: [claim("c1")] },
   ]);
 });
 
 test("état de l'art : les nouveaux points s'ajoutent après les anciens", () => {
   const { points } = decide(input({ state: existingState() })).state;
-  assert.deepEqual(points.map((p) => p.text), ["Point ancien.", "91 % est atteint."]);
+  assert.deepEqual(points.map((p) => p.text), [t("Point ancien.", "Former point."), t("91 % est atteint.", "91 percent is reached.")]);
 });
 
 // --- Règle 6 : pureté
