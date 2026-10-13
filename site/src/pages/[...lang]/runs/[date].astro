@@ -37,6 +37,26 @@ const t = ui[lang];
     </table>
   </div>
 
+  <h2>{t.run.tools(run.toolCalls.length)}</h2>
+  {run.toolCalls.length === 0 ? <p class="dim">{t.run.noTools}</p> : (
+    <div class="scroll">
+      <table>
+        <thead><tr>{t.run.toolCols.map((c) => <th>{c}</th>)}</tr></thead>
+        <tbody>
+          {run.toolCalls.map((c) => (
+            <tr>
+              <td class="wrap">{c.item}</td>
+              <td>{c.tool}</td>
+              <td class="wrap">{c.input}</td>
+              <td class={c.ok ? "published" : "rejected"}>{c.ok ? t.run.allowed : `${t.run.refused} — ${c.detail ?? ""}`}</td>
+              <td>{c.ms} ms</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )}
+
   <h2>{t.run.rejects(run.rejected.length)}</h2>
   <div class="scroll">
     <table>

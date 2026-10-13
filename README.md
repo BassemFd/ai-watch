@@ -4,12 +4,12 @@ Un site de veille sur l'IA écrit, vérifié et publié chaque jour par un pipel
 
 ## Principe
 
-L'orchestration est du code ; les modèles n'ont aucun outil.
+L'orchestration est du code. Un seul modèle a un outil : le chercheur lit des pages avec `fetch_page`, que le code limite à la liste blanche.
 
 1. **Collecte** (code) — flux RSS/Atom de `sources.json`, liste blanche de domaines, déduplication.
 2. **Tri** (Haiku 5.5) — garde au plus six sujets.
-3. **Recherche** (Sonnet 5.5, en parallèle) — extrait des faits, chacun avec une citation exacte.
-4. **Porte** (code) — la citation doit figurer mot pour mot dans la page.
+3. **Recherche** (Sonnet 5.5, un agent par sujet) — boucle d'agent avec l'outil `fetch_page` (liste blanche, 3 pages et 6 tours au plus, chaque appel tracé) ; rend des faits, chacun avec une citation exacte et la page d'où elle vient.
+4. **Porte** (code) — la citation doit figurer mot pour mot dans une page que l'agent a réellement lue.
 5. **Rédaction** (Opus 5.5) — écrit en français et en anglais à partir des seuls faits vérifiés.
 6. **Vérification** (Sonnet 5.5, contexte neuf) — juge chaque fait et chaque phrase, dans les deux langues.
 7. **Portes et publication** (code) — seuil du vérificateur, volume, budget ; un échec et aucun contenu n'est écrit. La trace du run l'est toujours.
@@ -25,6 +25,8 @@ Règle de dépendance, sans cérémonie : les règles ne connaissent ni le rése
 | `pipeline/schema.ts` | formes des données et codes (raisons de rejet, portes) | non |
 | `pipeline/gates.ts` | citation mot pour mot, énoncé publiable | non |
 | `pipeline/decide.ts` | ce qui est publié à partir d'un brouillon et des verdicts | non |
+| `pipeline/loop.ts` | boucle d'agent : tours, erreurs d'outil rendues au modèle, plafond, trace | non |
+| `pipeline/tools.ts` | l'outil `fetch_page` et sa liste blanche | via `fetchText` injecté |
 | `pipeline/run.ts` | orchestration des étapes, lecture et écriture des fichiers | oui |
 | `pipeline/agents.ts` | seul point de contact avec les modèles | oui |
 | `pipeline/collect.ts` | flux et pages web | oui |
