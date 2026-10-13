@@ -11,7 +11,7 @@ L'orchestration est du code. Un seul modèle a un outil : le chercheur lit des p
 3. **Recherche** (Sonnet 5.5, un agent par sujet) — boucle d'agent avec l'outil `fetch_page` (liste blanche, 3 pages et 6 tours au plus, chaque appel tracé) ; rend des faits, chacun avec une citation exacte et la page d'où elle vient.
 4. **Porte** (code) — la citation doit figurer mot pour mot dans une page que l'agent a réellement lue.
 5. **Vérification des faits** (Sonnet 5.5, contexte neuf) — juge chaque fait contre sa citation, dans les deux langues. Un fait refusé n'atteint jamais le rédacteur.
-6. **Rédaction** (Opus 5.5) — écrit en français et en anglais à partir des seuls faits validés.
+6. **Rédaction** (Sonnet 5.5) — écrit en français et en anglais à partir des seuls faits validés.
 7. **Vérification des énoncés** (Sonnet 5.5) — juge chaque phrase rédigée contre les faits qu'elle cite.
 8. **Portes et publication** (code) — seuil du vérificateur, volume, budget ; un échec et aucun contenu n'est écrit. La trace du run l'est toujours.
 
