@@ -1,9 +1,10 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { judge, makeLlm, type Llm } from "./agents.ts";
-import { fetchText, htmlToText, parseFeed } from "./collect.ts";
+import { fetchText, parseFeed } from "./collect.ts";
 import { decide, toStatements } from "./decide.ts";
-import { quoteProblem } from "./gates.ts";
+import { capped, quoteProblem } from "./gates.ts";
+import { runAgent } from "./loop.ts";
 import {
   Radar,
   ResearchOut,
@@ -18,10 +19,13 @@ import {
   type Item,
   type Trace,
 } from "./schema.ts";
+import { FETCH_PAGE, makeFetchTool } from "./tools.ts";
 
 const MAX_TRIAGE = 200; // items soumis au tri
 const MAX_ITEMS = 6; // sujets étudiés par run
 const MAX_PAGE_CHARS = 40_000;
+const MAX_FETCHES = 3; // pages lues par sujet : la sienne et deux liens
+const MAX_TURNS = 6; // envois au modèle par sujet
 
 const readJson = <T>(path: string, fallback: T): T =>
   existsSync(path) ? (JSON.parse(readFileSync(path, "utf8")) as T) : fallback;
@@ -72,27 +76,40 @@ async function triage(llm: Llm, fresh: Item[], byId: ReadonlyMap<string, Item>):
 
 type Sheet = { item: Item; claims: Claim[] };
 
-// 3. Recherche — un appel par sujet, en parallèle. Le code télécharge la page ; le modèle n'a
-// aucun outil. Porte : chaque citation doit figurer mot pour mot dans cette même page.
-async function research(o: Pick<Options, "llm" | "fetchText">, picked: Item[], reject: (r: Trace["rejected"][number]) => void) {
+// 3. Recherche — une boucle d'agent par sujet, en parallèle. Le modèle choisit ce qu'il lit avec son
+// seul outil, fetch_page ; le code fixe ce qu'il a le droit de lire. Porte : chaque citation doit
+// figurer mot pour mot dans la page qu'elle cite, et cette page avoir été lue par l'outil.
+async function research(
+  o: Pick<Options, "llm" | "fetchText" | "sources">,
+  picked: Item[],
+  reject: (r: Trace["rejected"][number]) => void,
+  toolCalls: Trace["toolCalls"],
+) {
+  const domains = o.sources.flatMap((s) => s.domains);
   const claims = new Map<string, Claim>();
   let proposed = 0;
   const sheets = (
     await Promise.all(
       picked.map(async (item): Promise<Sheet | null> => {
         try {
-          const page = htmlToText(await o.fetchText(item.url)).slice(0, MAX_PAGE_CHARS);
-          const out = await o.llm.call(
-            "research",
-            `Titre : ${item.title}\nURL : ${item.url}\n<source>\n${page}\n</source>`,
-            ResearchOut,
-          );
+          const { tool, pages } = makeFetchTool({ domains, maxFetches: MAX_FETCHES, maxChars: MAX_PAGE_CHARS, fetchText: o.fetchText });
+          const out = await runAgent({
+            conversation: o.llm.open("research", `Titre : ${item.title}\nURL : ${item.url}`, ResearchOut, [FETCH_PAGE]),
+            tools: { [FETCH_PAGE.name]: tool },
+            maxTurns: MAX_TURNS,
+            onToolCall: (e) => {
+              const asked = (e.input as { url?: unknown } | null)?.url;
+              toolCalls.push({ ...e, item: item.url, input: typeof asked === "string" ? asked : String(JSON.stringify(e.input)) });
+            },
+          });
           const kept: Claim[] = [];
           out.claims.forEach((c, i) => {
             proposed++;
-            const problem = quoteProblem(c.quote, page);
+            const url = URL.parse(c.url)?.href ?? "";
+            const page = pages.get(url);
+            const problem = page === undefined ? "source_not_fetched" : quoteProblem(c.quote, page);
             if (problem) return reject({ what: c.text, reason: problem });
-            const claim = { id: `${item.id}-${i}`, text: c.text, quote: c.quote, url: item.url };
+            const claim = { id: `${item.id}-${i}`, text: c.text, quote: c.quote, url };
             claims.set(claim.id, claim);
             kept.push(claim);
           });
@@ -136,10 +153,11 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
     stages: [],
     gates: [],
     rejected: [],
+    toolCalls: [],
     costUsd: 0,
   };
   const reject = (r: Trace["rejected"][number]) => {
-    trace.rejected.push(r);
+    trace.rejected.push({ ...r, what: capped(r.what) });
   };
   let seen = new Set<string>();
   let fresh: Item[] = [];
@@ -148,7 +166,7 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
     // 1. Collecte — code, sans modèle
     const collected = await collect(o);
     ({ seen, fresh } = collected);
-    trace.rejected.push(...collected.failures);
+    collected.failures.forEach(reject);
     trace.counts = { collectes: collected.total, nouveaux: fresh.length };
     if (!fresh.length) {
       trace.status = "empty";
@@ -165,7 +183,7 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
     }
 
     // 3. Recherche — porte : au moins une citation retrouvée mot pour mot
-    const { sheets, claims, proposed } = await research(o, picked, reject);
+    const { sheets, claims, proposed } = await research(o, picked, reject, trace.toolCalls);
     trace.counts.faitsProposes = proposed;
     trace.counts.faitsCites = claims.size;
     trace.gates.push({ name: "literal_quotes", pass: claims.size > 0, detail: `${claims.size}/${proposed}` });

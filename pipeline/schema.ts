@@ -16,6 +16,7 @@ export const REASONS = [
   "quote_not_found",
   "no_claim_cited",
   "unknown_claim",
+  "source_not_fetched",
   "claim_unsupported",
   "statement_unsupported",
   "feed_unreadable",
@@ -56,7 +57,7 @@ export const TriageOut = z.object({
   picks: z.array(z.object({ id: z.string(), score: z.number(), reason: z.string() })),
 });
 export const ResearchOut = z.object({
-  claims: z.array(z.object({ text: Text, quote: z.string() })),
+  claims: z.array(z.object({ text: Text, quote: z.string(), url: z.string() })),
 });
 export const WriteOut = z.object({
   headline: Text,
@@ -135,6 +136,9 @@ export const Trace = z.object({
   ),
   gates: z.array(z.object({ name: z.enum(GATES), pass: z.boolean(), detail: z.string() })),
   rejected: z.array(z.object({ what: Text, reason: z.enum(REASONS), detail: z.string().optional() })),
+  toolCalls: z.array(
+    z.object({ item: z.string(), tool: z.string(), input: z.string(), ok: z.boolean(), detail: z.string().optional(), ms: z.number() }),
+  ),
   costUsd: z.number(),
 });
 export type Trace = z.infer<typeof Trace>;

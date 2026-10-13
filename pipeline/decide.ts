@@ -1,5 +1,5 @@
 // La décision de publier : du code pur, aucun modèle, aucune écriture. Les entrées ne sont pas modifiées.
-import { statementProblem } from "./gates.ts";
+import { capped, statementProblem } from "./gates.ts";
 import { Brief, untranslated, type Claim, type Item, type Radar, type State, type Statement, type Text, type Trace, type VerifyOut, type WriteOut } from "./schema.ts";
 
 const MAX_OPS = 3; // ajouts au radar et à l'état de l'art par run
@@ -33,7 +33,7 @@ function judgeStatements(statements: Statement[], what: Text[], verdict: VerifyO
   const rejected: Trace["rejected"] = [];
   statements.forEach((s, i) => {
     const problem = statementProblem(s, literal, okClaims, okStatements);
-    if (problem) rejected.push({ what: what[i], reason: problem });
+    if (problem) rejected.push({ what: capped(what[i]), reason: problem });
     else publishable.add(s.id);
   });
   return { publishable, rejected };

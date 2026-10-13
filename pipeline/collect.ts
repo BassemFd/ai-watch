@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import { XMLParser } from "fast-xml-parser";
 import type { Item, Source } from "./schema.ts";
+import { isAllowed } from "./tools.ts";
 
 const MAX_AGE_DAYS = 7; // la déduplication (data/seen.json) évite les redites
 const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "@_" });
@@ -47,14 +48,8 @@ export function parseFeed(xml: string, source: Source, today: string): Item[] {
       (l) => l && typeof l === "object" && ((l as Record<string, string>)["@_rel"] ?? "alternate") === "alternate",
     ) as Record<string, string> | undefined;
     const url = atom?.["@_href"] ?? txt(links[0]);
-    let parsed: URL;
-    try {
-      parsed = new URL(url);
-    } catch {
-      continue;
-    }
-    const allowed = source.domains.some((d) => parsed.hostname === d || parsed.hostname.endsWith(`.${d}`));
-    if (parsed.protocol !== "https:" || !allowed) continue;
+    if (!isAllowed(url, source.domains)) continue;
+    const parsed = new URL(url);
     const time = Date.parse(txt(e.pubDate ?? e.published ?? e.updated ?? e["dc:date"]));
     if (!(time >= minTime)) continue;
     items.push({

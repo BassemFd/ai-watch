@@ -1,5 +1,5 @@
 // Les portes : du code pur, aucun modèle. Tout ce qui est publié passe par ici.
-import type { Reason } from "./schema.ts";
+import type { Reason, Text } from "./schema.ts";
 
 export const normalize = (s: string) =>
   s
@@ -10,6 +10,9 @@ export const normalize = (s: string) =>
     .replace(/\s+/g, " ")
     .trim()
     .toLowerCase();
+
+/** Ce qui désigne un rejet dans la trace : 200 caractères au plus par langue. */
+export const capped = (what: Text): Text => ({ fr: what.fr.slice(0, 200), en: what.en.slice(0, 200) });
 
 /** null si la citation figure mot pour mot dans la page, sinon le code de la raison du rejet. */
 export function quoteProblem(quote: string, page: string): Reason | null {
