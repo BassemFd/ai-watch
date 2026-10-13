@@ -9,6 +9,7 @@ export const day = (lang: Lang, iso: string) =>
   new Date(iso).toLocaleDateString(lang === "fr" ? "fr-FR" : "en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
 
 const fr = {
+  brand: ["veille", "ia"],
   siteTitle: "Veille IA — vérifiée par des agents",
   description: "Une veille sur l'IA écrite, vérifiée et publiée chaque jour par un pipeline d'agents, traces à l'appui.",
   switchTo: "English",
@@ -119,6 +120,7 @@ const fr = {
 };
 
 const en: typeof fr = {
+  brand: ["ai", "watch"],
   siteTitle: "AI Watch — verified by agents",
   description: "A daily AI briefing written, verified and published by a pipeline of agents, with full traces.",
   switchTo: "Français",

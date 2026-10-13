@@ -25,7 +25,7 @@ const nav = [
   </head>
   <body>
     <header>
-      <a class="brand" href={href(lang, "/")}>veille<span>/</span>ia</a>
+      <a class="brand" href={href(lang, "/")}>{t.brand[0]}<span>/</span>{t.brand[1]}</a>
       <nav>
         {nav.map(([p, label]) => <a href={href(lang, p)} aria-current={p === path ? "page" : undefined}>{label}</a>)}
         <a class="lang" href={href(other, path)} lang={other} hreflang={other}>{t.switchTo}</a>
