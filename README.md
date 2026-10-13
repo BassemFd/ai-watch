@@ -162,4 +162,4 @@ Un run complet par l'API a coûté environ 0,27 $ lors du premier essai réel, a
 
 ## Auteur
 
-[Bassem Fayed](https://career-log.bassem-fayed.workers.dev/) · [GitHub](https://github.com/BassemFd) · [LinkedIn](https://www.linkedin.com/in/bassem-fd/)
+[Bassem Fayed](https://career-log.bassem-fayed.workers.dev/) · [GitHub](https://github.com/BassemFd) · [LinkedIn](https://www.linkedin.com/in/bassem-fd/) · [bassem.fayed@gmail.com](mailto:bassem.fayed@gmail.com)
