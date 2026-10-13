@@ -23,7 +23,7 @@ export interface Llm {
 export const ROLES = {
   triage: { model: "claude-haiku-5-5", effort: "low", price: [0.1, 0.5] },
   research: { model: "claude-sonnet-5-5", effort: "medium", price: [2, 10] },
-  write: { model: "claude-opus-5-5", effort: "high", price: [4, 20] },
+  write: { model: "claude-sonnet-5-5", effort: "high", price: [2, 10] },
   verify: { model: "claude-sonnet-5-5", effort: "medium", price: [2, 10] },
 } as const;
 
