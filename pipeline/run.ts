@@ -5,7 +5,6 @@ import { fetchText, htmlToText, parseFeed } from "./collect.ts";
 import { decide, toStatements } from "./decide.ts";
 import { quoteProblem } from "./gates.ts";
 import {
-  Brief,
   Radar,
   ResearchOut,
   Source,
@@ -13,6 +12,7 @@ import {
   TriageOut,
   WriteOut,
   SECTIONS,
+  type Brief,
   type Claim,
   type Item,
   type Trace,
@@ -55,6 +55,75 @@ export async function collect(o: Pick<Options, "root" | "date" | "fetchText" | "
   return { seen, total: all.size, fresh, failures };
 }
 
+// 2. Tri
+async function triage(llm: Llm, fresh: Item[], byId: ReadonlyMap<string, Item>): Promise<Item[]> {
+  const tri = await llm.call(
+    "triage",
+    JSON.stringify(fresh.map(({ id, title, source, summary }) => ({ id, title, source, summary }))),
+    TriageOut,
+  );
+  return tri.picks
+    .filter((p) => byId.has(p.id))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, MAX_ITEMS)
+    .map((p) => byId.get(p.id)!);
+}
+
+type Sheet = { item: Item; claims: Claim[] };
+
+// 3. Recherche — un appel par sujet, en parallèle. Le code télécharge la page ; le modèle n'a
+// aucun outil. Porte : chaque citation doit figurer mot pour mot dans cette même page.
+async function research(o: Pick<Options, "llm" | "fetchText">, picked: Item[], reject: (what: string, reason: string) => void) {
+  const claims = new Map<string, Claim>();
+  let proposed = 0;
+  const sheets = (
+    await Promise.all(
+      picked.map(async (item): Promise<Sheet | null> => {
+        try {
+          const page = htmlToText(await o.fetchText(item.url)).slice(0, MAX_PAGE_CHARS);
+          const out = await o.llm.call(
+            "research",
+            `Titre : ${item.title}\nURL : ${item.url}\n<source>\n${page}\n</source>`,
+            ResearchOut,
+          );
+          const kept: Claim[] = [];
+          out.claims.forEach((c, i) => {
+            proposed++;
+            const problem = quoteProblem(c.quote, page);
+            if (problem) return reject(c.text, problem);
+            const claim = { id: `${item.id}-${i}`, text: c.text, quote: c.quote, url: item.url };
+            claims.set(claim.id, claim);
+            kept.push(claim);
+          });
+          return kept.length ? { item, claims: kept } : null;
+        } catch (e) {
+          reject(item.title, `sujet abandonné : ${msg(e)}`);
+          return null;
+        }
+      }),
+    )
+  ).filter((s) => s !== null);
+  return { sheets, claims, proposed };
+}
+
+// 4. Rédaction — le rédacteur ne voit que les faits vérifiés, jamais le web
+const write = (llm: Llm, date: string, sheets: Sheet[], radar: Radar) =>
+  llm.call(
+    "write",
+    JSON.stringify({
+      date,
+      fiches: sheets.map((s) => ({
+        itemId: s.item.id,
+        titre: s.item.title,
+        source: s.item.source,
+        faits: s.claims.map(({ id, text }) => ({ id, text })),
+      })),
+      radar: radar.entries.map(({ name, ring }) => ({ name, ring })),
+      sections: SECTIONS,
+    }),
+    WriteOut,
+  );
+
 export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> {
   const t0 = Date.now();
   const trace: Trace = {
@@ -68,11 +137,12 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
     rejected: [],
     costUsd: 0,
   };
-  const reject = (what: string, reason: string) => trace.rejected.push({ what: what.slice(0, 200), reason });
+  const reject = (what: string, reason: string) => {
+    trace.rejected.push({ what: what.slice(0, 200), reason });
+  };
   const gate = (name: string, pass: boolean, detail: string) => (trace.gates.push({ name, pass, detail }), pass);
   let seen = new Set<string>();
   let fresh: Item[] = [];
-  let brief: Brief | undefined;
 
   try {
     // 1. Collecte — code, sans modèle
@@ -86,54 +156,16 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
     }
 
     // 2. Tri
-    const tri = await o.llm.call(
-      "triage",
-      JSON.stringify(fresh.map(({ id, title, source, summary }) => ({ id, title, source, summary }))),
-      TriageOut,
-    );
     const byId = new Map(fresh.map((i) => [i.id, i]));
-    const picked = tri.picks
-      .filter((p) => byId.has(p.id))
-      .sort((a, b) => b.score - a.score)
-      .slice(0, MAX_ITEMS)
-      .map((p) => byId.get(p.id)!);
+    const picked = await triage(o.llm, fresh, byId);
     trace.counts.retenus = picked.length;
     if (!picked.length) {
       trace.status = "empty";
       return { trace };
     }
 
-    // 3. Recherche — un appel par sujet, en parallèle. Le code télécharge la page ; le modèle n'a
-    // aucun outil. Porte : chaque citation doit figurer mot pour mot dans cette même page.
-    const claims = new Map<string, Claim>();
-    let proposed = 0;
-    const sheets = (
-      await Promise.all(
-        picked.map(async (item) => {
-          try {
-            const page = htmlToText(await o.fetchText(item.url)).slice(0, MAX_PAGE_CHARS);
-            const out = await o.llm.call(
-              "research",
-              `Titre : ${item.title}\nURL : ${item.url}\n<source>\n${page}\n</source>`,
-              ResearchOut,
-            );
-            const kept: Claim[] = [];
-            out.claims.forEach((c, i) => {
-              proposed++;
-              const problem = quoteProblem(c.quote, page);
-              if (problem) return reject(c.text, problem);
-              const claim = { id: `${item.id}-${i}`, text: c.text, quote: c.quote, url: item.url };
-              claims.set(claim.id, claim);
-              kept.push(claim);
-            });
-            return kept.length ? { item, claims: kept } : null;
-          } catch (e) {
-            reject(item.title, `sujet abandonné : ${msg(e)}`);
-            return null;
-          }
-        }),
-      )
-    ).filter((s) => s !== null);
+    // 3. Recherche — porte : au moins une citation retrouvée mot pour mot
+    const { sheets, claims, proposed } = await research(o, picked, reject);
     trace.counts.faitsProposes = proposed;
     trace.counts.faitsCites = claims.size;
     if (!gate("citations littérales", claims.size > 0, `${claims.size}/${proposed} citations retrouvées mot pour mot`)) {
@@ -141,23 +173,9 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
       return { trace };
     }
 
-    // 4. Rédaction — le rédacteur ne voit que les faits vérifiés, jamais le web
+    // 4. Rédaction
     const radar = readJson<Radar>(join(o.root, "content/radar.json"), { entries: [] });
-    const draft = await o.llm.call(
-      "write",
-      JSON.stringify({
-        date: o.date,
-        fiches: sheets.map((s) => ({
-          itemId: s.item.id,
-          titre: s.item.title,
-          source: s.item.source,
-          faits: s.claims.map(({ id, text }) => ({ id, text })),
-        })),
-        radar: radar.entries.map(({ name, ring }) => ({ name, ring })),
-        sections: SECTIONS,
-      }),
-      WriteOut,
-    );
+    const draft = await write(o.llm, o.date, sheets, radar);
     const statements = toStatements(draft);
     if (!statements.length) {
       trace.status = "empty";
@@ -180,7 +198,7 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
       trace.status = "rejected";
       return { trace };
     }
-    brief = d.brief;
+    const { brief } = d;
     trace.counts.publies = d.published;
     if (!o.dryRun) {
       if (brief) writeJson(join(o.root, `content/briefs/${o.date}.json`), brief);

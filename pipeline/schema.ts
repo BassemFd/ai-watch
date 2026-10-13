@@ -51,6 +51,7 @@ export const WriteOut = z.object({
   radar: z.array(z.object({ name: z.string(), ring: Ring, rationale: z.string(), claimIds: z.array(z.string()) })),
   state: z.array(z.object({ sectionId: SectionId, text: z.string(), claimIds: z.array(z.string()) })),
 });
+export type WriteOut = z.infer<typeof WriteOut>;
 export const VerifyOut = z.object({
   claims: z.array(z.object({ id: z.string(), supported: z.boolean(), reason: z.string() })),
   statements: z.array(z.object({ id: z.string(), supported: z.boolean(), reason: z.string() })),
