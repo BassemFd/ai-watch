@@ -72,14 +72,34 @@ const failing: Script = () => {
 const endless: Script = () => fetchPage(A);
 
 type ToolSpec = { name: string; description: string; inputSchema: object };
+/** Le verdict du vérificateur sur un fait au premier appel : `null` = aucun verdict rendu. */
+type FactVerdict = { supported: boolean; reason?: string } | null;
+type Verifier = {
+  /** Premier appel (énoncés vides) : verdict sur chaque fait. Par défaut, tous soutenus. */
+  fact?: (fact: { id: string; text: { fr: string; en: string }; quote: string }) => FactVerdict;
+  /** Second appel : « all » = tous les faits reçus soutenus, « none » = aucun verdict sur les faits. */
+  secondFacts?: "all" | "none";
+  /** Raison donnée pour chaque énoncé refusé au second appel. */
+  statementReason?: string;
+  /** Le rédacteur (fictif) cite aussi les faits refusés au premier appel. */
+  writerCitesRefused?: boolean;
+};
 type FakeLlm = Llm & {
+  /** Les entrées du vérificateur, dans l'ordre des appels. */
+  verifyCalls: { claims: any[]; statements: any[] }[];
+  /** Les messages reçus par le rédacteur. */
+  writes: string[];
+  /** Ordre des appels « write » et « verify ». */
+  order: string[];
   opened: { stage: string; user: string; tools: ToolSpec[] }[];
   /** Les résultats d'outils reçus à chaque envoi, toutes conversations confondues. */
   received: ToolResult[][];
 };
 
 // Faux modèles : un chercheur scripté par sujet, un vérificateur réglable.
-function fakeLlm(judgeSays: boolean, scriptFor: (itemUrl: string) => Script): FakeLlm {
+function fakeLlm(judgeSays: boolean, scriptFor: (itemUrl: string) => Script, verifier: Verifier = {}): FakeLlm {
+  const verifyCalls: FakeLlm["verifyCalls"] = [];
+  const refusedIds: string[] = [];
   const answers = {
     triage: (input: any) => ({ picks: input.map((i: any) => ({ id: i.id, score: 9, reason: "" })) }),
     research: () => {
@@ -87,7 +107,7 @@ function fakeLlm(judgeSays: boolean, scriptFor: (itemUrl: string) => Script): Fa
     },
     write: (input: any) => {
       const [fiche] = input.fiches;
-      const claimIds = fiche.faits.map((f: any) => f.id);
+      const claimIds = [...fiche.faits.map((f: any) => f.id), ...(verifier.writerCitesRefused ? refusedIds : [])];
       return {
         headline: HEADLINE,
         items: [{ itemId: fiche.itemId, title: TITLE, summary: SUMMARY, why: WHY, claimIds }],
@@ -95,19 +115,40 @@ function fakeLlm(judgeSays: boolean, scriptFor: (itemUrl: string) => Script): Fa
         state: [{ sectionId: "modeles", text: POINT, claimIds }],
       };
     },
-    verify: (input: any) => ({
-      claims: input.claims.map((c: any) => ({ id: c.id, supported: judgeSays, reason: "" })),
-      statements: input.statements.map((s: any) => ({ id: s.id, supported: judgeSays, reason: "" })),
-    }),
+    verify: (input: any) => {
+      verifyCalls.push(input);
+      const first = input.statements.length === 0;
+      const claims = first
+        ? input.claims.flatMap((c: any) => {
+            const v = verifier.fact ? verifier.fact(c) : { supported: true };
+            if (v === null) return [];
+            if (!v.supported) refusedIds.push(c.id);
+            return [{ id: c.id, supported: v.supported, reason: v.reason ?? "" }];
+          })
+        : verifier.secondFacts === "none"
+          ? []
+          : input.claims.map((c: any) => ({ id: c.id, supported: true, reason: "" }));
+      return {
+        claims,
+        statements: input.statements.map((s: any) => ({ id: s.id, supported: judgeSays, reason: judgeSays ? "" : (verifier.statementReason ?? "") })),
+      };
+    },
   };
+  const order: string[] = [];
+  const writes: string[] = [];
   const opened: FakeLlm["opened"] = [];
   const received: ToolResult[][] = [];
   return {
     calls: [],
     spent: 0,
+    verifyCalls,
+    writes,
+    order,
     opened,
     received,
     async call(stage, user) {
+      if (stage === "write") writes.push(user);
+      if (stage === "write" || stage === "verify") order.push(stage);
       const input = stage === "research" ? user : JSON.parse(user);
       return answers[stage](input) as any;
     },
@@ -138,10 +179,11 @@ type World = {
   sources?: typeof sources;
   /** Adresses qui ne répondent pas, avec leur message d'erreur. */
   down?: Record<string, string>;
+  verifier?: Verifier;
 };
 function setup(root: string, w: World = {}) {
   const fetched: string[] = [];
-  const llm = fakeLlm(w.judgeSays ?? true, w.scriptFor ?? (() => w.script ?? HAPPY));
+  const llm = fakeLlm(w.judgeSays ?? true, w.scriptFor ?? (() => w.script ?? HAPPY), w.verifier);
   const fetchText = async (url: string) => {
     fetched.push(url);
     if (w.down?.[url]) throw new Error(w.down[url]);
@@ -279,14 +321,14 @@ test("run publié : l'état de l'art écrit porte son texte dans les deux langue
   assert.deepEqual(json(root, "content/state.json").points[0].text, POINT);
 });
 
-test("run publié : les quatre portes sont rapportées par leur code, la porte des citations d'abord", async () => {
+test("run publié : les cinq portes sont rapportées par leur code, dans l'ordre des étapes", async () => {
   const { trace } = await run(options(tmpRoot(), true));
-  assert.deepEqual(trace.gates.map((g) => [g.name, g.pass]), [["literal_quotes", true], ["verifier", true], ["volume", true], ["budget", true]]);
+  assert.deepEqual(trace.gates.map((g) => [g.name, g.pass]), [["literal_quotes", true], ["supported_claims", true], ["verifier", true], ["volume", true], ["budget", true]]);
 });
 
 test("run publié : le détail de chaque porte est neutre en langue", async () => {
   const { trace } = await run(options(tmpRoot(), true));
-  assert.equal(trace.gates.length, 4);
+  assert.equal(trace.gates.length, 5);
   for (const g of trace.gates) assertNeutralDetail(g.detail);
 });
 
@@ -319,7 +361,7 @@ test("sujet en échec : le détail de la porte literal_quotes est neutre en lang
   assertNeutralDetail(trace.gates.find((g) => g.name === "literal_quotes")?.detail);
 });
 
-test("run rejeté : si le vérificateur refuse, aucun contenu n'est écrit mais la trace l'est", async () => {
+test("run rejeté : si le vérificateur refuse les énoncés, aucun contenu n'est écrit mais la trace l'est", async () => {
   const root = mkdtempSync(join(tmpdir(), "veille-"));
   const { trace } = await run(options(root, false));
   assert.equal(trace.status, "rejected");
@@ -331,18 +373,168 @@ test("run rejeté : si le vérificateur refuse, aucun contenu n'est écrit mais 
 test("run rejeté : la trace écrite désigne chaque rejet dans les deux langues, avec un code pour raison", async () => {
   const root = tmpRoot();
   await run(options(root, false));
-  // Le vérificateur refuse aussi les faits : c'est le premier problème rencontré par chaque énoncé.
-  assert.deepEqual(json(root, `runs/${DATE}.json`).rejected, [
+  // Les faits sont validés avant l'écriture : les énoncés sont refusés en tant qu'énoncés.
+  assert.deepEqual(json(root, `runs/${DATE}.json`).rejected.map(({ what, reason }: any) => ({ what, reason })), [
     { what: MADE_UP_FACT, reason: "quote_not_found" },
-    { what: TITLE, reason: "claim_unsupported" },
-    { what: t("Modèle X", "Modèle X"), reason: "claim_unsupported" },
-    { what: POINT, reason: "claim_unsupported" },
+    { what: TITLE, reason: "statement_unsupported" },
+    { what: t("Modèle X", "Modèle X"), reason: "statement_unsupported" },
+    { what: POINT, reason: "statement_unsupported" },
   ]);
 });
 
 test("run rejeté : la porte verifier échoue, rapportée par son code", async () => {
   const { trace } = await run(options(tmpRoot(), false));
-  assert.deepEqual(trace.gates.map((g) => [g.name, g.pass]), [["literal_quotes", true], ["verifier", false], ["volume", true], ["budget", true]]);
+  assert.deepEqual(trace.gates.map((g) => [g.name, g.pass]), [["literal_quotes", true], ["supported_claims", true], ["verifier", false], ["volume", true], ["budget", true]]);
+});
+
+// --- Vérification des faits avant l'écriture
+
+const APACHE = "Apache 2.0";
+const refusing = (reason?: string): Verifier["fact"] => (c) => (c.quote.includes(APACHE) ? { supported: false, reason } : { supported: true });
+const twoFacts = () => script(fetchPage(A, B), finish(trueClaim(), claimB()));
+/** Le fait B est refusé avant l'écriture, le fait A est validé. */
+const oneRefused = (reason?: string, more: World = {}) => play({ script: twoFacts(), verifier: { fact: refusing(reason) }, ...more });
+/** Tous les faits sont refusés avant l'écriture. */
+const allRefused = () => play({ script: twoFacts(), verifier: { fact: () => ({ supported: false, reason: "dit plus que la citation" }) } });
+const writerFacts = (llm: FakeLlm) => llm.writes.flatMap((w) => JSON.parse(w).fiches.flatMap((f: any) => f.faits.map((x: any) => x.text)));
+const factRejections = (trace: Trace) => trace.rejected.filter((r) => r.reason === "claim_unsupported");
+
+test("faits : le vérificateur est appelé avant le rédacteur, puis une seconde fois après", async () => {
+  const { llm } = await play();
+  assert.deepEqual(llm.order, ["verify", "write", "verify"]);
+});
+
+test("faits : le premier appel porte une liste d'énoncés vide", async () => {
+  const { llm } = await play();
+  assert.deepEqual(llm.verifyCalls[0].statements, []);
+});
+
+test("faits : le premier appel reçoit tous les faits qui ont passé la citation littérale, et eux seuls", async () => {
+  const { llm } = await play({ script: script(fetchPage(A, B), finish(trueClaim(), madeUpClaim(), claimB())) });
+  assert.deepEqual(llm.verifyCalls[0].claims.map((c) => c.text), [TRUE_FACT, FACT_B]);
+});
+
+test("faits : un fait refusé est rejeté en claim_unsupported, désigné par son texte, avec la raison du vérificateur en détail", async () => {
+  const { trace } = await oneRefused("dit plus que la citation");
+  assert.deepEqual(factRejections(trace), [{ what: FACT_B, reason: "claim_unsupported", detail: "dit plus que la citation" }]);
+});
+
+test("faits : un fait sans verdict est refusé, sans détail", async () => {
+  const { root } = await play({ script: twoFacts(), verifier: { fact: (c) => (c.quote.includes(APACHE) ? null : { supported: true }) } });
+  const refused = json(root, `runs/${DATE}.json`).rejected.filter((r: any) => r.reason === "claim_unsupported");
+  assert.deepEqual(refused, [{ what: FACT_B, reason: "claim_unsupported" }]);
+});
+
+test("faits : un fait refusé avec un verdict mais sans raison est tout de même refusé", async () => {
+  const { trace } = await oneRefused();
+  assert.deepEqual(factRejections(trace).map((r) => r.what), [FACT_B]);
+});
+
+test("rédacteur : il ne reçoit que les faits validés", async () => {
+  const { llm } = await oneRefused();
+  assert.deepEqual(writerFacts(llm), [TRUE_FACT]);
+});
+
+test("rédacteur : un sujet dont tous les faits sont refusés ne lui est pas donné", async () => {
+  const scriptFor = (url: string) => (url === A ? script(fetchPage(A), finish(trueClaim())) : script(fetchPage(B), finish(claimB())));
+  const { llm } = await play({ feed: FEED_TWO, scriptFor, verifier: { fact: refusing() } });
+  assert.deepEqual(llm.writes.flatMap((w) => JSON.parse(w).fiches.map((f: any) => f.titre)), ["New model"]);
+});
+
+test("porte supported_claims : elle suit literal_quotes, passe avec au moins un fait validé et rapporte validés/cités", async () => {
+  const { trace } = await oneRefused();
+  assert.deepEqual(trace.gates.slice(0, 2).map((g) => [g.name, g.pass, g.detail]), [["literal_quotes", true, "2/2"], ["supported_claims", true, "1/2"]]);
+});
+
+test("porte supported_claims : le dénominateur ne compte que les faits ayant passé la citation littérale", async () => {
+  const { trace } = await play({ script: script(fetchPage(A, B), finish(trueClaim(), madeUpClaim(), claimB())), verifier: { fact: refusing() } });
+  assert.equal(trace.gates.find((g) => g.name === "supported_claims")?.detail, "1/2");
+});
+
+test("porte supported_claims : son détail est neutre en langue", async () => {
+  const { trace } = await oneRefused();
+  assertNeutralDetail(trace.gates.find((g) => g.name === "supported_claims")?.detail);
+});
+
+test("porte supported_claims : elle échoue quand tous les faits sont refusés, le run est rejeté", async () => {
+  const { trace } = await allRefused();
+  assert.deepEqual([trace.status, trace.gates.map((g) => [g.name, g.pass, g.detail])], ["rejected", [["literal_quotes", true, "2/2"], ["supported_claims", false, "0/2"]]]);
+});
+
+test("porte supported_claims : quand elle échoue, le rédacteur n'est jamais appelé", async () => {
+  const { llm } = await allRefused();
+  assert.deepEqual(llm.order, ["verify"]);
+});
+
+test("porte supported_claims : quand elle échoue, rien n'est écrit sous content/ mais la trace l'est", async () => {
+  const { root } = await allRefused();
+  assert.equal(existsSync(join(root, "content")), false);
+  assert.equal(Trace.parse(json(root, `runs/${DATE}.json`)).status, "rejected");
+});
+
+test("porte supported_claims : quand elle échoue, chaque fait refusé est rejeté dans la trace", async () => {
+  const { trace } = await allRefused();
+  assert.deepEqual(factRejections(trace).map((r) => r.what), [TRUE_FACT, FACT_B]);
+});
+
+test("trace : counts.faitsValides est le nombre de faits validés", async () => {
+  const { trace } = await oneRefused();
+  assert.equal(trace.counts.faitsValides, 1);
+});
+
+test("trace : counts.faitsValides vaut 0 quand tous les faits sont refusés", async () => {
+  const { trace } = await allRefused();
+  assert.equal(trace.counts.faitsValides, 0);
+});
+
+test("run publié malgré des faits refusés : la brève est produite à partir des faits restants", async () => {
+  const { root, trace } = await oneRefused();
+  assert.equal(trace.status, "published");
+  assert.deepEqual(publishedClaims(root), [[TRUE_FACT, A]]);
+  assert.deepEqual(trace.gates.map((g) => g.name), ["literal_quotes", "supported_claims", "verifier", "volume", "budget"]);
+});
+
+test("run publié malgré des faits refusés : le fait refusé n'est ni dans le radar ni dans l'état de l'art", async () => {
+  const { root } = await oneRefused();
+  assert.deepEqual(json(root, "content/radar.json").entries[0].evidence.map((c: any) => c.text), [TRUE_FACT]);
+  assert.deepEqual(json(root, "content/state.json").points[0].evidence.map((c: any) => c.text), [TRUE_FACT]);
+});
+
+// --- Vérification des énoncés après l'écriture
+
+test("énoncés : le second appel porte les énoncés et les faits qu'ils citent", async () => {
+  const { llm } = await play();
+  const second = llm.verifyCalls[1];
+  assert.equal(second.statements.length, 3);
+  assert.deepEqual(second.claims.map((c) => c.text), [TRUE_FACT]);
+});
+
+test("énoncés : un fait validé au premier appel le reste quand le second appel ne rend aucun verdict sur les faits", async () => {
+  const { root, trace } = await play({ verifier: { secondFacts: "none" } });
+  assert.equal(trace.status, "published");
+  assert.deepEqual(publishedClaims(root), [[TRUE_FACT, A]]);
+});
+
+test("énoncés : un énoncé qui cite un fait refusé au premier appel est rejeté, même si le second appel le dit soutenu", async () => {
+  const { root, trace } = await oneRefused(undefined, { verifier: { fact: refusing(), writerCitesRefused: true } });
+  const statements = trace.rejected.filter((r) => r.what.fr !== FACT_B.fr && r.reason !== "quote_not_found");
+  assert.deepEqual(statements.map((r) => r.what), [TITLE, untranslated("Modèle X"), POINT]);
+  for (const r of statements) assert.match(r.reason, /^(claim_unsupported|unknown_claim)$/);
+  assert.equal(existsSync(join(root, "content")), false);
+});
+
+test("énoncés : un énoncé refusé porte en détail la raison du vérificateur", async () => {
+  const { trace } = await play({ judgeSays: false, verifier: { statementReason: "le résumé dit plus que les faits" } });
+  const refused = trace.rejected.filter((r) => r.reason === "statement_unsupported");
+  assert.equal(refused.length, 3);
+  for (const r of refused) assert.equal(r.detail, "le résumé dit plus que les faits");
+});
+
+// --- Faits refusés, énoncés acceptés, et l'inverse : deux étapes distinctes
+
+test("trace : un run avec des faits refusés est valide pour le schéma Trace", async () => {
+  const { root } = await oneRefused("trop fort");
+  assert.deepEqual(Trace.parse(json(root, `runs/${DATE}.json`)).gates.map((g) => g.name), ["literal_quotes", "supported_claims", "verifier", "volume", "budget"]);
 });
 
 // --- Recherche en boucle d'agent : le modèle choisit ce qu'il lit, le code fixe ce qu'il a le droit de lire.

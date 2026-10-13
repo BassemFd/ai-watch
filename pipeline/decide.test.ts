@@ -205,6 +205,23 @@ test("publiable : un énoncé sans verdict vaut un refus", () => {
   assertOneRefusal(decide(input({ draft, claims, verdict })), "statement_unsupported");
 });
 
+test("publiable : un énoncé refusé porte en détail la raison du vérificateur", () => {
+  const draft = fourWith(statePoint());
+  const claims = claimsOf("c1");
+  const verdict = verdictOf(draft, claims, ["state:0"]);
+  verdict.statements.find((s) => s.id === "state:0")!.reason = "dit plus que les faits";
+  const { rejected } = decide(input({ draft, claims, verdict }));
+  assert.deepEqual([rejected[0].reason, rejected[0].detail], ["statement_unsupported", "dit plus que les faits"]);
+});
+
+test("publiable : un énoncé sans verdict est refusé sans détail", () => {
+  const draft = fourWith(statePoint());
+  const claims = claimsOf("c1");
+  const verdict = verdictOf(draft, claims);
+  verdict.statements = verdict.statements.filter((s) => s.id !== "state:0");
+  assert.equal("detail" in decide(input({ draft, claims, verdict })).rejected[0], false);
+});
+
 test("publiable : chaque énoncé refusé ajoute une entrée aux rejets, avec sa raison", () => {
   const result = decide(tenStatements(3));
   assert.equal(result.rejected.length, 3);
