@@ -40,6 +40,8 @@ export const Source = z.object({
   feed: z.string(),
   domains: z.array(z.string()),
   max: z.number().optional(),
+  /** Sujets au plus par run pour cette source (2 par défaut). */
+  maxPicks: z.number().optional(),
 });
 export type Source = z.infer<typeof Source>;
 

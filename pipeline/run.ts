@@ -3,7 +3,7 @@ import { dirname, join } from "node:path";
 import { judge, type Llm } from "./agents.ts";
 import { llmFromEnv } from "./cli.ts";
 import { fetchText, parseFeed } from "./collect.ts";
-import { decide, toStatements } from "./decide.ts";
+import { decide, pickTopics, toStatements } from "./decide.ts";
 import { capped, quoteProblem } from "./gates.ts";
 import { runAgent } from "./loop.ts";
 import {
@@ -26,6 +26,7 @@ import { FETCH_PAGE, makeFetchTool } from "./tools.ts";
 
 const MAX_TRIAGE = 200; // items soumis au tri
 const MAX_ITEMS = 6; // sujets étudiés par run
+const MAX_PER_SOURCE = 2; // sujets au plus par source, sauf réglage dans sources.json
 const MAX_PAGE_CHARS = 40_000;
 const MAX_FETCHES = 3; // pages lues par sujet : la sienne et deux liens
 const MAX_TURNS = 6; // envois au modèle par sujet
@@ -66,17 +67,14 @@ export async function collect(o: Pick<Options, "root" | "date" | "fetchText" | "
 }
 
 // 2. Tri
-async function triage(llm: Llm, fresh: Item[], byId: ReadonlyMap<string, Item>): Promise<Item[]> {
+async function triage(llm: Llm, fresh: Item[], byId: ReadonlyMap<string, Item>, sources: Source[]): Promise<Item[]> {
   const tri = await llm.call(
     "triage",
     JSON.stringify(fresh.map(({ id, title, source, summary }) => ({ id, title, source, summary }))),
     TriageOut,
   );
-  return tri.picks
-    .filter((p) => byId.has(p.id))
-    .sort((a, b) => b.score - a.score)
-    .slice(0, MAX_ITEMS)
-    .map((p) => byId.get(p.id)!);
+  const caps = new Map(sources.map((s) => [s.name, s.maxPicks ?? MAX_PER_SOURCE]));
+  return pickTopics(tri.picks, byId, (source) => caps.get(source) ?? MAX_PER_SOURCE, MAX_ITEMS);
 }
 
 type Sheet = { item: Item; claims: Claim[] };
@@ -199,7 +197,7 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
 
     // 2. Tri
     const byId = new Map(fresh.map((i) => [i.id, i]));
-    const picked = await triage(o.llm, fresh, byId);
+    const picked = await triage(o.llm, fresh, byId, o.sources);
     trace.counts.retenus = picked.length;
     if (!picked.length) {
       trace.status = "empty";

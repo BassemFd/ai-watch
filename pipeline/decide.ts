@@ -100,3 +100,26 @@ export function decide(o: {
   const brief = items.length ? Brief.parse({ date, headline: draft.headline, items }) : undefined;
   return { status: "published", ...result, brief };
 }
+
+/**
+ * Les sujets étudiés par un run : les mieux notés d'abord, sans qu'une source dépasse son plafond.
+ * Sans ce plafond, la source qui publie le plus finit par écrire toute l'édition.
+ */
+export function pickTopics(
+  picks: { id: string; score: number }[],
+  items: ReadonlyMap<string, Item>,
+  maxPerSource: (source: string) => number,
+  maxTotal: number,
+): Item[] {
+  const taken = new Map<string, number>();
+  const out: Item[] = [];
+  for (const pick of [...picks].sort((a, b) => b.score - a.score)) {
+    const item = items.get(pick.id);
+    if (!item || out.length >= maxTotal) continue;
+    const n = taken.get(item.source) ?? 0;
+    if (n >= maxPerSource(item.source)) continue;
+    taken.set(item.source, n + 1);
+    out.push(item);
+  }
+  return out;
+}
