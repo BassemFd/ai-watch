@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "0 4 * * *" # 4 h UTC : 6 h à Paris en été, 5 h en hiver
   workflow_dispatch:
+    inputs:
+      replay:
+        description: Rejouer les items déjà vus sans rien publier (diagnostic)
+        type: boolean
+        default: false
 
 permissions:
   contents: write
@@ -26,7 +31,7 @@ jobs:
       - run: npm ci
       - run: npm test
       - if: env.HAS_KEY == 'true'
-        run: npm run pipeline
+        run: npm run pipeline -- ${{ inputs.replay && '--replay' || '' }}
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           RUN_BUDGET_USD: "2"

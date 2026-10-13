@@ -55,6 +55,7 @@ Un agent ne voit que les fichiers, pas le raisonnement du précédent, et c'est 
 | `npm run typecheck` | types | non |
 | `npm run pipeline -- --collect-only` | lit les vrais flux, liste les items nouveaux | non |
 | `npm run pipeline -- --dry-run` | run complet, n'écrit rien, affiche la trace et l'édition | oui |
+| `npm run pipeline -- --replay` | comme `--dry-run`, mais relit aussi les items déjà vus (diagnostic) | oui |
 | `npm run pipeline` | run complet, écrit `content/`, `runs/`, `data/` | oui |
 | `npm run evals` | faits piégés soumis au vrai vérificateur, écrit `evals/last.json` | oui |
 | `npm run dev` / `npm run build` | site Astro (`site/dist`) | non |

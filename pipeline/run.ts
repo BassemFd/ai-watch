@@ -46,10 +46,12 @@ export type Options = {
   sources: Source[];
   budgetUsd: number;
   dryRun?: boolean;
+  /** Diagnostic : ignore les items déjà vus et n'écrit rien. */
+  replay?: boolean;
 };
 
-export async function collect(o: Pick<Options, "root" | "date" | "fetchText" | "sources">) {
-  const seen = new Set(readJson<string[]>(join(o.root, "data/seen.json"), []));
+export async function collect(o: Pick<Options, "root" | "date" | "fetchText" | "sources" | "replay">) {
+  const seen = new Set(o.replay ? [] : readJson<string[]>(join(o.root, "data/seen.json"), []));
   const all = new Map<string, Item>();
   const failures: Trace["rejected"] = [];
   for (const source of o.sources) {
@@ -246,7 +248,7 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
     }
     const { brief } = d;
     trace.counts.publies = d.published;
-    if (!o.dryRun) {
+    if (!o.dryRun && !o.replay) {
       if (brief) writeJson(join(o.root, `content/briefs/${o.date}.json`), brief);
       writeJson(join(o.root, "content/radar.json"), Radar.parse(d.radar));
       writeJson(join(o.root, "content/state.json"), State.parse(d.state));
@@ -261,7 +263,7 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
     trace.stages = o.llm.calls;
     trace.costUsd = o.llm.spent;
     trace.durationMs = Date.now() - t0;
-    if (!o.dryRun) {
+    if (!o.dryRun && !o.replay) {
       // Après une erreur, les items restent « non vus » pour être retentés au prochain run.
       if (trace.status !== "error") {
         writeJson(join(o.root, "data/seen.json"), [...seen, ...fresh.map((i) => i.id)].slice(-5000));
@@ -281,9 +283,10 @@ if (import.meta.main) {
     const c = await collect({ root, date, fetchText, sources });
     console.log(JSON.stringify({ total: c.total, nouveaux: c.fresh.length, echecs: c.failures, apercu: c.fresh.slice(0, 15).map((i) => `${i.source} — ${i.title}`) }, null, 2));
   } else {
-    const dryRun = process.argv.includes("--dry-run");
+    const replay = process.argv.includes("--replay");
+    const dryRun = replay || process.argv.includes("--dry-run");
     const budgetUsd = Number(process.env.RUN_BUDGET_USD ?? 2);
-    const { trace, brief } = await run({ root, date, llm: llmFromEnv(budgetUsd), fetchText, sources, budgetUsd, dryRun });
+    const { trace, brief } = await run({ root, date, llm: llmFromEnv(budgetUsd), fetchText, sources, budgetUsd, dryRun, replay });
     console.log(JSON.stringify(dryRun ? { trace, brief } : { status: trace.status, error: trace.error, counts: trace.counts, gates: trace.gates, costUsd: trace.costUsd }, null, 2));
     if (trace.status === "error") process.exit(1);
   }
