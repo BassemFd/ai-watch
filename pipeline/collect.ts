@@ -12,6 +12,8 @@ export async function fetchText(url: string): Promise<string> {
     signal: AbortSignal.timeout(20_000),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  // Une redirection vers un autre hôte contournerait la liste blanche, vérifiée sur l'adresse demandée.
+  if (new URL(res.url).hostname !== new URL(url).hostname) throw new Error(`redirected off-host to ${new URL(res.url).hostname}`);
   return res.text();
 }
 
