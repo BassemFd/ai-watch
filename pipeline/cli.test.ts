@@ -46,7 +46,7 @@ test("cli : chaque étape garde son modèle", async () => {
   await llm.call("triage", "q", Out);
   await llm.call("write", "q", Out);
   assert.equal(flag(seen[0].args, "--model"), "claude-haiku-5-5");
-  assert.equal(flag(seen[1].args, "--model"), "claude-opus-5-5");
+  assert.equal(flag(seen[1].args, "--model"), "claude-sonnet-5-5");
 });
 
 test("cli : le coût et les tokens sont comptés à chaque appel", async () => {
