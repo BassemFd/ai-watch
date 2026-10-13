@@ -793,3 +793,16 @@ test("rejets : le titre d'un sujet en échec est coupé à ses 200 premiers cara
   const { trace } = await play({ feed: feedOf(["T".repeat(250), A]), script: failing });
   assert.deepEqual(trace.rejected.map((r) => r.what), [untranslated("T".repeat(200))]);
 });
+
+test("rejeu : relit les items déjà vus et n'écrit rien", async () => {
+  const root = mkdtempSync(join(tmpdir(), "veille-"));
+  await run(options(root, true));
+  const before = readFileSync(join(root, `runs/${DATE}.json`), "utf8");
+  const seenBefore = readFileSync(join(root, "data/seen.json"), "utf8");
+
+  const { trace, brief } = await run({ ...options(root, true), replay: true });
+  assert.equal(trace.status, "published");
+  assert.ok(brief);
+  assert.equal(readFileSync(join(root, `runs/${DATE}.json`), "utf8"), before);
+  assert.equal(readFileSync(join(root, "data/seen.json"), "utf8"), seenBefore);
+});
