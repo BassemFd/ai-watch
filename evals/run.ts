@@ -6,12 +6,12 @@ import { judge } from "../pipeline/agents.ts";
 import { llmFromEnv } from "../pipeline/cli.ts";
 import type { Text } from "../pipeline/schema.ts";
 
-type Case = { id: string; expect: boolean; text: Text; quote: string };
+type Case = { id: string; expect: boolean; text: Text; quote: string; url: string };
 const dir = import.meta.dirname;
 const cases: Case[] = JSON.parse(readFileSync(join(dir, "cases.json"), "utf8"));
 
 const llm = llmFromEnv(0.5);
-const verdict = await judge(llm, cases.map(({ id, text, quote }) => ({ id, text, quote })), []);
+const verdict = await judge(llm, cases.map(({ id, text, quote, url }) => ({ id, text, quote, url })), []);
 const got = new Map(verdict.claims.map((v) => [v.id, v.supported]));
 // Un verdict manquant vaut un refus, comme dans le pipeline.
 const failures = cases.filter((c) => (got.get(c.id) ?? false) !== c.expect);

@@ -193,25 +193,43 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
       return { trace };
     }
 
-    // 4. Rédaction
+    // 4. Vérification des faits — avant que le rédacteur les voie ; un fait sans verdict favorable est refusé
+    const first = await judge(o.llm, [...claims.values()].map(({ id, text, quote, url }) => ({ id, text, quote, url })), []);
+    const verdicts = new Map(first.claims.map((v) => [v.id, v]));
+    const valid = new Map<string, Claim>();
+    for (const c of claims.values()) {
+      const v = verdicts.get(c.id);
+      if (v?.supported) valid.set(c.id, c);
+      else reject({ what: c.text, reason: "claim_unsupported", ...(v?.reason && { detail: v.reason }) });
+    }
+    trace.counts.faitsValides = valid.size;
+    trace.gates.push({ name: "supported_claims", pass: valid.size > 0, detail: `${valid.size}/${claims.size}` });
+    if (!valid.size) {
+      trace.status = "rejected";
+      return { trace };
+    }
+
+    // 5. Rédaction
     const radar = readJson<Radar>(join(o.root, "content/radar.json"), { entries: [] });
-    const draft = await write(o.llm, o.date, sheets, radar);
+    const kept = sheets.map((s) => ({ ...s, claims: s.claims.filter((c) => valid.has(c.id)) })).filter((s) => s.claims.length);
+    const draft = await write(o.llm, o.date, kept, radar);
     const statements = toStatements(draft);
     if (!statements.length) {
       trace.status = "empty";
       return { trace };
     }
 
-    // 5. Vérification — modèle indépendant, contexte neuf
-    const cited = [...new Set(statements.flatMap((s) => s.claimIds))].flatMap((id) => claims.get(id) ?? []);
-    const verdict = await judge(
+    // 6. Vérification des énoncés — modèle indépendant, contexte neuf ; les faits validés le restent
+    const cited = [...new Set(statements.flatMap((s) => s.claimIds))].flatMap((id) => valid.get(id) ?? []);
+    const second = await judge(
       o.llm,
-      cited.map(({ id, text, quote }) => ({ id, text, quote })),
+      cited.map(({ id, text, quote, url }) => ({ id, text, quote, url })),
       statements,
     );
-    // 5 (suite) à 7. Énoncés publiables, portes, publication — décidés par du code pur (decide.ts)
+    const verdict = { ...second, claims: [...valid.keys()].map((id) => ({ id, supported: true, reason: "" })) };
+    // 6 (suite) à 8. Énoncés publiables, portes, publication — décidés par du code pur (decide.ts)
     const state = readJson<State>(join(o.root, "content/state.json"), { points: [] });
-    const d = decide({ date: o.date, draft, claims, items: byId, verdict, radar, state, spentUsd: o.llm.spent, budgetUsd: o.budgetUsd });
+    const d = decide({ date: o.date, draft, claims: valid, items: byId, verdict, radar, state, spentUsd: o.llm.spent, budgetUsd: o.budgetUsd });
     trace.rejected.push(...d.rejected);
     trace.gates.push(...d.gates);
     if (d.status === "rejected") {

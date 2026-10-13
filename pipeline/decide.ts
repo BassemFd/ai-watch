@@ -29,11 +29,13 @@ const labels = (draft: WriteOut): Text[] => [
 function judgeStatements(statements: Statement[], what: Text[], verdict: VerifyOut, literal: ReadonlySet<string>) {
   const okClaims = new Set(verdict.claims.filter((v) => v.supported).map((v) => v.id));
   const okStatements = new Set(verdict.statements.filter((v) => v.supported).map((v) => v.id));
+  const reasons = new Map(verdict.statements.map((v) => [v.id, v.reason]));
   const publishable = new Set<string>();
   const rejected: Trace["rejected"] = [];
   statements.forEach((s, i) => {
     const problem = statementProblem(s, literal, okClaims, okStatements);
-    if (problem) rejected.push({ what: capped(what[i]), reason: problem });
+    const reason = reasons.get(s.id);
+    if (problem) rejected.push({ what: capped(what[i]), reason: problem, ...(problem === "statement_unsupported" && reason && { detail: reason }) });
     else publishable.add(s.id);
   });
   return { publishable, rejected };

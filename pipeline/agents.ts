@@ -105,7 +105,7 @@ export function makeLlm(budgetUsd: number): Llm {
 /** Vérificateur : contexte neuf, il ne voit ni les pages ni le raisonnement du rédacteur. */
 export function judge(
   llm: Llm,
-  claims: { id: string; text: Text; quote: string }[],
+  claims: { id: string; text: Text; quote: string; url: string }[],
   statements: Statement[],
 ): Promise<VerifyOut> {
   return llm.call("verify", JSON.stringify({ claims, statements }), VerifyOut);

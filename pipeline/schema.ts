@@ -23,7 +23,7 @@ export const REASONS = [
   "item_failed",
 ] as const;
 export type Reason = (typeof REASONS)[number];
-export const GATES = ["literal_quotes", "verifier", "volume", "budget"] as const;
+export const GATES = ["literal_quotes", "supported_claims", "verifier", "volume", "budget"] as const;
 
 const SectionId = z.enum(SECTIONS.map((s) => s.id));
 const Ring = z.enum(RINGS);
