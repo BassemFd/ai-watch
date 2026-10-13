@@ -25,7 +25,7 @@ const labels = (draft: WriteOut): Text[] => [
   ...draft.state.map((x) => x.text),
 ];
 
-// 5. Vérification — tout ce qui n'est pas explicitement validé est refusé
+// 6 (suite). Énoncés publiables — tout ce qui n'est pas explicitement validé est refusé
 function judgeStatements(statements: Statement[], what: Text[], verdict: VerifyOut, literal: ReadonlySet<string>) {
   const okClaims = new Set(verdict.claims.filter((v) => v.supported).map((v) => v.id));
   const okStatements = new Set(verdict.statements.filter((v) => v.supported).map((v) => v.id));
@@ -41,7 +41,7 @@ function judgeStatements(statements: Statement[], what: Text[], verdict: VerifyO
   return { publishable, rejected };
 }
 
-// 6. Portes — toutes obligatoires
+// 7. Portes — toutes obligatoires
 const evaluateGates = (validated: number, total: number, draft: WriteOut, spentUsd: number, budgetUsd: number): Trace["gates"] => [
   { name: "verifier", pass: validated / total >= MIN_JUDGE_RATIO, detail: `${validated}/${total} (>= ${MIN_JUDGE_RATIO * 100}%)` },
   { name: "volume", pass: draft.radar.length <= MAX_OPS && draft.state.length <= MAX_OPS, detail: `radar ${draft.radar.length}, state ${draft.state.length} (max ${MAX_OPS})` },
@@ -84,7 +84,7 @@ export function decide(o: {
   const result = { published: publishable.size, gates, rejected, radar, state };
   if (!gates.every((g) => g.pass)) return { status: "rejected", ...result };
 
-  // 7. Publication — seulement ce qui a passé les portes
+  // 8. Publication — seulement ce qui a passé les portes
   const evidence = (ids: string[]) => ids.map((id) => claims.get(id)!);
   const items = draft.items.flatMap((x, i) => {
     const item = o.items.get(x.itemId);

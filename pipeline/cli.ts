@@ -4,8 +4,8 @@
 import { spawn } from "node:child_process";
 import { tmpdir } from "node:os";
 import { z } from "zod";
-import { makeLlm, prompt, ROLES, type Call, type Llm, type Stage, type ToolSpec } from "./agents.ts";
-import type { ToolResult } from "./loop.ts";
+import { makeLlm, prompt, ROLES, unusable, type Call, type Llm, type Stage } from "./agents.ts";
+import type { ToolResult, ToolSpec } from "./loop.ts";
 
 export type Exec = (args: string[], stdin: string) => Promise<string>;
 
@@ -44,7 +44,6 @@ const jsonSchemaOf = (schema: z.ZodType) => {
 export function makeCliLlm(budgetUsd: number, exec: Exec = runClaude): Llm {
   const calls: Call[] = [];
   let spent = 0;
-  const unusable = (stage: Stage, why: string) => new Error(`stage ${stage}: unusable response (${why})`);
 
   /** Un lancement du CLI : plafond vérifié avant, coût compté après. Aucun outil intégré, aucun MCP. */
   async function ask(stage: Stage, system: string, stdin: string, jsonSchema: object): Promise<unknown> {

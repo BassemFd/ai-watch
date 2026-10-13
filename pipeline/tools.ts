@@ -1,13 +1,8 @@
 // Le seul outil donné à un modèle : lire une page, en https, sur un domaine de la liste blanche.
-import type { ToolSpec } from "./agents.ts";
-import { htmlToText } from "./collect.ts";
-import type { Tool } from "./loop.ts";
+import { htmlToText, isAllowed } from "./collect.ts";
 
-/** Vrai si l'adresse est en https et que son hôte est un domaine de la liste, ou l'un de ses sous-domaines. */
-export function isAllowed(url: string, domains: readonly string[]): boolean {
-  const parsed = URL.parse(url);
-  return parsed?.protocol === "https:" && domains.some((d) => parsed.hostname === d || parsed.hostname.endsWith(`.${d}`));
-}
+export { isAllowed }; // les tests la lisent ici
+import type { Tool, ToolSpec } from "./loop.ts";
 
 export const FETCH_PAGE: ToolSpec = {
   name: "fetch_page",

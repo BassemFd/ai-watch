@@ -3,14 +3,11 @@ import { join } from "node:path";
 import Anthropic from "@anthropic-ai/sdk";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import type { z } from "zod";
-import type { Conversation } from "./loop.ts";
+import type { Conversation, ToolSpec } from "./loop.ts";
 import { VerifyOut, type Statement, type Text } from "./schema.ts";
 
 export type Stage = "triage" | "research" | "write" | "verify";
 export type Call = { stage: string; model: string; ms: number; inputTokens: number; outputTokens: number; costUsd: number };
-
-/** Un outil tel que décrit au modèle. Le code qui l'exécute est passé à la boucle, pas ici. */
-export type ToolSpec = { name: string; description: string; inputSchema: Anthropic.Tool.InputSchema };
 
 /** Le seul point de contact avec un modèle : texte en entrée, JSON validé en sortie. */
 export interface Llm {
@@ -32,12 +29,13 @@ export const ROLES = {
 
 export const prompt = (stage: Stage) => readFileSync(join(import.meta.dirname, "prompts", `${stage}.md`), "utf8");
 
+/** Refus, troncature ou JSON invalide : l'étape échoue, rien n'est publié. */
+export const unusable = (stage: Stage, why: string | null) => new Error(`stage ${stage}: unusable response (${why})`);
+
 export function makeLlm(budgetUsd: number): Llm {
   const client = new Anthropic();
   const calls: Call[] = [];
   let spent = 0;
-  // Refus, troncature ou JSON invalide : l'étape échoue, rien n'est publié.
-  const unusable = (stage: Stage, stopReason: string | null) => new Error(`stage ${stage}: unusable response (${stopReason})`);
 
   /** Un appel au modèle : plafond vérifié avant, coût compté après. */
   async function ask<S extends z.ZodType>(stage: Stage, schema: S, messages: Anthropic.MessageParam[], tools?: Anthropic.Tool[]) {

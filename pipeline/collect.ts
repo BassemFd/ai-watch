@@ -1,10 +1,15 @@
 import { createHash } from "node:crypto";
 import { XMLParser } from "fast-xml-parser";
 import type { Item, Source } from "./schema.ts";
-import { isAllowed } from "./tools.ts";
 
 const MAX_AGE_DAYS = 7; // la déduplication (data/seen.json) évite les redites
 const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "@_" });
+
+/** Vrai si l'adresse est en https et que son hôte est un domaine de la liste, ou l'un de ses sous-domaines. */
+export function isAllowed(url: string, domains: readonly string[]): boolean {
+  const parsed = URL.parse(url);
+  return parsed?.protocol === "https:" && domains.some((d) => parsed.hostname === d || parsed.hostname.endsWith(`.${d}`));
+}
 
 export async function fetchText(url: string): Promise<string> {
   const res = await fetch(url, {

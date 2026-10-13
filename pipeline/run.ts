@@ -18,7 +18,9 @@ import {
   type Brief,
   type Claim,
   type Item,
+  type Statement,
   type Trace,
+  type VerifyOut,
 } from "./schema.ts";
 import { FETCH_PAGE, makeFetchTool } from "./tools.ts";
 
@@ -143,6 +145,25 @@ const write = (llm: Llm, date: string, sheets: Sheet[], radar: Radar) =>
     WriteOut,
   );
 
+// 4. Vérification des faits — le vérificateur ne voit que les faits, pas d'énoncés. Rend les faits validés.
+async function verifyClaims(llm: Llm, claims: ReadonlyMap<string, Claim>, reject: (r: Trace["rejected"][number]) => void) {
+  const verdicts = new Map((await judge(llm, [...claims.values()], [])).claims.map((v) => [v.id, v]));
+  const valid = new Map<string, Claim>();
+  for (const c of claims.values()) {
+    const v = verdicts.get(c.id);
+    if (v?.supported) valid.set(c.id, c);
+    else reject({ what: c.text, reason: "claim_unsupported", ...(v?.reason && { detail: v.reason }) });
+  }
+  return valid;
+}
+
+// 6. Vérification des énoncés — ne juge que les faits cités ; les faits validés le restent dans le verdict.
+async function verifyStatements(llm: Llm, valid: ReadonlyMap<string, Claim>, statements: Statement[]): Promise<VerifyOut> {
+  const cited = [...new Set(statements.flatMap((s) => s.claimIds))].flatMap((id) => valid.get(id) ?? []);
+  const second = await judge(llm, cited, statements);
+  return { ...second, claims: [...valid.keys()].map((id) => ({ id, supported: true, reason: "" })) };
+}
+
 export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> {
   const t0 = Date.now();
   const trace: Trace = {
@@ -194,14 +215,7 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
     }
 
     // 4. Vérification des faits — avant que le rédacteur les voie ; un fait sans verdict favorable est refusé
-    const first = await judge(o.llm, [...claims.values()].map(({ id, text, quote, url }) => ({ id, text, quote, url })), []);
-    const verdicts = new Map(first.claims.map((v) => [v.id, v]));
-    const valid = new Map<string, Claim>();
-    for (const c of claims.values()) {
-      const v = verdicts.get(c.id);
-      if (v?.supported) valid.set(c.id, c);
-      else reject({ what: c.text, reason: "claim_unsupported", ...(v?.reason && { detail: v.reason }) });
-    }
+    const valid = await verifyClaims(o.llm, claims, reject);
     trace.counts.faitsValides = valid.size;
     trace.gates.push({ name: "supported_claims", pass: valid.size > 0, detail: `${valid.size}/${claims.size}` });
     if (!valid.size) {
@@ -220,13 +234,7 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
     }
 
     // 6. Vérification des énoncés — modèle indépendant, contexte neuf ; les faits validés le restent
-    const cited = [...new Set(statements.flatMap((s) => s.claimIds))].flatMap((id) => valid.get(id) ?? []);
-    const second = await judge(
-      o.llm,
-      cited.map(({ id, text, quote, url }) => ({ id, text, quote, url })),
-      statements,
-    );
-    const verdict = { ...second, claims: [...valid.keys()].map((id) => ({ id, supported: true, reason: "" })) };
+    const verdict = await verifyStatements(o.llm, valid, statements);
     // 6 (suite) à 8. Énoncés publiables, portes, publication — décidés par du code pur (decide.ts)
     const state = readJson<State>(join(o.root, "content/state.json"), { points: [] });
     const d = decide({ date: o.date, draft, claims: valid, items: byId, verdict, radar, state, spentUsd: o.llm.spent, budgetUsd: o.budgetUsd });

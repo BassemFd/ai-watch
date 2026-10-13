@@ -10,6 +10,8 @@ export interface Conversation<T> {
 }
 /** Un outil rend du texte, ou échoue : son message d'erreur est alors rendu au modèle. */
 export type Tool = (input: unknown) => Promise<string>;
+/** Un outil tel que décrit au modèle (schéma JSON de son entrée). Le code qui l'exécute est un `Tool`. */
+export type ToolSpec = { name: string; description: string; inputSchema: { type: "object"; properties: Record<string, unknown>; required?: string[]; additionalProperties?: boolean } };
 export type ToolEvent = { tool: string; input: unknown; ok: boolean; detail?: string; ms: number };
 
 /** Fait tourner la conversation jusqu'à une sortie sans appel d'outil, en `maxTurns` envois au plus. */
