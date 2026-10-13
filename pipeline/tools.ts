@@ -19,6 +19,7 @@ export const FETCH_PAGE: ToolSpec = {
 /** Un outil par sujet : il compte ses téléchargements et garde le texte de chaque page lue, sous son adresse normalisée. */
 export function makeFetchTool(o: {
   domains: readonly string[];
+  paths?: readonly string[];
   maxFetches: number;
   maxChars: number;
   fetchText: (url: string) => Promise<string>;
@@ -28,7 +29,7 @@ export function makeFetchTool(o: {
   const tool: Tool = async (input) => {
     const url = (input as { url?: unknown } | null)?.url;
     if (typeof url !== "string") throw new Error("invalid input: expected { url: string }");
-    if (!isAllowed(url, o.domains)) throw new Error(`not allowed: ${url}`);
+    if (!isAllowed(url, o.domains, o.paths)) throw new Error(`not allowed: ${url}`);
     if (fetches >= o.maxFetches) throw new Error(`fetch limit reached (${o.maxFetches})`);
     fetches++;
     const text = htmlToText(await o.fetchText(url)).slice(0, o.maxChars);

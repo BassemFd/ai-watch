@@ -88,14 +88,16 @@ async function research(
   reject: (r: Trace["rejected"][number]) => void,
   toolCalls: Trace["toolCalls"],
 ) {
-  const domains = o.sources.flatMap((s) => s.domains);
+  // Un sujet ne lit que sa propre source : une page ne peut pas envoyer l'agent chez un tiers.
+  const bySource = new Map(o.sources.map((s) => [s.name, s]));
   const claims = new Map<string, Claim>();
   let proposed = 0;
   const sheets = (
     await Promise.all(
       picked.map(async (item): Promise<Sheet | null> => {
         try {
-          const { tool, pages } = makeFetchTool({ domains, maxFetches: MAX_FETCHES, maxChars: MAX_PAGE_CHARS, fetchText: o.fetchText });
+          const source = bySource.get(item.source);
+          const { tool, pages } = makeFetchTool({ domains: source?.domains ?? [], paths: source?.paths, maxFetches: MAX_FETCHES, maxChars: MAX_PAGE_CHARS, fetchText: o.fetchText });
           const out = await runAgent({
             conversation: o.llm.open("research", `Titre : ${item.title}\nURL : ${item.url}`, ResearchOut, [FETCH_PAGE]),
             tools: { [FETCH_PAGE.name]: tool },

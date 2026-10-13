@@ -6,9 +6,12 @@ const MAX_AGE_DAYS = 7; // la déduplication (data/seen.json) évite les redites
 const parser = new XMLParser({ ignoreAttributes: false, attributeNamePrefix: "@_" });
 
 /** Vrai si l'adresse est en https et que son hôte est un domaine de la liste, ou l'un de ses sous-domaines. */
-export function isAllowed(url: string, domains: readonly string[]): boolean {
+export function isAllowed(url: string, domains: readonly string[], paths: readonly string[] = []): boolean {
   const parsed = URL.parse(url);
-  return parsed?.protocol === "https:" && domains.some((d) => parsed.hostname === d || parsed.hostname.endsWith(`.${d}`));
+  if (parsed?.protocol !== "https:") return false;
+  if (!domains.some((d) => parsed.hostname === d || parsed.hostname.endsWith(`.${d}`))) return false;
+  // Sur un hôte partagé, le domaine ne dit rien de l'auteur : les préfixes de chemin le font.
+  return paths.length === 0 || paths.some((p) => parsed.pathname.startsWith(p));
 }
 
 export async function fetchText(url: string): Promise<string> {
@@ -55,7 +58,7 @@ export function parseFeed(xml: string, source: Source, today: string): Item[] {
       (l) => l && typeof l === "object" && ((l as Record<string, string>)["@_rel"] ?? "alternate") === "alternate",
     ) as Record<string, string> | undefined;
     const url = atom?.["@_href"] ?? txt(links[0]);
-    if (!isAllowed(url, source.domains)) continue;
+    if (!isAllowed(url, source.domains, source.paths)) continue;
     const parsed = new URL(url);
     const time = Date.parse(txt(e.pubDate ?? e.published ?? e.updated ?? e["dc:date"]));
     if (!(time >= minTime)) continue;

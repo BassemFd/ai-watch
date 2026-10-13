@@ -39,6 +39,8 @@ export const Source = z.object({
   name: z.string(),
   feed: z.string(),
   domains: z.array(z.string()),
+  /** Préfixes de chemin lisibles sur ces domaines ; vide ou absent : tout le domaine. */
+  paths: z.array(z.string()).optional(),
   max: z.number().optional(),
   /** Sujets au plus par run pour cette source (2 par défaut). */
   maxPicks: z.number().optional(),
