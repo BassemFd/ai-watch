@@ -1,16 +1,28 @@
 ---
+// Les preuves d'un texte publié : la citation brute de la source (machine à écrire, surlignée)
+// et le fait qu'elle établit. Deux visibles, le reste dépliable.
 import { ui } from "../lib/i18n.ts";
 const { claims, lang } = Astro.props;
+const t = ui[lang];
+const shown = claims.slice(0, 2);
+const hidden = claims.slice(2);
 ---
-<details class="evidence">
-  <summary>{ui[lang].evidence(claims.length)}</summary>
-  <ul>
-    {claims.map((c) => (
-      <li>
-        <p>{c.text[lang]}</p>
-        <blockquote>{c.quote}</blockquote>
-        <a href={c.url} rel="noopener">{new URL(c.url).hostname}</a>
-      </li>
-    ))}
-  </ul>
-</details>
+<aside class="proofs" aria-label={t.evidence(claims.length)}>
+  {shown.map((c) => (
+    <figure class="proof">
+      <blockquote><mark>{c.quote}</mark></blockquote>
+      <figcaption>{c.text[lang]} <a href={c.url} rel="noopener">{new URL(c.url).hostname}</a></figcaption>
+    </figure>
+  ))}
+  {hidden.length > 0 && (
+    <details>
+      <summary>{t.moreEvidence(hidden.length)}</summary>
+      {hidden.map((c) => (
+        <figure class="proof">
+          <blockquote><mark>{c.quote}</mark></blockquote>
+          <figcaption>{c.text[lang]} <a href={c.url} rel="noopener">{new URL(c.url).hostname}</a></figcaption>
+        </figure>
+      ))}
+    </details>
+  )}
+</aside>

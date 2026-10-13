@@ -19,6 +19,9 @@ const nav = [
     <title>{title ? `${title} · ${t.siteTitle.split(" — ")[0]}` : t.siteTitle}</title>
     <meta name="description" content={t.description} />
     <link rel="alternate" hreflang={other} href={href(other, path)} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,300..800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" />
   </head>
   <body>
     <header>
@@ -29,50 +32,88 @@ const nav = [
       </nav>
     </header>
     <main><slot /></main>
-    <footer>{t.footer} <a href={href(lang, "/pipeline/")}>{t.footerLink}</a></footer>
+    <footer>
+      <p>{t.footer} <a href={href(lang, "/pipeline/")}>{t.footerLink}</a></p>
+      <p class="signature">
+        {t.signature.by} <a href="https://career-log.bassem-fayed.workers.dev/" rel="noopener">Bassem Fayed</a>
+        {t.signature.love} <span aria-hidden="true">♥</span><span class="sr-only">{t.signature.loveWord}</span>
+        <a class="icon" href="https://github.com/BassemFd" rel="noopener" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.51 11.51 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222 0 1.606-.014 2.898-.014 3.293 0 .322.216.694.825.576C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" /></svg>
+        </a>
+        <a class="icon" href="https://www.linkedin.com/in/bassem-fd/" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.225 0z" /></svg>
+        </a>
+        <span class="also">{t.signature.also} <a href="https://career-log.bassem-fayed.workers.dev/" rel="noopener">Career log</a>, <a href="https://neja-five.vercel.app" rel="noopener">NeJa</a></span>
+      </p>
+    </footer>
   </body>
 </html>
 
 <style is:global>
+  /* Bureau de vérification : papier froid, encre bleu-noir, surligneur pour ce qui est prouvé,
+     crayon rouge pour ce qui est refusé. Le texte publié est composé ; la source est tapée. */
   :root {
-    --bg: #0c0e0d; --panel: #141816; --line: #262c29; --text: #e9ece8; --dim: #98a39c;
-    --ok: #7ee2a8; --warn: #f2c14e; --bad: #ff7a6b;
-    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    --paper: #f3f5f7; --sheet: #ffffff; --ink: #14213d; --muted: #556072; --line: #d3d9e1;
+    --marker: #ffe45c; --marker-ink: #14213d; --red: #c8102e;
+    --sans: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --typed: "Courier Prime", "Courier New", monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --paper: #0f1420; --sheet: #161d2c; --ink: #e6eaf2; --muted: #9aa4b5; --line: #2b3548; --red: #ff6b7a; }
   }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.6 Georgia, "Times New Roman", serif; }
-  header, main, footer { max-width: 60rem; margin: 0 auto; padding: 0 1.25rem; }
-  header { display: flex; flex-wrap: wrap; gap: 1rem 2rem; align-items: baseline; padding-top: 1.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--line); }
-  .brand { font: 700 1.1rem var(--mono); color: var(--text); text-decoration: none; }
-  .brand span { color: var(--ok); }
-  nav { display: flex; flex-wrap: wrap; gap: 1.25rem; font: 0.85rem var(--mono); }
-  nav a { color: var(--dim); text-decoration: none; }
-  nav a:hover, nav a[aria-current] { color: var(--text); }
-  nav .lang { color: var(--ok); }
-  main { padding-top: 2.5rem; padding-bottom: 4rem; }
-  footer { padding-top: 1.5rem; padding-bottom: 3rem; border-top: 1px solid var(--line); color: var(--dim); font-size: 0.9rem; }
-  a { color: var(--ok); }
-  h1 { font-size: clamp(2rem, 6vw, 3.4rem); line-height: 1.08; margin: 0 0 1rem; letter-spacing: -0.02em; text-wrap: balance; }
-  h2 { font-size: 1.5rem; line-height: 1.25; margin: 3rem 0 1rem; }
-  h3 { font-size: 1.15rem; margin: 0 0 0.4rem; }
-  p { margin: 0 0 0.8rem; }
-  .lede { color: var(--dim); font-size: 1.15rem; max-width: 42rem; }
-  .mono, .tag, table, .evidence summary { font-family: var(--mono); font-size: 0.8rem; }
-  .dim { color: var(--dim); }
-  .tag { display: inline-block; padding: 0.1rem 0.5rem; border: 1px solid currentColor; border-radius: 99px; }
-  .published { color: var(--ok); } .rejected, .error { color: var(--bad); } .empty { color: var(--warn); }
-  .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr)); gap: 1rem; }
-  .stats b { display: block; font: 700 1.6rem var(--mono); }
-  .stats span { color: var(--dim); font: 0.75rem var(--mono); }
-  .evidence { margin-top: 0.6rem; }
-  .evidence summary { cursor: pointer; color: var(--ok); }
-  .evidence ul { list-style: none; padding: 0; margin: 0.8rem 0 0; }
-  .evidence li { padding: 0.8rem 0; border-top: 1px solid var(--line); font-size: 0.95rem; }
-  blockquote { margin: 0.4rem 0; padding-left: 0.8rem; border-left: 2px solid var(--ok); color: var(--dim); font-style: italic; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1.0625rem/1.55 var(--sans); font-variant-numeric: tabular-nums; }
+  header, main, footer { max-width: 72rem; margin: 0 auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
+  header { display: flex; flex-wrap: wrap; gap: 0.75rem 2.5rem; align-items: baseline; padding-block: 1.5rem; }
+  .brand { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
+  .brand span { background: var(--marker); color: var(--marker-ink); padding: 0 0.15em; }
+  nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; flex: 1; }
+  nav a { color: var(--muted); text-decoration: none; }
+  nav a:hover { color: var(--ink); }
+  nav a[aria-current] { color: var(--ink); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.35em; }
+  nav .lang { margin-left: auto; color: var(--ink); text-decoration: underline; text-underline-offset: 0.2em; }
+  main { padding-block: clamp(2rem, 6vw, 4.5rem) 5rem; }
+  footer { padding-block: 1.5rem 3rem; border-top: 1px solid var(--line); color: var(--muted); max-width: 72rem; }
+  footer p { max-width: none; }
+  .signature { color: var(--ink); display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem 0.5rem; margin-top: 0.75rem; }
+  .signature .icon { display: inline-flex; padding: 0.2rem; }
+  .signature svg { width: 1.1rem; height: 1.1rem; }
+  .signature .also { color: var(--muted); margin-left: auto; }
+  .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  a { color: inherit; text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-thickness: 2px; }
+  :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+  h1 { font-weight: 750; font-stretch: 82%; font-size: clamp(2.5rem, 7.5vw, 5rem); line-height: 0.98; letter-spacing: -0.035em; margin: 0 0 1.5rem; max-width: 16ch; text-wrap: balance; }
+  h2 { font-weight: 700; font-stretch: 88%; font-size: clamp(1.6rem, 3.5vw, 2.3rem); line-height: 1.08; letter-spacing: -0.02em; margin: 4rem 0 1.25rem; text-wrap: balance; }
+  h3 { font-weight: 650; font-size: 1.3rem; line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 0.5rem; text-wrap: balance; }
+  p { margin: 0 0 0.9rem; max-width: 62ch; }
+  .lede { font-size: 1.25rem; line-height: 1.45; max-width: 46ch; }
+  .muted { color: var(--muted); }
+  .small { font-size: 0.9rem; }
+
+  /* Un texte publié et, dans la marge, ce qui le prouve. */
+  .pair { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem 3rem; padding-block: 1.75rem; border-top: 1px solid var(--line); }
+  @media (min-width: 58rem) { .pair { grid-template-columns: minmax(0, 38rem) minmax(0, 1fr); } }
+  .proofs { display: grid; gap: 1.1rem; align-content: start; }
+  .proof { margin: 0; }
+  .proof blockquote { margin: 0 0 0.35rem; font: 400 0.95rem/1.75 var(--typed); }
+  mark { background: var(--marker); color: var(--marker-ink); padding: 0.12em 0.2em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .proof figcaption { font-size: 0.88rem; line-height: 1.4; color: var(--muted); }
+  .proofs summary { cursor: pointer; font-size: 0.9rem; text-decoration: underline; text-underline-offset: 0.18em; margin-bottom: 1rem; }
+
+  /* Tampons : passé, refusé. Le refusé est rayé au crayon rouge. */
+  .stamp { display: inline-block; border: 1.5px solid currentColor; padding: 0.05em 0.5em; font-weight: 700; font-size: 0.85rem; white-space: nowrap; }
+  .rejected, .error { color: var(--red); }
+  .empty { color: var(--muted); }
+  s { text-decoration-color: var(--red); text-decoration-thickness: 2px; }
+
   .scroll { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; }
-  th, td { text-align: left; padding: 0.5rem 0.75rem 0.5rem 0; border-bottom: 1px solid var(--line); white-space: nowrap; }
-  th { color: var(--dim); font-weight: 400; }
-  td.wrap { white-space: normal; min-width: 16rem; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+  th, td { text-align: left; vertical-align: top; padding: 0.6rem 1.25rem 0.6rem 0; border-top: 1px solid var(--line); }
+  th { font-weight: 400; color: var(--muted); border-top: 0; }
+  td.num, th.num { text-align: right; white-space: nowrap; }
+  td.wrap { min-width: 15rem; }
+  td.url { font: 0.85rem/1.5 var(--typed); word-break: break-all; min-width: 14rem; }
 </style>

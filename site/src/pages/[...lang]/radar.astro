@@ -11,20 +11,33 @@ const t = ui[lang];
 <Layout title={t.radar.title} lang={lang} path="/radar/">
   <h1>{t.radar.h1}</h1>
   <p class="lede">{t.radar.lede}</p>
+
+  <ol class="scale" aria-hidden="true">
+    {RINGS.map((ring) => (
+      <li class={radar.entries.some((e) => e.ring === ring) ? "on" : ""}>
+        <b>{t.rings[ring]}</b>
+        <span>{radar.entries.filter((e) => e.ring === ring).length}</span>
+      </li>
+    ))}
+  </ol>
+
   {RINGS.map((ring) => {
     const entries = radar.entries.filter((e) => e.ring === ring);
     return (
       <section>
-        <h2>{t.rings[ring]} <span class="mono dim">{t.ringHints[ring]}</span></h2>
-        {entries.length === 0 && <p class="dim">{t.radar.empty}</p>}
+        <h2>{t.rings[ring]}</h2>
+        <p class="muted">{t.ringHints[ring]}</p>
+        {entries.length === 0 && <p class="muted">{t.radar.empty}</p>}
         {entries.map((e) => (
-          <div class="panel">
-            <h3>{e.name}</h3>
-            <p>{e.rationale[lang]}</p>
-            <span class="mono dim">
-              {t.radar.since(day(lang, e.since))}
-              {e.history.length > 1 && ` · ${t.radar.path} : ${e.history.map((h) => t.rings[h.ring]).join(" → ")}`}
-            </span>
+          <div class="pair">
+            <div>
+              <h3>{e.name}</h3>
+              <p>{e.rationale[lang]}</p>
+              <p class="small muted">
+                {t.radar.since(day(lang, e.since))}
+                {e.history.length > 1 && `, ${t.radar.path} : ${e.history.map((h) => t.rings[h.ring]).join(" → ")}`}
+              </p>
+            </div>
             <Evidence claims={e.evidence} lang={lang} />
           </div>
         ))}
@@ -32,3 +45,14 @@ const t = ui[lang];
     );
   })}
 </Layout>
+
+<style>
+  /* L'échelle : du plus sûr au plus prudent, avec le nombre d'entrées par anneau. */
+  .scale { list-style: none; margin: 3rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 2px solid var(--ink); }
+  .scale li { padding: 0.8rem 0.75rem 0.8rem 0; display: flex; flex-direction: column; color: var(--muted); }
+  .scale li + li { border-left: 1px solid var(--line); padding-left: 0.75rem; }
+  .scale b { font-weight: 600; font-size: clamp(0.85rem, 2vw, 1.05rem); }
+  .scale span { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 750; font-stretch: 82%; line-height: 1; margin-top: 0.4rem; }
+  .scale .on { color: var(--ink); }
+  .scale .on span { background: var(--marker); color: var(--marker-ink); align-self: start; padding: 0 0.15em; }
+</style>

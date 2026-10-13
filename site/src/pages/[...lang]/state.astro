@@ -15,14 +15,20 @@ const bySection = SECTIONS.map((s) => ({ id: s.id, points: state.points.filter((
   {bySection.map((s) => (
     <section>
       <h2>{t.sections[s.id]}</h2>
-      {s.points.length === 0 && <p class="dim">{t.state.empty}</p>}
+      {s.points.length === 0 && <p class="muted">{t.state.empty}</p>}
       {s.points.map((p) => (
-        <div class="panel">
-          <p>{p.text[lang]}</p>
-          <span class="mono dim">{t.state.added(day(lang, p.date))}</span>
+        <div class="pair">
+          <div>
+            <p class="point">{p.text[lang]}</p>
+            <p class="small muted">{t.state.added(day(lang, p.date))}</p>
+          </div>
           <Evidence claims={p.evidence} lang={lang} />
         </div>
       ))}
     </section>
   ))}
 </Layout>
+
+<style>
+  .point { font-size: 1.2rem; line-height: 1.4; font-weight: 500; }
+</style>

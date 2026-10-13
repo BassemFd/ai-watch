@@ -1,40 +1,50 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import Evidence from "../../components/Evidence.astro";
-import { briefs, runs, usd } from "../../lib/data.ts";
+import { briefs, runs } from "../../lib/data.ts";
 import { day, href, langOf, langPaths, ui } from "../../lib/i18n.ts";
 export const getStaticPaths = langPaths;
 const lang = langOf(Astro.params.lang);
 const t = ui[lang];
 const [last] = runs;
 const [today, ...earlier] = briefs;
+// La pièce à conviction de la page : une vraie phrase du jour et sa citation.
+const specimen = today?.items[0]?.claims[0];
 ---
 <Layout lang={lang} path="/">
   <h1>{t.home.h1}</h1>
   <p class="lede">{t.home.lede}</p>
 
+  {specimen && (
+    <figure class="specimen">
+      <p class="claim">{specimen.text[lang]}</p>
+      <blockquote><mark>{specimen.quote}</mark></blockquote>
+      <figcaption>{t.home.proofCaption} <a href={specimen.url} rel="noopener">{new URL(specimen.url).hostname}</a></figcaption>
+    </figure>
+  )}
+
   {last ? (
-    <a class="panel stats" href={href(lang, `/runs/${last.date}/`)} style="text-decoration:none;color:inherit;margin-top:2rem">
-      <div><b class={last.status}>{t.status[last.status]}</b><span>{t.home.lastRun} · {day(lang, last.date)}</span></div>
-      <div><b>{last.counts.nouveaux ?? 0}</b><span>{t.home.itemsRead}</span></div>
-      <div><b>{last.counts.faitsCites ?? 0}/{last.counts.faitsProposes ?? 0}</b><span>{t.home.quotesFound}</span></div>
-      <div><b>{last.rejected.length}</b><span>{t.home.rejected}</span></div>
-      <div><b>{usd(last.costUsd)}</b><span>{t.home.cost}</span></div>
-    </a>
+    <p class="runline">
+      <span class={`stamp ${last.status}`}>{t.status[last.status]}</span>
+      {t.home.runLine(day(lang, last.date), last.counts, last.rejected.length)}{" "}
+      <a href={href(lang, `/runs/${last.date}/`)}>{t.home.runLink}</a>
+    </p>
   ) : (
-    <p class="panel dim">{t.home.noRun}</p>
+    <p class="runline muted">{t.home.noRun}</p>
   )}
 
   {today && (
     <section>
-      <p class="mono dim" style="margin-top:3rem">{t.home.editionOf(day(lang, today.date))}</p>
-      <h2 style="margin-top:0">{today.headline[lang]}</h2>
+      <h2>{today.headline[lang]}</h2>
+      <p class="muted">{t.home.editionOf(day(lang, today.date))}</p>
       {today.items.map((item) => (
-        <article class="panel">
-          <h3><a href={item.url} rel="noopener">{item.title[lang]}</a></h3>
-          <p class="mono dim">{item.source}</p>
-          <p>{item.summary[lang]}</p>
-          <p><em>{item.why[lang]}</em></p>
+        <article class="pair">
+          <div>
+            <h3><a href={item.url} rel="noopener">{item.title[lang]}</a></h3>
+            <p>{item.summary[lang]}</p>
+            <p class="muted">{item.why[lang]}</p>
+            <p class="small muted">{item.source}</p>
+          </div>
           <Evidence claims={item.claims} lang={lang} />
         </article>
       ))}
@@ -45,13 +55,26 @@ const [today, ...earlier] = briefs;
     <section>
       <h2>{t.home.earlier}</h2>
       {earlier.slice(0, 14).map((b) => (
-        <details class="panel">
-          <summary><span class="mono dim">{day(lang, b.date)}</span> — {b.headline[lang]}</summary>
+        <details class="earlier">
+          <summary><span class="muted">{day(lang, b.date)}</span> {b.headline[lang]}</summary>
           {b.items.map((item) => (
-            <p style="margin-top:0.8rem"><a href={item.url} rel="noopener">{item.title[lang]}</a>. {item.summary[lang]}</p>
+            <p><a href={item.url} rel="noopener">{item.title[lang]}</a>. {item.summary[lang]}</p>
           ))}
         </details>
       ))}
     </section>
   )}
 </Layout>
+
+<style>
+  .specimen { margin: clamp(2.5rem, 6vw, 4.5rem) 0 0; display: grid; gap: 1rem 3rem; grid-template-columns: minmax(0, 1fr); align-items: start; }
+  @media (min-width: 58rem) { .specimen { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+  .specimen .claim { font-size: clamp(1.35rem, 2.6vw, 1.9rem); line-height: 1.22; font-weight: 600; letter-spacing: -0.015em; margin: 0; max-width: 26ch; }
+  .specimen blockquote { margin: 0; font: 400 clamp(1rem, 1.6vw, 1.2rem)/1.8 var(--typed); }
+  .specimen figcaption { grid-column: 1 / -1; color: var(--muted); font-size: 0.92rem; }
+  .runline { margin: 3rem 0 0; padding-top: 1.25rem; border-top: 2px solid var(--ink); max-width: none; }
+  .runline .stamp { margin-right: 0.6rem; }
+  .earlier { border-top: 1px solid var(--line); padding-block: 0.9rem; }
+  .earlier summary { cursor: pointer; font-weight: 600; }
+  .earlier p { margin-top: 0.8rem; }
+</style>

@@ -9,47 +9,42 @@ const lang = langOf(Astro.params.lang);
 const t = ui[lang];
 ---
 <Layout title={t.run.title(run.date)} lang={lang} path={`/runs/${run.date}/`}>
-  <p class="mono dim"><a href={href(lang, "/pipeline/")}>{t.run.back}</a></p>
+  <p><a href={href(lang, "/pipeline/")}>{t.run.back}</a></p>
   <h1>{t.run.title(day(lang, run.date))}</h1>
-  <div class="panel stats">
-    <div><b class={run.status}>{t.status[run.status]}</b><span>{t.run.status}</span></div>
-    {Object.entries(run.counts).map(([k, v]) => <div><b>{v}</b><span>{t.counts[k] ?? k}</span></div>)}
-    <div><b>{Math.round(run.durationMs / 1000)} s</b><span>{t.run.duration}</span></div>
-    <div><b>{usd(run.costUsd)}</b><span>{t.run.cost}</span></div>
-  </div>
-  {run.error && <p class="panel error mono">{run.error}</p>}
+  <p class="lede">
+    <span class={`stamp ${run.status}`}>{t.status[run.status]}</span>
+    {" "}{Math.round(run.durationMs / 1000)} s, {usd(run.costUsd)}.
+  </p>
+  {run.error && <p class="error">{run.error}</p>}
+
+  <dl class="counts">
+    {Object.entries(run.counts).map(([k, v]) => <div><dd>{v}</dd><dt>{t.counts[k] ?? k}</dt></div>)}
+  </dl>
 
   <h2>{t.run.gates}</h2>
-  {run.gates.length === 0 && <p class="dim">{t.run.noGates}</p>}
-  {run.gates.map((g) => (
-    <p><span class={`tag ${g.pass ? "published" : "rejected"}`}>{g.pass ? t.run.pass : t.run.fail}</span> <b>{t.gates[g.name] ?? g.name}</b> <span class="mono dim">{g.detail}</span></p>
-  ))}
-
-  <h2>{t.run.calls}</h2>
-  <div class="scroll">
-    <table>
-      <thead><tr>{t.run.cols.map((c) => <th>{c}</th>)}</tr></thead>
-      <tbody>
-        {run.stages.map((s) => (
-          <tr><td>{s.stage}</td><td>{s.model}</td><td>{s.inputTokens}</td><td>{s.outputTokens}</td><td>{(s.ms / 1000).toFixed(1)} s</td><td>{usd(s.costUsd)}</td></tr>
-        ))}
-      </tbody>
-    </table>
-  </div>
+  {run.gates.length === 0 && <p class="muted">{t.run.noGates}</p>}
+  <ul class="gates">
+    {run.gates.map((g) => (
+      <li>
+        <span class={`stamp ${g.pass ? "" : "rejected"}`}>{g.pass ? t.run.pass : t.run.fail}</span>
+        <b>{t.gates[g.name] ?? g.name}</b>
+        <span class="muted">{g.detail}</span>
+      </li>
+    ))}
+  </ul>
 
   <h2>{t.run.tools(run.toolCalls.length)}</h2>
-  {run.toolCalls.length === 0 ? <p class="dim">{t.run.noTools}</p> : (
+  {run.toolCalls.length === 0 ? <p class="muted">{t.run.noTools}</p> : (
     <div class="scroll">
       <table>
-        <thead><tr>{t.run.toolCols.map((c) => <th>{c}</th>)}</tr></thead>
+        <thead><tr><th>{t.run.toolCols[1]}</th><th>{t.run.toolCols[2]}</th><th>{t.run.toolCols[3]}</th><th class="num">{t.run.toolCols[4]}</th></tr></thead>
         <tbody>
           {run.toolCalls.map((c) => (
             <tr>
-              <td class="wrap">{c.item}</td>
               <td>{c.tool}</td>
-              <td class="wrap">{c.input}</td>
-              <td class={c.ok ? "published" : "rejected"}>{c.ok ? t.run.allowed : `${t.run.refused} — ${c.detail ?? ""}`}</td>
-              <td>{c.ms} ms</td>
+              <td class="url">{c.input}</td>
+              <td>{c.ok ? t.run.allowed : <span class="rejected">{t.run.refused}{c.detail && ` (${c.detail})`}</span>}</td>
+              <td class="num">{c.ms} ms</td>
             </tr>
           ))}
         </tbody>
@@ -57,14 +52,38 @@ const t = ui[lang];
     </div>
   )}
 
-  <h2>{t.run.rejects(run.rejected.length)}</h2>
+  <h2>{t.run.calls}</h2>
   <div class="scroll">
     <table>
+      <thead><tr>{t.run.cols.map((c, i) => <th class={i > 1 ? "num" : ""}>{c}</th>)}</tr></thead>
       <tbody>
-        {run.rejected.map((x) => (
-          <tr><td class="wrap">{x.what[lang]}</td><td class="wrap rejected">{t.reasons[x.reason] ?? x.reason}{x.detail && ` (${x.detail})`}</td></tr>
+        {run.stages.map((s) => (
+          <tr><td>{s.stage}</td><td>{s.model.replace("claude-", "")}</td><td class="num">{s.inputTokens}</td><td class="num">{s.outputTokens}</td><td class="num">{(s.ms / 1000).toFixed(1)} s</td><td class="num">{usd(s.costUsd)}</td></tr>
         ))}
       </tbody>
     </table>
   </div>
+
+  <h2>{t.run.rejects(run.rejected.length)}</h2>
+  <ul class="refused">
+    {run.rejected.map((x) => (
+      <li>
+        <s>{x.what[lang]}</s>
+        <span class="rejected">{t.reasons[x.reason] ?? x.reason}{x.detail && ` (${x.detail})`}</span>
+      </li>
+    ))}
+  </ul>
 </Layout>
+
+<style>
+  .counts { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 1.5rem 2rem; margin: 2.5rem 0 0; padding-top: 1.25rem; border-top: 2px solid var(--ink); }
+  .counts div { display: flex; flex-direction: column; }
+  .counts dd { margin: 0; font-size: 2.6rem; line-height: 1; font-weight: 750; font-stretch: 82%; letter-spacing: -0.03em; }
+  .counts dt { color: var(--muted); font-size: 0.9rem; margin-top: 0.3rem; }
+  .gates { list-style: none; padding: 0; margin: 0; }
+  .gates li { display: flex; flex-wrap: wrap; gap: 0.3rem 0.9rem; align-items: baseline; padding-block: 0.7rem; border-top: 1px solid var(--line); }
+  .refused { list-style: none; padding: 0; margin: 0; }
+  .refused li { display: grid; gap: 0.3rem 3rem; padding-block: 1rem; border-top: 1px solid var(--line); }
+  @media (min-width: 58rem) { .refused li { grid-template-columns: minmax(0, 38rem) minmax(0, 1fr); } }
+  .refused span { font-size: 0.92rem; }
+</style>
