@@ -1,0 +1,50 @@
+---
+import Layout from "../../../layouts/Layout.astro";
+import { runs, usd } from "../../../lib/data.ts";
+import { day, href, langOf, langPaths, ui } from "../../../lib/i18n.ts";
+export const getStaticPaths = () =>
+  langPaths().flatMap(({ params }) => runs.map((run) => ({ params: { ...params, date: run.date }, props: { run } })));
+const { run } = Astro.props;
+const lang = langOf(Astro.params.lang);
+const t = ui[lang];
+---
+<Layout title={t.run.title(run.date)} lang={lang} path={`/runs/${run.date}/`}>
+  <p class="mono dim"><a href={href(lang, "/pipeline/")}>{t.run.back}</a></p>
+  <h1>{t.run.title(day(lang, run.date))}</h1>
+  <div class="panel stats">
+    <div><b class={run.status}>{t.status[run.status]}</b><span>{t.run.status}</span></div>
+    {Object.entries(run.counts).map(([k, v]) => <div><b>{v}</b><span>{t.counts[k] ?? k}</span></div>)}
+    <div><b>{Math.round(run.durationMs / 1000)} s</b><span>{t.run.duration}</span></div>
+    <div><b>{usd(run.costUsd)}</b><span>{t.run.cost}</span></div>
+  </div>
+  {run.error && <p class="panel error mono">{run.error}</p>}
+
+  <h2>{t.run.gates}</h2>
+  {run.gates.length === 0 && <p class="dim">{t.run.noGates}</p>}
+  {run.gates.map((g) => (
+    <p><span class={`tag ${g.pass ? "published" : "rejected"}`}>{g.pass ? t.run.pass : t.run.fail}</span> <b>{t.gates[g.name] ?? g.name}</b> <span class="mono dim">{g.detail}</span></p>
+  ))}
+
+  <h2>{t.run.calls}</h2>
+  <div class="scroll">
+    <table>
+      <thead><tr>{t.run.cols.map((c) => <th>{c}</th>)}</tr></thead>
+      <tbody>
+        {run.stages.map((s) => (
+          <tr><td>{s.stage}</td><td>{s.model}</td><td>{s.inputTokens}</td><td>{s.outputTokens}</td><td>{(s.ms / 1000).toFixed(1)} s</td><td>{usd(s.costUsd)}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <h2>{t.run.rejects(run.rejected.length)}</h2>
+  <div class="scroll">
+    <table>
+      <tbody>
+        {run.rejected.map((x) => (
+          <tr><td class="wrap">{x.what[lang]}</td><td class="wrap rejected">{t.reasons[x.reason] ?? x.reason}{x.detail && ` (${x.detail})`}</td></tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</Layout>

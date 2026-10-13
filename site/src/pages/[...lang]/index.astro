@@ -1,0 +1,57 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Evidence from "../../components/Evidence.astro";
+import { briefs, runs, usd } from "../../lib/data.ts";
+import { day, href, langOf, langPaths, ui } from "../../lib/i18n.ts";
+export const getStaticPaths = langPaths;
+const lang = langOf(Astro.params.lang);
+const t = ui[lang];
+const [last] = runs;
+const [today, ...earlier] = briefs;
+---
+<Layout lang={lang} path="/">
+  <h1>{t.home.h1}</h1>
+  <p class="lede">{t.home.lede}</p>
+
+  {last ? (
+    <a class="panel stats" href={href(lang, `/runs/${last.date}/`)} style="text-decoration:none;color:inherit;margin-top:2rem">
+      <div><b class={last.status}>{t.status[last.status]}</b><span>{t.home.lastRun} · {day(lang, last.date)}</span></div>
+      <div><b>{last.counts.nouveaux ?? 0}</b><span>{t.home.itemsRead}</span></div>
+      <div><b>{last.counts.faitsCites ?? 0}/{last.counts.faitsProposes ?? 0}</b><span>{t.home.quotesFound}</span></div>
+      <div><b>{last.rejected.length}</b><span>{t.home.rejected}</span></div>
+      <div><b>{usd(last.costUsd)}</b><span>{t.home.cost}</span></div>
+    </a>
+  ) : (
+    <p class="panel dim">{t.home.noRun}</p>
+  )}
+
+  {today && (
+    <section>
+      <p class="mono dim" style="margin-top:3rem">{t.home.editionOf(day(lang, today.date))}</p>
+      <h2 style="margin-top:0">{today.headline[lang]}</h2>
+      {today.items.map((item) => (
+        <article class="panel">
+          <h3><a href={item.url} rel="noopener">{item.title[lang]}</a></h3>
+          <p class="mono dim">{item.source}</p>
+          <p>{item.summary[lang]}</p>
+          <p><em>{item.why[lang]}</em></p>
+          <Evidence claims={item.claims} lang={lang} />
+        </article>
+      ))}
+    </section>
+  )}
+
+  {earlier.length > 0 && (
+    <section>
+      <h2>{t.home.earlier}</h2>
+      {earlier.slice(0, 14).map((b) => (
+        <details class="panel">
+          <summary><span class="mono dim">{day(lang, b.date)}</span> — {b.headline[lang]}</summary>
+          {b.items.map((item) => (
+            <p style="margin-top:0.8rem"><a href={item.url} rel="noopener">{item.title[lang]}</a>. {item.summary[lang]}</p>
+          ))}
+        </details>
+      ))}
+    </section>
+  )}
+</Layout>

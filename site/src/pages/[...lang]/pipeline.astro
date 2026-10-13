@@ -1,0 +1,86 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { runs, evals, usd } from "../../lib/data.ts";
+import { day, href, langOf, langPaths, ui } from "../../lib/i18n.ts";
+export const getStaticPaths = langPaths;
+const lang = langOf(Astro.params.lang);
+const t = ui[lang];
+const recent = runs.slice(0, 30);
+const maxCost = Math.max(...recent.map((r) => r.costUsd), 0.01);
+const rejections = runs.slice(0, 7).flatMap((r) => r.rejected.map((x) => ({ ...x, date: r.date }))).slice(0, 25);
+---
+<Layout title={t.pipeline.title} lang={lang} path="/pipeline/">
+  <h1>{t.pipeline.h1}</h1>
+  <p class="lede">{t.pipeline.lede}</p>
+
+  <ol class="flow">
+    {t.pipeline.stages.map(([name, who, what]) => (
+      <li class={who === "code" ? "code" : ""}>
+        <b>{name}</b> <span class="tag">{who}</span>
+        <p>{what}</p>
+      </li>
+    ))}
+  </ol>
+
+  <h2>{t.pipeline.limitsTitle}</h2>
+  <p>{t.pipeline.limits}</p>
+
+  {evals && (
+    <>
+      <h2>{t.pipeline.evalTitle}</h2>
+      <div class="panel stats">
+        <div><b class={evals.failures.length ? "rejected" : "published"}>{evals.passed}/{evals.total}</b><span>{t.pipeline.evalCases}</span></div>
+        <div><b>{day(lang, evals.date)}</b><span>{t.pipeline.evalLast}</span></div>
+        {evals.failures.length > 0 && <div><span>{t.pipeline.evalFailing} : {evals.failures.join(", ")}</span></div>}
+      </div>
+    </>
+  )}
+
+  <h2>{t.pipeline.runsTitle(recent.length)}</h2>
+  {recent.length === 0 ? <p class="dim">{t.home.noRun}</p> : (
+    <div class="scroll">
+      <table>
+        <thead><tr>{t.pipeline.cols.map((c) => <th>{c}</th>)}<th></th></tr></thead>
+        <tbody>
+          {recent.map((r) => (
+            <tr>
+              <td><a href={href(lang, `/runs/${r.date}/`)}>{r.date}</a></td>
+              <td class={r.status}>{t.status[r.status]}</td>
+              <td>{r.counts.nouveaux ?? 0}</td>
+              <td>{r.counts.faitsCites ?? 0}/{r.counts.faitsProposes ?? 0}</td>
+              <td>{r.rejected.length}</td>
+              <td>{Math.round(r.durationMs / 1000)} s</td>
+              <td>{usd(r.costUsd)}</td>
+              <td style="width:8rem"><div class="bar" style={`width:${(r.costUsd / maxCost) * 100}%`}></div></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )}
+
+  {rejections.length > 0 && (
+    <>
+      <h2>{t.pipeline.refusedTitle}</h2>
+      <div class="scroll">
+        <table>
+          <tbody>
+            {rejections.map((x) => (
+              <tr><td>{x.date}</td><td class="wrap">{x.what[lang]}</td><td class="wrap rejected">{t.reasons[x.reason] ?? x.reason}</td></tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  )}
+</Layout>
+
+<style>
+  .flow { list-style: none; padding: 0; margin: 2.5rem 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: 0.75rem; counter-reset: s; }
+  .flow li { counter-increment: s; background: var(--panel); border: 1px solid var(--line); border-top: 3px solid var(--ok); border-radius: 8px; padding: 0.9rem 1rem; }
+  .flow li.code { border-top-color: var(--dim); }
+  .flow li::before { content: counter(s, decimal-leading-zero); display: block; font: 0.75rem var(--mono); color: var(--dim); }
+  .flow p { margin: 0.5rem 0 0; font-size: 0.92rem; color: var(--dim); }
+  .flow .tag { color: var(--dim); }
+  .bar { height: 0.5rem; background: var(--ok); border-radius: 2px; min-width: 2px; }
+</style>

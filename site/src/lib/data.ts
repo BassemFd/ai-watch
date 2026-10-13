@@ -19,16 +19,4 @@ export const radar = load("content/radar.json", Radar) ?? { entries: [] };
 export const state = load("content/state.json", State) ?? { points: [] };
 export const evals = load("evals/last.json", EvalReport);
 
-export const STATUS = { published: "publié", rejected: "rejeté", empty: "rien de neuf", error: "erreur" } as const;
-export const RING_LABELS = { adopter: "Adopter", essayer: "Essayer", evaluer: "Évaluer", attendre: "Attendre" } as const;
-export const frDate = (iso: string) =>
-  new Date(iso).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
 export const usd = (n: number) => `${n.toFixed(n < 0.1 ? 3 : 2)} $`;
-export const COUNT_LABELS: Record<string, string> = {
-  collectes: "items dans les flux",
-  nouveaux: "items nouveaux",
-  retenus: "sujets étudiés",
-  faitsProposes: "faits proposés",
-  faitsCites: "citations retrouvées",
-  publies: "énoncés publiés",
-};

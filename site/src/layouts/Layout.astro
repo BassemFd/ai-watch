@@ -1,33 +1,35 @@
 ---
-const { title } = Astro.props;
+import { href, ui, type Lang } from "../lib/i18n.ts";
+// `path` est le chemin sans préfixe de langue, par exemple "/radar/".
+const { title, lang, path } = Astro.props as { title?: string; lang: Lang; path: string };
+const t = ui[lang];
+const other: Lang = lang === "fr" ? "en" : "fr";
 const nav = [
-  ["/", "Édition du jour"],
-  ["/etat-de-l-art/", "État de l'art"],
-  ["/radar/", "Radar"],
-  ["/pipeline/", "Pipeline"],
+  ["/", t.nav.today],
+  ["/state/", t.nav.state],
+  ["/radar/", t.nav.radar],
+  ["/pipeline/", t.nav.pipeline],
 ];
-const here = Astro.url.pathname;
 ---
 <!doctype html>
-<html lang="fr">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title ? `${title} · Veille IA` : "Veille IA — vérifiée par des agents"}</title>
-    <meta name="description" content="Une veille sur l'IA écrite, vérifiée et publiée chaque jour par un pipeline d'agents, traces à l'appui." />
+    <title>{title ? `${title} · ${t.siteTitle.split(" — ")[0]}` : t.siteTitle}</title>
+    <meta name="description" content={t.description} />
+    <link rel="alternate" hreflang={other} href={href(other, path)} />
   </head>
   <body>
     <header>
-      <a class="brand" href="/">veille<span>/</span>ia</a>
+      <a class="brand" href={href(lang, "/")}>veille<span>/</span>ia</a>
       <nav>
-        {nav.map(([href, label]) => <a href={href} aria-current={here === href ? "page" : undefined}>{label}</a>)}
+        {nav.map(([p, label]) => <a href={href(lang, p)} aria-current={p === path ? "page" : undefined}>{label}</a>)}
+        <a class="lang" href={href(other, path)} lang={other} hreflang={other}>{t.switchTo}</a>
       </nav>
     </header>
     <main><slot /></main>
-    <footer>
-      Aucun humain ne relit ces pages avant publication. Chaque phrase renvoie à une citation retrouvée mot pour mot
-      dans sa source. <a href="/pipeline/">Voir comment.</a>
-    </footer>
+    <footer>{t.footer} <a href={href(lang, "/pipeline/")}>{t.footerLink}</a></footer>
   </body>
 </html>
 
@@ -46,6 +48,7 @@ const here = Astro.url.pathname;
   nav { display: flex; flex-wrap: wrap; gap: 1.25rem; font: 0.85rem var(--mono); }
   nav a { color: var(--dim); text-decoration: none; }
   nav a:hover, nav a[aria-current] { color: var(--text); }
+  nav .lang { color: var(--ok); }
   main { padding-top: 2.5rem; padding-bottom: 4rem; }
   footer { padding-top: 1.5rem; padding-bottom: 3rem; border-top: 1px solid var(--line); color: var(--dim); font-size: 0.9rem; }
   a { color: var(--ok); }

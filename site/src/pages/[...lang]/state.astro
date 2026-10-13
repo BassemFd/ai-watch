@@ -1,0 +1,28 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Evidence from "../../components/Evidence.astro";
+import { state } from "../../lib/data.ts";
+import { day, langOf, langPaths, ui } from "../../lib/i18n.ts";
+import { SECTIONS } from "../../../../pipeline/schema.ts";
+export const getStaticPaths = langPaths;
+const lang = langOf(Astro.params.lang);
+const t = ui[lang];
+const bySection = SECTIONS.map((s) => ({ id: s.id, points: state.points.filter((p) => p.sectionId === s.id).reverse() }));
+---
+<Layout title={t.state.title} lang={lang} path="/state/">
+  <h1>{t.state.h1}</h1>
+  <p class="lede">{t.state.lede}</p>
+  {bySection.map((s) => (
+    <section>
+      <h2>{t.sections[s.id]}</h2>
+      {s.points.length === 0 && <p class="dim">{t.state.empty}</p>}
+      {s.points.map((p) => (
+        <div class="panel">
+          <p>{p.text[lang]}</p>
+          <span class="mono dim">{t.state.added(day(lang, p.date))}</span>
+          <Evidence claims={p.evidence} lang={lang} />
+        </div>
+      ))}
+    </section>
+  ))}
+</Layout>
