@@ -228,6 +228,34 @@ test("rejets : un point d'état de l'art refusé est désigné par son texte bil
   assert.deepEqual(rejected.map((r) => r.what), [text]);
 });
 
+// Plafond : ce qui désigne un rejet tient en 200 caractères par langue.
+const whatOfRefusedPoint = (text: Text) => decide(input({ draft: fourWith(statePoint([], text)) })).rejected.map((r) => r.what);
+
+test("rejets : un texte de plus de 200 caractères est coupé à ses 200 premiers, dans chaque langue", () => {
+  const long = t(`${"F".repeat(200)} suite coupée`, `${"E".repeat(200)} dropped tail`);
+  assert.deepEqual(whatOfRefusedPoint(long), [t("F".repeat(200), "E".repeat(200))]);
+});
+
+test("rejets : un texte de 200 caractères exactement reste entier", () => {
+  const exact = t("F".repeat(200), "E".repeat(200));
+  assert.deepEqual(whatOfRefusedPoint(exact), [exact]);
+});
+
+test("rejets : une version courte reste entière quand l'autre langue est coupée", () => {
+  assert.deepEqual(whatOfRefusedPoint(t("F".repeat(250), "Short.")), [t("F".repeat(200), "Short.")]);
+});
+
+test("rejets : le titre d'une brève refusée est coupé à 200 caractères par langue", () => {
+  const refused = { ...briefItem([]), title: t("F".repeat(250), "E".repeat(250)) };
+  const { rejected } = decide(input({ draft: draftOf({ items: [briefItem(), refused, briefItem(), briefItem()] }) }));
+  assert.deepEqual(rejected.map((r) => r.what), [t("F".repeat(200), "E".repeat(200))]);
+});
+
+test("rejets : le nom d'une entrée radar refusée est coupé à 200 caractères", () => {
+  const draft = draftOf({ items: [briefItem(), briefItem()], radar: [radarEntry("N".repeat(250), "essayer", [])] });
+  assert.deepEqual(decide(input({ draft })).rejected.map((r) => r.what), [t("N".repeat(200), "N".repeat(200))]);
+});
+
 // --- Règle 3 : les trois portes
 
 test("portes : les trois portes sont rapportées quand le run est publié", () => {
