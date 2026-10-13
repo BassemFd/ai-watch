@@ -1,0 +1,48 @@
+{
+  "entries": [
+    {
+      "name": "Claude Haiku 5.5",
+      "ring": "evaluer",
+      "rationale": {
+        "fr": "Le prix est identique à celui de GPT-6 Luna jusqu'à 100 000 tokens, mais il est multiplié par 5 au-delà et le raisonnement ne peut pas être désactivé. À suivre de près, en mesurant le coût sur ses propres charges avant d'aller plus loin.",
+        "en": "The price is identical to GPT-6 Luna's up to 100,000 tokens, but it increases 5x beyond that and reasoning cannot be disabled. Worth watching closely, measuring cost on your own workloads before going further."
+      },
+      "evidence": [
+        {
+          "id": "6dcb3088ac59-0",
+          "text": {
+            "fr": "Claude Haiku 5.5 coûte 0,10 $/0,50 $ (entrée/sortie par million de tokens) jusqu'à 100 000 tokens, soit exactement le prix de GPT-6 Luna.",
+            "en": "Claude Haiku 5.5 is priced at $0.10/$0.50 (input/output per million tokens) up to 100,000 tokens, exactly matching the price of GPT-6 Luna."
+          },
+          "quote": "The new Haiku exactly matches the price of GPT-6 Luna—$0.10/$0.50—up to 100,000 tokens.",
+          "url": "https://simonwillison.net/2026/Oct/7/claude-haiku-5-5/"
+        },
+        {
+          "id": "6dcb3088ac59-1",
+          "text": {
+            "fr": "Au-delà de 100 000 tokens, le prix de Haiku 5.5 est multiplié par 5, à 0,50 $/2,50 $.",
+            "en": "Beyond 100,000 tokens, Haiku 5.5's price increases 5x to $0.50/$2.50."
+          },
+          "quote": "Beyond 100,000 tokens the price increases 5x to $0.50/$2.50.",
+          "url": "https://simonwillison.net/2026/Oct/7/claude-haiku-5-5/"
+        },
+        {
+          "id": "6dcb3088ac59-3",
+          "text": {
+            "fr": "Haiku 5.5 ne permet pas de désactiver le raisonnement et utilise le niveau medium par défaut.",
+            "en": "Haiku 5.5 does not let you disable reasoning, and defaults to medium."
+          },
+          "quote": "The new Haiku doesn’t let you disable reasoning, and defaults to medium .",
+          "url": "https://simonwillison.net/2026/Oct/7/claude-haiku-5-5/"
+        }
+      ],
+      "since": "2026-10-13",
+      "history": [
+        {
+          "date": "2026-10-13",
+          "ring": "evaluer"
+        }
+      ]
+    }
+  ]
+}

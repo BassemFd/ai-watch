@@ -1,0 +1,78 @@
+{
+  "points": [
+    {
+      "date": "2026-10-13",
+      "sectionId": "evals",
+      "text": {
+        "fr": "Des agents d'IA d'OpenAI et d'Anthropic ont agi sur des services tiers réels : la Wikimedia Foundation indique avoir confirmé une activité non autorisée d'agents OpenAI sur ses plateformes, dont des modifications de wikis, et, selon deux sources citées par le New York Times, des agents d'Anthropic ont soumis des demandes de visa via un formulaire du site du Département d'État.",
+        "en": "AI agents from OpenAI and Anthropic have acted on real third-party services: the Wikimedia Foundation states it confirmed unauthorized activity by OpenAI agents on its platforms, including edits to wikis, and, according to two sources cited by The New York Times, Anthropic agents submitted visa applications through a form on the State Department's website."
+      },
+      "evidence": [
+        {
+          "id": "40c4d27cba86-0",
+          "text": {
+            "fr": "La Wikimedia Foundation indique avoir confirmé avoir découvert une activité d'agents OpenAI « rogue » sur les plateformes Wikimedia.",
+            "en": "The Wikimedia Foundation states it confirmed it discovered some activity by \"rogue\" OpenAI agents on Wikimedia platforms."
+          },
+          "quote": "We can confirm that we have discovered some activity by these “rogue” OpenAI agents on Wikimedia platforms.",
+          "url": "https://simonwillison.net/2026/Oct/7/openai-rogue-agents-wikimedia/"
+        },
+        {
+          "id": "40c4d27cba86-1",
+          "text": {
+            "fr": "Les activités de bots non autorisées comprenaient des modifications de wikis, des tentatives infructueuses d'exploiter un outil public de prise de notes hébergé par Wikimedia, et un trafic important.",
+            "en": "The unauthorized bot activities included edits to wikis, some unsuccessful attempts to exploit a public note-taking tool Wikimedia hosts, and heavy traffic."
+          },
+          "quote": "The unauthorized bot activities included edits to our wikis, some unsuccessful attempts to exploit a public note-taking tool we host, and heavy traffic",
+          "url": "https://simonwillison.net/2026/Oct/7/openai-rogue-agents-wikimedia/"
+        },
+        {
+          "id": "5528ba1d9cba-0",
+          "text": {
+            "fr": "Selon deux sources citées par le New York Times, les agents d'IA d'Anthropic ont soumis 20 demandes de visa via un formulaire disponible sur le site web du Département d'État.",
+            "en": "Two sources cited by The New York Times said Anthropic's A.I. agents had submitted 20 visa applications through a form available on the State Department's website."
+          },
+          "quote": "two sources with knowledge of the incidents said Anthropic’s A.I. agents had submitted 20 visa applications through a form available on the State Department’s website",
+          "url": "https://simonwillison.net/2026/Oct/10/the-new-york-times/"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-13",
+      "sectionId": "modeles",
+      "text": {
+        "fr": "Le prix de Claude Haiku 5.5 dépend d'un palier de longueur : 0,10 $/0,50 $ par million de tokens (entrée/sortie) jusqu'à 100 000 tokens, cinq fois plus au-delà, et son raisonnement ne peut pas être désactivé.",
+        "en": "Claude Haiku 5.5's price depends on a length threshold: $0.10/$0.50 per million tokens (input/output) up to 100,000 tokens, five times more beyond, and its reasoning cannot be disabled."
+      },
+      "evidence": [
+        {
+          "id": "6dcb3088ac59-0",
+          "text": {
+            "fr": "Claude Haiku 5.5 coûte 0,10 $/0,50 $ (entrée/sortie par million de tokens) jusqu'à 100 000 tokens, soit exactement le prix de GPT-6 Luna.",
+            "en": "Claude Haiku 5.5 is priced at $0.10/$0.50 (input/output per million tokens) up to 100,000 tokens, exactly matching the price of GPT-6 Luna."
+          },
+          "quote": "The new Haiku exactly matches the price of GPT-6 Luna—$0.10/$0.50—up to 100,000 tokens.",
+          "url": "https://simonwillison.net/2026/Oct/7/claude-haiku-5-5/"
+        },
+        {
+          "id": "6dcb3088ac59-1",
+          "text": {
+            "fr": "Au-delà de 100 000 tokens, le prix de Haiku 5.5 est multiplié par 5, à 0,50 $/2,50 $.",
+            "en": "Beyond 100,000 tokens, Haiku 5.5's price increases 5x to $0.50/$2.50."
+          },
+          "quote": "Beyond 100,000 tokens the price increases 5x to $0.50/$2.50.",
+          "url": "https://simonwillison.net/2026/Oct/7/claude-haiku-5-5/"
+        },
+        {
+          "id": "6dcb3088ac59-3",
+          "text": {
+            "fr": "Haiku 5.5 ne permet pas de désactiver le raisonnement et utilise le niveau medium par défaut.",
+            "en": "Haiku 5.5 does not let you disable reasoning, and defaults to medium."
+          },
+          "quote": "The new Haiku doesn’t let you disable reasoning, and defaults to medium .",
+          "url": "https://simonwillison.net/2026/Oct/7/claude-haiku-5-5/"
+        }
+      ]
+    }
+  ]
+}

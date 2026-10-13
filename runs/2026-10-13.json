@@ -1,0 +1,235 @@
+{
+  "date": "2026-10-13",
+  "startedAt": "2026-10-13T14:37:24.613Z",
+  "durationMs": 127364,
+  "status": "published",
+  "counts": {
+    "collectes": 39,
+    "nouveaux": 39,
+    "retenus": 6,
+    "faitsProposes": 19,
+    "faitsCites": 19,
+    "faitsValides": 17,
+    "publies": 8
+  },
+  "stages": [
+    {
+      "stage": "triage",
+      "model": "claude-haiku-5-5",
+      "ms": 11166,
+      "inputTokens": 7763,
+      "outputTokens": 1572,
+      "costUsd": 0.00096584
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 5836,
+      "inputTokens": 6295,
+      "outputTokens": 225,
+      "costUsd": 0.012317300000000002
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 6211,
+      "inputTokens": 6308,
+      "outputTokens": 244,
+      "costUsd": 0.012535899999999999
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 7852,
+      "inputTokens": 6311,
+      "outputTokens": 230,
+      "costUsd": 0.0124001
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 7973,
+      "inputTokens": 6327,
+      "outputTokens": 231,
+      "costUsd": 0.0124507
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 8203,
+      "inputTokens": 6313,
+      "outputTokens": 199,
+      "costUsd": 0.012098099999999999
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 9021,
+      "inputTokens": 6364,
+      "outputTokens": 213,
+      "costUsd": 0.0123563
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 5669,
+      "inputTokens": 3903,
+      "outputTokens": 527,
+      "costUsd": 0.012134200000000001
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 5483,
+      "inputTokens": 3735,
+      "outputTokens": 606,
+      "costUsd": 0.012252199999999998
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 6089,
+      "inputTokens": 3706,
+      "outputTokens": 646,
+      "costUsd": 0.012536199999999999
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 5548,
+      "inputTokens": 4133,
+      "outputTokens": 529,
+      "costUsd": 0.0130742
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 8351,
+      "inputTokens": 5024,
+      "outputTokens": 1283,
+      "costUsd": 0.024178200000000004
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 9745,
+      "inputTokens": 8705,
+      "outputTokens": 1635,
+      "costUsd": 0.0424222
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 12084,
+      "inputTokens": 6745,
+      "outputTokens": 1743,
+      "costUsd": 0.039031800000000005
+    },
+    {
+      "stage": "write",
+      "model": "claude-opus-5-5",
+      "ms": 69756,
+      "inputTokens": 5819,
+      "outputTokens": 8072,
+      "costUsd": 0.19214999999999996
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 15155,
+      "inputTokens": 9779,
+      "outputTokens": 2341,
+      "costUsd": 0.0571478
+    }
+  ],
+  "gates": [
+    {
+      "name": "literal_quotes",
+      "pass": true,
+      "detail": "19/19"
+    },
+    {
+      "name": "supported_claims",
+      "pass": true,
+      "detail": "17/19"
+    },
+    {
+      "name": "verifier",
+      "pass": true,
+      "detail": "8/8 (>= 70%)"
+    },
+    {
+      "name": "volume",
+      "pass": true,
+      "detail": "radar 1, state 2 (max 3)"
+    },
+    {
+      "name": "budget",
+      "pass": true,
+      "detail": "0.480/2 USD"
+    }
+  ],
+  "rejected": [
+    {
+      "what": {
+        "fr": "Haiku 5.5 utilise un nouveau tokenizer : le même long prompt consomme environ 1,25 fois plus de tokens qu'avec Haiku 4.5, d'après l'outil Claude Token Counter de l'auteur.",
+        "en": "Haiku 5.5 uses a new tokenizer: the same long prompt uses around 1.25x as many tokens as with Haiku 4.5, according to the author's Claude Token Counter tool."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote only says the same prompt uses about 1.25x more tokens and does not state that Haiku 5.5 uses a new tokenizer."
+    },
+    {
+      "what": {
+        "fr": "Les abonnés Max 5x recevront 100 $ de crédits API par mois, les Max 20x 200 $, et les abonnés Team jusqu'à 500 $ mutualisés.",
+        "en": "Max 5x users will get $100 in API credits per month, Max 20x users $200, and Team subscribers up to $500, pooled across their users."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote says \"credits\" without specifying they are API credits, so the claim adds a detail not in the quote."
+    }
+  ],
+  "toolCalls": [
+    {
+      "tool": "fetch_page",
+      "input": "https://simonwillison.net/2026/Oct/6/hn-49982139/",
+      "ok": true,
+      "ms": 70,
+      "item": "https://simonwillison.net/2026/Oct/6/hn-49982139/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://simonwillison.net/2026/Oct/10/the-new-york-times/",
+      "ok": true,
+      "ms": 24,
+      "item": "https://simonwillison.net/2026/Oct/10/the-new-york-times/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://simonwillison.net/2026/Oct/6/victoria-kim/",
+      "ok": true,
+      "ms": 26,
+      "item": "https://simonwillison.net/2026/Oct/6/victoria-kim/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://simonwillison.net/2026/Oct/7/claude-haiku-5-5/",
+      "ok": true,
+      "ms": 25,
+      "item": "https://simonwillison.net/2026/Oct/7/claude-haiku-5-5/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://github.com/anthropics/claude-code/releases/tag/v2.1.296",
+      "ok": true,
+      "ms": 546,
+      "item": "https://github.com/anthropics/claude-code/releases/tag/v2.1.296"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://simonwillison.net/2026/Oct/7/openai-rogue-agents-wikimedia/",
+      "ok": true,
+      "ms": 34,
+      "item": "https://simonwillison.net/2026/Oct/7/openai-rogue-agents-wikimedia/"
+    }
+  ],
+  "costUsd": 0.48005104
+}
