@@ -26,6 +26,9 @@ export type Item = { id: string; url: string; title: string; source: string; sum
 export const Claim = z.object({ id: z.string(), text: z.string(), quote: z.string(), url: z.string() });
 export type Claim = z.infer<typeof Claim>;
 
+/** Un énoncé du brouillon, tel que soumis au vérificateur. */
+export type Statement = { id: string; text: string; claimIds: string[] };
+
 // --- Sorties des modèles (schémas simples : contraintes vérifiées par le code, pas par le modèle)
 
 export const TriageOut = z.object({

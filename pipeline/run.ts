@@ -1,8 +1,9 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
-import { judge, makeLlm, type Llm, type Statement } from "./agents.ts";
+import { judge, makeLlm, type Llm } from "./agents.ts";
 import { fetchText, htmlToText, parseFeed } from "./collect.ts";
-import { quoteProblem, statementProblem } from "./gates.ts";
+import { decide, toStatements } from "./decide.ts";
+import { quoteProblem } from "./gates.ts";
 import {
   Brief,
   Radar,
@@ -20,8 +21,6 @@ import {
 const MAX_TRIAGE = 200; // items soumis au tri
 const MAX_ITEMS = 6; // sujets étudiés par run
 const MAX_PAGE_CHARS = 40_000;
-const MAX_OPS = 3; // ajouts au radar et à l'état de l'art par run
-const MIN_JUDGE_RATIO = 0.7;
 
 const readJson = <T>(path: string, fallback: T): T =>
   existsSync(path) ? (JSON.parse(readFileSync(path, "utf8")) as T) : fallback;
@@ -159,11 +158,7 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
       }),
       WriteOut,
     );
-    const statements: Statement[] = [
-      ...draft.items.map((x, i) => ({ id: `item:${i}`, text: `${x.title}. ${x.summary} ${x.why}`, claimIds: x.claimIds })),
-      ...draft.radar.map((x, i) => ({ id: `radar:${i}`, text: `${x.name} (${x.ring}). ${x.rationale}`, claimIds: x.claimIds })),
-      ...draft.state.map((x, i) => ({ id: `state:${i}`, text: x.text, claimIds: x.claimIds })),
-    ];
+    const statements = toStatements(draft);
     if (!statements.length) {
       trace.status = "empty";
       return { trace };
@@ -176,52 +171,21 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
       cited.map(({ id, text, quote }) => ({ id, text, quote })),
       statements,
     );
-    const okClaims = new Set(verdict.claims.filter((v) => v.supported).map((v) => v.id));
-    const okStatements = new Set(verdict.statements.filter((v) => v.supported).map((v) => v.id));
-    const literal = new Set(claims.keys());
-    const publishable = new Set<string>();
-    for (const s of statements) {
-      const problem = statementProblem(s, literal, okClaims, okStatements);
-      if (problem) reject(s.text, problem);
-      else publishable.add(s.id);
-    }
-
-    // 6. Portes — toutes obligatoires
-    const ratio = publishable.size / statements.length;
-    const passed = [
-      gate("vérificateur", ratio >= MIN_JUDGE_RATIO, `${publishable.size}/${statements.length} énoncés validés (seuil ${MIN_JUDGE_RATIO * 100} %)`),
-      gate("volume", draft.radar.length <= MAX_OPS && draft.state.length <= MAX_OPS, `${draft.radar.length} radar, ${draft.state.length} état de l'art (max ${MAX_OPS})`),
-      gate("budget", o.llm.spent <= o.budgetUsd, `${o.llm.spent.toFixed(3)} $ sur ${o.budgetUsd} $`),
-    ].every(Boolean);
-    if (!passed) {
+    // 5 (suite) à 7. Énoncés publiables, portes, publication — décidés par du code pur (decide.ts)
+    const state = readJson<State>(join(o.root, "content/state.json"), { points: [] });
+    const d = decide({ date: o.date, draft, claims, items: byId, verdict, radar, state, spentUsd: o.llm.spent, budgetUsd: o.budgetUsd });
+    trace.rejected.push(...d.rejected);
+    trace.gates.push(...d.gates);
+    if (d.status === "rejected") {
       trace.status = "rejected";
       return { trace };
     }
-
-    // 7. Publication — seul le code écrit, et seulement ce qui a passé les portes
-    const evidence = (ids: string[]) => ids.map((id) => claims.get(id)!);
-    const items = draft.items.flatMap((x, i) => {
-      const item = byId.get(x.itemId);
-      if (!publishable.has(`item:${i}`) || !item) return [];
-      return [{ title: x.title, url: item.url, source: item.source, summary: x.summary, why: x.why, claims: evidence(x.claimIds) }];
-    });
-    draft.radar.forEach((x, i) => {
-      if (!publishable.has(`radar:${i}`)) return;
-      const existing = radar.entries.find((e) => e.name.toLowerCase() === x.name.toLowerCase());
-      const update = { ring: x.ring, rationale: x.rationale, evidence: evidence(x.claimIds) };
-      if (existing) Object.assign(existing, update).history.push({ date: o.date, ring: x.ring });
-      else radar.entries.push({ name: x.name, ...update, since: o.date, history: [{ date: o.date, ring: x.ring }] });
-    });
-    const state = readJson<State>(join(o.root, "content/state.json"), { points: [] });
-    draft.state.forEach((x, i) => {
-      if (publishable.has(`state:${i}`)) state.points.push({ date: o.date, sectionId: x.sectionId, text: x.text, evidence: evidence(x.claimIds) });
-    });
-    if (items.length) brief = Brief.parse({ date: o.date, headline: draft.headline, items });
-    trace.counts.publies = publishable.size;
+    brief = d.brief;
+    trace.counts.publies = d.published;
     if (!o.dryRun) {
       if (brief) writeJson(join(o.root, `content/briefs/${o.date}.json`), brief);
-      writeJson(join(o.root, "content/radar.json"), Radar.parse(radar));
-      writeJson(join(o.root, "content/state.json"), State.parse(state));
+      writeJson(join(o.root, "content/radar.json"), Radar.parse(d.radar));
+      writeJson(join(o.root, "content/state.json"), State.parse(d.state));
     }
     trace.status = "published";
     return { trace, brief };

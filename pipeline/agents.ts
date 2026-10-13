@@ -3,7 +3,7 @@ import { join } from "node:path";
 import Anthropic from "@anthropic-ai/sdk";
 import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import type { z } from "zod";
-import { VerifyOut } from "./schema.ts";
+import { VerifyOut, type Statement } from "./schema.ts";
 
 export type Stage = "triage" | "research" | "write" | "verify";
 export type Call = { stage: string; model: string; ms: number; inputTokens: number; outputTokens: number; costUsd: number };
@@ -64,8 +64,6 @@ export function makeLlm(budgetUsd: number): Llm {
     },
   };
 }
-
-export type Statement = { id: string; text: string; claimIds: string[] };
 
 /** Vérificateur : contexte neuf, il ne voit ni les pages ni le raisonnement du rédacteur. */
 export function judge(
