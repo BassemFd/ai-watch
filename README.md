@@ -1,6 +1,6 @@
 # ai/watch · veille/ia
 
-**Live: https://ai-watch-by-bf.pages.dev/en/** (English) · https://ai-watch-by-bf.pages.dev (French)
+**Live: https://ai-watch.bassemfayed.com/en/** (English) · https://ai-watch.bassemfayed.com (French)
 
 A daily AI briefing written, verified and published every morning by a pipeline of models, with no human review. Every published sentence is tied to a quote found word for word in its source, and everything the pipeline refuses to publish is shown with the reason it was refused.
 
