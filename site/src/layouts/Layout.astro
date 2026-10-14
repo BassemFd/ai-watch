@@ -98,17 +98,25 @@ const nav = [
   html { -webkit-text-size-adjust: 100%; }
   body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1.0625rem/1.55 var(--sans); overflow-wrap: break-word; }
   header, main { max-width: 72rem; margin: 0 auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
-  header { display: flex; flex-wrap: wrap; gap: 0.6rem 2rem; align-items: baseline; padding-block: 1.1rem; border-bottom: 1px solid var(--line); }
+  /* En-tête : nom, rubriques, réglages sur une ligne ; sous 60rem, les rubriques passent sur une seconde
+     ligne entière, jamais coupées en deux (elles défilent si l'écran est trop étroit). */
+  header { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 0.75rem 2.5rem; align-items: baseline; padding-block: 1.1rem; border-bottom: 1px solid var(--line); }
   .brand { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
   .brand span { background: var(--marker); color: var(--marker-ink); padding: 0 0.15em; }
-  nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; flex: 1; }
-  nav a { color: var(--muted); text-decoration: none; }
-  nav a:hover { color: var(--ink); }
-  nav a[aria-current] { color: var(--ink); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.35em; }
-  .tools { display: flex; align-items: baseline; gap: 1rem; margin-left: auto; }
+  header nav { display: flex; gap: 1.6rem; white-space: nowrap; }
+  header nav a { color: var(--muted); text-decoration: none; padding-block: 0.15rem; }
+  header nav a:hover { color: var(--ink); }
+  header nav a[aria-current] { color: var(--ink); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.35em; }
+  .tools { display: flex; align-items: baseline; gap: 1rem; }
   .lang { color: var(--ink); text-decoration: underline; text-underline-offset: 0.2em; }
   /* Petit écran : le nom et les réglages sur une ligne, les rubriques dessous. */
-  @media (max-width: 40rem) { nav { order: 3; flex-basis: 100%; gap: 0.4rem 1.25rem; } }
+  @media (max-width: 60rem) {
+    header { grid-template-columns: minmax(0, 1fr) auto; }
+    header nav { grid-column: 1 / -1; grid-row: 2; gap: 1.4rem; overflow-x: auto; scrollbar-width: none; padding-bottom: 0.2rem; }
+    header nav::-webkit-scrollbar { display: none; }
+  }
+  @media (max-width: 26rem) { header nav { gap: 1rem; font-size: 0.94rem; } }
+  @media (max-width: 22rem) { header nav { gap: 0.8rem; font-size: 0.9rem; } }
   .theme { font: inherit; color: var(--ink); background: none; border: 1px solid var(--line); border-radius: 99px; padding: 0.1rem 0.7rem; cursor: pointer; }
   .theme:hover { border-color: var(--ink); }
   main { padding-block: clamp(1.25rem, 3.5vw, 2.75rem) 4rem; }
