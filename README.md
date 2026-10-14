@@ -162,4 +162,4 @@ A full run through the API costs between 0.30 and 0.40 USD, based on the real ru
 
 ## Author
 
-[Bassem Fayed](https://career-log.bassem-fayed.workers.dev/) · [GitHub](https://github.com/BassemFd) · [LinkedIn](https://www.linkedin.com/in/bassem-fd/) · [bassem.fayed@gmail.com](mailto:bassem.fayed@gmail.com)
+[Bassem Fayed](https://bassemfayed.com/) · [GitHub](https://github.com/BassemFd) · [LinkedIn](https://www.linkedin.com/in/bassem-fd/) · [bassem.fayed@gmail.com](mailto:bassem.fayed@gmail.com)
