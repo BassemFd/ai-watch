@@ -1,8 +1,8 @@
 {
   "date": "2026-10-14",
   "headline": {
-    "fr": "Gemini 4 Argon disponible, conversion en hybride par « priming », contrôle de version chez Anthropic",
-    "en": "Gemini 4 Argon available, hybrid conversion via priming, source control at Anthropic"
+    "fr": "Gemini 4 Argon disponible via l'API, à prix introductif jusqu'au 30 novembre ; Amazon Science : convertir un Transformer en hybride sans repartir de zéro ; Grok 4.7 sur Amazon Bedrock : quatre niveaux d'effort de raisonnement",
+    "en": "Gemini 4 Argon available via the API, at an introductory price until November 30; Amazon Science: converting a Transformer into a hybrid without starting from scratch; Grok 4.7 on Amazon Bedrock: four reasoning effort levels"
   },
   "items": [
     {
