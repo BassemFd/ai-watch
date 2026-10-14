@@ -38,18 +38,23 @@ const specimen = today?.items[0]?.claims[0];
 
   {today && (
     <section>
-      <h2>{today.headline[lang]}</h2>
-      <p class="muted">{t.home.editionOf(day(lang, today.date))}</p>
-      {today.items.map((item) => (
-        <article class="pair">
-          <div>
-            <h3><a href={item.url} rel="noopener">{item.title[lang]}</a></h3>
-            <p>{item.summary[lang]}</p>
-            <p class="muted">{item.why[lang]}</p>
-            <p class="small muted">{item.source}</p>
+      <h2>{t.home.editionOf(day(lang, today.date))}</h2>
+      {today.items.map((item, i) => (
+        <details class="item" open={i === 0}>
+          <summary>
+            <h3>{item.title[lang]}</h3>
+            <span class="teaser">{item.summary[lang]}</span>
+            <span class="meta"><span>{item.source}</span><span class="count">{t.evidence(item.claims.length)}</span></span>
+          </summary>
+          <div class="pair">
+            <div>
+              <p>{item.summary[lang]}</p>
+              <p class="muted">{item.why[lang]}</p>
+              <p class="small"><a href={item.url} rel="noopener">{t.home.readSource}</a></p>
+            </div>
+            <Evidence claims={item.claims} lang={lang} />
           </div>
-          <Evidence claims={item.claims} lang={lang} />
-        </article>
+        </details>
       ))}
     </section>
   )}
@@ -59,7 +64,7 @@ const specimen = today?.items[0]?.claims[0];
       <h2>{t.home.earlier}</h2>
       {earlier.slice(0, 14).map((b) => (
         <details class="earlier">
-          <summary><span class="muted">{day(lang, b.date)}</span> {b.headline[lang]}</summary>
+          <summary>{day(lang, b.date)} <span class="muted">{t.home.itemsCount(b.items.length)}</span></summary>
           {b.items.map((item) => (
             <p><a href={item.url} rel="noopener">{item.title[lang]}</a>. {item.summary[lang]}</p>
           ))}
@@ -79,6 +84,19 @@ const specimen = today?.items[0]?.claims[0];
   .specimen figcaption { color: var(--muted); font-size: 0.88rem; }
   .runline { margin: 2.25rem 0 0; padding-top: 1rem; border-top: 2px solid var(--ink); max-width: none; }
   .runline .stamp { margin-right: 0.6rem; }
+  /* Une brève fermée : titre, une ligne de résumé, la source et le nombre de preuves. */
+  .item { border-top: 1px solid var(--line); }
+  .item summary { list-style: none; cursor: pointer; display: grid; gap: 0.35rem; padding: 1.15rem 2.25rem 1.15rem 0; position: relative; }
+  .item summary::-webkit-details-marker { display: none; }
+  .item summary::after { content: ""; position: absolute; right: 0.4rem; top: 1.45rem; width: 0.6rem; height: 0.6rem; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); transition: transform 0.2s; }
+  .item[open] summary::after { transform: rotate(-135deg); top: 1.7rem; }
+  .item summary:hover h3 { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
+  .item h3 { margin: 0; }
+  .teaser { color: var(--muted); overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+  .item[open] .teaser { display: none; }
+  .meta { display: flex; flex-wrap: wrap; gap: 0.3rem 0.9rem; align-items: baseline; font-size: 0.88rem; color: var(--muted); }
+  .item > .pair { border-top: 0; padding-top: 0.25rem; }
+  @media (prefers-reduced-motion: reduce) { .item summary::after { transition: none; } }
   .earlier { border-top: 1px solid var(--line); padding-block: 0.9rem; }
   .earlier summary { cursor: pointer; font-weight: 600; }
   .earlier p { margin-top: 0.8rem; }

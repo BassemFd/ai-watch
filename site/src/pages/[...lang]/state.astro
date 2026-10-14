@@ -22,7 +22,7 @@ const bySection = SECTIONS.map((s) => ({ id: s.id, points: state.points.filter((
             <p class="point">{p.text[lang]}</p>
             <p class="small muted">{t.state.added(day(lang, p.date))}</p>
           </div>
-          <Evidence claims={p.evidence} lang={lang} />
+          <Evidence claims={p.evidence} lang={lang} collapsed />
         </div>
       ))}
     </section>

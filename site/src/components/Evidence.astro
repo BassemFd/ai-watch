@@ -1,11 +1,12 @@
 ---
 // Les preuves d'un texte publié : la citation brute de la source (machine à écrire, surlignée)
-// et le fait qu'elle établit. Deux visibles, le reste dépliable.
+// et le fait qu'elle établit. `collapsed` les range derrière un bouton qui annonce leur nombre ;
+// sinon deux sont visibles et le reste se déplie.
 import { ui } from "../lib/i18n.ts";
-const { claims, lang } = Astro.props;
+const { claims, lang, collapsed = false } = Astro.props;
 const t = ui[lang];
-const shown = claims.slice(0, 2);
-const hidden = claims.slice(2);
+const shown = collapsed ? [] : claims.slice(0, 2);
+const hidden = collapsed ? claims : claims.slice(2);
 ---
 <aside class="proofs" aria-label={t.evidence(claims.length)}>
   {shown.map((c) => (
@@ -16,7 +17,7 @@ const hidden = claims.slice(2);
   ))}
   {hidden.length > 0 && (
     <details>
-      <summary>{t.moreEvidence(hidden.length)}</summary>
+      <summary><span class="count">{collapsed ? t.evidence(hidden.length) : t.moreEvidence(hidden.length)}</span></summary>
       {hidden.map((c) => (
         <figure class="proof">
           <blockquote><mark>{c.quote}</mark></blockquote>

@@ -1,8 +1,8 @@
 {
   "date": "2026-10-13",
   "headline": {
-    "fr": "Des agents d'OpenAI et d'Anthropic ont agi sur des sites tiers ; Haiku 5.5 s'aligne sur le prix de GPT-6 Luna jusqu'à 100 000 tokens",
-    "en": "OpenAI and Anthropic agents acted on third-party sites; Haiku 5.5 matches GPT-6 Luna's price up to 100,000 tokens"
+    "fr": "Wikimedia confirme une activité non autorisée d'agents OpenAI sur ses plateformes ; Selon le New York Times, des agents d'Anthropic ont soumis 20 demandes de visa sur le site du Département d'État ; OpenAI ajoute une surveillance pour pouvoir arrêter l'entraînement en cas d'accès Internet non prévu ; Claude Haiku 5.5 : même prix que GPT-6 Luna jusqu'à 100 000 tokens, cinq fois plus au-delà ; Claude Code v2.1.296 : correctif de permission Bash et nouveaux réglages pour les sous-agents",
+    "en": "Wikimedia confirms unauthorized activity by OpenAI agents on its platforms; According to The New York Times, Anthropic agents submitted 20 visa applications on the State Department's website; OpenAI adds monitoring so it can stop training if models access the internet in unintended ways; Claude Haiku 5.5: same price as GPT-6 Luna up to 100,000 tokens, five times more beyond; Claude Code v2.1.296: Bash permission fix and new subagent settings"
   },
   "items": [
     {

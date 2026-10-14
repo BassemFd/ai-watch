@@ -38,7 +38,7 @@ const t = ui[lang];
                 {e.history.length > 1 && `, ${t.radar.path} : ${e.history.map((h) => t.rings[h.ring]).join(" → ")}`}
               </p>
             </div>
-            <Evidence claims={e.evidence} lang={lang} />
+            <Evidence claims={e.evidence} lang={lang} collapsed />
           </div>
         ))}
       </section>

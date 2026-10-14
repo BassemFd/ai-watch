@@ -17,7 +17,7 @@ const fr = {
   nav: { today: "Édition du jour", state: "État de l'art", radar: "Radar", pipeline: "Pipeline" },
   footer: "Aucun humain ne relit ces pages avant publication. Chaque phrase renvoie à une citation retrouvée mot pour mot dans sa source.",
   footerLink: "Voir comment.",
-  signature: { by: "Créé par", love: "avec", loveWord: "amour", also: "Autres sites :", mail: "Écrire un mail" },
+  signature: { by: "Créé par", love: "avec", loveWord: "amour", also: "Autres sites", mail: "Écrire un mail" },
   evidence: (n: number) => `${n} ${n > 1 ? "preuves" : "preuve"}`,
   moreEvidence: (n: number) => `${n} ${n > 1 ? "autres preuves" : "autre preuve"}`,
   status: { published: "publié", rejected: "rejeté", empty: "rien de neuf", error: "erreur" },
@@ -53,8 +53,10 @@ const fr = {
     runLine: (d: string, c: Record<string, number>, refused: number) =>
       `Run du ${d} : ${c.nouveaux ?? 0} items lus, ${c.faitsCites ?? 0} citations retrouvées mot pour mot, ${c.faitsValides ?? 0} faits validés, ${c.publies ?? 0} énoncés publiés, ${refused} refus.`,
     runLink: "Lire la trace du run",
+    readSource: "Lire la source",
     noRun: "Le pipeline n'a pas encore tourné.",
     editionOf: (d: string) => `Édition du ${d}`,
+    itemsCount: (n: number) => `${n} ${n > 1 ? "brèves" : "brève"}`,
     earlier: "Éditions précédentes",
   },
   state: {
@@ -129,7 +131,7 @@ const en: typeof fr = {
   nav: { today: "Today's edition", state: "State of the art", radar: "Radar", pipeline: "Pipeline" },
   footer: "No human reviews these pages before they go out. Every sentence points to a quote found word for word in its source.",
   footerLink: "See how.",
-  signature: { by: "Created by", love: "with", loveWord: "love", also: "Other sites:", mail: "Send an email" },
+  signature: { by: "Created by", love: "with", loveWord: "love", also: "Other sites", mail: "Send an email" },
   evidence: (n) => `${n} ${n > 1 ? "proofs" : "proof"}`,
   moreEvidence: (n) => `${n} more ${n > 1 ? "proofs" : "proof"}`,
   status: { published: "published", rejected: "rejected", empty: "nothing new", error: "error" },
@@ -165,8 +167,10 @@ const en: typeof fr = {
     runLine: (d, c, refused) =>
       `Run of ${d}: ${c.nouveaux ?? 0} items read, ${c.faitsCites ?? 0} quotes found word for word, ${c.faitsValides ?? 0} facts validated, ${c.publies ?? 0} statements published, ${refused} refused.`,
     runLink: "Read the run trace",
+    readSource: "Read the source",
     noRun: "The pipeline has not run yet.",
     editionOf: (d) => `Edition of ${d}`,
+    itemsCount: (n) => `${n} ${n > 1 ? "items" : "item"}`,
     earlier: "Earlier editions",
   },
   state: {
