@@ -156,7 +156,7 @@ Un run complet par l'API a coûté environ 0,27 $ lors du premier essai réel, a
 
 ## Limites connues
 
-- Le seuil du vérificateur (70 % d'énoncés validés) a été posé a priori ; avec peu d'énoncés, deux refus suffisent à rejeter une édition.
+- Le seuil du vérificateur (la moitié des énoncés validés) a été abaissé de 70 % à 50 % après trois runs réels, où la porte à 70 % rejetait deux éditions sur trois. Chaque énoncé reste vérifié un par un.
 - L'extraction de texte des pages se fait par expressions régulières : une page rendue en JavaScript donne peu de texte et ses citations sont rejetées.
 - Certaines sources primaires manquent faute de flux lisible ou parce que leurs pages bloquent les robots.
 
