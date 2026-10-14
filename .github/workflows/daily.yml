@@ -2,7 +2,8 @@ name: Run quotidien
 
 on:
   schedule:
-    - cron: "0 4 * * *" # 4 h UTC : 6 h à Paris en été, 5 h en hiver
+    # Pas pile sur l'heure : c'est le créneau le plus chargé, où GitHub retarde ou saute les runs programmés.
+    - cron: "17 4 * * *" # 4 h 17 UTC : 6 h 17 à Paris en été, 5 h 17 en hiver
   workflow_dispatch:
     inputs:
       replay:

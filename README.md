@@ -146,7 +146,7 @@ Avant d'ajouter une source, vérifier avec `--collect-only` que son flux est lis
 
 ## Mise en ligne
 
-- **Run quotidien** : [`.github/workflows/daily.yml`](.github/workflows/daily.yml), à 4 h UTC. Il lance les tests, puis le pipeline, puis committe `content/`, `runs/` et `data/`. Il a besoin du secret `ANTHROPIC_API_KEY` ; sans lui, le run est sauté. Le déclenchement manuel propose une case « replay » pour un essai qui ne publie rien.
+- **Run quotidien** : [`.github/workflows/daily.yml`](.github/workflows/daily.yml), à 4 h 17 UTC (GitHub ne garantit pas l'heure exacte des runs programmés, ni qu'ils aient lieu). Il lance les tests, puis le pipeline, puis committe `content/`, `runs/` et `data/`. Il a besoin du secret `ANTHROPIC_API_KEY` ; sans lui, le run est sauté. Le déclenchement manuel propose une case « replay » pour un essai qui ne publie rien.
 - **Évals** : [`.github/workflows/evals.yml`](.github/workflows/evals.yml), sur chaque pull request qui touche le pipeline.
 - **Site** : Cloudflare Pages, projet `ai-watch-by-bf` relié au dépôt. Commande de build `npm run build`, dossier de sortie `site/dist` (repris dans [`wrangler.jsonc`](wrangler.jsonc)). Chaque push sur `main` redéploie, y compris les commits du run quotidien.
 
