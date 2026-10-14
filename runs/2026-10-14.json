@@ -1,37 +1,30 @@
 {
   "date": "2026-10-14",
-  "startedAt": "2026-10-14T07:47:08.886Z",
-  "durationMs": 83936,
-  "status": "rejected",
+  "startedAt": "2026-10-14T07:50:15.490Z",
+  "durationMs": 74131,
+  "status": "published",
   "counts": {
     "collectes": 160,
     "nouveaux": 142,
     "retenus": 6,
-    "faitsProposes": 36,
-    "faitsCites": 36,
-    "faitsValides": 29
+    "faitsProposes": 30,
+    "faitsCites": 30,
+    "faitsValides": 21,
+    "publies": 5
   },
   "stages": [
     {
       "stage": "triage",
       "model": "claude-haiku-5-5",
-      "ms": 8198,
+      "ms": 5441,
       "inputTokens": 26375,
-      "outputTokens": 1504,
-      "costUsd": 0.0033895
+      "outputTokens": 672,
+      "costUsd": 0.0029735
     },
     {
       "stage": "research",
       "model": "claude-sonnet-5-5",
-      "ms": 1348,
-      "inputTokens": 2123,
-      "outputTokens": 76,
-      "costUsd": 0.005006
-    },
-    {
-      "stage": "research",
-      "model": "claude-sonnet-5-5",
-      "ms": 1367,
+      "ms": 1438,
       "inputTokens": 2137,
       "outputTokens": 83,
       "costUsd": 0.005104
@@ -39,23 +32,31 @@
     {
       "stage": "research",
       "model": "claude-sonnet-5-5",
-      "ms": 1587,
-      "inputTokens": 2207,
-      "outputTokens": 118,
-      "costUsd": 0.005594
+      "ms": 1526,
+      "inputTokens": 2169,
+      "outputTokens": 100,
+      "costUsd": 0.005338
     },
     {
       "stage": "research",
       "model": "claude-sonnet-5-5",
-      "ms": 1627,
-      "inputTokens": 2158,
-      "outputTokens": 93,
-      "costUsd": 0.005246
+      "ms": 1582,
+      "inputTokens": 2143,
+      "outputTokens": 82,
+      "costUsd": 0.005106
     },
     {
       "stage": "research",
       "model": "claude-sonnet-5-5",
-      "ms": 1746,
+      "ms": 1613,
+      "inputTokens": 2155,
+      "outputTokens": 91,
+      "costUsd": 0.00522
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1859,
       "inputTokens": 2152,
       "outputTokens": 77,
       "costUsd": 0.005074
@@ -63,7 +64,7 @@
     {
       "stage": "research",
       "model": "claude-sonnet-5-5",
-      "ms": 1957,
+      "ms": 1960,
       "inputTokens": 2152,
       "outputTokens": 89,
       "costUsd": 0.005194
@@ -71,207 +72,191 @@
     {
       "stage": "research",
       "model": "claude-sonnet-5-5",
-      "ms": 7013,
-      "inputTokens": 10034,
-      "outputTokens": 1221,
-      "costUsd": 0.032278
+      "ms": 881,
+      "inputTokens": 2247,
+      "outputTokens": 10,
+      "costUsd": 0.004594
     },
     {
       "stage": "research",
       "model": "claude-sonnet-5-5",
-      "ms": 6873,
-      "inputTokens": 5585,
-      "outputTokens": 1225,
-      "costUsd": 0.02342
-    },
-    {
-      "stage": "research",
-      "model": "claude-sonnet-5-5",
-      "ms": 7582,
+      "ms": 7379,
       "inputTokens": 3330,
-      "outputTokens": 1281,
-      "costUsd": 0.01947
+      "outputTokens": 1283,
+      "costUsd": 0.01949
     },
     {
       "stage": "research",
       "model": "claude-sonnet-5-5",
-      "ms": 6899,
+      "ms": 6928,
+      "inputTokens": 5585,
+      "outputTokens": 1224,
+      "costUsd": 0.02341
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 7394,
       "inputTokens": 10231,
-      "outputTokens": 1193,
-      "costUsd": 0.032392
+      "outputTokens": 1337,
+      "costUsd": 0.033832
     },
     {
       "stage": "research",
       "model": "claude-sonnet-5-5",
-      "ms": 8620,
-      "inputTokens": 12367,
-      "outputTokens": 1537,
-      "costUsd": 0.040104
+      "ms": 8259,
+      "inputTokens": 12120,
+      "outputTokens": 1454,
+      "costUsd": 0.03878
     },
     {
       "stage": "research",
       "model": "claude-sonnet-5-5",
-      "ms": 8478,
-      "inputTokens": 6900,
-      "outputTokens": 1540,
-      "costUsd": 0.0292
+      "ms": 8469,
+      "inputTokens": 14919,
+      "outputTokens": 1479,
+      "costUsd": 0.044628
     },
     {
       "stage": "verify",
       "model": "claude-sonnet-5-5",
-      "ms": 13645,
-      "inputTokens": 9691,
-      "outputTokens": 2290,
-      "costUsd": 0.042282
+      "ms": 12699,
+      "inputTokens": 8622,
+      "outputTokens": 2089,
+      "costUsd": 0.038134
     },
     {
       "stage": "write",
       "model": "claude-sonnet-5-5",
-      "ms": 32324,
-      "inputTokens": 6422,
-      "outputTokens": 5379,
-      "costUsd": 0.066634
+      "ms": 28184,
+      "inputTokens": 5364,
+      "outputTokens": 4525,
+      "costUsd": 0.055978
     },
     {
       "stage": "verify",
       "model": "claude-sonnet-5-5",
-      "ms": 13069,
-      "inputTokens": 11052,
-      "outputTokens": 2070,
-      "costUsd": 0.042804
+      "ms": 10220,
+      "inputTokens": 9602,
+      "outputTokens": 1617,
+      "costUsd": 0.035374
     }
   ],
   "gates": [
     {
       "name": "literal_quotes",
       "pass": true,
-      "detail": "36/36"
+      "detail": "30/30"
     },
     {
       "name": "supported_claims",
       "pass": true,
-      "detail": "29/36"
+      "detail": "21/30"
     },
     {
       "name": "verifier",
-      "pass": false,
-      "detail": "4/10 (>= 50%)"
+      "pass": true,
+      "detail": "5/7 (>= 50%)"
     },
     {
       "name": "volume",
       "pass": true,
-      "detail": "radar 1, state 3 (max 3)"
+      "detail": "radar 0, state 2 (max 3)"
     },
     {
       "name": "budget",
       "pass": true,
-      "detail": "0.363/2 USD"
+      "detail": "0.328/2 USD"
     }
   ],
   "rejected": [
     {
       "what": {
-        "fr": "Le pipeline en deux étapes utilise des filtres regex pour générer les candidats, puis un classifieur ModernBERT affiné pour évaluer chaque candidat dans son contexte.",
-        "en": "The two-stage pipeline uses regex filters for candidate generation, then a fine-tuned ModernBERT classifier to evaluate each candidate and its surrounding context."
+        "fr": "Un ingénieur de Scion a répondu que, Claude étant de loin le plus gros utilisateur de Scion et nécessairement en ligne, le support hors ligne n'était pas important.",
+        "en": "A Scion engineer replied that since Claude is by far the heaviest user of Scion and is necessarily online, offline support wasn't important."
       },
       "reason": "claim_unsupported",
-      "detail": "The quote only mentions the fine-tuned ModernBERT classifier evaluating candidates in context; it does not establish a two-stage pipeline or regex filters for candidate generation."
+      "detail": "The quote does not say the speaker is a Scion engineer or that this was a reply, and it does not mention offline support; the URL alone does not establish these details."
     },
     {
       "what": {
-        "fr": "Hors ligne, sur le scan post-push, le nouveau pipeline a obtenu une précision supérieure de 13 % et un rappel supérieur de 19 % à ceux de l'ancien pipeline LLM, sur le même trafic public.",
-        "en": "Offline, on post-push scanning, the new pipeline achieved 13% higher precision and 19% higher recall than the previous LLM pipeline on the same public traffic."
+        "fr": "Google a affiné son modèle léger Gemma sur des conversations d'arnaques locales pour la détection d'arnaques.",
+        "en": "Google's lightweight Gemma model was fine-tuned on local scam conversations for scam detection."
       },
       "reason": "claim_unsupported",
-      "detail": "The quote does not say the evaluation was offline, whereas the claim adds 'offline' in both versions."
+      "detail": "The quote says Gemma was fine-tuned on local scam conversations but does not mention scam detection as the purpose, though this is only implied by the URL."
     },
     {
       "what": {
-        "fr": "Dans un test A/B client, l'acceptation pondérée par propriétaire de dépôt a augmenté de 11,5 %.",
-        "en": "In a customer A/B experiment, repository owner-weighted acceptance increased by 11.5%."
+        "fr": "Le pipeline comporte deux étapes : un classifieur léger filtre les messages entrants avec une consommation minimale, puis le Gemma affiné analyse un extrait plus large de la conversation pour confirme",
+        "en": "The pipeline has two stages: a lightweight classifier screens inbound messages using minimal power, then the fine-tuned Gemma model analyzes a larger snapshot of the conversation to confirm a threat o"
       },
       "reason": "claim_unsupported",
-      "detail": "The quote does not mention a customer A/B experiment; it only gives an 11.5% increase in owner-weighted acceptance, so the experiment context is unsupported."
+      "detail": "The quote covers only stage 2; the lightweight classifier screening inbound messages with minimal power is not in the quote."
     },
     {
       "what": {
-        "fr": "Google DeepMind et GovTech Singapore ont affiné un modèle de détection d'arnaques qui préserve la vie privée et fonctionne sur l'appareil.",
-        "en": "Google DeepMind and GovTech Singapore fine-tuned a privacy-preserving, on-device scam detection model."
+        "fr": "Les arnaques représentent plus de la moitié des crimes signalés à Singapour et plus de 4 milliards de S$ de pertes depuis 2019.",
+        "en": "Scams make up over half of Singapore's reported crimes and account for more than S$4 billion in losses since 2019."
       },
       "reason": "claim_unsupported",
-      "detail": "The quote says 'Together' without naming Google DeepMind and GovTech Singapore; the url alone cannot establish the GovTech partner, so the attribution is not proven by the quote."
+      "detail": "The quote has no explicit subject; the claim assumes it refers to scams, which is not established by the quote alone."
     },
     {
       "what": {
-        "fr": "Le système utilise un pipeline en deux étapes : un classifieur léger filtre les messages entrants avec une consommation minimale, puis le modèle Gemma affiné analyse un extrait plus large de la conver",
-        "en": "The system uses a two-stage pipeline: a lightweight classifier screens inbound messages using minimal power, then the fine-tuned Gemma model analyzes a larger snapshot of the conversation to confirm a"
+        "fr": "Dans le test d'AWS (72 exécutions d'agent), l'agent a répondu correctement à 67 exécutions sur 72, dont les 18 sur 18 au niveau d'effort xhigh.",
+        "en": "In AWS's test of 72 agent runs, the agent answered 67 of the 72 runs correctly, including all 18 at the xhigh effort level."
       },
       "reason": "claim_unsupported",
-      "detail": "The quote only covers Stage 2 (Gemma analysis of a larger snapshot); the lightweight classifier first stage with minimal power use is not established."
+      "detail": "The quote does not mention AWS's test or that the 72 runs were agent runs, beyond what the URL implies; it also frames xhigh without confirming the 72-run total as stated in the claim text."
     },
     {
       "what": {
-        "fr": "Un ingénieur de Scion a répondu que Claude, principal utilisateur de Scion, est nécessairement en ligne, donc le support hors ligne n'était pas important.",
-        "en": "A Scion engineer replied that since Claude is by far the heaviest user of Scion and is necessarily online, offline support just wasn't important to do."
+        "fr": "Grok 4.7 est accessible sur Bedrock via deux profils d'inférence inter-régions : us.xai.grok-4.7 (routage aux États-Unis) et global.xai.grok-4.7 (régions AWS commerciales).",
+        "en": "Grok 4.7 is accessed on Bedrock through two cross-Region inference profiles: us.xai.grok-4.7 (routing within the US) and global.xai.grok-4.7 (commercial AWS Regions)."
       },
       "reason": "claim_unsupported",
-      "detail": "The quote does not say the speaker is a Scion engineer nor that it was a reply, and 'offline support' is not named in the quote itself; these details go beyond it."
+      "detail": "The quote says two profiles are available but does not list their names or routing scopes."
     },
     {
       "what": {
-        "fr": "Argon obtient 87 % au benchmark ERQA (Embodied Reasoning) et surpasse tous les autres modèles de pointe.",
-        "en": "Argon outperforms all other frontier models on the Embodied Reasoning (ERQA) benchmark with a score of 87%."
+        "fr": "Les jetons de raisonnement comptent comme jetons de sortie et consomment max_completion_tokens avant le texte de réponse ; si la limite est atteinte pendant le raisonnement, la réponse n'a pas de text",
+        "en": "Reasoning tokens count as output tokens and draw down max_completion_tokens before the answer text; if the limit is reached during reasoning, the response returns without answer text."
       },
       "reason": "claim_unsupported",
-      "detail": "The quote does not name the ERQA benchmark; the claim attributes the 87% score to ERQA which the quote does not establish."
+      "detail": "The quote does not say that the response has no text if the limit is reached during reasoning."
     },
     {
       "what": {
-        "fr": "Singapour : un Gemma affiné contre les arnaques, exécuté sur l'appareil",
-        "en": "Singapore: a fine-tuned Gemma for scam detection, running on-device"
+        "fr": "Le nombre moyen de jetons de sortie par exécution passe de 1 184 au niveau low à 9 147 au niveau xhigh, tandis que les appels d'outils restent à peu près constants (17,2 à 18,7).",
+        "en": "Mean output tokens per run rose from 1,184 at low to 9,147 at xhigh, while tool calls stayed roughly flat (17.2 to 18.7)."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote covers only the flat tool calls; the output token means of 1,184 and 9,147 are not in the quote."
+    },
+    {
+      "what": {
+        "fr": "Dans les conditions contrôlées de l'étude, Gated KalmaNet (GKA) est la meilleure couche à espace d'états, suivie de Gated DeltaNet (GDN) puis de Mamba-2.",
+        "en": "Under the study's controlled conditions, Gated KalmaNet (GKA) performs best among the state space models, followed by Gated DeltaNet (GDN) and then Mamba-2."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not say that GKA, GDN and Mamba-2 are state space models or that they are the best among them in a layer sense beyond ranking."
+    },
+    {
+      "what": {
+        "fr": "Anthropic remplace Git par un nouveau système de contrôle de version",
+        "en": "Anthropic replaces Git with a new source control system"
       },
       "reason": "statement_unsupported",
-      "detail": "The statement attributes the fine-tuning to Google DeepMind and the Singapore Government jointly, which the cited claims do not establish."
+      "detail": "The headline claims Anthropic replaces Git with a new system, which the cited claims only imply through migration from Git, and the analysis about strain on tooling goes beyond the facts."
     },
     {
       "what": {
-        "fr": "Claude Code v2.1.299 : compaction en veille et règles MCP plus strictes",
-        "en": "Claude Code v2.1.299: idle compaction and stricter MCP rules"
+        "fr": "Un modèle affiné avec GovTech Singapore fonctionne entièrement sur l'appareil",
+        "en": "A model fine-tuned with GovTech Singapore runs entirely on-device"
       },
       "reason": "statement_unsupported",
-      "detail": "The statement says the mcp__<server>__* form is now required, but the claim only says to write it, and also cites unsupported inference about teams needing to review rules; moreover the statement says it 'can be turned off' fine but the 'required' strengthening is not established."
-    },
-    {
-      "what": {
-        "fr": "Agent Lightning v1.0 : un framework de RL pour agents en 3 500 lignes",
-        "en": "Agent Lightning v1.0: an agent RL framework in 3,500 lines"
-      },
-      "reason": "statement_unsupported",
-      "detail": "It relies on claim 565e240356c9-5, which is not supported, and asserts the Qwen pipeline result in terms that match, but the Kubernetes claim fails."
-    },
-    {
-      "what": {
-        "fr": "Agent Lightning",
-        "en": "Agent Lightning"
-      },
-      "reason": "statement_unsupported",
-      "detail": "It relies on the unsupported Kubernetes claim and the tracking/pilot recommendation aside, mentions 14.6 points not stated in the cited claims' text (derived) while the Kubernetes claim is refused."
-    },
-    {
-      "what": {
-        "fr": "Microsoft Research rapporte qu'un pipeline de bout en bout pour agent de code construit sur Qwen3.5-9B avec Agent Lightning v1.0 a fait passer le Pass@1 sur SWE-bench Verified de 41,8 % à 56,4 %, avec",
-        "en": "Microsoft Research reports that an end-to-end coding-agent pipeline built on Qwen3.5-9B with Agent Lightning v1.0 raised Pass@1 on SWE-bench Verified from 41.8% to 56.4%, using about 6,000 training sa"
-      },
-      "reason": "statement_unsupported",
-      "detail": "The claim does not say the pipeline used Agent Lightning v1.0 or that Microsoft Research reported it for a coding agent in those terms."
-    },
-    {
-      "what": {
-        "fr": "Google DeepMind et le gouvernement de Singapour ont affiné le modèle léger Gemma sur des conversations d'arnaques locales, à partir de jeux de données anonymisés, dans l'environnement GCP de GovTech S",
-        "en": "Google DeepMind and the Singapore Government fine-tuned the lightweight Gemma model on local scam conversations, using anonymised datasets, within GovTech Singapore's GCP environment; the model runs e"
-      },
-      "reason": "statement_unsupported",
-      "detail": "The cited claims do not establish that Google DeepMind and the Singapore Government jointly fine-tuned the model."
+      "detail": "The headline says a model fine-tuned with GovTech Singapore, but the cited claims do not establish the model purpose or that DeepMind fine-tuned it, and the cited facts cover only a subset; the privacy-design framing is acceptable but the title is not fully supported."
     }
   ],
   "toolCalls": [
@@ -279,44 +264,45 @@
       "tool": "fetch_page",
       "input": "https://simonwillison.net/2026/Oct/13/redesigning-source-control-at-anthropic/",
       "ok": true,
-      "ms": 21,
+      "ms": 77,
       "item": "https://simonwillison.net/2026/Oct/13/redesigning-source-control-at-anthropic/"
     },
     {
       "tool": "fetch_page",
-      "input": "https://github.blog/ai-and-ml/githubs-model-for-secret-detection-finding-more-secrets-with-less-noise/",
+      "input": "https://aws.amazon.com/blogs/machine-learning/build-long-horizon-agents-with-grok-4-7-on-amazon-bedrock/",
       "ok": true,
-      "ms": 31,
-      "item": "https://github.blog/ai-and-ml/githubs-model-for-secret-detection-finding-more-secrets-with-less-noise/"
+      "ms": 96,
+      "item": "https://aws.amazon.com/blogs/machine-learning/build-long-horizon-agents-with-grok-4-7-on-amazon-bedrock/"
     },
     {
       "tool": "fetch_page",
-      "input": "https://github.com/anthropics/claude-code/releases/tag/v2.1.299",
+      "input": "https://www.amazon.science/blog/can-we-change-an-ai-models-architecture-without-retraining-it-from-scratch",
       "ok": true,
-      "ms": 437,
-      "item": "https://github.com/anthropics/claude-code/releases/tag/v2.1.299"
+      "ms": 41,
+      "item": "https://www.amazon.science/blog/can-we-change-an-ai-models-architecture-without-retraining-it-from-scratch"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://deepmind.google/blog/developing-gemini-4-argon-responsibly-and-safely/",
+      "ok": false,
+      "detail": "redirected off-host to blog.google",
+      "ms": 356,
+      "item": "https://deepmind.google/blog/developing-gemini-4-argon-responsibly-and-safely/"
     },
     {
       "tool": "fetch_page",
       "input": "https://deepmind.google/blog/on-device-ai-scam-detection-mddi/",
       "ok": true,
-      "ms": 174,
+      "ms": 203,
       "item": "https://deepmind.google/blog/on-device-ai-scam-detection-mddi/"
     },
     {
       "tool": "fetch_page",
       "input": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/",
       "ok": true,
-      "ms": 145,
+      "ms": 209,
       "item": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/"
-    },
-    {
-      "tool": "fetch_page",
-      "input": "https://www.microsoft.com/en-us/research/blog/agent-lightning-v1-0-a-3500-line-lightweight-agentic-rl-framework-for-training-agents-with-real-harnesses/",
-      "ok": true,
-      "ms": 676,
-      "item": "https://www.microsoft.com/en-us/research/blog/agent-lightning-v1-0-a-3500-line-lightweight-agentic-rl-framework-for-training-agents-with-real-harnesses/"
     }
   ],
-  "costUsd": 0.36319150000000006
+  "costUsd": 0.32822950000000006
 }

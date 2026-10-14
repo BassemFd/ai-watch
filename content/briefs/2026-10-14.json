@@ -1,0 +1,153 @@
+{
+  "date": "2026-10-14",
+  "headline": {
+    "fr": "Gemini 4 Argon disponible, conversion en hybride par « priming », contrôle de version chez Anthropic",
+    "en": "Gemini 4 Argon available, hybrid conversion via priming, source control at Anthropic"
+  },
+  "items": [
+    {
+      "title": {
+        "fr": "Gemini 4 Argon disponible via l'API, à prix introductif jusqu'au 30 novembre",
+        "en": "Gemini 4 Argon available via the API, at an introductory price until November 30"
+      },
+      "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/",
+      "source": "Google AI",
+      "summary": {
+        "fr": "Gemini 4 Argon est disponible mondialement via l'API dans AI Studio et la plateforme Gemini. Il se classe n°1 sur le Vals Index et offre une limite unifiée d'entrée-sortie de 1M de jetons. Le prix introductif est de 2 $ par million de jetons d'entrée et 10 $ par million de jetons de sortie ; après le 30 novembre 2026, il passera à 4 $ et 20 $.",
+        "en": "Gemini 4 Argon is globally available via the API in AI Studio and the Gemini platform. It ranks #1 on the Vals Index and offers a 1M unified input-output token limit. The introductory price is $2 per million input tokens and $10 per million output tokens; after November 30, 2026, it becomes $4 and $20."
+      },
+      "why": {
+        "fr": "Le tarif doublera à la fin de la période introductive : pour un projet qui vise ce modèle, il vaut mieux budgétiser dès maintenant sur le prix après le 30 novembre.",
+        "en": "The price will double when the introductory period ends, so a project targeting this model should budget now on the post-November 30 price."
+      },
+      "claims": [
+        {
+          "id": "c1e94fc83136-0",
+          "text": {
+            "fr": "Gemini 4 Argon est disponible mondialement via l'API dans AI Studio et la plateforme Gemini pour les développeurs et entreprises, et pour les abonnés Google AI Ultra dans Google Antigravity.",
+            "en": "Gemini 4 Argon is globally available via the API in AI Studio and the Gemini platform for developers and enterprises, and for Google AI Ultra subscribers in Google Antigravity."
+          },
+          "quote": "Gemini 4 Argon is now globally available today for developers and enterprises via the API in AI Studio and Gemini platform , for Google AI Ultra subscribers in Google Antigravity",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/"
+        },
+        {
+          "id": "c1e94fc83136-1",
+          "text": {
+            "fr": "Argon se classe n°1 sur le Vals Index, qui mesure la performance des modèles dans des secteurs économiques comme la finance, le code, le droit et la fiscalité.",
+            "en": "Argon ranks #1 on the Vals Index, which measures model performance across economic sectors like finance, coding, legal, and tax work."
+          },
+          "quote": "ranking #1 on the Vals Index , which measures model performance across critical economic sectors like finance, coding, legal, and tax work",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/"
+        },
+        {
+          "id": "c1e94fc83136-2",
+          "text": {
+            "fr": "Le prix de lancement introductif est de 2 $ par million de jetons d'entrée et 10 $ par million de jetons de sortie.",
+            "en": "The introductory launch price is $2 per million input tokens and $10 per million output tokens."
+          },
+          "quote": "The model launches today at an introductory price 1 of $2 per million input tokens and $10 per million output tokens (with cached input tokens at 95% off).",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/"
+        },
+        {
+          "id": "c1e94fc83136-3",
+          "text": {
+            "fr": "Après la période introductive se terminant le 30 novembre 2026, le prix passera à 4 $ par million de jetons d'entrée et 20 $ par million de jetons de sortie.",
+            "en": "After the introductory period expires on November 30, 2026, the price of $4 per 1M input tokens and $20 per 1M output tokens will apply."
+          },
+          "quote": "After the introductory period expires on November 30, 2026, the price of $4 per 1M input tokens and $20 per 1M output tokens will apply.",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/"
+        },
+        {
+          "id": "c1e94fc83136-4",
+          "text": {
+            "fr": "Via l'API Gemini, Argon offre une limite unifiée d'entrée-sortie de 1M de jetons, présentée comme leader du secteur.",
+            "en": "Via the Gemini API, Argon offers a 1M unified input-output token limit, described as industry-leading."
+          },
+          "quote": "This is enabled by an industry-leading 1M unified input-output token limit via the Gemini API.",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Amazon Science : convertir un Transformer en hybride sans repartir de zéro",
+        "en": "Amazon Science: converting a Transformer into a hybrid without starting from scratch"
+      },
+      "url": "https://www.amazon.science/blog/can-we-change-an-ai-models-architecture-without-retraining-it-from-scratch",
+      "source": "Amazon Science",
+      "summary": {
+        "fr": "Le « priming » réutilise les poids d'un Transformer pré-entraîné et réduit de plus de 99 % le coût de pré-entraînement des architectures hybrides. Le pipeline consomme moins de 0,5 % du budget de tokens de pré-entraînement du modèle source et fonctionne sur plusieurs familles (Qwen, Llama, Mistral). À l'échelle 32B, le hybride GKA est à moins de 1 % de son Transformer source avec la moitié du cache KV à l'inférence.",
+        "en": "Priming uses pretrained Transformer weights as a starting point and reduces the pretraining cost of hybrid architectures by more than 99%. The pipeline consumes less than 0.5% of the source model's pretraining token budget and works across families (Qwen, Llama, Mistral). At 32B scale, the hybrid GKA is within 1% of its source Transformer while requiring half the KV cache at inference."
+      },
+      "why": {
+        "fr": "Si ces résultats se confirment au-delà de ce cadre, convertir un modèle existant pourrait coûter bien moins cher que d'entraîner une architecture hybride depuis zéro, ce qui concerne ceux qui servent des contextes longs.",
+        "en": "If these results hold beyond this setting, converting an existing model could cost far less than training a hybrid architecture from scratch, which matters for teams serving long contexts."
+      },
+      "claims": [
+        {
+          "id": "e05f5dfb850c-0",
+          "text": {
+            "fr": "Le « priming » réutilise les poids d'un Transformer pré-entraîné et réduit de plus de 99 % le coût de pré-entraînement des architectures hybrides.",
+            "en": "Priming uses pretrained Transformer weights as a starting point and reduces the pretraining cost of hybrid architectures by more than 99%."
+          },
+          "quote": "We introduce priming, a method that leverages pretrained Transformer weights as a starting point to reduce the pretraining cost of hybrid architectures by more than 99%.",
+          "url": "https://www.amazon.science/blog/can-we-change-an-ai-models-architecture-without-retraining-it-from-scratch"
+        },
+        {
+          "id": "e05f5dfb850c-1",
+          "text": {
+            "fr": "Le pipeline de priming consomme moins de 0,5 % du budget de tokens de pré-entraînement du modèle source et fonctionne sur plusieurs familles de Transformers (Qwen, Llama, Mistral).",
+            "en": "The priming pipeline consumes less than 0.5% of the source model's pretraining token budget and works across Transformer families (Qwen, Llama, Mistral)."
+          },
+          "quote": "The entire pipeline consumes less than 0.5% of the source model's pretraining token budget, and it works across Transformer families (Qwen, Llama, Mistral)",
+          "url": "https://www.amazon.science/blog/can-we-change-an-ai-models-architecture-without-retraining-it-from-scratch"
+        },
+        {
+          "id": "e05f5dfb850c-2",
+          "text": {
+            "fr": "À l'échelle 32B, le modèle hybride GKA est à moins de 1 % de son Transformer source entraîné sur les mêmes données, avec la moitié du cache KV à l'inférence.",
+            "en": "At 32B scale, the hybrid GKA is within 1% of its source Transformer trained on the same data, while requiring half the KV cache at inference."
+          },
+          "quote": "at the 32-billion-parameter (32B) scale, hybrid GKA is within 1% of its source Transformer trained on the same data, despite requiring half the KV cache at inference.",
+          "url": "https://www.amazon.science/blog/can-we-change-an-ai-models-architecture-without-retraining-it-from-scratch"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Grok 4.7 sur Amazon Bedrock : quatre niveaux d'effort de raisonnement",
+        "en": "Grok 4.7 on Amazon Bedrock: four reasoning effort levels"
+      },
+      "url": "https://aws.amazon.com/blogs/machine-learning/build-long-horizon-agents-with-grok-4-7-on-amazon-bedrock/",
+      "source": "AWS Machine Learning",
+      "summary": {
+        "fr": "Sur Amazon Bedrock, Grok 4.7 propose quatre niveaux d'effort de raisonnement : low, medium, high et xhigh. SpaceXAI indique une fenêtre de contexte de 500K jetons, avec entrée texte et image et sortie texte.",
+        "en": "On Amazon Bedrock, Grok 4.7 supports four reasoning effort levels: low, medium, high, and xhigh. SpaceXAI lists a 500K token context window, with text and image input and text output."
+      },
+      "why": {
+        "fr": "Le choix du niveau d'effort offre un levier de réglage par requête ; reste à mesurer, sur ses propres tâches, ce que chaque niveau apporte.",
+        "en": "The choice of effort level gives a per-request tuning lever; what each level delivers on your own tasks remains to be measured."
+      },
+      "claims": [
+        {
+          "id": "c1d6272d93f8-1",
+          "text": {
+            "fr": "Sur Amazon Bedrock, Grok 4.7 propose quatre niveaux d'effort de raisonnement : low, medium, high et xhigh.",
+            "en": "On Amazon Bedrock, Grok 4.7 supports four reasoning effort levels: low, medium, high, and xhigh."
+          },
+          "quote": "Grok 4.7 supports four effort levels: low , medium , high , and xhigh .",
+          "url": "https://aws.amazon.com/blogs/machine-learning/build-long-horizon-agents-with-grok-4-7-on-amazon-bedrock/"
+        },
+        {
+          "id": "c1d6272d93f8-5",
+          "text": {
+            "fr": "SpaceXAI indique une fenêtre de contexte de 500K jetons pour Grok 4.7, avec entrée texte et image et sortie texte.",
+            "en": "SpaceXAI lists a 500K token context window for Grok 4.7, with text and image input and text output."
+          },
+          "quote": "SpaceXAI lists a 500K token context window for Grok 4.7, with text and image input and text output.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/build-long-horizon-agents-with-grok-4-7-on-amazon-bedrock/"
+        }
+      ]
+    }
+  ]
+}

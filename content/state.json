@@ -73,6 +73,62 @@
           "url": "https://simonwillison.net/2026/Oct/7/claude-haiku-5-5/"
         }
       ]
+    },
+    {
+      "date": "2026-10-14",
+      "sectionId": "open",
+      "text": {
+        "fr": "Amazon Science a montré qu'un pipeline de « priming » réutilisant les poids de Transformers pré-entraînés (Qwen, Llama, Mistral) consomme moins de 0,5 % du budget de tokens de pré-entraînement du modèle source. À l'échelle 32B, le hybride GKA obtenu est à moins de 1 % de son Transformer source entraîné sur les mêmes données, avec la moitié du cache KV ; son avantage de débit passe de 1,50× à 16K tokens à 2,06× à 128K (GKA à 10 itérations).",
+        "en": "Amazon Science showed that a priming pipeline reusing pretrained Transformer weights (Qwen, Llama, Mistral) consumes less than 0.5% of the source model's pretraining token budget. At 32B scale, the resulting GKA hybrid is within 1% of its source Transformer trained on the same data, with half the KV cache; its throughput advantage grows from 1.50× at 16K tokens to 2.06× at 128K (GKA at 10 iterations)."
+      },
+      "evidence": [
+        {
+          "id": "e05f5dfb850c-1",
+          "text": {
+            "fr": "Le pipeline de priming consomme moins de 0,5 % du budget de tokens de pré-entraînement du modèle source et fonctionne sur plusieurs familles de Transformers (Qwen, Llama, Mistral).",
+            "en": "The priming pipeline consumes less than 0.5% of the source model's pretraining token budget and works across Transformer families (Qwen, Llama, Mistral)."
+          },
+          "quote": "The entire pipeline consumes less than 0.5% of the source model's pretraining token budget, and it works across Transformer families (Qwen, Llama, Mistral)",
+          "url": "https://www.amazon.science/blog/can-we-change-an-ai-models-architecture-without-retraining-it-from-scratch"
+        },
+        {
+          "id": "e05f5dfb850c-2",
+          "text": {
+            "fr": "À l'échelle 32B, le modèle hybride GKA est à moins de 1 % de son Transformer source entraîné sur les mêmes données, avec la moitié du cache KV à l'inférence.",
+            "en": "At 32B scale, the hybrid GKA is within 1% of its source Transformer trained on the same data, while requiring half the KV cache at inference."
+          },
+          "quote": "at the 32-billion-parameter (32B) scale, hybrid GKA is within 1% of its source Transformer trained on the same data, despite requiring half the KV cache at inference.",
+          "url": "https://www.amazon.science/blog/can-we-change-an-ai-models-architecture-without-retraining-it-from-scratch"
+        },
+        {
+          "id": "e05f5dfb850c-5",
+          "text": {
+            "fr": "L'avantage de débit du modèle hybride 32B va de 1,50× à 16K tokens à 2,06× à 128K tokens (GKA à 10 itérations).",
+            "en": "The 32B hybrid's throughput advantage grows from 1.50× at 16K tokens to 2.06× at 128K (GKA at 10 iterations)."
+          },
+          "quote": "The throughput advantage grows with context length: 1.50× at 16K tokens, scaling to 2.06× at 128K for the 32B model (GKA at 10 iterations).",
+          "url": "https://www.amazon.science/blog/can-we-change-an-ai-models-architecture-without-retraining-it-from-scratch"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-14",
+      "sectionId": "evals",
+      "text": {
+        "fr": "Selon Google, Gemini 4 Argon est en tête du benchmark Gray Swan d'injection de prompt indirecte, avec un taux de réussite d'attaque de 0,7 % sur 15 tentatives adaptatives.",
+        "en": "According to Google, Gemini 4 Argon leads the Gray Swan Indirect Prompt Injection benchmark, cutting attack success across 15 adaptive attempts to 0.7%."
+      },
+      "evidence": [
+        {
+          "id": "c1e94fc83136-5",
+          "text": {
+            "fr": "Sur le benchmark Gray Swan d'injection de prompt indirecte, Argon est en tête, avec un taux de réussite d'attaque de 0,7 % sur 15 tentatives adaptatives.",
+            "en": "Argon leads the Gray Swan Indirect Prompt Injection benchmark, cutting attack success across 15 adaptive attempts to 0.7%."
+          },
+          "quote": "Argon leads the Gray Swan Indirect Prompt Injection (IPI) benchmark, cutting attack success across 15 adaptive attempts to 0.7%.",
+          "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/"
+        }
+      ]
     }
   ]
 }
