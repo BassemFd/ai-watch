@@ -288,10 +288,11 @@ test("run publié : le fait inventé est écarté, le reste est écrit, le rerun
   assert.equal(json(root, `runs/${DATE}.json`).status, "published");
 });
 
-test("run publié : la brève écrite porte le titre de l'édition dans les deux langues", async () => {
+test("run publié : le titre de l'édition écrite reprend les titres publiés, dans les deux langues", async () => {
   const root = tmpRoot();
   await run(options(root, true));
-  assert.deepEqual(json(root, `content/briefs/${DATE}.json`).headline, HEADLINE);
+  const brief = json(root, `content/briefs/${DATE}.json`);
+  assert.deepEqual(brief.headline, { fr: brief.items.map((x: any) => x.title.fr).join(" ; "), en: brief.items.map((x: any) => x.title.en).join("; ") });
 });
 
 test("run publié : chaque brève écrite porte son titre, son résumé et son intérêt dans les deux langues", async () => {
