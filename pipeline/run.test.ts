@@ -509,6 +509,20 @@ test("énoncés : le second appel porte les énoncés et les faits qu'ils citent
   assert.deepEqual(second.claims.map((c) => c.text), [TRUE_FACT]);
 });
 
+test("énoncés : au second appel, chaque fait porte la source et le titre de son sujet, comme pour le rédacteur", async () => {
+  const { llm } = await play();
+  const [fact] = llm.verifyCalls[1].claims;
+  assert.equal(fact.source, sources[0].name);
+  assert.equal(fact.title, "New model");
+});
+
+test("faits : au premier appel, un fait ne porte que lui-même et sa citation", async () => {
+  const { llm } = await play();
+  const [fact] = llm.verifyCalls[0].claims;
+  assert.equal(fact.source, undefined);
+  assert.equal(fact.title, undefined);
+});
+
 test("énoncés : un fait validé au premier appel le reste quand le second appel ne rend aucun verdict sur les faits", async () => {
   const { root, trace } = await play({ verifier: { secondFacts: "none" } });
   assert.equal(trace.status, "published");
