@@ -25,12 +25,12 @@ flowchart LR
 
 1. **Collecte** (code). Lit les flux RSS et Atom de [`sources.json`](sources.json), ne garde que les liens `https` vers les domaines de la liste blanche, écarte ce qui a déjà été vu.
 2. **Tri** (Haiku 5.5). Note les items. Le code retient au plus six sujets, avec un plafond par source pour qu'aucune n'écrive toute l'édition.
-3. **Recherche** (Sonnet 5.5, un agent par sujet). Une boucle d'agent avec un seul outil, `fetch_page`. Le modèle choisit ce qu'il lit ; le code décide ce qu'il a le droit de lire : liste blanche, pas de redirection vers un autre hôte, 3 pages et 6 tours au plus. Chaque appel d'outil est tracé. L'agent rend des faits atomiques, chacun avec une citation exacte et la page d'où elle vient.
+3. **Recherche** (Sonnet 5.5, un agent par sujet). Une boucle d'agent avec un seul outil, `fetch_page`. Le modèle choisit ce qu'il lit ; le code décide ce qu'il a le droit de lire : les seuls domaines (et, sur un hôte partagé, les seuls chemins) de la source du sujet, pas de redirection vers un autre hôte, 3 pages et 6 tours au plus. Chaque appel d'outil est tracé. L'agent rend des faits atomiques, chacun avec une citation exacte et la page d'où elle vient.
 4. **Porte des citations** (code). Une citation doit figurer mot pour mot dans une page que l'agent a réellement lue pendant sa boucle. Sinon le fait disparaît.
 5. **Vérification des faits** (Sonnet 5.5, contexte neuf). Juge chaque fait contre sa seule citation, dans les deux langues. Un fait refusé n'atteint jamais le rédacteur.
 6. **Rédaction** (Sonnet 5.5). Écrit l'édition en français et en anglais à partir des seuls faits validés. Il ne voit jamais le web.
-7. **Vérification des énoncés** (Sonnet 5.5). Juge chaque phrase rédigée contre les faits qu'elle cite.
-8. **Portes et publication** (code). Seuil du vérificateur, volume, budget. Une porte échoue et aucun contenu n'est écrit. La trace du run, elle, est toujours écrite.
+7. **Vérification des énoncés** (Sonnet 5.5). Juge chaque phrase rédigée contre les faits qu'elle cite. Il reçoit le même contexte que le rédacteur (source et titre de chaque sujet) et ne rejuge pas les faits déjà validés.
+8. **Portes et publication** (code). Seuil du vérificateur (au moins la moitié des énoncés validés), volume, budget. Seuls les énoncés validés un par un sont publiés. Une porte échoue et aucun contenu n'est écrit. La trace du run, elle, est toujours écrite.
 
 Trois règles tiennent l'ensemble :
 
@@ -103,7 +103,7 @@ Chaque comportement passe par un cycle red, green, refactor. La commande `/tdd` 
 
 Un agent ne voit que les fichiers, pas le raisonnement du précédent, et c'est le script qui décide si la phase est commitée. Les petits changements suivent le même cycle à la main, avec la même porte. L'historique git montre les cycles.
 
-222 tests, tous hors ligne : les modèles et le réseau y sont remplacés par des doublures. Ils couvrent les règles et l'orchestration, pas les consignes ; celles-ci sont jugées par l'éval et par les runs réels.
+Plus de 220 tests, tous hors ligne : les modèles et le réseau y sont remplacés par des doublures. Ils couvrent les règles et l'orchestration, pas les consignes ; celles-ci sont jugées par l'éval et par les runs réels.
 
 ## Commandes
 
@@ -132,13 +132,14 @@ Deux façons d'appeler les modèles :
 Une source dans [`sources.json`](sources.json) :
 
 ```json
-{ "id": "mistral", "name": "Mistral AI", "feed": "https://mistral.ai/rss.xml", "domains": ["mistral.ai"], "max": 40, "maxPicks": 2 }
+{ "id": "claude-code", "name": "Claude Code (releases)", "feed": "https://github.com/anthropics/claude-code/releases.atom", "domains": ["github.com"], "paths": ["/anthropics/claude-code/"], "maxPicks": 1 }
 ```
 
 | Champ | Rôle |
 |---|---|
 | `feed` | flux RSS ou Atom |
-| `domains` | domaines que le pipeline a le droit de lire pour cette source ; l'union de tous forme la liste blanche de `fetch_page` |
+| `domains` | domaines que le pipeline a le droit de lire pour cette source ; l'agent qui étudie un sujet ne peut lire que ceux de sa source |
+| `paths` | préfixes de chemin autorisés sur ces domaines, pour les hôtes partagés comme github.com (facultatif) |
 | `max` | items lus dans le flux (40 par défaut) |
 | `maxPicks` | sujets au plus par run (2 par défaut, 1 pour les blogs de commentaire) |
 
@@ -152,11 +153,12 @@ Avant d'ajouter une source, vérifier avec `--collect-only` que son flux est lis
 
 ## Coût
 
-Un run complet par l'API a coûté environ 0,27 $ lors du premier essai réel, avec la rédaction encore sur un modèle plus cher. Le chiffre affiché sur le site est calculé par le pipeline à partir des tokens et d'une grille de prix écrite dans `pipeline/agents.ts` : c'est une estimation, la facture fait foi. L'hébergement et GitHub Actions sont gratuits pour ce dépôt.
+Un run complet par l'API coûte entre 0,30 et 0,40 $ d'après les runs réels du 14 octobre 2026, soit une dizaine de dollars par mois. `RUN_BUDGET_USD` le plafonne. Le chiffre affiché sur le site est calculé par le pipeline à partir des tokens et d'une grille de prix écrite dans `pipeline/agents.ts` : c'est une estimation, la facture fait foi. L'hébergement et GitHub Actions sont gratuits pour ce dépôt.
 
 ## Limites connues
 
-- Le seuil du vérificateur (la moitié des énoncés validés) a été abaissé de 70 % à 50 % après trois runs réels, où la porte à 70 % rejetait deux éditions sur trois. Chaque énoncé reste vérifié un par un.
+- Le seuil du vérificateur a été abaissé de 70 % à 50 % après plusieurs runs réels où la porte rejetait des éditions entières pour quelques énoncés refusés. Chaque énoncé reste vérifié un par un ; seul le seuil global a bougé.
+- Le rédacteur et le vérificateur partagent le même modèle : le vérificateur est indépendant par son contexte et sa consigne, pas par son modèle.
 - L'extraction de texte des pages se fait par expressions régulières : une page rendue en JavaScript donne peu de texte et ses citations sont rejetées.
 - Certaines sources primaires manquent faute de flux lisible ou parce que leurs pages bloquent les robots.
 
