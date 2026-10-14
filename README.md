@@ -1,167 +1,165 @@
-# veille/ia · ai/watch
+# ai/watch · veille/ia
 
-**En ligne : https://ai-watch-by-bf.pages.dev** (français) · https://ai-watch-by-bf.pages.dev/en/ (English)
+**Live: https://ai-watch-by-bf.pages.dev/en/** (English) · https://ai-watch-by-bf.pages.dev (French)
 
-Un site de veille sur l'IA écrit, vérifié et publié chaque matin par un pipeline de modèles, sans relecture humaine. Chaque phrase publiée renvoie à une citation retrouvée mot pour mot dans sa source, et tout ce que le pipeline refuse de publier est affiché avec la raison du refus.
+A daily AI briefing written, verified and published every morning by a pipeline of models, with no human review. Every published sentence is tied to a quote found word for word in its source, and everything the pipeline refuses to publish is shown with the reason it was refused.
 
-> *A daily AI briefing written, verified and published by a pipeline of models with no human review. Every published sentence is tied to a quote found word for word in its source, and everything the pipeline refuses to publish is shown with the reason. The site is bilingual; this README is in French.*
+The project is a harness engineering showcase: what matters here is not the model, but what the code around it allows it to do, checks behind it, and records.
 
-Le projet sert de démonstration d'ingénierie de harness : ce qui compte ici n'est pas le modèle, mais ce que le code autour l'autorise à faire, vérifie derrière lui et trace.
-
-## Ce que fait un run
+## What a run does
 
 ```mermaid
 flowchart LR
-  A[Collecte<br/>code] --> B[Tri<br/>Haiku 5.5]
-  B --> C[Recherche<br/>Sonnet 5.5 + fetch_page]
-  C --> D{Citation<br/>mot pour mot ?<br/>code}
-  D --> E[Vérification des faits<br/>Sonnet 5.5]
-  E --> F[Rédaction fr + en<br/>Sonnet 5.5]
-  F --> G[Vérification des énoncés<br/>Sonnet 5.5]
-  G --> H{Portes<br/>code}
-  H -->|toutes passent| I[Publication<br/>code]
-  H -->|une échoue| J[Rien n'est publié<br/>la trace l'est]
+  A[Collect<br/>code] --> B[Triage<br/>Haiku 5.5]
+  B --> C[Research<br/>Sonnet 5.5 + fetch_page]
+  C --> D{Quote found<br/>word for word?<br/>code}
+  D --> E[Fact check<br/>Sonnet 5.5]
+  E --> F[Writing fr + en<br/>Sonnet 5.5]
+  F --> G[Statement check<br/>Sonnet 5.5]
+  G --> H{Gates<br/>code}
+  H -->|all pass| I[Publish<br/>code]
+  H -->|one fails| J[Nothing is published<br/>the trace is]
 ```
 
-1. **Collecte** (code). Lit les flux RSS et Atom de [`sources.json`](sources.json), ne garde que les liens `https` vers les domaines de la liste blanche, écarte ce qui a déjà été vu.
-2. **Tri** (Haiku 5.5). Note les items. Le code retient au plus six sujets, avec un plafond par source pour qu'aucune n'écrive toute l'édition.
-3. **Recherche** (Sonnet 5.5, un agent par sujet). Une boucle d'agent avec un seul outil, `fetch_page`. Le modèle choisit ce qu'il lit ; le code décide ce qu'il a le droit de lire : les seuls domaines (et, sur un hôte partagé, les seuls chemins) de la source du sujet, pas de redirection vers un autre hôte, 3 pages et 6 tours au plus. Chaque appel d'outil est tracé. L'agent rend des faits atomiques, chacun avec une citation exacte et la page d'où elle vient.
-4. **Porte des citations** (code). Une citation doit figurer mot pour mot dans une page que l'agent a réellement lue pendant sa boucle. Sinon le fait disparaît.
-5. **Vérification des faits** (Sonnet 5.5, contexte neuf). Juge chaque fait contre sa seule citation, dans les deux langues. Un fait refusé n'atteint jamais le rédacteur.
-6. **Rédaction** (Sonnet 5.5). Écrit l'édition en français et en anglais à partir des seuls faits validés. Il ne voit jamais le web.
-7. **Vérification des énoncés** (Sonnet 5.5). Juge chaque phrase rédigée contre les faits qu'elle cite. Il reçoit le même contexte que le rédacteur (source et titre de chaque sujet) et ne rejuge pas les faits déjà validés.
-8. **Portes et publication** (code). Seuil du vérificateur (au moins la moitié des énoncés validés), volume, budget. Seuls les énoncés validés un par un sont publiés. Une porte échoue et aucun contenu n'est écrit. La trace du run, elle, est toujours écrite.
+1. **Collect** (code). Reads the RSS and Atom feeds listed in [`sources.json`](sources.json), keeps only `https` links to allowlisted domains, and drops anything already seen.
+2. **Triage** (Haiku 5.5). Scores the items. The code keeps at most six topics, with a per-source cap so that no single source writes the whole edition.
+3. **Research** (Sonnet 5.5, one agent per topic). An agent loop with a single tool, `fetch_page`. The model chooses what to read; the code decides what it may read: only the domains of the topic's own source (and, on shared hosts, only allowed paths), no redirect to another host, at most 3 pages and 6 turns. Every tool call is recorded. The agent returns atomic facts, each with an exact quote and the page it comes from.
+4. **Quote gate** (code). A quote must appear word for word in a page the agent actually read during its loop. Otherwise the fact is dropped.
+5. **Fact check** (Sonnet 5.5, fresh context). Judges each fact against its quote alone, in both languages. A refused fact never reaches the writer.
+6. **Writing** (Sonnet 5.5). Writes the edition in French and English from validated facts only. It never sees the web.
+7. **Statement check** (Sonnet 5.5). Judges each written sentence against the facts it cites. It gets the same context as the writer (source and title of each topic) and does not re-judge facts that were already validated.
+8. **Gates and publishing** (code). Verifier threshold (at least half of the statements validated), volume, budget. Only statements validated one by one are published, and the edition title is built from their titles. If a gate fails, no content is written. The run trace is always written.
 
-Trois règles tiennent l'ensemble :
+Three rules hold it together:
 
-- le modèle qui lit le web ne peut rien écrire ;
-- le modèle qui écrit ne lit pas le web ;
-- seul le code publie.
+- the model that reads the web cannot write anything;
+- the model that writes never reads the web;
+- only code publishes.
 
-## Ce que ça garantit, et ce que ça ne garantit pas
+## What it guarantees, and what it does not
 
-| Garanti par le code | Non garanti |
+| Guaranteed by code | Not guaranteed |
 |---|---|
-| Toute phrase publiée cite au moins un fait | Que la source dit vrai : une page de la liste blanche qui se trompe sera citée fidèlement |
-| Tout fait cité a une citation présente mot pour mot dans une page lue | Qu'une édition sort chaque jour : le pipeline préfère ne rien publier |
-| Un verdict manquant vaut un refus | L'indépendance totale du vérificateur : il partage son modèle avec le rédacteur, seuls le contexte et la consigne diffèrent |
-| Un run ne dépasse pas son budget de plus d'un appel | La qualité éditoriale : aucun test ne la mesure |
+| Every published sentence cites at least one fact | That the source is right: an allowlisted page that is wrong will be quoted faithfully |
+| Every cited fact has a quote present word for word in a page that was read | That an edition comes out every day: the pipeline prefers to publish nothing |
+| A missing verdict counts as a refusal | Full independence of the verifier: it shares its model with the writer; only the context and the instructions differ |
+| A run exceeds its budget by at most one call | Editorial quality: no test measures it |
 
-La liste des sources est donc le vrai rempart, et elle est tenue à la main.
+The source list is therefore the real safeguard, and it is maintained by hand.
 
-## Le site
+## The site
 
-Astro, entièrement statique. Il ne lit que des fichiers du dépôt et les revalide au build avec les mêmes schémas que le pipeline : une donnée invalide casse le build, donc rien n'est déployé.
+Astro, fully static. It only reads files from the repository and re-validates them at build time with the same schemas as the pipeline: invalid data breaks the build, so nothing gets deployed.
 
-| Page | Contenu |
+| Page | Content |
 |---|---|
-| `/` | l'édition du jour, chaque brève posée à côté des citations qui la prouvent |
-| `/state/` | l'état de l'art : au plus trois points ajoutés par run, jamais réécrits |
-| `/radar/` | les recommandations en quatre anneaux, chaque mouvement sourcé |
-| `/pipeline/` | les étapes avec les chiffres du dernier run, l'historique, l'éval, les refus |
-| `/runs/<date>/` | la trace d'un run : portes, appels d'outils, appels aux modèles, rejets |
+| `/` | today's edition, each item set next to the quotes that prove it |
+| `/state/` | the state of the art: at most three points added per run, never rewritten |
+| `/radar/` | recommendations in four rings, each move sourced |
+| `/pipeline/` | the stages with the last run's figures, run history, the eval, refusals |
+| `/runs/<date>/` | one run's trace: gates, tool calls, model calls, rejections |
 
-Les mêmes pages existent sous `/en/`. Le contenu est généré dans les deux langues et vérifié dans les deux. La trace d'un run ne contient aucune phrase, seulement des codes et des chiffres, traduits à l'affichage par [`site/src/lib/i18n.ts`](site/src/lib/i18n.ts).
+The same pages exist under `/en/`. Content is generated in both languages and verified in both. A run trace contains no sentences, only codes and numbers, translated at display time by [`site/src/lib/i18n.ts`](site/src/lib/i18n.ts).
 
 ## Architecture
 
-Règle de dépendance, sans cérémonie : les règles métier ne connaissent ni le réseau, ni les fichiers, ni le SDK.
+The dependency rule, without ceremony: business rules know nothing about the network, files or the SDK.
 
-| Fichier | Rôle | E/S |
+| File | Role | I/O |
 |---|---|---|
-| [`pipeline/schema.ts`](pipeline/schema.ts) | formes des données, codes des raisons de rejet et des portes | non |
-| [`pipeline/gates.ts`](pipeline/gates.ts) | citation mot pour mot, énoncé publiable | non |
-| [`pipeline/decide.ts`](pipeline/decide.ts) | choix des sujets, ce qui est publié à partir d'un brouillon et des verdicts | non |
-| [`pipeline/loop.ts`](pipeline/loop.ts) | la boucle d'agent : tours, erreurs d'outil rendues au modèle, plafond, trace | non |
-| [`pipeline/tools.ts`](pipeline/tools.ts) | l'outil `fetch_page` et ses limites | via une fonction injectée |
-| [`pipeline/run.ts`](pipeline/run.ts) | orchestration des étapes, lecture et écriture des fichiers | oui |
-| [`pipeline/agents.ts`](pipeline/agents.ts) | le port `Llm` et son adaptateur API Anthropic | oui |
-| [`pipeline/cli.ts`](pipeline/cli.ts) | second adaptateur du port `Llm` : le CLI `claude`, sans clé API | oui |
-| [`pipeline/collect.ts`](pipeline/collect.ts) | flux et pages web, liste blanche | oui |
-| [`pipeline/prompts/`](pipeline/prompts) | une consigne par rôle | |
+| [`pipeline/schema.ts`](pipeline/schema.ts) | data shapes, rejection reason and gate codes | no |
+| [`pipeline/gates.ts`](pipeline/gates.ts) | word-for-word quotes, publishable statements | no |
+| [`pipeline/decide.ts`](pipeline/decide.ts) | topic selection, what gets published from a draft and the verdicts | no |
+| [`pipeline/loop.ts`](pipeline/loop.ts) | the agent loop: turns, tool errors returned to the model, cap, trace | no |
+| [`pipeline/tools.ts`](pipeline/tools.ts) | the `fetch_page` tool and its limits | through an injected function |
+| [`pipeline/run.ts`](pipeline/run.ts) | stage orchestration, reading and writing files | yes |
+| [`pipeline/agents.ts`](pipeline/agents.ts) | the `Llm` port and its Anthropic API adapter | yes |
+| [`pipeline/cli.ts`](pipeline/cli.ts) | a second `Llm` adapter: the `claude` CLI, no API key needed | yes |
+| [`pipeline/collect.ts`](pipeline/collect.ts) | feeds and web pages, allowlist | yes |
+| [`pipeline/prompts/`](pipeline/prompts) | one set of instructions per role (in French) | |
 
-Le reste du dépôt :
+The rest of the repository:
 
-| Dossier | Contenu |
+| Folder | Content |
 |---|---|
-| `content/` | éditions, radar, état de l'art (écrits par le pipeline) |
-| `runs/` | une trace par jour (toujours écrite) |
-| `data/seen.json` | les items déjà traités |
-| `evals/` | faits piégés pour le vérificateur, et le dernier résultat |
-| `site/` | le site Astro |
-| `tdd/`, `.claude/` | la porte et les agents du cycle TDD |
+| `content/` | editions, radar, state of the art (written by the pipeline) |
+| `runs/` | one trace per day (always written) |
+| `data/seen.json` | items already processed |
+| `evals/` | trap facts for the verifier, and the latest result |
+| `site/` | the Astro site |
+| `tdd/`, `.claude/` | the gate and the agents of the TDD cycle |
 
-## Développement en TDD
+## Test-driven development
 
-Chaque comportement passe par un cycle red, green, refactor. La commande `/tdd` de Claude Code le déroule avec un agent par phase :
+Every behaviour goes through a red, green, refactor cycle. The `/tdd` command in Claude Code runs it with one agent per phase:
 
-| Phase | Agent | Porte ([`tdd/gate.sh`](tdd/gate.sh)) | Commit |
+| Phase | Agent | Gate ([`tdd/gate.sh`](tdd/gate.sh)) | Commit |
 |---|---|---|---|
-| Red | `tdd-red` écrit des tests | seuls des `*.test.ts` ont changé et la suite échoue | `test(...)` |
-| Green | `tdd-green` écrit le code minimal | aucun test modifié, suite et types verts | `feat(...)` |
-| Refactor | `tdd-refactor` restructure, ou ne fait rien | aucun test modifié, suite et types verts | `refactor(...)` |
+| Red | `tdd-red` writes tests | only `*.test.ts` files changed and the suite fails | `test(...)` |
+| Green | `tdd-green` writes the minimal code | no test changed, suite and types pass | `feat(...)` |
+| Refactor | `tdd-refactor` restructures, or does nothing | no test changed, suite and types pass | `refactor(...)` |
 
-Un agent ne voit que les fichiers, pas le raisonnement du précédent, et c'est le script qui décide si la phase est commitée. Les petits changements suivent le même cycle à la main, avec la même porte. L'historique git montre les cycles.
+An agent sees only the files, not the previous agent's reasoning, and the script decides whether a phase may be committed. Small changes follow the same cycle by hand, through the same gate. The git history shows the cycles.
 
-Plus de 220 tests, tous hors ligne : les modèles et le réseau y sont remplacés par des doublures. Ils couvrent les règles et l'orchestration, pas les consignes ; celles-ci sont jugées par l'éval et par les runs réels.
+Over 220 tests, all offline: models and the network are replaced by test doubles. They cover the rules and the orchestration, not the prompts; those are judged by the eval and by real runs.
 
-## Commandes
+## Commands
 
-Node 24 ou plus (le TypeScript est exécuté directement, sans compilation).
+Node 24 or later (TypeScript runs directly, without a build step).
 
-| Commande | Effet | Appelle un modèle |
+| Command | Effect | Calls a model |
 |---|---|---|
-| `npm test` | toute la suite | non |
-| `npm run typecheck` | types | non |
-| `npm run pipeline -- --collect-only` | lit les vrais flux, liste les items nouveaux | non |
-| `npm run pipeline -- --dry-run` | run complet, n'écrit rien, affiche la trace et l'édition | oui |
-| `npm run pipeline -- --replay` | comme `--dry-run`, mais relit aussi les items déjà vus | oui |
-| `npm run pipeline` | run complet, écrit `content/`, `runs/`, `data/` | oui |
-| `npm run evals` | soumet les faits piégés au vrai vérificateur, écrit `evals/last.json` | oui |
-| `npm run build` | construit le site dans `site/dist` | non |
+| `npm test` | the whole suite | no |
+| `npm run typecheck` | types | no |
+| `npm run pipeline -- --collect-only` | reads the real feeds, lists new items | no |
+| `npm run pipeline -- --dry-run` | full run, writes nothing, prints the trace and the edition | yes |
+| `npm run pipeline -- --replay` | like `--dry-run`, but also re-reads items already seen | yes |
+| `npm run pipeline` | full run, writes `content/`, `runs/`, `data/` | yes |
+| `npm run evals` | sends the trap facts to the real verifier, writes `evals/last.json` | yes |
+| `npm run build` | builds the site into `site/dist` | no |
 
-Deux façons d'appeler les modèles :
+Two ways to call the models:
 
-- `ANTHROPIC_API_KEY` : l'API Anthropic, avec appel d'outil natif. C'est ce qu'utilise le workflow GitHub.
-- `LLM_BACKEND=cli` devant la commande : le CLI `claude` connecté à un abonnement, par exemple `LLM_BACKEND=cli npm run pipeline`. La boucle d'outils du chercheur y est émulée en JSON.
+- `ANTHROPIC_API_KEY`: the Anthropic API, with native tool calling. This is what the GitHub workflow uses.
+- `LLM_BACKEND=cli` before the command: the `claude` CLI signed in to a subscription, for example `LLM_BACKEND=cli npm run pipeline`. The researcher's tool loop is emulated in JSON in this mode.
 
-`RUN_BUDGET_USD` plafonne un run (2 $ par défaut).
+`RUN_BUDGET_USD` caps a run (2 USD by default).
 
-## Régler le pipeline
+## Tuning the pipeline
 
-Une source dans [`sources.json`](sources.json) :
+A source in [`sources.json`](sources.json):
 
 ```json
 { "id": "claude-code", "name": "Claude Code (releases)", "feed": "https://github.com/anthropics/claude-code/releases.atom", "domains": ["github.com"], "paths": ["/anthropics/claude-code/"], "maxPicks": 1 }
 ```
 
-| Champ | Rôle |
+| Field | Role |
 |---|---|
-| `feed` | flux RSS ou Atom |
-| `domains` | domaines que le pipeline a le droit de lire pour cette source ; l'agent qui étudie un sujet ne peut lire que ceux de sa source |
-| `paths` | préfixes de chemin autorisés sur ces domaines, pour les hôtes partagés comme github.com (facultatif) |
-| `max` | items lus dans le flux (40 par défaut) |
-| `maxPicks` | sujets au plus par run (2 par défaut, 1 pour les blogs de commentaire) |
+| `feed` | RSS or Atom feed |
+| `domains` | domains the pipeline may read for this source; the agent studying a topic can only read its own source's domains |
+| `paths` | allowed path prefixes on those domains, for shared hosts such as github.com (optional) |
+| `max` | items read from the feed (40 by default) |
+| `maxPicks` | maximum topics per run (2 by default, 1 for commentary blogs) |
 
-Avant d'ajouter une source, vérifier avec `--collect-only` que son flux est lisible et que ses pages ne bloquent pas les robots.
+Before adding a source, check with `--collect-only` that its feed is readable and that its pages do not block bots.
 
-## Mise en ligne
+## Deployment
 
-- **Run quotidien** : [`.github/workflows/daily.yml`](.github/workflows/daily.yml), à 4 h 17 UTC (GitHub ne garantit pas l'heure exacte des runs programmés, ni qu'ils aient lieu). Il lance les tests, puis le pipeline, puis committe `content/`, `runs/` et `data/`. Il a besoin du secret `ANTHROPIC_API_KEY` ; sans lui, le run est sauté. Le déclenchement manuel propose une case « replay » pour un essai qui ne publie rien.
-- **Évals** : [`.github/workflows/evals.yml`](.github/workflows/evals.yml), sur chaque pull request qui touche le pipeline.
-- **Site** : Cloudflare Pages, projet `ai-watch-by-bf` relié au dépôt. Commande de build `npm run build`, dossier de sortie `site/dist` (repris dans [`wrangler.jsonc`](wrangler.jsonc)). Chaque push sur `main` redéploie, y compris les commits du run quotidien.
+- **Daily run**: [`.github/workflows/daily.yml`](.github/workflows/daily.yml), at 04:17 UTC (GitHub guarantees neither the exact time of scheduled runs nor that they happen). It runs the tests, then the pipeline, then commits `content/`, `runs/` and `data/`. It needs the `ANTHROPIC_API_KEY` secret; without it, the run is skipped. The manual trigger offers a "replay" checkbox for a trial that publishes nothing.
+- **Evals**: [`.github/workflows/evals.yml`](.github/workflows/evals.yml), on every pull request that touches the pipeline.
+- **Site**: Cloudflare Pages, project `ai-watch-by-bf` connected to the repository. Build command `npm run build`, output directory `site/dist` (also set in [`wrangler.jsonc`](wrangler.jsonc)). Every push to `main` redeploys, including the daily run's commits.
 
-## Coût
+## Cost
 
-Un run complet par l'API coûte entre 0,30 et 0,40 $ d'après les runs réels du 14 octobre 2026, soit une dizaine de dollars par mois. `RUN_BUDGET_USD` le plafonne. Le chiffre affiché sur le site est calculé par le pipeline à partir des tokens et d'une grille de prix écrite dans `pipeline/agents.ts` : c'est une estimation, la facture fait foi. L'hébergement et GitHub Actions sont gratuits pour ce dépôt.
+A full run through the API costs between 0.30 and 0.40 USD, based on the real runs of 14 October 2026, so roughly ten dollars a month. `RUN_BUDGET_USD` caps it. The figure shown on the site is computed by the pipeline from token counts and a price table in `pipeline/agents.ts`: it is an estimate, and the invoice is what counts. Hosting and GitHub Actions are free for this repository.
 
-## Limites connues
+## Known limitations
 
-- Le seuil du vérificateur a été abaissé de 70 % à 50 % après plusieurs runs réels où la porte rejetait des éditions entières pour quelques énoncés refusés. Chaque énoncé reste vérifié un par un ; seul le seuil global a bougé.
-- Le rédacteur et le vérificateur partagent le même modèle : le vérificateur est indépendant par son contexte et sa consigne, pas par son modèle.
-- L'extraction de texte des pages se fait par expressions régulières : une page rendue en JavaScript donne peu de texte et ses citations sont rejetées.
-- Certaines sources primaires manquent faute de flux lisible ou parce que leurs pages bloquent les robots.
+- The verifier threshold was lowered from 70% to 50% after several real runs in which the gate rejected whole editions over a few refused statements. Every statement is still checked one by one; only the overall threshold moved.
+- The writer and the verifier use the same model: the verifier is independent through its context and instructions, not through its model.
+- Text is extracted from pages with regular expressions: a page rendered in JavaScript yields little text, and its quotes are rejected.
+- Some primary sources are missing because they have no readable feed or their pages block bots.
 
-## Auteur
+## Author
 
 [Bassem Fayed](https://career-log.bassem-fayed.workers.dev/) · [GitHub](https://github.com/BassemFd) · [LinkedIn](https://www.linkedin.com/in/bassem-fd/) · [bassem.fayed@gmail.com](mailto:bassem.fayed@gmail.com)
