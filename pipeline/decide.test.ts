@@ -370,9 +370,17 @@ test("publication : le run est publié quand les trois portes passent", () => {
   assert.equal(decide(input()).status, "published");
 });
 
-test("brève : porte la date du run et le titre du brouillon", () => {
+test("brève : porte la date du run, et son titre est fait des titres des brèves publiées, pas d'un texte libre", () => {
   const { brief } = decide(input());
-  assert.deepEqual([brief?.date, brief?.headline], [DATE, t("Édition test", "Test edition")]);
+  const titles = brief!.items.map((x) => x.title);
+  assert.equal(brief?.date, DATE);
+  assert.equal(brief?.headline.fr, titles.map((x) => x.fr).join(" ; "));
+  assert.equal(brief?.headline.en, titles.map((x) => x.en).join("; "));
+});
+
+test("brève : le titre libre du brouillon n'est jamais publié, faute d'être vérifié", () => {
+  const { brief } = decide(input());
+  assert.notEqual(brief?.headline.fr, "Édition test");
 });
 
 test("brève : le titre, le résumé et l'intérêt viennent du brouillon", () => {
