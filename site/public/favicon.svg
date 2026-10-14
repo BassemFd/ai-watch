@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <style>rect { fill: #ffe45c; } @media (prefers-color-scheme: dark) { rect { fill: #33ff33; } }</style>
+  <style>rect { fill: #ffe45c; } @media (prefers-color-scheme: dark) { rect { fill: #3fb950; } }</style>
   <rect width="32" height="32" rx="5"/>
   <path d="M19.5 5h4.2L12.5 27H8.3z" fill="#14213d"/>
 </svg>
