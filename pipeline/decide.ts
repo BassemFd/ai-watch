@@ -97,7 +97,9 @@ export function decide(o: {
   draft.state.forEach((x, i) => {
     if (publishable.has(`state:${i}`)) state.points.push({ date, sectionId: x.sectionId, text: x.text, evidence: evidence(x.claimIds) });
   });
-  const brief = items.length ? Brief.parse({ date, headline: draft.headline, items }) : undefined;
+  // Le titre de l'édition n'est pas jugé par le vérificateur : il est donc fait des titres publiés, qui le sont.
+  const headline = { fr: items.map((x) => x.title.fr).join(" ; "), en: items.map((x) => x.title.en).join("; ") };
+  const brief = items.length ? Brief.parse({ date, headline, items }) : undefined;
   return { status: "published", ...result, brief };
 }
 
