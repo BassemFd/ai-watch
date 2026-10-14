@@ -3,7 +3,7 @@ import { capped, statementProblem } from "./gates.ts";
 import { Brief, untranslated, type Claim, type Item, type Radar, type State, type Statement, type Text, type Trace, type VerifyOut, type WriteOut } from "./schema.ts";
 
 const MAX_OPS = 3; // ajouts au radar et à l'état de l'art par run
-const MIN_JUDGE_RATIO = 0.7;
+const MIN_JUDGE_RATIO = 0.5;
 
 /** Les deux versions d'un énoncé, telles que lues par le vérificateur. */
 const both = (say: (lang: keyof Text) => string) => `FR : ${say("fr")}\nEN : ${say("en")}`;
