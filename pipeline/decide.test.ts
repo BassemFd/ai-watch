@@ -340,7 +340,7 @@ test("porte budget : son détail est neutre en langue", () => {
 // --- Règle 4 : une porte échoue
 
 test("rejet : le vérificateur sous le seuil rejette le run", () => {
-  assert.equal(decide(tenStatements(4)).status, "rejected");
+  assert.equal(decide(tenStatements(6)).status, "rejected");
 });
 
 test("rejet : un volume excessif rejette le run, même entièrement validé", () => {
