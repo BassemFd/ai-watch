@@ -283,14 +283,15 @@ test("portes : les trois portes sont rapportées quand le run est rejeté", () =
   assert.deepEqual(decide(input({ spentUsd: 3 })).gates.map((g) => g.name).sort(), ["budget", "verifier", "volume"]);
 });
 
-test("porte verifier : passe à exactement 70 % d'énoncés publiables", () => {
-  const result = decide(tenStatements(3));
-  assert.equal(result.published, 7);
+// Chaque énoncé est déjà vérifié un par un : la porte ne sert qu'à détecter un rédacteur qui déraille.
+test("porte verifier : passe à exactement la moitié d'énoncés publiables", () => {
+  const result = decide(tenStatements(5));
+  assert.equal(result.published, 5);
   assert.equal(gate(result, "verifier")?.pass, true);
 });
 
-test("porte verifier : échoue sous 70 % d'énoncés publiables", () => {
-  assert.equal(gate(decide(tenStatements(4)), "verifier")?.pass, false);
+test("porte verifier : échoue sous la moitié d'énoncés publiables", () => {
+  assert.equal(gate(decide(tenStatements(6)), "verifier")?.pass, false);
 });
 
 test("porte volume : passe avec 3 entrées radar et 3 points d'état de l'art", () => {
