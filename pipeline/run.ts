@@ -160,8 +160,19 @@ async function verifyClaims(llm: Llm, claims: ReadonlyMap<string, Claim>, reject
 }
 
 // 6. Vérification des énoncés — ne juge que les faits cités ; les faits validés le restent dans le verdict.
-async function verifyStatements(llm: Llm, valid: ReadonlyMap<string, Claim>, statements: Statement[]): Promise<VerifyOut> {
-  const cited = [...new Set(statements.flatMap((s) => s.claimIds))].flatMap((id) => valid.get(id) ?? []);
+async function verifyStatements(
+  llm: Llm,
+  valid: ReadonlyMap<string, Claim>,
+  statements: Statement[],
+  topics: ReadonlyMap<string, Item>,
+): Promise<VerifyOut> {
+  // Le rédacteur connaît la source et le titre de chaque sujet : le vérificateur doit les connaître aussi,
+  // sinon toute attribution (« Google DeepMind a… ») est refusée faute de preuve.
+  const cited = [...new Set(statements.flatMap((s) => s.claimIds))].flatMap((id) => {
+    const claim = valid.get(id);
+    const topic = topics.get(id);
+    return claim ? [{ ...claim, source: topic?.source, title: topic?.title }] : [];
+  });
   const second = await judge(llm, cited, statements);
   return { ...second, claims: [...valid.keys()].map((id) => ({ id, supported: true, reason: "" })) };
 }
@@ -236,7 +247,8 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
     }
 
     // 6. Vérification des énoncés — modèle indépendant, contexte neuf ; les faits validés le restent
-    const verdict = await verifyStatements(o.llm, valid, statements);
+    const topics = new Map(kept.flatMap((s) => s.claims.map((c) => [c.id, s.item] as const)));
+    const verdict = await verifyStatements(o.llm, valid, statements, topics);
     // 6 (suite) à 8. Énoncés publiables, portes, publication — décidés par du code pur (decide.ts)
     const state = readJson<State>(join(o.root, "content/state.json"), { points: [] });
     const d = decide({ date: o.date, draft, claims: valid, items: byId, verdict, radar, state, spentUsd: o.llm.spent, budgetUsd: o.budgetUsd });

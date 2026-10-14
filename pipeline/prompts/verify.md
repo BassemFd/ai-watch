@@ -13,3 +13,7 @@ Pour chaque fait, `supported` est vrai seulement si la citation, lue seule, éta
 Pour chaque énoncé, `supported` est vrai seulement si chaque affirmation factuelle qu'il contient figure dans les faits qu'il cite. Une analyse ou une recommandation clairement formulée comme telle est acceptable tant qu'elle n'introduit aucun fait nouveau.
 
 Rends un verdict pour chaque fait et chaque énoncé reçu, avec une raison. La raison est écrite en anglais, en une seule phrase : elle est affichée telle quelle sur les deux versions du site.
+
+## Quand `statements` n'est pas vide
+
+Les faits ont déjà été vérifiés contre leur citation lors d'une passe précédente : tiens-les pour établis et ne les rejuge pas. Chaque fait porte aussi la `source` et le `title` de la page d'où il vient ; le rédacteur les connaissait, ce sont des informations admises. Un énoncé peut donc attribuer un fait à cette source ou reprendre ce titre. Juge seulement si chaque affirmation de l'énoncé est couverte par les faits cités, leur source et leur titre.
