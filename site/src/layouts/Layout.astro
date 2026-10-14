@@ -90,9 +90,9 @@ const nav = [
     --typed: "Courier Prime", "Courier New", monospace;
   }
   /* Sombre : choix explicite du lecteur, sinon réglage du système. */
-  :root[data-theme="dark"] { --paper: #0e131d; --sheet: #171e2d; --ink: #e8ecf3; --muted: #9ba6b8; --line: #2a3447; --red: #ff7582; color-scheme: dark; }
+  :root[data-theme="dark"] { --paper: #0e131d; --sheet: #171e2d; --ink: #e8ecf3; --muted: #9ba6b8; --line: #2a3447; --red: #ff7582; --marker: #7ee2a8; --marker-ink: #0e131d; color-scheme: dark; }
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) { --paper: #0e131d; --sheet: #171e2d; --ink: #e8ecf3; --muted: #9ba6b8; --line: #2a3447; --red: #ff7582; color-scheme: dark; }
+    :root:not([data-theme="light"]) { --paper: #0e131d; --sheet: #171e2d; --ink: #e8ecf3; --muted: #9ba6b8; --line: #2a3447; --red: #ff7582; --marker: #7ee2a8; --marker-ink: #0e131d; color-scheme: dark; }
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
