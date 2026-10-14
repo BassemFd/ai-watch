@@ -1,0 +1,282 @@
+{
+  "date": "2026-10-14",
+  "startedAt": "2026-10-14T07:38:54.198Z",
+  "durationMs": 79091,
+  "status": "rejected",
+  "counts": {
+    "collectes": 160,
+    "nouveaux": 142,
+    "retenus": 6,
+    "faitsProposes": 36,
+    "faitsCites": 36,
+    "faitsValides": 33
+  },
+  "stages": [
+    {
+      "stage": "triage",
+      "model": "claude-haiku-5-5",
+      "ms": 4358,
+      "inputTokens": 26375,
+      "outputTokens": 610,
+      "costUsd": 0.0029425
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1394,
+      "inputTokens": 2152,
+      "outputTokens": 77,
+      "costUsd": 0.005074
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1476,
+      "inputTokens": 2155,
+      "outputTokens": 91,
+      "costUsd": 0.00522
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1590,
+      "inputTokens": 2207,
+      "outputTokens": 118,
+      "costUsd": 0.005594
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1958,
+      "inputTokens": 2152,
+      "outputTokens": 89,
+      "costUsd": 0.005194
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1964,
+      "inputTokens": 2170,
+      "outputTokens": 101,
+      "costUsd": 0.00535
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4383,
+      "inputTokens": 2158,
+      "outputTokens": 93,
+      "costUsd": 0.005246
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 7566,
+      "inputTokens": 5585,
+      "outputTokens": 1326,
+      "costUsd": 0.02443
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 7686,
+      "inputTokens": 10231,
+      "outputTokens": 1357,
+      "costUsd": 0.034032
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 8471,
+      "inputTokens": 14919,
+      "outputTokens": 1504,
+      "costUsd": 0.044878
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 8157,
+      "inputTokens": 6921,
+      "outputTokens": 1445,
+      "costUsd": 0.028292
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 8425,
+      "inputTokens": 8472,
+      "outputTokens": 1440,
+      "costUsd": 0.031344
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 6691,
+      "inputTokens": 10034,
+      "outputTokens": 1231,
+      "costUsd": 0.032378
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 10245,
+      "inputTokens": 9991,
+      "outputTokens": 1738,
+      "costUsd": 0.037362
+    },
+    {
+      "stage": "write",
+      "model": "claude-sonnet-5-5",
+      "ms": 32819,
+      "inputTokens": 6958,
+      "outputTokens": 5660,
+      "costUsd": 0.070516
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 15365,
+      "inputTokens": 12435,
+      "outputTokens": 2612,
+      "costUsd": 0.05099
+    }
+  ],
+  "gates": [
+    {
+      "name": "literal_quotes",
+      "pass": true,
+      "detail": "36/36"
+    },
+    {
+      "name": "supported_claims",
+      "pass": true,
+      "detail": "33/36"
+    },
+    {
+      "name": "verifier",
+      "pass": false,
+      "detail": "6/11 (>= 70%)"
+    },
+    {
+      "name": "volume",
+      "pass": true,
+      "detail": "radar 2, state 3 (max 3)"
+    },
+    {
+      "name": "budget",
+      "pass": true,
+      "detail": "0.389/2 USD"
+    }
+  ],
+  "rejected": [
+    {
+      "what": {
+        "fr": "Le pipeline comporte deux étapes : un classifieur léger filtre les messages entrants avec une consommation minimale, puis le modèle Gemma affiné analyse un extrait plus large de la conversation pour c",
+        "en": "The pipeline has two stages: a lightweight classifier screens inbound messages using minimal power, then the fine-tuned Gemma model analyzes a larger snapshot of the conversation to confirm a threat o"
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote covers only stage 2; the claim also asserts a lightweight classifier stage screening inbound messages with minimal power, which the quote does not establish."
+    },
+    {
+      "what": {
+        "fr": "Le pipeline en deux étapes utilise un filtre regex à fort rappel pour générer les candidats, puis un classifieur ModernBERT affiné qui évalue chaque candidat avec son contexte.",
+        "en": "The two-stage pipeline uses high-recall regex filters for candidate generation, then a fine-tuned ModernBERT classifier that evaluates each candidate and its surrounding context."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote only covers the ModernBERT classifier stage; the regex high-recall candidate generation and two-stage structure are not in the quote."
+    },
+    {
+      "what": {
+        "fr": "Dans un test A/B client, l'acceptation pondérée par propriétaire de dépôt a augmenté de 11,5 %.",
+        "en": "In a customer A/B experiment, repository owner-weighted acceptance increased by 11.5%."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not say it was a customer A/B experiment, only that owner-weighted acceptance rose 11.5%."
+    },
+    {
+      "what": {
+        "fr": "Gemini 4 Argon est disponible via l'API Gemini",
+        "en": "Gemini 4 Argon is available via the Gemini API"
+      },
+      "reason": "statement_unsupported",
+      "detail": "The opening sentence claims availability via the \"Gemini API\", which is not in the cited claims (they say API in AI Studio and the Gemini platform), and the claim that the price \"doubles\" is a derived fact not stated."
+    },
+    {
+      "what": {
+        "fr": "Google DeepMind et Singapour affinent Gemma pour détecter les arnaques",
+        "en": "Google DeepMind and Singapore fine-tune Gemma for scam detection"
+      },
+      "reason": "statement_unsupported",
+      "detail": "It relies on claim 58e4191fcfe4-0, which is unsupported because the quote never mentions scam detection."
+    },
+    {
+      "what": {
+        "fr": "Noyaux MoE : des gains de débit sur H200 avec vLLM et SageMaker",
+        "en": "MoE kernels: throughput gains on H200 with vLLM and SageMaker"
+      },
+      "reason": "statement_unsupported",
+      "detail": "The 10% routing gain is called \"a further\" gain, and the analysis claims some gains came from routing rather than new kernels; both go slightly beyond the cited facts, which do not say the gains are additive."
+    },
+    {
+      "what": {
+        "fr": "Un classifieur compact quantifié en 8 bits peut surpasser un pipeline LLM sur la détection de secrets, en précision comme en rappel, pour un coût de service inférieur de plus de 98 %.",
+        "en": "A compact 8-bit quantized classifier can outperform an LLM pipeline on secret detection, in both precision and recall, at a serving cost more than 98% lower."
+      },
+      "reason": "statement_unsupported",
+      "detail": "It generalizes from one GitHub classifier to a compact quantized classifier in general, and the cited claims do not say that the 98% cost reduction is attributable to 8-bit quantization."
+    },
+    {
+      "what": {
+        "fr": "Un Transformer pré-entraîné peut être converti en modèle hybride avec moins de 0,5 % de son budget de pré-entraînement, à moins de 1 % de l'original à l'échelle 32B avec la moitié du cache KV.",
+        "en": "A pretrained Transformer can be converted into a hybrid model with less than 0.5% of its pretraining budget, within 1% of the original at 32B scale with half the KV cache."
+      },
+      "reason": "statement_unsupported",
+      "detail": "It generalizes to any pretrained Transformer and omits that the 1% result applies to the GKA hybrid at 32B; the cited claims do not establish general convertibility."
+    }
+  ],
+  "toolCalls": [
+    {
+      "tool": "fetch_page",
+      "input": "https://www.amazon.science/blog/can-we-change-an-ai-models-architecture-without-retraining-it-from-scratch",
+      "ok": true,
+      "ms": 20,
+      "item": "https://www.amazon.science/blog/can-we-change-an-ai-models-architecture-without-retraining-it-from-scratch"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://deepmind.google/blog/on-device-ai-scam-detection-mddi/",
+      "ok": true,
+      "ms": 163,
+      "item": "https://deepmind.google/blog/on-device-ai-scam-detection-mddi/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://www.microsoft.com/en-us/research/blog/agent-lightning-v1-0-a-3500-line-lightweight-agentic-rl-framework-for-training-agents-with-real-harnesses/",
+      "ok": true,
+      "ms": 345,
+      "item": "https://www.microsoft.com/en-us/research/blog/agent-lightning-v1-0-a-3500-line-lightweight-agentic-rl-framework-for-training-agents-with-real-harnesses/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://aws.amazon.com/blogs/machine-learning/mixture-of-experts-kernel-engineering-on-amazon-sagemaker-ai/",
+      "ok": true,
+      "ms": 65,
+      "item": "https://aws.amazon.com/blogs/machine-learning/mixture-of-experts-kernel-engineering-on-amazon-sagemaker-ai/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/",
+      "ok": true,
+      "ms": 140,
+      "item": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://github.blog/ai-and-ml/githubs-model-for-secret-detection-finding-more-secrets-with-less-noise/",
+      "ok": true,
+      "ms": 28,
+      "item": "https://github.blog/ai-and-ml/githubs-model-for-secret-detection-finding-more-secrets-with-less-noise/"
+    }
+  ],
+  "costUsd": 0.3888425
+}
