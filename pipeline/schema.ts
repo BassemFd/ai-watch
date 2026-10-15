@@ -21,9 +21,10 @@ export const REASONS = [
   "statement_unsupported",
   "feed_unreadable",
   "item_failed",
+  "not_corroborated",
 ] as const;
 export type Reason = (typeof REASONS)[number];
-export const GATES = ["literal_quotes", "supported_claims", "verifier", "volume", "budget"] as const;
+export const GATES = ["literal_quotes", "supported_claims", "corroboration", "verifier", "volume", "budget"] as const;
 
 const SectionId = z.enum(SECTIONS.map((s) => s.id));
 const Ring = z.enum(RINGS);
@@ -44,12 +45,16 @@ export const Source = z.object({
   max: z.number().optional(),
   /** Sujets au plus par run pour cette source (2 par défaut). */
   maxPicks: z.number().optional(),
+  /** Même éditeur ou même organisation : deux sources du même groupe ne se recoupent pas (son id par défaut). */
+  group: z.string().optional(),
 });
 export type Source = z.infer<typeof Source>;
 
 export type Item = { id: string; url: string; title: string; source: string; summary: string };
 
-export const Claim = z.object({ id: z.string(), text: Text, quote: z.string(), url: z.string() });
+/** La citation d'une seconde source, indépendante de la première, qui établit le même fait. */
+export const Confirmation = z.object({ quote: z.string(), url: z.string() });
+export const Claim = z.object({ id: z.string(), text: Text, quote: z.string(), url: z.string(), confirmation: Confirmation.optional() });
 export type Claim = z.infer<typeof Claim>;
 
 /** Un énoncé du brouillon, tel que soumis au vérificateur. */
@@ -58,10 +63,10 @@ export type Statement = { id: string; text: string; claimIds: string[] };
 // --- Sorties des modèles (schémas simples : contraintes vérifiées par le code, pas par le modèle)
 
 export const TriageOut = z.object({
-  picks: z.array(z.object({ id: z.string(), score: z.number(), reason: z.string() })),
+  picks: z.array(z.object({ id: z.string(), score: z.number(), reason: z.string(), sameStory: z.array(z.string()).optional() })),
 });
 export const ResearchOut = z.object({
-  claims: z.array(z.object({ text: Text, quote: z.string(), url: z.string() })),
+  claims: z.array(z.object({ text: Text, quote: z.string(), url: z.string(), confirmation: Confirmation.optional() })),
 });
 export const WriteOut = z.object({
   headline: Text,
@@ -94,6 +99,8 @@ export const Brief = z.object({
       title: Text,
       url: z.string(),
       source: z.string(),
+      /** La source indépendante qui recoupe le sujet. */
+      confirmedBy: z.object({ source: z.string(), url: z.string() }).optional(),
       summary: Text,
       why: Text,
       claims: z.array(Claim),

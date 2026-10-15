@@ -22,10 +22,10 @@ flowchart LR
 ```
 
 1. **Collect** (code). Reads the RSS and Atom feeds listed in [`sources.json`](sources.json), keeps only `https` links to allowlisted domains, and drops anything already seen.
-2. **Triage** (Haiku 5.5). Scores the items. The code keeps at most six topics, with a per-source cap so that no single source writes the whole edition.
-3. **Research** (Sonnet 5.5, one agent per topic). An agent loop with a single tool, `fetch_page`. The model chooses what to read; the code decides what it may read: only the domains of the topic's own source (and, on shared hosts, only allowed paths), no redirect to another host, at most 3 pages and 6 turns. Every tool call is recorded. The agent returns atomic facts, each with an exact quote and the page it comes from.
-4. **Quote gate** (code). A quote must appear word for word in a page the agent actually read during its loop. Otherwise the fact is dropped.
-5. **Fact check** (Sonnet 5.5, fresh context). Judges each fact against its quote alone, in both languages. A refused fact never reaches the writer.
+2. **Triage** (Haiku 5.5). Scores the items and, for each, lists the other items that cover the very same story. The code keeps a topic only if one of them comes from an independent source (a different `group`, so Google AI and DeepMind do not confirm each other), at most eight topics, with a per-source cap so that no single source writes the whole edition.
+3. **Research** (Sonnet 5.5, one agent per topic). An agent loop with a single tool, `fetch_page`. The model chooses what to read; the code decides what it may read: only the domains of the topic's own source (and, on shared hosts, only allowed paths), no redirect to another host, at most 3 pages plus the second source's page, and 6 turns. Every tool call is recorded. The agent returns atomic facts, each with an exact quote and the page it comes from, and, when the second source says the same thing, its own exact quote.
+4. **Quote gate** (code). A quote must appear word for word in a page the agent actually read during its loop. Otherwise the fact is dropped (a confirmation quote goes through the same gate and must come from the second source, not from the page the fact cites).
+5. **Fact check** (Sonnet 5.5, fresh context). Judges each fact against its quote alone, in both languages. A refused fact never reaches the writer. Each confirmation is judged like a fact; a refused one is simply removed. A topic with no confirmed fact is dropped (`not_corroborated`) and the corroboration gate fails if no topic is left.
 6. **Writing** (Sonnet 5.5). Writes the edition in French and English from validated facts only. It never sees the web.
 7. **Statement check** (Sonnet 5.5). Judges each written sentence against the facts it cites. It gets the same context as the writer (source and title of each topic) and does not re-judge facts that were already validated.
 8. **Gates and publishing** (code). Verifier threshold (at least half of the statements validated), volume, budget. Only statements validated one by one are published, and the edition title is built from their titles. If a gate fails, no content is written. The run trace is always written.
@@ -137,6 +137,7 @@ A source in [`sources.json`](sources.json):
 |---|---|
 | `feed` | RSS or Atom feed |
 | `domains` | domains the pipeline may read for this source; the agent studying a topic can only read its own source's domains |
+| `group` | publisher or organisation (defaults to the `id`); two sources of the same group never confirm each other |
 | `paths` | allowed path prefixes on those domains, for shared hosts such as github.com (optional) |
 | `max` | items read from the feed (40 by default) |
 | `maxPicks` | maximum topics per run (2 by default, 1 for commentary blogs) |

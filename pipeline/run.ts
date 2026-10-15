@@ -3,7 +3,7 @@ import { dirname, join } from "node:path";
 import { judge, type Llm } from "./agents.ts";
 import { llmFromEnv } from "./cli.ts";
 import { fetchText, parseFeed } from "./collect.ts";
-import { decide, pickTopics, toStatements } from "./decide.ts";
+import { decide, pickTopics, toStatements, withSecondSource } from "./decide.ts";
 import { capped, quoteProblem } from "./gates.ts";
 import { runAgent } from "./loop.ts";
 import {
@@ -22,13 +22,13 @@ import {
   type Trace,
   type VerifyOut,
 } from "./schema.ts";
-import { FETCH_PAGE, makeFetchTool } from "./tools.ts";
+import { FETCH_PAGE, isAllowed, makeFetchTool } from "./tools.ts";
 
 const MAX_TRIAGE = 200; // items soumis au tri
 const MAX_ITEMS = 8; // sujets étudiés par run
 const MAX_PER_SOURCE = 2; // sujets au plus par source, sauf réglage dans sources.json
 const MAX_PAGE_CHARS = 40_000;
-const MAX_FETCHES = 3; // pages lues par sujet : la sienne et deux liens
+const MAX_FETCHES = 3; // pages lues par sujet : la sienne et deux liens, plus celle de la source qui la recoupe
 const MAX_TURNS = 6; // envois au modèle par sujet
 
 const readJson = <T>(path: string, fallback: T): T =>
@@ -67,17 +67,38 @@ export async function collect(o: Pick<Options, "root" | "date" | "fetchText" | "
 }
 
 // 2. Tri
-async function triage(llm: Llm, fresh: Item[], byId: ReadonlyMap<string, Item>, sources: Source[]): Promise<Item[]> {
+// Un sujet n'est retenu que si une source indépendante (un autre groupe) couvre la même histoire : `via` la désigne.
+async function triage(llm: Llm, fresh: Item[], byId: ReadonlyMap<string, Item>, sources: Source[]) {
   const tri = await llm.call(
     "triage",
     JSON.stringify(fresh.map(({ id, title, source, summary }) => ({ id, title, source, summary }))),
     TriageOut,
   );
   const caps = new Map(sources.map((s) => [s.name, s.maxPicks ?? MAX_PER_SOURCE]));
-  return pickTopics(tri.picks, byId, (source) => caps.get(source) ?? MAX_PER_SOURCE, MAX_ITEMS);
+  const group = new Map(sources.map((s) => [s.name, s.group ?? s.id]));
+  const paired = withSecondSource(tri.picks, byId, (source) => group.get(source) ?? source);
+  const topics = pickTopics(paired, byId, (source) => caps.get(source) ?? MAX_PER_SOURCE, MAX_ITEMS);
+  return { topics, via: new Map(paired.map((p) => [p.id, p.via] as const)) };
 }
 
 type Sheet = { item: Item; claims: Claim[] };
+
+/**
+ * La confirmation d'un fait : une citation retrouvée mot pour mot dans une page lue sur la source qui recoupe,
+ * alors que le fait lui-même cite l'autre source. Sinon rien : le fait reste valable, mais non recoupé.
+ */
+function confirmationOf(proof: Claim["confirmation"], claimUrl: string, second: Source | undefined, pages: ReadonlyMap<string, string>) {
+  if (!proof || !second) return undefined;
+  const url = URL.parse(proof.url)?.href ?? "";
+  const page = pages.get(url);
+  const onSecond = (u: string) => isAllowed(u, second.domains, second.paths);
+  if (page === undefined || !onSecond(url) || onSecond(claimUrl) || quoteProblem(proof.quote, page)) return undefined;
+  return { quote: proof.quote, url };
+}
+
+/** Chaque confirmation est jugée comme un fait à part entière : même texte, citation de l'autre source. */
+const confirmations = (claims: ReadonlyMap<string, Claim>) =>
+  new Map([...claims.values()].flatMap((c) => (c.confirmation ? [[`${c.id}~`, { id: `${c.id}~`, text: c.text, ...c.confirmation }] as const] : [])));
 
 // 3. Recherche — une boucle d'agent par sujet, en parallèle. Le modèle choisit ce qu'il lit avec son
 // seul outil, fetch_page ; le code fixe ce qu'il a le droit de lire. Porte : chaque citation doit
@@ -85,6 +106,7 @@ type Sheet = { item: Item; claims: Claim[] };
 async function research(
   o: Pick<Options, "llm" | "fetchText" | "sources">,
   picked: Item[],
+  via: ReadonlyMap<string, Item>,
   reject: (r: Trace["rejected"][number]) => void,
   toolCalls: Trace["toolCalls"],
 ) {
@@ -97,9 +119,11 @@ async function research(
       picked.map(async (item): Promise<Sheet | null> => {
         try {
           const source = bySource.get(item.source);
-          const { tool, pages } = makeFetchTool({ domains: source?.domains ?? [], paths: source?.paths, maxFetches: MAX_FETCHES, maxChars: MAX_PAGE_CHARS, fetchText: o.fetchText });
+          const second = via.get(item.id);
+          const secondSource = second && bySource.get(second.source);
+          const { tool, pages } = makeFetchTool({ domains: source?.domains ?? [], paths: source?.paths, also: secondSource ? [secondSource] : [], maxFetches: MAX_FETCHES + (secondSource ? 1 : 0), maxChars: MAX_PAGE_CHARS, fetchText: o.fetchText });
           const out = await runAgent({
-            conversation: o.llm.open("research", `Titre : ${item.title}\nURL : ${item.url}`, ResearchOut, [FETCH_PAGE]),
+            conversation: o.llm.open("research", `Titre : ${item.title}\nURL : ${item.url}${second ? `\nRecoupement : ${second.title}\nURL du recoupement : ${second.url}` : ""}`, ResearchOut, [FETCH_PAGE]),
             tools: { [FETCH_PAGE.name]: tool },
             maxTurns: MAX_TURNS,
             onToolCall: (e) => {
@@ -114,7 +138,9 @@ async function research(
             const page = pages.get(url);
             const problem = page === undefined ? "source_not_fetched" : quoteProblem(c.quote, page);
             if (problem) return reject({ what: c.text, reason: problem });
-            const claim = { id: `${item.id}-${i}`, text: c.text, quote: c.quote, url };
+            const claim: Claim = { id: `${item.id}-${i}`, text: c.text, quote: c.quote, url };
+            const proof = confirmationOf(c.confirmation, url, secondSource, pages);
+            if (proof) claim.confirmation = proof;
             claims.set(claim.id, claim);
             kept.push(claim);
           });
@@ -154,7 +180,7 @@ async function verifyClaims(llm: Llm, claims: ReadonlyMap<string, Claim>, reject
   for (const c of claims.values()) {
     const v = verdicts.get(c.id);
     if (v?.supported) valid.set(c.id, c);
-    else reject({ what: c.text, reason: "claim_unsupported", ...(v?.reason && { detail: v.reason }) });
+    else if (!c.id.endsWith("~")) reject({ what: c.text, reason: "claim_unsupported", ...(v?.reason && { detail: v.reason }) });
   }
   return valid;
 }
@@ -210,7 +236,7 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
 
     // 2. Tri
     const byId = new Map(fresh.map((i) => [i.id, i]));
-    const picked = await triage(o.llm, fresh, byId, o.sources);
+    const { topics: picked, via } = await triage(o.llm, fresh, byId, o.sources);
     trace.counts.retenus = picked.length;
     if (!picked.length) {
       trace.status = "empty";
@@ -218,7 +244,7 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
     }
 
     // 3. Recherche — porte : au moins une citation retrouvée mot pour mot
-    const { sheets, claims, proposed } = await research(o, picked, reject, trace.toolCalls);
+    const { sheets, claims, proposed } = await research(o, picked, via, reject, trace.toolCalls);
     trace.counts.faitsProposes = proposed;
     trace.counts.faitsCites = claims.size;
     trace.gates.push({ name: "literal_quotes", pass: claims.size > 0, detail: `${claims.size}/${proposed}` });
@@ -228,7 +254,15 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
     }
 
     // 4. Vérification des faits — avant que le rédacteur les voie ; un fait sans verdict favorable est refusé
-    const valid = await verifyClaims(o.llm, claims, reject);
+    const proofs = confirmations(claims);
+    const checked = await verifyClaims(o.llm, new Map([...claims, ...proofs]), reject);
+    // Une confirmation refusée est retirée du fait, qui reste valable ; les confirmations ne vont pas plus loin.
+    const valid = new Map<string, Claim>();
+    for (const c of claims.values()) {
+      if (!checked.has(c.id)) continue;
+      const { confirmation, ...bare } = c;
+      valid.set(c.id, confirmation && checked.has(`${c.id}~`) ? c : bare);
+    }
     trace.counts.faitsValides = valid.size;
     trace.gates.push({ name: "supported_claims", pass: valid.size > 0, detail: `${valid.size}/${claims.size}` });
     if (!valid.size) {
@@ -236,9 +270,19 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
       return { trace };
     }
 
+    // 4 (suite). Recoupement — porte : un sujet n'est publié que si un de ses faits est confirmé par la seconde source
+    const checkedSheets = sheets.map((s) => ({ ...s, claims: s.claims.flatMap((c) => valid.get(c.id) ?? []) })).filter((s) => s.claims.length);
+    const kept = checkedSheets.filter((s) => s.claims.some((c) => c.confirmation));
+    checkedSheets.filter((s) => !kept.includes(s)).forEach((s) => reject({ what: untranslated(s.item.title), reason: "not_corroborated" }));
+    trace.counts.sujetsRecoupes = kept.length;
+    trace.gates.push({ name: "corroboration", pass: kept.length > 0, detail: `${kept.length}/${checkedSheets.length}` });
+    if (!kept.length) {
+      trace.status = "rejected";
+      return { trace };
+    }
+
     // 5. Rédaction
     const radar = readJson<Radar>(join(o.root, "content/radar.json"), { entries: [] });
-    const kept = sheets.map((s) => ({ ...s, claims: s.claims.filter((c) => valid.has(c.id)) })).filter((s) => s.claims.length);
     const draft = await write(o.llm, o.date, kept, radar);
     const statements = toStatements(draft);
     if (!statements.length) {
@@ -251,7 +295,7 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
     const verdict = await verifyStatements(o.llm, valid, statements, topics);
     // 6 (suite) à 8. Énoncés publiables, portes, publication — décidés par du code pur (decide.ts)
     const state = readJson<State>(join(o.root, "content/state.json"), { points: [] });
-    const d = decide({ date: o.date, draft, claims: valid, items: byId, verdict, radar, state, spentUsd: o.llm.spent, budgetUsd: o.budgetUsd });
+    const d = decide({ date: o.date, draft, claims: valid, items: byId, via, verdict, radar, state, spentUsd: o.llm.spent, budgetUsd: o.budgetUsd });
     trace.rejected.push(...d.rejected);
     trace.gates.push(...d.gates);
     if (d.status === "rejected") {

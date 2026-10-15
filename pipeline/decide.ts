@@ -64,6 +64,8 @@ export function decide(o: {
   verdict: VerifyOut;
   radar: Radar;
   state: State;
+  /** Pour chaque sujet (id d'item), l'item de la source indépendante qui le recoupe. */
+  via?: ReadonlyMap<string, Item>;
   spentUsd: number;
   budgetUsd: number;
 }): {
@@ -89,7 +91,8 @@ export function decide(o: {
   const items = draft.items.flatMap((x, i) => {
     const item = o.items.get(x.itemId);
     if (!publishable.has(`item:${i}`) || !item) return [];
-    return [{ title: x.title, url: item.url, source: item.source, summary: x.summary, why: x.why, claims: evidence(x.claimIds) }];
+    const second = o.via?.get(x.itemId);
+    return [{ title: x.title, url: item.url, source: item.source, ...(second && { confirmedBy: { source: second.source, url: second.url } }), summary: x.summary, why: x.why, claims: evidence(x.claimIds) }];
   });
   draft.radar.forEach((x, i) => {
     if (publishable.has(`radar:${i}`)) upsertRadar(radar, x, evidence(x.claimIds), date);
@@ -122,6 +125,28 @@ export function pickTopics(
     if (n >= maxPerSource(item.source)) continue;
     taken.set(item.source, n + 1);
     out.push(item);
+  }
+  return out;
+}
+
+/**
+ * Ne garde que les sujets que le tri dit couverts par une autre source, indépendante (un autre groupe), et leur
+ * associe cet item. Les mieux notés d'abord : un item qui en recoupe un meilleur n'est pas un sujet à part.
+ */
+export function withSecondSource(
+  picks: { id: string; score: number; sameStory?: string[] }[],
+  items: ReadonlyMap<string, Item>,
+  groupOf: (source: string) => string,
+): { id: string; score: number; via: Item }[] {
+  const used = new Set<string>();
+  const out: { id: string; score: number; via: Item }[] = [];
+  for (const pick of [...picks].sort((a, b) => b.score - a.score)) {
+    const item = items.get(pick.id);
+    if (!item || used.has(item.id)) continue;
+    const via = (pick.sameStory ?? []).map((id) => items.get(id)).find((v) => v && !used.has(v.id) && v.id !== item.id && groupOf(v.source) !== groupOf(item.source));
+    if (!via) continue;
+    used.add(item.id).add(via.id);
+    out.push({ id: pick.id, score: pick.score, via });
   }
   return out;
 }

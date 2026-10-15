@@ -44,13 +44,13 @@ const specimen = today?.items[0]?.claims[0];
           <summary>
             <h3>{item.title[lang]}</h3>
             <span class="teaser">{item.summary[lang]}</span>
-            <span class="meta"><span>{item.source}</span><span class="count">{t.evidence(item.claims.length)}</span></span>
+            <span class="meta"><span>{item.source}{item.confirmedBy && ` + ${item.confirmedBy.source}`}</span><span class="count">{t.evidence(item.claims.length)}</span></span>
           </summary>
           <div class="pair">
             <div>
               <p>{item.summary[lang]}</p>
               <p class="muted">{item.why[lang]}</p>
-              <p class="small"><a href={item.url} rel="noopener">{t.home.readSource}</a></p>
+              <p class="small"><a href={item.url} rel="noopener">{t.home.readSource}</a>{item.confirmedBy && <> · {t.home.confirmedBy} <a href={item.confirmedBy.url} rel="noopener">{item.confirmedBy.source}</a></>}</p>
             </div>
             <Evidence claims={item.claims} lang={lang} />
           </div>

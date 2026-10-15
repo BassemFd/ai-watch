@@ -30,6 +30,11 @@ const FEED_TWO = feedOf(["New model", A], ["Second model", B]);
 // Une seconde source saine, sans rien de neuf : seul son domaine compte.
 const OTHER = { id: "other", name: "Autre", feed: "https://other.example.net/feed", domains: ["other.example.net"] };
 const OTHER_PAGE = "https://other.example.net/p";
+// La source qui recoupe : un autre groupe, des items à elle, une page qui contient toutes les citations des tests.
+const CORROB = { id: "corrob", name: "Recoupement", feed: "https://corrob.example.net/feed", domains: ["corrob.example.net"] };
+const CORROB_FEED = feedOf(["Même histoire 1", "https://corrob.example.net/c1"], ["Même histoire 2", "https://corrob.example.net/c2"], ["Même histoire 3", "https://corrob.example.net/c3"]);
+const C1 = "https://corrob.example.net/c1";
+const CORROB_PAGE = `${PAGE}${PAGE_B}`;
 const PAGES: Record<string, string> = { [B]: PAGE_B, [OTHER_PAGE]: PAGE_B };
 
 // Textes bilingues : les deux versions diffèrent, pour qu'un test puisse les distinguer.
@@ -97,11 +102,13 @@ type FakeLlm = Llm & {
 };
 
 // Faux modèles : un chercheur scripté par sujet, un vérificateur réglable.
-function fakeLlm(judgeSays: boolean, scriptFor: (itemUrl: string) => Script, verifier: Verifier = {}): FakeLlm {
+function fakeLlm(judgeSays: boolean, scriptFor: (itemUrl: string) => Script, verifier: Verifier = {}, corroborate = true): FakeLlm {
   const verifyCalls: FakeLlm["verifyCalls"] = [];
   const refusedIds: string[] = [];
   const answers = {
-    triage: (input: any) => ({ picks: input.map((i: any) => ({ id: i.id, score: 9, reason: "" })) }),
+    triage: (input: any) => ({
+      picks: input.map((i: any) => ({ id: i.id, score: 9, reason: "", sameStory: input.filter((o: any) => o.source !== i.source).map((o: any) => o.id) })),
+    }),
     research: () => {
       throw new Error("la recherche doit passer par open(), pas par call()");
     },
@@ -156,11 +163,30 @@ function fakeLlm(judgeSays: boolean, scriptFor: (itemUrl: string) => Script, ver
       opened.push({ stage, user, tools });
       // Le sujet est reconnu à son adresse dans le message ; un seul sujet par défaut.
       const next = scriptFor([B, A].find((url) => user.includes(url)) ?? A);
+      // Comme un chercheur qui a lu la page qui recoupe : elle est demandée avant de conclure,
+      // et chaque fait cité y trouve sa confirmation.
+      const second = /URL du recoupement : (\S+)/.exec(user)?.[1];
       let turn = 0;
+      let readSecond = !second || !corroborate;
+      let held: unknown = null;
       return {
         async send(results) {
           received.push([...results]);
-          const { calls, output } = next(turn++, results);
+          if (held) {
+            const done = held;
+            held = null;
+            return { calls: [], output: schema.parse(done) as any };
+          }
+          let { calls, output } = next(turn++, results);
+          const claims = (output as { claims: ClaimOut[] } | null)?.claims ?? [];
+          if (second && corroborate && claims.length) {
+            output = { claims: claims.map((c) => ({ ...c, confirmation: { quote: c.quote, url: second } })) };
+            if (!readSecond) {
+              held = output;
+              readSecond = true;
+              return { calls: [{ id: `call-${++callSeq}`, name: "fetch_page", input: { url: second } }], output: null };
+            }
+          }
           // Comme le vrai modèle : la sortie finale passe par le schéma demandé.
           return { calls, output: output === null ? null : (schema.parse(output) as any) };
         },
@@ -180,18 +206,22 @@ type World = {
   /** Adresses qui ne répondent pas, avec leur message d'erreur. */
   down?: Record<string, string>;
   verifier?: Verifier;
+  /** Faux : le chercheur ne lit pas la page qui recoupe et ne cite aucune confirmation. */
+  corroborate?: boolean;
 };
 function setup(root: string, w: World = {}) {
   const fetched: string[] = [];
-  const llm = fakeLlm(w.judgeSays ?? true, w.scriptFor ?? (() => w.script ?? HAPPY), w.verifier);
+  const llm = fakeLlm(w.judgeSays ?? true, w.scriptFor ?? (() => w.script ?? HAPPY), w.verifier, w.corroborate);
   const fetchText = async (url: string) => {
     fetched.push(url);
     if (w.down?.[url]) throw new Error(w.down[url]);
     if (url === sources[0].feed) return w.feed ?? FEED;
+    if (url === CORROB.feed) return CORROB_FEED;
+    if (url.startsWith("https://corrob.example.net/")) return CORROB_PAGE;
     if (url.endsWith("/feed")) return feedOf();
     return PAGES[url] ?? PAGE;
   };
-  return { options: { root, date: DATE, llm, fetchText, sources: w.sources ?? sources, budgetUsd: 2 }, fetched, llm };
+  return { options: { root, date: DATE, llm, fetchText, sources: [...(w.sources ?? sources), CORROB], budgetUsd: 2 }, fetched, llm };
 }
 /** Lance un run dans un dossier neuf et rend tout ce qu'un test peut vouloir observer. */
 async function play(w: World = {}) {
@@ -322,14 +352,14 @@ test("run publié : l'état de l'art écrit porte son texte dans les deux langue
   assert.deepEqual(json(root, "content/state.json").points[0].text, POINT);
 });
 
-test("run publié : les cinq portes sont rapportées par leur code, dans l'ordre des étapes", async () => {
+test("run publié : les six portes sont rapportées par leur code, dans l'ordre des étapes", async () => {
   const { trace } = await run(options(tmpRoot(), true));
-  assert.deepEqual(trace.gates.map((g) => [g.name, g.pass]), [["literal_quotes", true], ["supported_claims", true], ["verifier", true], ["volume", true], ["budget", true]]);
+  assert.deepEqual(trace.gates.map((g) => [g.name, g.pass]), [["literal_quotes", true], ["supported_claims", true], ["corroboration", true], ["verifier", true], ["volume", true], ["budget", true]]);
 });
 
 test("run publié : le détail de chaque porte est neutre en langue", async () => {
   const { trace } = await run(options(tmpRoot(), true));
-  assert.equal(trace.gates.length, 5);
+  assert.equal(trace.gates.length, 6);
   for (const g of trace.gates) assertNeutralDetail(g.detail);
 });
 
@@ -385,7 +415,7 @@ test("run rejeté : la trace écrite désigne chaque rejet dans les deux langues
 
 test("run rejeté : la porte verifier échoue, rapportée par son code", async () => {
   const { trace } = await run(options(tmpRoot(), false));
-  assert.deepEqual(trace.gates.map((g) => [g.name, g.pass]), [["literal_quotes", true], ["supported_claims", true], ["verifier", false], ["volume", true], ["budget", true]]);
+  assert.deepEqual(trace.gates.map((g) => [g.name, g.pass]), [["literal_quotes", true], ["supported_claims", true], ["corroboration", true], ["verifier", false], ["volume", true], ["budget", true]]);
 });
 
 // --- Vérification des faits avant l'écriture
@@ -412,7 +442,8 @@ test("faits : le premier appel porte une liste d'énoncés vide", async () => {
 
 test("faits : le premier appel reçoit tous les faits qui ont passé la citation littérale, et eux seuls", async () => {
   const { llm } = await play({ script: script(fetchPage(A, B), finish(trueClaim(), madeUpClaim(), claimB())) });
-  assert.deepEqual(llm.verifyCalls[0].claims.map((c) => c.text), [TRUE_FACT, FACT_B]);
+  const facts = llm.verifyCalls[0].claims.filter((c) => !c.id.endsWith("~")); // les confirmations sont jugées avec eux
+  assert.deepEqual(facts.map((c) => c.text), [TRUE_FACT, FACT_B]);
 });
 
 test("faits : un fait refusé est rejeté en claim_unsupported, désigné par son texte, avec la raison du vérificateur en détail", async () => {
@@ -492,7 +523,7 @@ test("run publié malgré des faits refusés : la brève est produite à partir 
   const { root, trace } = await oneRefused();
   assert.equal(trace.status, "published");
   assert.deepEqual(publishedClaims(root), [[TRUE_FACT, A]]);
-  assert.deepEqual(trace.gates.map((g) => g.name), ["literal_quotes", "supported_claims", "verifier", "volume", "budget"]);
+  assert.deepEqual(trace.gates.map((g) => g.name), ["literal_quotes", "supported_claims", "corroboration", "verifier", "volume", "budget"]);
 });
 
 test("run publié malgré des faits refusés : le fait refusé n'est ni dans le radar ni dans l'état de l'art", async () => {
@@ -549,7 +580,7 @@ test("énoncés : un énoncé refusé porte en détail la raison du vérificateu
 
 test("trace : un run avec des faits refusés est valide pour le schéma Trace", async () => {
   const { root } = await oneRefused("trop fort");
-  assert.deepEqual(Trace.parse(json(root, `runs/${DATE}.json`)).gates.map((g) => g.name), ["literal_quotes", "supported_claims", "verifier", "volume", "budget"]);
+  assert.deepEqual(Trace.parse(json(root, `runs/${DATE}.json`)).gates.map((g) => g.name), ["literal_quotes", "supported_claims", "corroboration", "verifier", "volume", "budget"]);
 });
 
 // --- Recherche en boucle d'agent : le modèle choisit ce qu'il lit, le code fixe ce qu'il a le droit de lire.
@@ -587,12 +618,12 @@ test("recherche : le modèle reçoit le texte de la page demandée, sans balises
 test("téléchargement : run() ne télécharge pas la page d'un sujet que le modèle n'a pas demandée", async () => {
   const { fetched, llm } = await play({ script: script(finish()) });
   assert.equal(llm.opened.length, 1);
-  assert.deepEqual(fetched, [sources[0].feed]);
+  assert.deepEqual(fetched, [sources[0].feed, CORROB.feed]);
 });
 
 test("téléchargement : la page demandée par le modèle est téléchargée une seule fois", async () => {
   const { fetched } = await play();
-  assert.deepEqual(fetched, [sources[0].feed, A]);
+  assert.deepEqual(fetched, [sources[0].feed, CORROB.feed, A, C1]);
 });
 
 // --- Liste blanche et limites de fetch_page
@@ -632,13 +663,14 @@ test("liste blanche : une source peut restreindre les chemins lisibles sur son d
   assert.equal(fetched.includes(outside), false);
 });
 
-test("limite : la quatrième page demandée pour un sujet est refusée avec « fetch limit »", async () => {
-  const pages = [1, 2, 3, 4].map((n) => `https://example.org/p${n}`);
+test("limite : la cinquième page demandée pour un sujet est refusée avec « fetch limit »", async () => {
+  // Trois pages de la source, plus celle qui la recoupe : quatre.
+  const pages = [1, 2, 3, 4, 5].map((n) => `https://example.org/p${n}`);
   const { trace, fetched } = await play({ script: script(...pages.map((url) => fetchPage(url)), finish()) });
   const calls = toolCalls(trace);
-  assert.deepEqual(calls.map((c) => c.ok), [true, true, true, false]);
-  assert.match(String(calls[3].detail), /fetch limit/);
-  assert.equal(fetched.includes(pages[3]), false);
+  assert.deepEqual(calls.map((c) => c.ok), [true, true, true, true, false]);
+  assert.match(String(calls[4].detail), /fetch limit/);
+  assert.equal(fetched.includes(pages[4]), false);
 });
 
 test("limite : chaque sujet a droit à ses trois pages", async () => {
@@ -660,8 +692,8 @@ test("boucle sans fin : la conversation s'arrête au sixième envoi", async () =
   assert.equal(llm.received.length, 6);
 });
 
-test("boucle : un sujet conclu au sixième envoi est accepté", async () => {
-  const { root, trace } = await play({ script: script(fetchPage(A), fetchPage(A), fetchPage(A), fetchPage(A), fetchPage(A), finish(trueClaim())) });
+test("boucle : un sujet conclu au sixième envoi est accepté (la page qui recoupe en prend un)", async () => {
+  const { root, trace } = await play({ script: script(fetchPage(A), fetchPage(A), fetchPage(A), ask({ page: 1 }), finish(trueClaim())) });
   assert.deepEqual(failures(trace), []);
   assert.deepEqual(publishedClaims(root), [[TRUE_FACT, A]]);
 });
@@ -731,7 +763,10 @@ test("trace : toolCalls est vide quand aucun outil n'a été appelé", async () 
 
 test("trace : un appel d'outil est rapporté avec le sujet, l'outil, l'adresse demandée et son succès, sans détail", async () => {
   const { trace } = await play();
-  assert.deepEqual(withoutMs(toolCalls(trace)), [{ item: A, tool: "fetch_page", input: A, ok: true }]);
+  assert.deepEqual(withoutMs(toolCalls(trace)), [
+    { item: A, tool: "fetch_page", input: A, ok: true },
+    { item: A, tool: "fetch_page", input: C1, ok: true },
+  ]);
 });
 
 test("trace : chaque appel d'outil porte une durée numérique", async () => {
@@ -741,7 +776,7 @@ test("trace : chaque appel d'outil porte une durée numérique", async () => {
 
 test("trace : il y a une entrée par appel d'outil, dans l'ordre des appels d'un sujet", async () => {
   const { trace } = await play({ script: script(fetchPage(A), fetchPage(B), finish()) });
-  assert.deepEqual(toolCalls(trace).map((c) => c.input), [A, B]);
+  assert.deepEqual(toolCalls(trace).map((c) => c.input), [A, B]); // sans fait, la page qui recoupe n'est pas lue
 });
 
 test("trace : une entrée d'outil sans adresse est rapportée par son JSON, comme appel refusé", async () => {
@@ -763,7 +798,36 @@ test("trace : les appels d'outils sont écrits dans le fichier du run et valides
   const { root, trace } = await play();
   const parsed = Trace.parse(json(root, `runs/${DATE}.json`));
   assert.deepEqual(toolCalls(parsed), toolCalls(trace));
-  assert.equal(toolCalls(parsed).length, 1);
+  assert.equal(toolCalls(parsed).length, 2);
+});
+
+// --- Recoupement : un sujet n'est publié que si une source indépendante confirme l'un de ses faits
+
+test("recoupement : sans confirmation, le sujet est rejeté en not_corroborated et la porte échoue", async () => {
+  const { root, trace } = await play({ corroborate: false });
+  assert.equal(trace.status, "rejected");
+  assert.deepEqual(trace.gates.at(-1), { name: "corroboration", pass: false, detail: "0/1" });
+  assert.ok(reasons(trace).some(([what, reason]) => JSON.stringify(what) === JSON.stringify(untranslated("New model")) && reason === "not_corroborated"));
+  assert.equal(existsSync(join(root, `content/briefs/${DATE}.json`)), false);
+});
+
+test("recoupement : la brève publiée nomme la source qui recoupe et garde la citation qui confirme", async () => {
+  const { root } = await play();
+  const [item] = json(root, `content/briefs/${DATE}.json`).items;
+  assert.deepEqual(item.confirmedBy, { source: CORROB.name, url: C1 });
+  assert.equal(item.claims[0].confirmation.url, C1);
+});
+
+test("recoupement : une confirmation que le vérificateur refuse est retirée du fait, donc le sujet n'est pas recoupé", async () => {
+  const { trace } = await play({ verifier: { fact: (c) => ({ supported: !c.id.endsWith("~") }) } });
+  assert.equal(trace.status, "rejected");
+  assert.equal(trace.gates.at(-1)?.pass, false);
+});
+
+test("recoupement : un fait qui cite lui-même la source qui recoupe ne se confirme pas tout seul", async () => {
+  const { trace } = await play({ script: script(fetchPage(A, C1), finish(trueClaim(C1))) });
+  assert.equal(trace.status, "rejected");
+  assert.ok(reasons(trace).some(([, reason]) => reason === "not_corroborated"));
 });
 
 // --- Sujet en échec : la boucle échoue, les autres sujets continuent

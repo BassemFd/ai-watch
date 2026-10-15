@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
 import type { z } from "zod";
-import { decide, pickTopics, toStatements } from "./decide.ts";
+import { decide, pickTopics, toStatements, withSecondSource } from "./decide.ts";
 import type { Claim, Item, Radar, State, VerifyOut, WriteOut } from "./schema.ts";
 
 type Draft = z.infer<typeof WriteOut>;
@@ -532,4 +532,41 @@ test("sujets : les mieux notés passent d'abord, quel que soit l'ordre reçu", (
 
 test("sujets : un identifiant inconnu est ignoré", () => {
   assert.deepEqual(pickTopics(scored("zz", "b1"), topics, capOf({}), 6).map((i) => i.id), ["b1"]);
+});
+
+// --- Second source : un sujet n'est étudié que si une source indépendante couvre la même histoire
+
+const from = (id: string, source: string): Item => ({ ...item(id), source });
+const world = (...items: Item[]) => new Map(items.map((i) => [i.id, i]));
+const groupOf = (source: string) => (source.startsWith("Google") ? "google" : source);
+
+test("second source : un sujet sans autre source sur la même histoire est écarté", () => {
+  const items = world(from("a", "A"), from("b", "B"));
+  assert.deepEqual(withSecondSource([{ id: "a", score: 9 }, { id: "b", score: 8, sameStory: [] }], items, groupOf), []);
+});
+
+test("second source : le sujet reçoit l'item de l'autre source", () => {
+  const items = world(from("a", "A"), from("b", "B"));
+  const [paired] = withSecondSource([{ id: "a", score: 9, sameStory: ["b"] }], items, groupOf);
+  assert.deepEqual([paired.id, paired.via.id], ["a", "b"]);
+});
+
+test("second source : deux sources du même groupe ne se recoupent pas", () => {
+  const items = world(from("a", "Google AI"), from("b", "Google DeepMind"));
+  assert.deepEqual(withSecondSource([{ id: "a", score: 9, sameStory: ["b"] }], items, groupOf), []);
+});
+
+test("second source : un identifiant inconnu ou l'item lui-même ne recoupe rien", () => {
+  const items = world(from("a", "A"));
+  assert.deepEqual(withSecondSource([{ id: "a", score: 9, sameStory: ["a", "inconnu"] }], items, groupOf), []);
+});
+
+test("second source : un item qui en recoupe un mieux noté n'est pas un sujet à part, ni ne le recoupe deux fois", () => {
+  const items = world(from("a", "A"), from("b", "B"), from("c", "C"));
+  const picks = [
+    { id: "a", score: 9, sameStory: ["b"] },
+    { id: "b", score: 8, sameStory: ["a"] },
+    { id: "c", score: 7, sameStory: ["b"] },
+  ];
+  assert.deepEqual(withSecondSource(picks, items, groupOf).map((p) => [p.id, p.via.id]), [["a", "b"]]);
 });

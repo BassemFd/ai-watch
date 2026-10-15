@@ -155,7 +155,7 @@ const nav = [
   .proofs { display: grid; gap: 1.1rem; align-content: start; }
   .proof { margin: 0; }
   .proof blockquote { margin: 0 0 0.35rem; font: 400 0.95rem/1.75 var(--typed); }
-  mark { background: var(--marker); color: var(--marker-ink); padding: 0.12em 0.2em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .proof blockquote.second { margin-left: 1rem; font-size: 0.88rem; color: var(--muted); }  mark { background: var(--marker); color: var(--marker-ink); padding: 0.12em 0.2em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
   /* Sombre : les citations s'affichent comme une sortie de terminal, en vert phosphore sur fond noir. */
   :root[data-theme="dark"] mark { background: rgb(63 185 80 / 0.12); color: var(--marker); }
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) mark { background: rgb(63 185 80 / 0.12); color: var(--marker); } }

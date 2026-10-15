@@ -12,6 +12,7 @@ const hidden = collapsed ? claims : claims.slice(2);
   {shown.map((c) => (
     <figure class="proof">
       <blockquote><mark>{c.quote}</mark></blockquote>
+      {c.confirmation && <blockquote class="second"><mark>{c.confirmation.quote}</mark> <a href={c.confirmation.url} rel="noopener">{t.home.confirmedBy} {new URL(c.confirmation.url).hostname}</a></blockquote>}
       <figcaption>{c.text[lang]} <a href={c.url} rel="noopener">{new URL(c.url).hostname}</a></figcaption>
     </figure>
   ))}
@@ -21,6 +22,7 @@ const hidden = collapsed ? claims : claims.slice(2);
       {hidden.map((c) => (
         <figure class="proof">
           <blockquote><mark>{c.quote}</mark></blockquote>
+          {c.confirmation && <blockquote class="second"><mark>{c.confirmation.quote}</mark> <a href={c.confirmation.url} rel="noopener">{t.home.confirmedBy} {new URL(c.confirmation.url).hostname}</a></blockquote>}
           <figcaption>{c.text[lang]} <a href={c.url} rel="noopener">{new URL(c.url).hostname}</a></figcaption>
         </figure>
       ))}

@@ -223,3 +223,17 @@ test("chemins : l'outil refuse une page hors préfixe sans la télécharger", as
   await assert.rejects(tool({ url: "https://github.com/someone/else" }), /not allowed/);
   assert.deepEqual(asked, []);
 });
+
+test("recoupement : l'outil lit aussi la source qui recoupe, avec ses propres préfixes, et rien d'autre", async () => {
+  const asked: string[] = [];
+  const { tool } = makeFetchTool({
+    domains: ["example.org"],
+    also: [{ domains: ["github.com"], paths: ["/ollama/"] }],
+    maxFetches: 5,
+    maxChars: 1000,
+    fetchText: async (url) => (asked.push(url), "<p>x</p>"),
+  });
+  await tool({ url: "https://github.com/ollama/ollama/releases" });
+  await assert.rejects(tool({ url: "https://github.com/someone/else" }), /not allowed/);
+  assert.deepEqual(asked, ["https://github.com/ollama/ollama/releases"]);
+});
