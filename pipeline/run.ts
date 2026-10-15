@@ -264,6 +264,8 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
       valid.set(c.id, confirmation && checked.has(`${c.id}~`) ? c : bare);
     }
     trace.counts.faitsValides = valid.size;
+    trace.counts.confirmationsCitees = proofs.size;
+    trace.counts.confirmationsValides = [...valid.values()].filter((c) => c.confirmation).length;
     trace.gates.push({ name: "supported_claims", pass: valid.size > 0, detail: `${valid.size}/${claims.size}` });
     if (!valid.size) {
       trace.status = "rejected";
