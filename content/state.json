@@ -129,6 +129,34 @@
           "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-argon/"
         }
       ]
+    },
+    {
+      "date": "2026-10-15",
+      "sectionId": "open",
+      "text": {
+        "fr": "Leash Bio a rapporté que Hermes, entraîné uniquement sur ses propres données DEL, se maintient au niveau de Boltz sur les benchmarks publics ; dans sa compétition Kaggle (environ 4 milliards de mesures, environ 2 000 équipes), personne n'a fait mieux que le hasard sur une bibliothèque chimique jamais vue.",
+        "en": "Leash Bio reported that Hermes, trained only on its own DEL data, keeps pace with Boltz on public benchmarks; in its Kaggle competition (about 4B measurements, about 2,000 teams), nobody beat chance on an unseen chemical library."
+      },
+      "evidence": [
+        {
+          "id": "ecfb2d56ace4-1",
+          "text": {
+            "fr": "La compétition Kaggle de Leash a réuni environ 4 milliards de mesures et environ 2 000 équipes, et personne n'a fait mieux que le hasard sur une bibliothèque chimique jamais vue.",
+            "en": "Leash's Kaggle competition involved about 4B measurements and about 2,000 teams, with nobody beating chance on an unseen chemical library."
+          },
+          "quote": "about 4B measurements from a basement and about 2,000 teams, with nobody beating chance on an unseen chemical library",
+          "url": "https://www.latent.space/p/lab-in-the-loop-at-compute-speed"
+        },
+        {
+          "id": "ecfb2d56ace4-3",
+          "text": {
+            "fr": "Hermes, entraîné uniquement sur les données propres de Leash, se maintient au niveau de Boltz sur les benchmarks publics.",
+            "en": "Hermes, trained only on Leash's own data, keeps pace with Boltz on public benchmarks."
+          },
+          "quote": "Hermes , trained only on Leash’s own data, keeping pace with Boltz on public benchmarks.",
+          "url": "https://www.latent.space/p/lab-in-the-loop-at-compute-speed"
+        }
+      ]
     }
   ]
 }

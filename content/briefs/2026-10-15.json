@@ -1,0 +1,90 @@
+{
+  "date": "2026-10-15",
+  "headline": {
+    "fr": "Claude Code v2.1.300 : télémétrie OpenTelemetry, transcriptions reproductibles et validation des hooks ; Le décompilage de jeux par l'IA soulève une inquiétude sur l'open source forcé",
+    "en": "Claude Code v2.1.300: OpenTelemetry telemetry, reproducible transcripts and hook validation; AI decompiling of games raises concern about forced open-sourcing"
+  },
+  "items": [
+    {
+      "title": {
+        "fr": "Claude Code v2.1.300 : télémétrie OpenTelemetry, transcriptions reproductibles et validation des hooks",
+        "en": "Claude Code v2.1.300: OpenTelemetry telemetry, reproducible transcripts and hook validation"
+      },
+      "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.300",
+      "source": "Claude Code (releases)",
+      "summary": {
+        "fr": "L'événement OpenTelemetry api_request gagne les champs cache_creation_5m_tokens et cache_creation_1h_tokens, qui séparent les écritures de cache selon leur durée de vie, et les spans de trace reçoivent des attributs GenAI semantic-convention comme gen_ai.tool.name et error.type. Les transcriptions locales enregistrent aussi le prompt système, les outils et les paramètres de chaque requête API, de sorte qu'une transcription partagée puisse reproduire exactement une requête. Les entrées updatedInput des hooks PreToolUse et PermissionRequest sont désormais validées comme l'entrée propre de Claude : les clés inconnues sont supprimées et une entrée rejetée par l'outil refuse l'appel.",
+        "en": "The OpenTelemetry api_request event gains cache_creation_5m_tokens and cache_creation_1h_tokens fields, which split cache writes by lifetime, and trace spans gain GenAI semantic-convention attributes such as gen_ai.tool.name and error.type. Local session transcripts now also record each API request's system prompt, tools and parameters, so a shared transcript can reproduce a request exactly. updatedInput from PreToolUse and PermissionRequest hooks is now validated like Claude's own input: unknown keys are dropped, and input the tool rejects denies the call."
+      },
+      "why": {
+        "fr": "Analyse : une télémétrie plus fine sur le cache et des transcriptions reproductibles facilitent le suivi des coûts et le débogage d'un agent en production.",
+        "en": "Analysis: finer-grained cache telemetry and reproducible transcripts make it easier to track costs and debug an agent in production."
+      },
+      "claims": [
+        {
+          "id": "29f9840eaa57-0",
+          "text": {
+            "fr": "Claude Code v2.1.300 ajoute à l'événement OpenTelemetry api_request les champs cache_creation_5m_tokens et cache_creation_1h_tokens, qui séparent les écritures de cache selon leur durée de vie.",
+            "en": "Claude Code v2.1.300 adds cache_creation_5m_tokens and cache_creation_1h_tokens to the OpenTelemetry api_request event, splitting cache writes by lifetime."
+          },
+          "quote": "Added cache_creation_5m_tokens and cache_creation_1h_tokens to the OpenTelemetry api_request event, splitting cache writes by lifetime",
+          "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.300"
+        },
+        {
+          "id": "29f9840eaa57-1",
+          "text": {
+            "fr": "Les spans de trace reçoivent des attributs OpenTelemetry GenAI semantic-convention, comme gen_ai.provider.name, gen_ai.conversation.id, gen_ai.tool.name et error.type.",
+            "en": "Trace spans gain OpenTelemetry GenAI semantic-convention attributes, such as gen_ai.provider.name, gen_ai.conversation.id, gen_ai.tool.name and error.type."
+          },
+          "quote": "Added OpenTelemetry GenAI semantic-convention attributes to trace spans, such as gen_ai.provider.name , gen_ai.conversation.id , gen_ai.tool.name and error.type",
+          "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.300"
+        },
+        {
+          "id": "29f9840eaa57-3",
+          "text": {
+            "fr": "Les transcriptions de session locales enregistrent aussi le prompt système, les outils et les paramètres de chaque requête API, de sorte qu'une transcription partagée puisse reproduire exactement une requête.",
+            "en": "Local session transcripts now also record each API request's system prompt, tools and parameters, so a shared transcript can reproduce a request exactly."
+          },
+          "quote": "Changed local session transcripts to also record each API request's system prompt, tools and parameters, so a transcript you choose to share can reproduce a request exactly",
+          "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.300"
+        },
+        {
+          "id": "29f9840eaa57-4",
+          "text": {
+            "fr": "Les entrées updatedInput des hooks PreToolUse et PermissionRequest sont désormais validées comme l'entrée propre de Claude : les clés inconnues sont supprimées et une entrée rejetée par l'outil refuse l'appel.",
+            "en": "updatedInput from PreToolUse and PermissionRequest hooks is now validated like Claude's own input: unknown keys are dropped, and input the tool rejects denies the call."
+          },
+          "quote": "Changed hooks: updatedInput from PreToolUse and PermissionRequest hooks is now validated like Claude's own input: unknown keys are dropped, and input the tool rejects denies the call",
+          "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.300"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Le décompilage de jeux par l'IA soulève une inquiétude sur l'open source forcé",
+        "en": "AI decompiling of games raises concern about forced open-sourcing"
+      },
+      "url": "https://simonwillison.net/2026/Oct/14/ai-is-mass-decompiling-games/",
+      "source": "Simon Willison",
+      "summary": {
+        "fr": "Un extrait cité par Simon Willison avertit qu'un jeu ou une application payants pourraient être publiés en open source contre la volonté de leur éditeur.",
+        "en": "A passage quoted by Simon Willison warns that a paid game or app can be open-sourced against its owner's will."
+      },
+      "why": {
+        "fr": "Analyse : pour un éditeur de logiciel distribué sous forme binaire, ce type d'avertissement invite à réexaminer ce que protège réellement la distribution compilée.",
+        "en": "Analysis: for a vendor shipping software as binaries, this kind of warning is a prompt to reexamine what compiled distribution actually protects."
+      },
+      "claims": [
+        {
+          "id": "8560636ebc00-2",
+          "text": {
+            "fr": "L'extrait cité avertit qu'un jeu ou une application payants pourraient être publiés en open source contre la volonté de leur éditeur.",
+            "en": "The quoted passage warns that a paid game or app can be open-sourced against its owner's will."
+          },
+          "quote": "Your paid game or app can be open-sourced against your will.",
+          "url": "https://simonwillison.net/2026/Oct/14/ai-is-mass-decompiling-games/"
+        }
+      ]
+    }
+  ]
+}

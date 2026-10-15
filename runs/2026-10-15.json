@@ -1,0 +1,174 @@
+{
+  "date": "2026-10-15",
+  "startedAt": "2026-10-15T09:12:31.496Z",
+  "durationMs": 55245,
+  "status": "published",
+  "counts": {
+    "collectes": 169,
+    "nouveaux": 109,
+    "retenus": 3,
+    "faitsProposes": 15,
+    "faitsCites": 15,
+    "faitsValides": 13,
+    "publies": 3
+  },
+  "stages": [
+    {
+      "stage": "triage",
+      "model": "claude-haiku-5-5",
+      "ms": 5250,
+      "inputTokens": 21605,
+      "outputTokens": 329,
+      "costUsd": 0.002325
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4373,
+      "inputTokens": 2123,
+      "outputTokens": 76,
+      "costUsd": 0.005006
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4666,
+      "inputTokens": 2150,
+      "outputTokens": 76,
+      "costUsd": 0.00506
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4987,
+      "inputTokens": 2144,
+      "outputTokens": 82,
+      "costUsd": 0.005108
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4902,
+      "inputTokens": 3073,
+      "outputTokens": 662,
+      "costUsd": 0.012766
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 6646,
+      "inputTokens": 4842,
+      "outputTokens": 1120,
+      "costUsd": 0.020884
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 7813,
+      "inputTokens": 8171,
+      "outputTokens": 1477,
+      "costUsd": 0.031112
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 7775,
+      "inputTokens": 4887,
+      "outputTokens": 1041,
+      "costUsd": 0.020184
+    },
+    {
+      "stage": "write",
+      "model": "claude-sonnet-5-5",
+      "ms": 14532,
+      "inputTokens": 4183,
+      "outputTokens": 2093,
+      "costUsd": 0.029296
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 7241,
+      "inputTokens": 5881,
+      "outputTokens": 1012,
+      "costUsd": 0.021882
+    }
+  ],
+  "gates": [
+    {
+      "name": "literal_quotes",
+      "pass": true,
+      "detail": "15/15"
+    },
+    {
+      "name": "supported_claims",
+      "pass": true,
+      "detail": "13/15"
+    },
+    {
+      "name": "verifier",
+      "pass": true,
+      "detail": "3/4 (>= 50%)"
+    },
+    {
+      "name": "volume",
+      "pass": true,
+      "detail": "radar 0, state 1 (max 3)"
+    },
+    {
+      "name": "budget",
+      "pass": true,
+      "detail": "0.154/2 USD"
+    }
+  ],
+  "rejected": [
+    {
+      "what": {
+        "fr": "Le développeur indépendant Popcar décrit une vague récente de décompilation de jeux existants par IA, qui permet des mélanges inattendus entre jeux et fait naître de nombreux projets de préservation, ",
+        "en": "Indie game developer Popcar describes a recent wave of AI-powered decompilation of existing games, enabling odd mashups between games and a boom in preservation projects, often in a browser using WebA"
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not mention WebAssembly or browsers, and the claim also adds that Popcar describes the wave as 'recent', which is fine, but the WebAssembly/browser detail goes beyond the quote."
+    },
+    {
+      "what": {
+        "fr": "Selon l'extrait cité, si l'IA peut décompiler des jeux et des logiciels, n'importe qui pourrait décompiler les logiciels d'autrui et les utiliser comme il l'entend, sans que personne puisse l'en empêc",
+        "en": "The quoted passage says that if AI can decompile games and software, anybody can decompile other software and use it any way they'd like, and nobody can stop them."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote only says anybody can decompile other software and nobody can stop them; the French and English versions add an 'if AI can decompile games and software' condition that the quote alone does not establish."
+    },
+    {
+      "what": {
+        "fr": "Leash Bio publie Minos avec un preprint et un jeu de données ouvert",
+        "en": "Leash Bio releases Minos with a preprint and an open dataset"
+      },
+      "reason": "statement_unsupported",
+      "detail": "The statement mentions an agent sandbox in its analysis, and Minos is released with a preprint and open dataset; the sandbox claim is cited but the facts do not tie the sandbox to the open dataset, and the title says Minos while the sandbox is not shown to be part of the release."
+    }
+  ],
+  "toolCalls": [
+    {
+      "tool": "fetch_page",
+      "input": "https://www.latent.space/p/lab-in-the-loop-at-compute-speed",
+      "ok": true,
+      "ms": 63,
+      "item": "https://www.latent.space/p/lab-in-the-loop-at-compute-speed"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://github.com/anthropics/claude-code/releases/tag/v2.1.300",
+      "ok": true,
+      "ms": 535,
+      "item": "https://github.com/anthropics/claude-code/releases/tag/v2.1.300"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://simonwillison.net/2026/Oct/14/ai-is-mass-decompiling-games/",
+      "ok": true,
+      "ms": 28,
+      "item": "https://simonwillison.net/2026/Oct/14/ai-is-mass-decompiling-games/"
+    }
+  ],
+  "costUsd": 0.153623
+}
