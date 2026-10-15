@@ -18,6 +18,9 @@
   {"id": "transformers", "name": "Transformers (releases)", "feed": "https://github.com/huggingface/transformers/releases.atom", "domains": ["github.com"], "maxPicks": 1, "paths": ["/huggingface/transformers/"]},
   {"id": "ollama", "name": "Ollama (releases)", "feed": "https://github.com/ollama/ollama/releases.atom", "domains": ["github.com"], "max": 5, "maxPicks": 1, "paths": ["/ollama/ollama/"]},
   {"id": "langgraph", "name": "LangGraph (releases)", "feed": "https://github.com/langchain-ai/langgraph/releases.atom", "domains": ["github.com"], "max": 5, "maxPicks": 1, "paths": ["/langchain-ai/langgraph/"]},
+  {"id": "openai", "name": "OpenAI", "feed": "https://openai.com/news/rss.xml", "domains": ["openai.com"], "max": 15, "maxPicks": 1},
+  {"id": "interconnects", "name": "Interconnects", "feed": "https://www.interconnects.ai/feed", "domains": ["interconnects.ai"], "max": 10, "maxPicks": 1},
+  {"id": "ars-ai", "name": "Ars Technica (IA)", "feed": "https://arstechnica.com/ai/feed/", "domains": ["arstechnica.com"], "max": 15, "maxPicks": 1},
   {"id": "import-ai", "name": "Import AI", "feed": "https://jack-clark.net/feed/", "domains": ["jack-clark.net"], "maxPicks": 1},
   {"id": "latent-space", "name": "Latent Space", "feed": "https://www.latent.space/feed", "domains": ["latent.space"], "max": 10, "maxPicks": 1},
   {"id": "willison", "name": "Simon Willison", "feed": "https://simonwillison.net/atom/everything/", "domains": ["simonwillison.net"], "max": 15, "maxPicks": 1}

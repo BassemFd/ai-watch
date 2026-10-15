@@ -25,7 +25,7 @@ import {
 import { FETCH_PAGE, makeFetchTool } from "./tools.ts";
 
 const MAX_TRIAGE = 200; // items soumis au tri
-const MAX_ITEMS = 6; // sujets étudiés par run
+const MAX_ITEMS = 8; // sujets étudiés par run
 const MAX_PER_SOURCE = 2; // sujets au plus par source, sauf réglage dans sources.json
 const MAX_PAGE_CHARS = 40_000;
 const MAX_FETCHES = 3; // pages lues par sujet : la sienne et deux liens
