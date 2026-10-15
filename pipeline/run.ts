@@ -43,7 +43,7 @@ export type Options = {
   root: string;
   date: string;
   llm: Llm;
-  fetchText: (url: string) => Promise<string>;
+  fetchText: (url: string, allowed?: (finalUrl: string) => boolean) => Promise<string>;
   sources: Source[];
   budgetUsd: number;
   dryRun?: boolean;

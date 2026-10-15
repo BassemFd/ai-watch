@@ -237,3 +237,19 @@ test("recoupement : l'outil lit aussi la source qui recoupe, avec ses propres pr
   await assert.rejects(tool({ url: "https://github.com/someone/else" }), /not allowed/);
   assert.deepEqual(asked, ["https://github.com/ollama/ollama/releases"]);
 });
+
+test("redirection : l'outil donne au téléchargement ce que la source a le droit de lire, et rien d'autre", async () => {
+  let verdicts: boolean[] = [];
+  const { tool } = makeFetchTool({
+    domains: ["deepmind.google", "blog.google"],
+    paths: ["/blog/", "/innovation-and-ai/"],
+    maxFetches: 3,
+    maxChars: 1000,
+    fetchText: async (_url, allowed) => {
+      verdicts = ["https://blog.google/innovation-and-ai/x/", "https://blog.google/products/x/", "https://evil.com/"].map(allowed);
+      return "<p>x</p>";
+    },
+  });
+  await tool({ url: "https://deepmind.google/blog/x/" });
+  assert.deepEqual(verdicts, [true, false, false]);
+});

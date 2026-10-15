@@ -14,14 +14,18 @@ export function isAllowed(url: string, domains: readonly string[], paths: readon
   return paths.length === 0 || paths.some((p) => parsed.pathname.startsWith(p));
 }
 
-export async function fetchText(url: string): Promise<string> {
+/**
+ * `allowed` dit si l'adresse finale reste dans ce que la source a le droit de lire : une redirection vers un autre
+ * domaine de la même source (deepmind.google → blog.google) passe, toute autre est refusée.
+ */
+export async function fetchText(url: string, allowed: (finalUrl: string) => boolean = () => false): Promise<string> {
   const res = await fetch(url, {
     headers: { "user-agent": "veille-ia-bot/1.0" },
     signal: AbortSignal.timeout(20_000),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   // Une redirection vers un autre hôte contournerait la liste blanche, vérifiée sur l'adresse demandée.
-  if (new URL(res.url).hostname !== new URL(url).hostname) throw new Error(`redirected off-host to ${new URL(res.url).hostname}`);
+  if (new URL(res.url).hostname !== new URL(url).hostname && !allowed(res.url)) throw new Error(`redirected off-host to ${new URL(res.url).hostname}`);
   return res.text();
 }
 

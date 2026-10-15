@@ -1,6 +1,6 @@
 [
   {"id": "mistral", "name": "Mistral AI", "feed": "https://mistral.ai/rss.xml", "domains": ["mistral.ai"]},
-  {"id": "deepmind", "name": "Google DeepMind", "feed": "https://deepmind.google/blog/rss.xml", "domains": ["deepmind.google"], "group": "google"},
+  {"id": "deepmind", "name": "Google DeepMind", "feed": "https://deepmind.google/blog/rss.xml", "domains": ["deepmind.google", "blog.google"], "paths": ["/blog/", "/technology/google-deepmind/", "/innovation-and-ai/models-and-research/"], "group": "google"},
   {"id": "google-ai", "name": "Google AI", "feed": "https://blog.google/technology/ai/rss/", "domains": ["blog.google"], "paths": ["/technology/ai/", "/innovation-and-ai/", "/products/"], "group": "google"},
   {"id": "google-research", "name": "Google Research", "feed": "https://research.google/blog/rss/", "domains": ["research.google"], "group": "google"},
   {"id": "msr", "name": "Microsoft Research", "feed": "https://www.microsoft.com/en-us/research/feed/", "domains": ["microsoft.com"], "paths": ["/en-us/research/"]},

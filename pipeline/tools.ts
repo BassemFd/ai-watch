@@ -24,17 +24,18 @@ export function makeFetchTool(o: {
   also?: readonly { domains: readonly string[]; paths?: readonly string[] }[];
   maxFetches: number;
   maxChars: number;
-  fetchText: (url: string) => Promise<string>;
+  fetchText: (url: string, allowed: (finalUrl: string) => boolean) => Promise<string>;
 }): { tool: Tool; pages: Map<string, string> } {
   const pages = new Map<string, string>();
   let fetches = 0;
   const tool: Tool = async (input) => {
     const url = (input as { url?: unknown } | null)?.url;
     if (typeof url !== "string") throw new Error("invalid input: expected { url: string }");
-    if (![o, ...(o.also ?? [])].some((a) => isAllowed(url, a.domains, a.paths))) throw new Error(`not allowed: ${url}`);
+    const allowed = (u: string) => [o, ...(o.also ?? [])].some((a) => isAllowed(u, a.domains, a.paths));
+    if (!allowed(url)) throw new Error(`not allowed: ${url}`);
     if (fetches >= o.maxFetches) throw new Error(`fetch limit reached (${o.maxFetches})`);
     fetches++;
-    const text = htmlToText(await o.fetchText(url)).slice(0, o.maxChars);
+    const text = htmlToText(await o.fetchText(url, allowed)).slice(0, o.maxChars);
     pages.set(new URL(url).href, text);
     return text;
   };
