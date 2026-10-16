@@ -304,6 +304,7 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
     const radar = readJson<Radar>(join(o.root, "content/radar.json"), { entries: [] });
     const [written, moves] = await Promise.all([write(o.llm, o.date, kept), curate(o.llm, o.date, kept, radar, confirmed)]);
     const draft: Draft = { ...written, radar: moves };
+    trace.counts.mouvementsRadar = moves.length;
     const statements = toStatements(draft);
     if (!statements.length) {
       trace.status = "empty";
