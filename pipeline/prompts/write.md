@@ -8,6 +8,6 @@ Tu produis :
 - `headline` : le titre de l'édition.
 - `items` : les sujets qui méritent une brève. `summary` rapporte les faits en 2 ou 3 phrases. `why` dit en une phrase pourquoi cela compte pour quelqu'un qui construit avec l'IA ; c'est une analyse, formulée comme telle, sans fait nouveau.
 - `radar` : au plus 3 recommandations à ajouter ou déplacer, seulement si les faits du jour le justifient. Les anneaux : `adopter` (à utiliser par défaut), `essayer` (vaut un pilote), `evaluer` (à suivre de près), `attendre` (pas encore, ou à éviter). Tu reçois l'état actuel du radar ; ne répète pas une entrée inchangée.
-- `state` : au plus 3 points à ajouter à « acquis » (la page « Acquis » du site), chacun rattaché à une section. Un point dit ce qu'une source a montré, borné à ce qu'elle a montré : qui, quel modèle ou système, à quelle échelle, dans quelles conditions. « Un modèle de 32 milliards de paramètres a été converti en hybride avec 1 % de son budget de pré-entraînement », pas « un Transformer peut être converti en hybride ».
+- `state` : au plus 3 points à ajouter à « l'état de l'art », chacun rattaché à une section. Un point dit ce qu'une source a montré, borné à ce qu'elle a montré : qui, quel modèle ou système, à quelle échelle, dans quelles conditions. « Un modèle de 32 milliards de paramètres a été converti en hybride avec 1 % de son budget de pré-entraînement », pas « un Transformer peut être converti en hybride ».
 
 Des listes vides sont un résultat normal : mieux vaut ne rien publier que remplir.
