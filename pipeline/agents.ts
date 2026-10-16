@@ -6,7 +6,7 @@ import type { z } from "zod";
 import type { Conversation, ToolSpec } from "./loop.ts";
 import { VerifyOut, type Statement, type Text } from "./schema.ts";
 
-export type Stage = "triage" | "research" | "write" | "verify";
+export type Stage = "triage" | "research" | "write" | "curate" | "verify";
 export type Call = { stage: string; model: string; ms: number; inputTokens: number; outputTokens: number; costUsd: number };
 
 /** Le seul point de contact avec un modèle : texte en entrée, JSON validé en sortie. */
@@ -24,6 +24,8 @@ export const ROLES = {
   triage: { model: "claude-haiku-5-5", effort: "low", price: [0.1, 0.5] },
   research: { model: "claude-sonnet-5-5", effort: "medium", price: [2, 10] },
   write: { model: "claude-sonnet-5-5", effort: "high", price: [2, 10] },
+  // Le seul rôle d'Opus : arbitrer ce qui entre au radar et à quel anneau. Un appel par run, petite entrée.
+  curate: { model: "claude-opus-5-5", effort: "high", price: [4, 20] },
   verify: { model: "claude-sonnet-5-5", effort: "medium", price: [2, 10] },
 } as const;
 

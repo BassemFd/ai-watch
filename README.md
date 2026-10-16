@@ -15,7 +15,9 @@ flowchart LR
   C --> D{Quote found<br/>word for word?<br/>code}
   D --> E[Fact check<br/>Sonnet 5.5]
   E --> F[Writing fr + en<br/>Sonnet 5.5]
+  E --> R[Radar curation<br/>Opus 5.5]
   F --> G[Statement check<br/>Sonnet 5.5]
+  R --> G
   G --> H{Gates<br/>code}
   H -->|all pass| I[Publish<br/>code]
   H -->|one fails| J[Nothing is published<br/>the trace is]
@@ -26,7 +28,7 @@ flowchart LR
 3. **Research** (Sonnet 5.5, one agent per topic). An agent loop with a single tool, `fetch_page`. The model chooses what to read; the code decides what it may read: only the domains of the topic's own source (and, on shared hosts, only allowed paths), no redirect to another host, at most 3 pages plus the second source's page, and 6 turns. Every tool call is recorded. The agent returns atomic facts, each with an exact quote and the page it comes from, and, when the second source says the same thing, its own exact quote.
 4. **Quote gate** (code). A quote must appear word for word in a page the agent actually read during its loop. Otherwise the fact is dropped (a confirmation quote goes through the same gate and must come from the second source, not from the page the fact cites).
 5. **Fact check** (Sonnet 5.5, fresh context). Judges each fact against its quote alone, in both languages. A refused fact never reaches the writer. Each confirmation is judged like a fact; a refused one is simply removed. A topic with no confirmed fact is still published, labelled "single source", after the confirmed ones.
-6. **Writing** (Sonnet 5.5). Writes the edition in French and English from validated facts only. It never sees the web.
+6. **Writing** (Sonnet 5.5) and **radar curation** (Opus 5.5), in parallel. The writer produces the edition in French and English from validated facts only. The curator is a separate agent whose only job is the radar: it sees the current radar and the day's validated facts (with their source, whether it is primary and whether it is corroborated) and proposes at most three entries or ring moves, none when nothing changes a decision. Neither sees the web.
 7. **Statement check** (Sonnet 5.5). Judges each written sentence against the facts it cites. It gets the same context as the writer (source and title of each topic) and does not re-judge facts that were already validated.
 8. **Gates and publishing** (code). Verifier threshold (at least half of the statements validated), volume, budget. Only statements validated one by one are published, and the edition title is built from their titles. If a gate fails, no content is written. The run trace is always written.
 
@@ -137,6 +139,7 @@ A source in [`sources.json`](sources.json):
 |---|---|
 | `feed` | RSS or Atom feed |
 | `domains` | domains the pipeline may read for this source; the agent studying a topic can only read its own source's domains |
+| `primary` | `true` when the source is the publisher itself on its own subject (a lab's blog, a project's releases); such a topic is labelled "primary source" instead of "single source" |
 | `group` | publisher or organisation (defaults to the `id`); two sources of the same group never confirm each other |
 | `paths` | allowed path prefixes on those domains, for shared hosts such as github.com (optional) |
 | `max` | items read from the feed (40 by default) |

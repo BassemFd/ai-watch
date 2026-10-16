@@ -7,6 +7,7 @@ import type { Llm } from "./agents.ts";
 import { htmlToText, parseFeed } from "./collect.ts";
 import { quoteProblem, statementProblem } from "./gates.ts";
 import type { ToolResult, Turn } from "./loop.ts";
+import { ROLES } from "./agents.ts";
 import { run } from "./run.ts";
 import { Trace } from "./schema.ts";
 
@@ -92,6 +93,8 @@ type Verifier = {
 type FakeLlm = Llm & {
   /** Les entrées du vérificateur, dans l'ordre des appels. */
   verifyCalls: { claims: any[]; statements: any[] }[];
+  /** Les entrées du curateur du radar. */
+  curateCalls: any[];
   /** Les messages reçus par le rédacteur. */
   writes: string[];
   /** Ordre des appels « write » et « verify ». */
@@ -102,7 +105,8 @@ type FakeLlm = Llm & {
 };
 
 // Faux modèles : un chercheur scripté par sujet, un vérificateur réglable.
-function fakeLlm(judgeSays: boolean, scriptFor: (itemUrl: string) => Script, verifier: Verifier = {}, corroborate = true): FakeLlm {
+function fakeLlm(judgeSays: boolean, scriptFor: (itemUrl: string) => Script, verifier: Verifier = {}, corroborate = true, curated = 1): FakeLlm {
+  const curateCalls: any[] = [];
   const verifyCalls: FakeLlm["verifyCalls"] = [];
   const refusedIds: string[] = [];
   const answers = {
@@ -121,9 +125,14 @@ function fakeLlm(judgeSays: boolean, scriptFor: (itemUrl: string) => Script, ver
       return {
         headline: HEADLINE,
         items: [{ itemId: fiche.itemId, title: TITLE, summary: SUMMARY, why: WHY, claimIds }],
-        radar: [{ name: "Modèle X", ring: "essayer", rationale: RATIONALE, claimIds }],
         state: [{ sectionId: "modeles", text: POINT, claimIds }],
       };
+    },
+    curate: (input: any) => {
+      curateCalls.push(input);
+      const [fiche] = input.fiches;
+      const claimIds = [...fiche.faits.map((f: any) => f.id), ...(verifier.writerCitesRefused ? refusedIds : [])];
+      return { radar: Array.from({ length: curated }, (_, i) => ({ name: i ? `Modèle ${i}` : "Modèle X", ring: "essayer", rationale: RATIONALE, claimIds })) };
     },
     verify: (input: any) => {
       verifyCalls.push(input);
@@ -152,6 +161,7 @@ function fakeLlm(judgeSays: boolean, scriptFor: (itemUrl: string) => Script, ver
     calls: [],
     spent: 0,
     verifyCalls,
+    curateCalls,
     writes,
     order,
     opened,
@@ -211,10 +221,12 @@ type World = {
   verifier?: Verifier;
   /** Faux : le chercheur ne lit pas la page qui recoupe et ne cite aucune confirmation. */
   corroborate?: boolean;
+  /** Nombre d'entrées de radar que le faux curateur propose (une par défaut). */
+  curated?: number;
 };
 function setup(root: string, w: World = {}) {
   const fetched: string[] = [];
-  const llm = fakeLlm(w.judgeSays ?? true, w.scriptFor ?? (() => w.script ?? HAPPY), w.verifier, w.corroborate);
+  const llm = fakeLlm(w.judgeSays ?? true, w.scriptFor ?? (() => w.script ?? HAPPY), w.verifier, w.corroborate, w.curated);
   const fetchText = async (url: string) => {
     fetched.push(url);
     if (w.down?.[url]) throw new Error(w.down[url]);
@@ -831,6 +843,28 @@ test("recoupement : un fait qui cite lui-même la source qui recoupe ne se confi
   const { root, trace } = await play({ script: script(fetchPage(A, C1), finish(trueClaim(C1))) });
   assert.equal(trace.counts.sujetsRecoupes, 0);
   assert.equal(json(root, `content/briefs/${DATE}.json`).items[0].confirmedBy, undefined);
+});
+
+// --- Curateur du radar : un agent à part, sur Opus, qui ne voit que les faits validés
+
+test("curateur : un appel à l'étape curate, sur Opus, avec le radar actuel et les faits validés, sans les faits refusés", async () => {
+  const { llm } = await play({ verifier: { fact: refusing() }, script: script(fetchPage(A, B), finish(trueClaim(), claimB())) });
+  const [call] = llm.curateCalls;
+  assert.deepEqual(call.radar, []);
+  assert.deepEqual(call.fiches[0].faits.map((f: any) => f.text), [TRUE_FACT]);
+  assert.equal(ROLES.curate.model, "claude-opus-5-5");
+});
+
+test("curateur : le radar écrit vient de lui, et le rédacteur ne reçoit plus le radar", async () => {
+  const { root, llm } = await play();
+  assert.equal(json(root, "content/radar.json").entries[0].name, "Modèle X");
+  assert.equal("radar" in JSON.parse(llm.writes[0]), false);
+});
+
+test("curateur : au-delà de trois mouvements, le code coupe, la porte volume ne fait pas échouer le run", async () => {
+  const { trace } = await play({ curated: 5 });
+  assert.equal(trace.status, "published");
+  assert.equal(trace.gates.find((g) => g.name === "volume")?.pass, true);
 });
 
 // --- Sujet en échec : la boucle échoue, les autres sujets continuent

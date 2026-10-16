@@ -44,7 +44,7 @@ const specimen = today?.items[0]?.claims[0];
           <summary>
             <h3>{item.title[lang]}</h3>
             <span class="teaser">{item.summary[lang]}</span>
-            <span class="meta"><span>{item.source}{item.confirmedBy && ` + ${item.confirmedBy.source}`}</span>{!item.confirmedBy && <span class="single">{t.home.singleSource}</span>}<span class="count">{t.evidence(item.claims.length)}</span></span>
+            <span class="meta"><span>{item.source}{item.confirmedBy && ` + ${item.confirmedBy.source}`}</span>{!item.confirmedBy && <span class="single">{item.primary ? t.home.primarySource : t.home.singleSource}</span>}<span class="count">{t.evidence(item.claims.length)}</span></span>
           </summary>
           <div class="pair">
             <div>

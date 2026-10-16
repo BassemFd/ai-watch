@@ -1,6 +1,6 @@
 // La décision de publier : du code pur, aucun modèle, aucune écriture. Les entrées ne sont pas modifiées.
 import { capped, statementProblem } from "./gates.ts";
-import { Brief, untranslated, type Claim, type Item, type Radar, type State, type Statement, type Text, type Trace, type VerifyOut, type WriteOut } from "./schema.ts";
+import { Brief, untranslated, type Claim, type Item, type Radar, type State, type Statement, type Text, type Trace, type VerifyOut, type Draft } from "./schema.ts";
 
 const MAX_OPS = 3; // ajouts au radar et à l'état de l'art par run
 const MIN_JUDGE_RATIO = 0.5;
@@ -8,7 +8,7 @@ const MIN_JUDGE_RATIO = 0.5;
 /** Les deux versions d'un énoncé, telles que lues par le vérificateur. */
 const both = (say: (lang: keyof Text) => string) => `FR : ${say("fr")}\nEN : ${say("en")}`;
 
-export const toStatements = (draft: WriteOut): Statement[] => [
+export const toStatements = (draft: Draft): Statement[] => [
   ...draft.items.map((x, i) => ({
     id: `item:${i}`,
     text: both((l) => `${x.title[l]}. ${x.summary[l]} ${x.why[l]}`),
@@ -19,7 +19,7 @@ export const toStatements = (draft: WriteOut): Statement[] => [
 ];
 
 /** Ce qui désigne chaque énoncé dans les rejets, dans l'ordre de `toStatements`. */
-const labels = (draft: WriteOut): Text[] => [
+const labels = (draft: Draft): Text[] => [
   ...draft.items.map((x) => x.title),
   ...draft.radar.map((x) => untranslated(x.name)),
   ...draft.state.map((x) => x.text),
@@ -42,14 +42,14 @@ function judgeStatements(statements: Statement[], what: Text[], verdict: VerifyO
 }
 
 // 7. Portes — toutes obligatoires
-const evaluateGates = (validated: number, total: number, draft: WriteOut, spentUsd: number, budgetUsd: number): Trace["gates"] => [
+const evaluateGates = (validated: number, total: number, draft: Draft, spentUsd: number, budgetUsd: number): Trace["gates"] => [
   { name: "verifier", pass: validated / total >= MIN_JUDGE_RATIO, detail: `${validated}/${total} (>= ${MIN_JUDGE_RATIO * 100}%)` },
   { name: "volume", pass: draft.radar.length <= MAX_OPS && draft.state.length <= MAX_OPS, detail: `radar ${draft.radar.length}, state ${draft.state.length} (max ${MAX_OPS})` },
   { name: "budget", pass: spentUsd <= budgetUsd, detail: `${spentUsd.toFixed(3)}/${budgetUsd} USD` },
 ];
 
 /** Met à jour l'entrée du même nom (casse ignorée) ou en ajoute une. Modifie `radar` : lui passer une copie. */
-function upsertRadar(radar: Radar, x: WriteOut["radar"][number], evidence: Claim[], date: string) {
+function upsertRadar(radar: Radar, x: Draft["radar"][number], evidence: Claim[], date: string) {
   const existing = radar.entries.find((e) => e.name.toLowerCase() === x.name.toLowerCase());
   const update = { ring: x.ring, rationale: x.rationale, evidence };
   if (existing) Object.assign(existing, update).history.push({ date, ring: x.ring });
@@ -58,7 +58,7 @@ function upsertRadar(radar: Radar, x: WriteOut["radar"][number], evidence: Claim
 
 export function decide(o: {
   date: string;
-  draft: WriteOut;
+  draft: Draft;
   claims: Map<string, Claim>; // Map et non ReadonlyMap : le type est repris tel quel par les tests
   items: ReadonlyMap<string, Item>;
   verdict: VerifyOut;
@@ -92,7 +92,7 @@ export function decide(o: {
     const item = o.items.get(x.itemId);
     if (!publishable.has(`item:${i}`) || !item) return [];
     const second = o.via?.get(x.itemId);
-    return [{ title: x.title, url: item.url, source: item.source, ...(second && { confirmedBy: { source: second.source, url: second.url } }), summary: x.summary, why: x.why, claims: evidence(x.claimIds) }];
+    return [{ title: x.title, url: item.url, source: item.source, ...(second && { confirmedBy: { source: second.source, url: second.url } }), ...(item.primary && { primary: true }), summary: x.summary, why: x.why, claims: evidence(x.claimIds) }];
   });
   draft.radar.forEach((x, i) => {
     if (publishable.has(`radar:${i}`)) upsertRadar(radar, x, evidence(x.claimIds), date);
@@ -100,7 +100,9 @@ export function decide(o: {
   draft.state.forEach((x, i) => {
     if (publishable.has(`state:${i}`)) state.points.push({ date, sectionId: x.sectionId, text: x.text, evidence: evidence(x.claimIds) });
   });
-  items.sort((a, b) => Number(!!b.confirmedBy) - Number(!!a.confirmedBy)); // les sujets recoupés d'abord
+  // Recoupés d'abord, puis sources primaires, puis le reste (tri stable : l'ordre de pertinence est gardé dedans).
+  const rank = (x: { confirmedBy?: unknown; primary?: boolean }) => (x.confirmedBy ? 0 : x.primary ? 1 : 2);
+  items.sort((a, b) => rank(a) - rank(b));
   // Le titre de l'édition n'est pas jugé par le vérificateur : il est donc fait des titres publiés, qui le sont.
   const headline = { fr: items.map((x) => x.title.fr).join(" ; "), en: items.map((x) => x.title.en).join("; ") };
   const brief = items.length ? Brief.parse({ date, headline, items }) : undefined;
@@ -119,7 +121,8 @@ export function pickTopics(
 ): Item[] {
   const taken = new Map<string, number>();
   const out: Item[] = [];
-  for (const pick of [...picks].sort((a, b) => Number(!!b.via) - Number(!!a.via) || b.score - a.score)) {
+  const rank = (p: { id: string; via?: unknown }) => (p.via ? 0 : items.get(p.id)?.primary ? 1 : 2);
+  for (const pick of [...picks].sort((a, b) => rank(a) - rank(b) || b.score - a.score)) {
     const item = items.get(pick.id);
     if (!item || out.length >= maxTotal) continue;
     const n = taken.get(item.source) ?? 0;

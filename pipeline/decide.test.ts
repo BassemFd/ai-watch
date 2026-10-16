@@ -1,10 +1,7 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import type { z } from "zod";
 import { decide, pickTopics, toStatements, withSecondSource } from "./decide.ts";
-import type { Claim, Item, Radar, State, VerifyOut, WriteOut } from "./schema.ts";
-
-type Draft = z.infer<typeof WriteOut>;
+import type { Claim, Draft, Item, Radar, State, VerifyOut } from "./schema.ts";
 type Input = Parameters<typeof decide>[0];
 
 const DATE = "2026-10-13";
@@ -587,4 +584,18 @@ test("brève : le sujet recoupé nomme sa seconde source et passe en tête, l'au
   const claims = claimsOf("c1");
   const result = decide(input({ draft, claims, verdict: verdictOf(draft, claims), items: world(item("i1"), item("i2")), via: world(from("v", "Autre")).has("v") ? new Map([["i2", from("v", "Autre")]]) : undefined }));
   assert.deepEqual(result.brief?.items.map((x) => x.confirmedBy?.source), ["Autre", undefined]);
+});
+
+test("sujets : à défaut de recoupement, une source primaire passe avant une autre, même mieux notée", () => {
+  const topics = world(from("a", "A"), { ...from("b", "B"), primary: true });
+  const picked = pickTopics([{ id: "a", score: 9 }, { id: "b", score: 5 }], topics, () => 5, 1);
+  assert.deepEqual(picked.map((i) => i.id), ["b"]);
+});
+
+test("brève : recoupé, puis source primaire, puis le reste ; la source primaire est marquée", () => {
+  const draft = draftOf({ items: [briefItem(["c1"], "i1"), briefItem(["c1"], "i2"), briefItem(["c1"], "i3")], radar: [], state: [] });
+  const claims = claimsOf("c1");
+  const items = world(item("i1"), { ...item("i2"), primary: true }, item("i3"));
+  const result = decide(input({ draft, claims, verdict: verdictOf(draft, claims), items, via: new Map([["i3", from("v", "Autre")]]) }));
+  assert.deepEqual(result.brief?.items.map((x) => [x.confirmedBy?.source, x.primary]), [["Autre", undefined], [undefined, true], [undefined, undefined]]);
 });

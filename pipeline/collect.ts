@@ -72,6 +72,7 @@ export function parseFeed(xml: string, source: Source, today: string): Item[] {
       title: htmlToText(txt(e.title)),
       source: source.name,
       summary: htmlToText(txt(e.description ?? e.summary ?? e.content)).slice(0, 400),
+      ...(source.primary && { primary: true }),
     });
     if (items.length >= (source.max ?? 40)) break;
   }

@@ -13,10 +13,12 @@ import {
   State,
   TriageOut,
   WriteOut,
+  CurateOut,
   SECTIONS,
   untranslated,
   type Brief,
   type Claim,
+  type Draft,
   type Item,
   type Statement,
   type Trace,
@@ -156,7 +158,7 @@ async function research(
 }
 
 // 4. Rédaction — le rédacteur ne voit que les faits vérifiés, jamais le web
-const write = (llm: Llm, date: string, sheets: Sheet[], radar: Radar) =>
+const write = (llm: Llm, date: string, sheets: Sheet[]) =>
   llm.call(
     "write",
     JSON.stringify({
@@ -167,11 +169,31 @@ const write = (llm: Llm, date: string, sheets: Sheet[], radar: Radar) =>
         source: s.item.source,
         faits: s.claims.map(({ id, text }) => ({ id, text })),
       })),
-      radar: radar.entries.map(({ name, ring }) => ({ name, ring })),
       sections: SECTIONS,
     }),
     WriteOut,
   );
+
+// 4 bis. Curation du radar — un agent à part, sur le modèle le plus fort : il arbitre ce qui entre au radar
+// et à quel anneau, à partir des mêmes faits validés. Il ne voit pas le web non plus.
+async function curate(llm: Llm, date: string, sheets: Sheet[], radar: Radar, confirmed: ReadonlyMap<string, Item>) {
+  const out = await llm.call(
+    "curate",
+    JSON.stringify({
+      date,
+      radar: radar.entries.map(({ name, ring, rationale, since, history }) => ({ name, ring, rationale: rationale.fr, since, history })),
+      fiches: sheets.map((s) => ({
+        titre: s.item.title,
+        source: s.item.source,
+        primaire: !!s.item.primary,
+        recoupe: confirmed.has(s.item.id),
+        faits: s.claims.map(({ id, text }) => ({ id, text })),
+      })),
+    }),
+    CurateOut,
+  );
+  return out.radar.slice(0, 3); // le volume est une porte du code : le curateur ne la franchit pas
+}
 
 // 4. Vérification des faits — le vérificateur ne voit que les faits, pas d'énoncés. Rend les faits validés.
 async function verifyClaims(llm: Llm, claims: ReadonlyMap<string, Claim>, reject: (r: Trace["rejected"][number]) => void) {
@@ -280,7 +302,8 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
 
     // 5. Rédaction
     const radar = readJson<Radar>(join(o.root, "content/radar.json"), { entries: [] });
-    const draft = await write(o.llm, o.date, kept, radar);
+    const [written, moves] = await Promise.all([write(o.llm, o.date, kept), curate(o.llm, o.date, kept, radar, confirmed)]);
+    const draft: Draft = { ...written, radar: moves };
     const statements = toStatements(draft);
     if (!statements.length) {
       trace.status = "empty";

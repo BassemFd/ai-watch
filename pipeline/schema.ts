@@ -46,10 +46,12 @@ export const Source = z.object({
   maxPicks: z.number().optional(),
   /** Même éditeur ou même organisation : deux sources du même groupe ne se recoupent pas (son id par défaut). */
   group: z.string().optional(),
+  /** L'éditeur lui-même, sur son propre sujet : fiable pour ce qu'il annonce, sans second avis. */
+  primary: z.boolean().optional(),
 });
 export type Source = z.infer<typeof Source>;
 
-export type Item = { id: string; url: string; title: string; source: string; summary: string };
+export type Item = { id: string; url: string; title: string; source: string; summary: string; primary?: boolean };
 
 /** La citation d'une seconde source, indépendante de la première, qui établit le même fait. */
 export const Confirmation = z.object({ quote: z.string(), url: z.string() });
@@ -78,10 +80,16 @@ export const WriteOut = z.object({
       claimIds: z.array(z.string()),
     }),
   ),
-  radar: z.array(z.object({ name: z.string(), ring: Ring, rationale: Text, claimIds: z.array(z.string()) })),
   state: z.array(z.object({ sectionId: SectionId, text: Text, claimIds: z.array(z.string()) })),
 });
 export type WriteOut = z.infer<typeof WriteOut>;
+/** Les mouvements du radar, décidés par le curateur et non par le rédacteur. */
+export const CurateOut = z.object({
+  radar: z.array(z.object({ name: z.string(), ring: Ring, rationale: Text, claimIds: z.array(z.string()) })),
+});
+export type CurateOut = z.infer<typeof CurateOut>;
+/** Ce que le code décide de publier : le texte du rédacteur et les mouvements du curateur. */
+export type Draft = WriteOut & CurateOut;
 export const VerifyOut = z.object({
   claims: z.array(z.object({ id: z.string(), supported: z.boolean(), reason: z.string() })),
   statements: z.array(z.object({ id: z.string(), supported: z.boolean(), reason: z.string() })),
@@ -98,6 +106,8 @@ export const Brief = z.object({
       title: Text,
       url: z.string(),
       source: z.string(),
+      /** Source primaire : l'éditeur sur son propre sujet. */
+      primary: z.boolean().optional(),
       /** La source indépendante qui recoupe le sujet ; absente : source unique. */
       confirmedBy: z.object({ source: z.string(), url: z.string() }).optional(),
       summary: Text,
