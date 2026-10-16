@@ -85,16 +85,16 @@ const rejections = runs.slice(0, 7).flatMap((r) => r.rejected.map((x) => ({ ...x
 
 <style>
   .figures { margin: 3rem 0 0.5rem; }
-  .ledger { list-style: none; margin: 0; padding: 0; counter-reset: stage; border-top: 2px solid var(--ink); }
-  .ledger li { counter-increment: stage; display: grid; gap: 0.25rem 2rem; grid-template-columns: minmax(0, 1fr); padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
+  .ledger { list-style: none; margin: 0; padding: 0; counter-reset: stage; border-top: 1px solid var(--line); }
+  .ledger li { counter-increment: stage; display: grid; gap: 0.25rem 2rem; grid-template-columns: minmax(0, 1fr); padding: 1.25rem 0; border-bottom: 1px solid var(--line-soft); }
   @media (min-width: 52rem) { .ledger li { grid-template-columns: 9rem minmax(0, 1fr) 13rem; align-items: start; } }
   .who { color: var(--muted); }
   .who::before { content: counter(stage) ". "; }
   .model .who { color: var(--ink); font-weight: 600; }
-  .what b { font-size: 1.25rem; font-weight: 650; letter-spacing: -0.01em; }
+  .what b { font-size: 1.125rem; font-weight: 600; letter-spacing: -0.01em; }
   .what p { margin: 0.2rem 0 0; color: var(--muted); max-width: 52ch; }
   .out { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.2rem 0.6rem; }
-  .out strong { font-size: 2.4rem; line-height: 1; font-weight: 750; letter-spacing: -0.03em; }
+  .out strong { font-size: 2rem; line-height: 1; font-weight: 700; letter-spacing: -0.02em; }
   .out span { color: var(--muted); font-size: 0.9rem; }
   .out s { flex-basis: 100%; font-size: 0.9rem; }
   /* Le seul mouvement de la page : les étapes s'inscrivent dans l'ordre où le run les traverse. */
@@ -103,7 +103,7 @@ const rejections = runs.slice(0, 7).flatMap((r) => r.rejected.map((x) => ({ ...x
     @keyframes inscribe { from { opacity: 0; transform: translateY(0.5rem); } }
   }
   .refused { list-style: none; padding: 0; margin: 0; }
-  .refused li { display: grid; gap: 0.3rem 3rem; padding-block: 1rem; border-top: 1px solid var(--line); }
+  .refused li { display: grid; gap: 0.3rem 3rem; padding-block: 1rem; border-top: 1px solid var(--line-soft); }
   @media (min-width: 58rem) { .refused li { grid-template-columns: minmax(0, 38rem) minmax(0, 1fr); } }
   .refused span { font-size: 0.92rem; }
 </style>

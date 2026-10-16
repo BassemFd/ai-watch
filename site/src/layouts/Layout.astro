@@ -26,7 +26,7 @@ const nav = [
     <link rel="alternate" hreflang={other} href={href(other, path)} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:ital,wght@0,400..900;1,400..900&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" />
   </head>
   <body>
     <header>
@@ -81,100 +81,106 @@ const nav = [
 </html>
 
 <style is:global>
-  /* Bureau de vérification : papier froid, encre bleu-noir, surligneur pour ce qui est prouvé,
-     crayon rouge pour ce qui est refusé. Le texte publié est composé ; la source est tapée. */
+  /* Place de marché claire : toile blanche, encre #222, une seule couleur de marque (le rausch) pour ce qui
+     se clique ou se prouve. Formes douces : 8px pour les boutons, 14px pour les cartes, pilules pour le reste.
+     Une seule ombre, au survol. Les valeurs viennent de DESIGN.md ; la teinte de surbrillance et le sombre
+     en sont dérivés (le document n'a pas de mode sombre). */
   :root {
-    --paper: #f3f5f7; --sheet: #ffffff; --ink: #14213d; --muted: #556072; --line: #d3d9e1;
-    --marker: #ffe45c; --marker-ink: #14213d; --red: #c8102e;
-    --sans: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+    --paper: #ffffff; --sheet: #f3f5f7; --strong: #e6eaef; --ink: #14213d; --body: #2d3b5c; --muted: #556072; --line: #d3d9e1; --line-soft: #e3e8ee;
+    --marker: #ffe45c; --marker-ink: #14213d; --marker-active: #f2d330; --red: #c8102e;
+    --sans: "Inter", -apple-system, system-ui, Roboto, "Helvetica Neue", sans-serif;
     --typed: "Courier Prime", "Courier New", monospace;
+    --lift: rgba(0,0,0,0.02) 0 0 0 1px, rgba(0,0,0,0.04) 0 2px 6px 0, rgba(0,0,0,0.1) 0 4px 8px 0;
   }
   /* Sombre : choix explicite du lecteur, sinon réglage du système. */
-  :root[data-theme="dark"] { --paper: #0e131d; --sheet: #171e2d; --ink: #e8ecf3; --muted: #9ba6b8; --line: #2a3447; --red: #ff7582; --marker: #3fb950; --marker-ink: #0e131d; color-scheme: dark; }
+  :root[data-theme="dark"] { --paper: #0e131d; --sheet: #171e2d; --strong: #232c3f; --ink: #e8ecf3; --body: #cfd6e2; --muted: #9ba6b8; --line: #2a3447; --line-soft: #222b3c; --red: #ff7582; --marker: #3fb950; --marker-ink: #0e131d; --marker-active: #55c96a; --lift: rgba(0,0,0,0.3) 0 2px 8px 0, rgba(0,0,0,0.5) 0 4px 12px 0; color-scheme: dark; }
   @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) { --paper: #0e131d; --sheet: #171e2d; --ink: #e8ecf3; --muted: #9ba6b8; --line: #2a3447; --red: #ff7582; --marker: #3fb950; --marker-ink: #0e131d; color-scheme: dark; }
+    :root:not([data-theme="light"]) { --paper: #0e131d; --sheet: #171e2d; --strong: #232c3f; --ink: #e8ecf3; --body: #cfd6e2; --muted: #9ba6b8; --line: #2a3447; --line-soft: #222b3c; --red: #ff7582; --marker: #3fb950; --marker-ink: #0e131d; --marker-active: #55c96a; --lift: rgba(0,0,0,0.3) 0 2px 8px 0, rgba(0,0,0,0.5) 0 4px 12px 0; color-scheme: dark; }
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
-  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1.0625rem/1.55 var(--sans); overflow-wrap: break-word; }
-  header, main { max-width: 72rem; margin: 0 auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1rem/1.5 var(--sans); overflow-wrap: break-word; }
+  header, main { max-width: 80rem; margin: 0 auto; padding-inline: clamp(1rem, 4vw, 2.5rem); }
   /* En-tête : nom, rubriques, réglages sur une ligne ; sous 60rem, les rubriques passent sur une seconde
      ligne entière, jamais coupées en deux (elles défilent si l'écran est trop étroit). */
-  header { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 0.75rem 2.5rem; align-items: baseline; padding-block: 1.1rem; border-bottom: 1px solid var(--line); }
-  .brand { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.02em; color: var(--ink); text-decoration: none; }
+  header { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 0.75rem 2.5rem; align-items: center; min-height: 5rem; padding-block: 0.75rem; border-bottom: 1px solid var(--line); }
+  .brand { font-weight: 700; font-size: 1.4rem; letter-spacing: -0.03em; color: var(--ink); text-decoration: none; }
   .brand span { background: var(--marker); color: var(--marker-ink); padding: 0 0.15em; }
-  header nav { display: flex; gap: 1.6rem; white-space: nowrap; }
-  header nav a { color: var(--muted); text-decoration: none; padding-block: 0.15rem; }
+  header nav { display: flex; gap: 1.75rem; white-space: nowrap; justify-content: center; }
+  header nav a { color: var(--muted); text-decoration: none; font-weight: 600; padding-block: 0.6rem; border-bottom: 2px solid transparent; }
   header nav a:hover { color: var(--ink); }
-  header nav a[aria-current] { color: var(--ink); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.35em; }
-  .tools { display: flex; align-items: baseline; gap: 1rem; }
-  .lang { color: var(--ink); text-decoration: underline; text-underline-offset: 0.2em; }
+  header nav a[aria-current] { color: var(--ink); border-bottom-color: var(--ink); }
+  .tools { display: flex; align-items: center; gap: 0.6rem; }
+  .lang, .theme { font: 500 0.875rem/1 var(--sans); color: var(--ink); background: var(--paper); border: 1px solid var(--line); border-radius: 9999px; padding: 0.7rem 1rem; cursor: pointer; text-decoration: none; }
+  .lang:hover, .theme:hover { border-color: var(--ink); text-decoration: none; }
   /* Petit écran : le nom et les réglages sur une ligne, les rubriques dessous. */
   @media (max-width: 60rem) {
     header { grid-template-columns: minmax(0, 1fr) auto; }
-    header nav { grid-column: 1 / -1; grid-row: 2; gap: 1.4rem; overflow-x: auto; scrollbar-width: none; padding-bottom: 0.2rem; }
+    header nav { grid-column: 1 / -1; grid-row: 2; gap: 1.4rem; justify-content: flex-start; overflow-x: auto; scrollbar-width: none; }
     header nav::-webkit-scrollbar { display: none; }
   }
   @media (max-width: 26rem) { header nav { gap: 1rem; font-size: 0.94rem; } }
   @media (max-width: 22rem) { header nav { gap: 0.8rem; font-size: 0.9rem; } }
-  .theme { font: inherit; color: var(--ink); background: none; border: 1px solid var(--line); border-radius: 99px; padding: 0.1rem 0.7rem; cursor: pointer; }
-  .theme:hover { border-color: var(--ink); }
-  main { padding-block: clamp(1.25rem, 3.5vw, 2.75rem) 4rem; }
-  /* Pied de page : une bande pleine largeur, trois blocs côte à côte, empilés sur mobile.
-     Pas collant : sur un téléphone il mangerait l'écran pour des liens qu'on consulte rarement. */
-  .site-footer { margin-top: 4rem; background: var(--sheet); border-top: 1px solid var(--line); }
-  .footer-inner { max-width: 72rem; margin: 0 auto; padding: 2.25rem clamp(1rem, 4vw, 2.5rem) 2.75rem; display: grid; gap: 2rem 3rem; grid-template-columns: minmax(0, 1fr); }
+  main { padding-block: clamp(1.5rem, 4vw, 4rem) 4rem; }
+  /* Pied de page : même toile que la page, pas de contraste ; trois blocs côte à côte, empilés sur mobile. */
+  .site-footer { margin-top: 4rem; background: var(--paper); border-top: 1px solid var(--line); }
+  .footer-inner { max-width: 80rem; margin: 0 auto; padding: 3rem clamp(1rem, 4vw, 2.5rem) 3rem; display: grid; gap: 2rem 3rem; grid-template-columns: minmax(0, 1fr); }
   @media (min-width: 48rem) { .footer-inner { grid-template-columns: minmax(0, 2fr) minmax(0, 1.3fr) minmax(0, 1fr); } }
-  .site-footer p { margin: 0 0 0.6rem; max-width: 42ch; color: var(--muted); }
+  .site-footer p { margin: 0 0 0.6rem; max-width: 42ch; color: var(--muted); font-size: 0.875rem; line-height: 1.43; }
+  .site-footer li { font-size: 0.875rem; }
   .about .brand { display: inline-block; margin-bottom: 0.6rem; }
   .author p { color: var(--ink); }
   .social, .elsewhere ul { list-style: none; padding: 0; margin: 0; }
   .social { display: flex; gap: 0.6rem; }
-  .social a { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 1px solid var(--line); border-radius: 50%; color: var(--ink); }
-  .social a:hover { border-color: var(--ink); }
-  .social svg { width: 1.15rem; height: 1.15rem; }
+  .social a { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; background: var(--strong); border-radius: 50%; color: var(--ink); }
+  .social a:hover { box-shadow: var(--lift); }
+  .social svg { width: 1.1rem; height: 1.1rem; }
   .elsewhere ul { display: grid; gap: 0.5rem; }
   .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
   a { color: inherit; text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
   a:hover { text-decoration-thickness: 2px; }
-  :focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 4px; }
 
-  h1 { font-weight: 700; font-size: clamp(2.1rem, 5.2vw, 3.6rem); line-height: 1.04; letter-spacing: -0.03em; margin: 0 0 1.1rem; max-width: 20ch; text-wrap: balance; }
-  h2 { font-weight: 700; font-size: clamp(1.45rem, 3vw, 2rem); line-height: 1.12; letter-spacing: -0.02em; margin: 3rem 0 1rem; text-wrap: balance; }
-  h3 { font-weight: 650; font-size: 1.3rem; line-height: 1.2; letter-spacing: -0.01em; margin: 0 0 0.5rem; text-wrap: balance; }
-  p { margin: 0 0 0.9rem; max-width: 62ch; }
-  .lede { font-size: 1.25rem; line-height: 1.45; max-width: 46ch; }
+  h1 { font-weight: 700; font-size: clamp(1.75rem, 4vw, 2.5rem); line-height: 1.15; letter-spacing: -0.02em; margin: 0 0 1rem; max-width: 22ch; text-wrap: balance; }
+  h2 { font-weight: 600; font-size: clamp(1.25rem, 2.4vw, 1.5rem); line-height: 1.2; letter-spacing: -0.02em; margin: 4rem 0 1rem; text-wrap: balance; }
+  h3 { font-weight: 600; font-size: 1.25rem; line-height: 1.25; letter-spacing: -0.01em; margin: 0 0 0.5rem; text-wrap: balance; }
+  p { margin: 0 0 0.9rem; max-width: 62ch; color: var(--body); }
+  .lede { font-size: 1.125rem; line-height: 1.5; max-width: 52ch; color: var(--muted); }
   .muted { color: var(--muted); }
-  .small { font-size: 0.9rem; }
+  .small { font-size: 0.875rem; }
+  /* Bouton principal : la couleur de marque (ici le surligneur), texte d'encre, 8px. Une seule par bloc. */
+  .btn { display: inline-block; padding: 0.7rem 1.25rem; border-radius: 8px; font-weight: 600; font-size: 0.9375rem; text-decoration: none; color: var(--marker-ink); background: var(--marker); }
+  .btn:hover { background: var(--marker-active); text-decoration: none; }
 
   /* Un texte publié et, dans la marge, ce qui le prouve. */
   .pair > *, .hero > * { min-width: 0; }
   blockquote, td.url, .proof figcaption { overflow-wrap: anywhere; }
-  .pair { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem 3rem; padding-block: 1.75rem; border-top: 1px solid var(--line); }
+  .pair { display: grid; grid-template-columns: minmax(0, 1fr); gap: 1rem 3rem; padding-block: 1.75rem; border-top: 1px solid var(--line-soft); }
   @media (min-width: 58rem) { .pair { grid-template-columns: minmax(0, 38rem) minmax(0, 1fr); } }
-  .proofs { display: grid; gap: 1.1rem; align-content: start; }
-  .proof { margin: 0; }
-  .proof blockquote { margin: 0 0 0.35rem; font: 400 0.95rem/1.75 var(--typed); }
-  .proof blockquote.second { margin-left: 1rem; font-size: 0.88rem; color: var(--muted); }  mark { background: var(--marker); color: var(--marker-ink); padding: 0.12em 0.2em; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
-  /* Sombre : les citations s'affichent comme une sortie de terminal, en vert phosphore sur fond noir. */
+  .proofs { display: grid; gap: 1rem; align-content: start; }
+  .proof { margin: 0; padding: 1rem 1.15rem; background: var(--sheet); border-radius: 14px; }
+  .proof blockquote { margin: 0 0 0.5rem; font: 400 0.9rem/1.7 var(--typed); color: var(--ink); }
+  .proof blockquote.second { margin: 0.6rem 0 0.5rem; padding-top: 0.6rem; border-top: 1px solid var(--line); font-size: 0.85rem; color: var(--muted); }
+  mark { background: var(--marker); color: var(--marker-ink); padding: 0.1em 0.2em; border-radius: 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .proof figcaption { font-size: 0.8125rem; line-height: 1.4; color: var(--muted); }
+  .proofs summary { cursor: pointer; font-size: 0.875rem; font-weight: 500; margin-bottom: 1rem; }
+  .count { display: inline-block; background: var(--marker); color: var(--marker-ink); font-weight: 600; font-size: 0.8125rem; padding: 0.2em 0.75em; border-radius: 9999px; }
+  .proofs summary:hover .count { box-shadow: 0 0 0 2px var(--marker); }
+  /* Sombre : les citations s'affichent comme une sortie de terminal, en vert phosphore. */
   :root[data-theme="dark"] mark { background: rgb(63 185 80 / 0.12); color: var(--marker); }
   @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) mark { background: rgb(63 185 80 / 0.12); color: var(--marker); } }
-  .proof figcaption { font-size: 0.88rem; line-height: 1.4; color: var(--muted); }
-  .proofs summary { cursor: pointer; font-size: 0.9rem; margin-bottom: 1rem; }
-  .count { display: inline-block; background: var(--marker); color: var(--marker-ink); font-weight: 600; font-size: 0.85rem; padding: 0.05em 0.45em; border-radius: 2px; }
-  .proofs summary:hover .count { box-shadow: 0 0 0 2px var(--marker); }
 
-  /* Tampons : passé, refusé. Le refusé est rayé au crayon rouge. */
-  .stamp { display: inline-block; border: 1.5px solid currentColor; padding: 0.05em 0.5em; font-weight: 700; font-size: 0.85rem; white-space: nowrap; }
+  /* Tampons : passé, refusé. Le refusé est en rouge d'erreur, pas en rausch (la marque ne dit jamais « non »). */
+  .stamp { display: inline-block; border: 1px solid currentColor; border-radius: 9999px; padding: 0.15em 0.75em; font-weight: 600; font-size: 0.8125rem; white-space: nowrap; }
   .rejected, .error { color: var(--red); }
   .empty { color: var(--muted); }
   s { text-decoration-color: var(--red); text-decoration-thickness: 2px; }
 
   .scroll { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; font-size: 0.95rem; font-variant-numeric: tabular-nums; }
-  th, td { text-align: left; vertical-align: top; padding: 0.6rem 1.25rem 0.6rem 0; border-top: 1px solid var(--line); }
-  th { font-weight: 400; color: var(--muted); border-top: 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.875rem; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; vertical-align: top; padding: 0.75rem 1.25rem 0.75rem 0; border-top: 1px solid var(--line-soft); }
+  th { font-weight: 500; color: var(--muted); border-top: 0; }
   td.num, th.num { text-align: right; white-space: nowrap; }
   td.wrap { min-width: 15rem; }
-  td.url { font: 0.85rem/1.5 var(--typed); word-break: break-all; min-width: 14rem; }
+  td.url { font: 0.8125rem/1.5 var(--typed); word-break: break-all; min-width: 14rem; }
 </style>

@@ -48,11 +48,10 @@ const t = ui[lang];
 
 <style>
   /* L'échelle : du plus sûr au plus prudent, avec le nombre d'entrées par anneau. */
-  .scale { list-style: none; margin: 3rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 2px solid var(--ink); }
-  .scale li { padding: 0.8rem 0.75rem 0.8rem 0; display: flex; flex-direction: column; color: var(--muted); }
-  .scale li + li { border-left: 1px solid var(--line); padding-left: 0.75rem; }
-  .scale b { font-weight: 600; font-size: clamp(0.85rem, 2vw, 1.05rem); }
-  .scale span { font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 750; line-height: 1; margin-top: 0.4rem; }
-  .scale .on { color: var(--ink); }
-  .scale .on span { background: var(--marker); color: var(--marker-ink); align-self: start; padding: 0 0.15em; }
+  .scale { list-style: none; margin: 3rem 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.75rem; }
+  .scale li { padding: 1rem 1.15rem; display: flex; flex-direction: column; color: var(--muted); border: 1px solid var(--line); border-radius: 14px; }
+  .scale b { font-weight: 600; font-size: clamp(0.8rem, 2vw, 1rem); }
+  .scale span { font-size: clamp(1.6rem, 5vw, 2.5rem); font-weight: 700; line-height: 1; margin-top: 0.5rem; }
+  .scale .on { color: var(--ink); box-shadow: var(--lift); }
+  .scale .on span { background: var(--marker); color: var(--marker-ink); align-self: start; padding: 0 0.15em; border-radius: 3px; }
 </style>

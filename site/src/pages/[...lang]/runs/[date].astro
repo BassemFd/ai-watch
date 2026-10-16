@@ -76,14 +76,14 @@ const t = ui[lang];
 </Layout>
 
 <style>
-  .counts { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 1.5rem 2rem; margin: 2.5rem 0 0; padding-top: 1.25rem; border-top: 2px solid var(--ink); }
-  .counts div { display: flex; flex-direction: column; }
-  .counts dd { margin: 0; font-size: 2.6rem; line-height: 1; font-weight: 750; letter-spacing: -0.03em; }
+  .counts { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 1rem; margin: 2.5rem 0 0; }
+  .counts div { display: flex; flex-direction: column; padding: 1.1rem 1.25rem; background: var(--sheet); border-radius: 14px; }
+  .counts dd { margin: 0; font-size: 2.25rem; line-height: 1; font-weight: 700; letter-spacing: -0.02em; }
   .counts dt { color: var(--muted); font-size: 0.9rem; margin-top: 0.3rem; }
   .gates { list-style: none; padding: 0; margin: 0; }
-  .gates li { display: flex; flex-wrap: wrap; gap: 0.3rem 0.9rem; align-items: baseline; padding-block: 0.7rem; border-top: 1px solid var(--line); }
+  .gates li { display: flex; flex-wrap: wrap; gap: 0.3rem 0.9rem; align-items: baseline; padding-block: 0.7rem; border-top: 1px solid var(--line-soft); }
   .refused { list-style: none; padding: 0; margin: 0; }
-  .refused li { display: grid; gap: 0.3rem 3rem; padding-block: 1rem; border-top: 1px solid var(--line); }
+  .refused li { display: grid; gap: 0.3rem 3rem; padding-block: 1rem; border-top: 1px solid var(--line-soft); }
   @media (min-width: 58rem) { .refused li { grid-template-columns: minmax(0, 38rem) minmax(0, 1fr); } }
   .refused span { font-size: 0.92rem; }
 </style>

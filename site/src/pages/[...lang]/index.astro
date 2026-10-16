@@ -50,7 +50,7 @@ const specimen = today?.items[0]?.claims[0];
             <div>
               <p>{item.summary[lang]}</p>
               <p class="muted">{item.why[lang]}</p>
-              <p class="small"><a href={item.url} rel="noopener">{t.home.readSource}</a>{item.confirmedBy && <> · {t.home.confirmedBy} <a href={item.confirmedBy.url} rel="noopener">{item.confirmedBy.source}</a></>}</p>
+              <p class="small"><a class="btn" href={item.url} rel="noopener">{t.home.readSource}</a>{item.confirmedBy && <> · {t.home.confirmedBy} <a href={item.confirmedBy.url} rel="noopener">{item.confirmedBy.source}</a></>}</p>
             </div>
             <Evidence claims={item.claims} lang={lang} />
           </div>
@@ -76,28 +76,28 @@ const specimen = today?.items[0]?.claims[0];
 
 <style>
   /* L'accroche à gauche, la pièce à conviction à droite : une phrase du jour et sa preuve. */
-  .hero { display: grid; gap: 1.75rem 3.5rem; grid-template-columns: minmax(0, 1fr); align-items: start; }
+  .hero { display: grid; gap: 2rem 4rem; grid-template-columns: minmax(0, 1fr); align-items: start; }
   @media (min-width: 58rem) { .hero { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); } }
-  .specimen { margin: 0; padding: 1.4rem 1.5rem; background: var(--sheet); border: 1px solid var(--line); border-radius: 6px; display: grid; gap: 1rem; }
-  .specimen .claim { font-size: clamp(1.1rem, 1.7vw, 1.3rem); line-height: 1.3; font-weight: 600; letter-spacing: -0.01em; margin: 0; max-width: none; }
-  .specimen blockquote { margin: 0; font: 400 0.98rem/1.8 var(--typed); }
-  .specimen figcaption { color: var(--muted); font-size: 0.88rem; }
-  .runline { margin: 2.25rem 0 0; padding-top: 1rem; border-top: 2px solid var(--ink); max-width: none; }
+  .specimen { margin: 0; padding: 1.5rem; background: var(--paper); border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--lift); display: grid; gap: 1rem; }
+  .specimen .claim { font-size: 1.25rem; line-height: 1.3; font-weight: 600; letter-spacing: -0.01em; margin: 0; max-width: none; color: var(--ink); }
+  .specimen blockquote { margin: 0; font: 400 0.9rem/1.7 var(--typed); }
+  .specimen figcaption { color: var(--muted); font-size: 0.8125rem; }
+  .runline { margin: 2.5rem 0 0; padding: 1rem 1.25rem; background: var(--sheet); border-radius: 14px; max-width: none; color: var(--body); font-size: 0.9375rem; }
   .runline .stamp { margin-right: 0.6rem; }
-  /* Une brève fermée : titre, une ligne de résumé, la source et le nombre de preuves. */
-  .item { border-top: 1px solid var(--line); }
-  .item summary { list-style: none; cursor: pointer; display: grid; gap: 0.35rem; padding: 1.15rem 2.25rem 1.15rem 0; position: relative; }
+  /* Une brève = une carte : titre, une ligne de résumé, la source et le nombre de preuves ; elle s'ouvre sur ses preuves. */
+  .item { border: 1px solid var(--line); border-radius: 14px; margin-bottom: 1rem; padding-inline: 1.5rem; background: var(--paper); }
+  .item:hover { box-shadow: var(--lift); }
+  .item summary { list-style: none; cursor: pointer; display: grid; gap: 0.35rem; padding: 1.25rem 2.25rem 1.25rem 0; position: relative; }
   .item summary::-webkit-details-marker { display: none; }
-  .item summary::after { content: ""; position: absolute; right: 0.4rem; top: 1.45rem; width: 0.6rem; height: 0.6rem; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: rotate(45deg); transition: transform 0.2s; }
-  .item[open] summary::after { transform: rotate(-135deg); top: 1.7rem; }
-  .item summary:hover h3 { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.2em; }
+  .item summary::after { content: ""; position: absolute; right: 0.4rem; top: 1.6rem; width: 0.55rem; height: 0.55rem; border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); transform: rotate(45deg); transition: transform 0.2s; }
+  .item[open] summary::after { transform: rotate(-135deg); top: 1.8rem; }
   .item h3 { margin: 0; }
   .teaser { color: var(--muted); overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
   .item[open] .teaser { display: none; }
-  .meta { display: flex; flex-wrap: wrap; gap: 0.3rem 0.9rem; align-items: baseline; font-size: 0.88rem; color: var(--muted); }
-  .item > .pair { border-top: 0; padding-top: 0.25rem; }
+  .meta { display: flex; flex-wrap: wrap; gap: 0.3rem 0.9rem; align-items: center; font-size: 0.875rem; color: var(--muted); }
+  .item > .pair { padding-top: 1.25rem; padding-bottom: 1.5rem; }
   @media (prefers-reduced-motion: reduce) { .item summary::after { transition: none; } }
-  .earlier { border-top: 1px solid var(--line); padding-block: 0.9rem; }
+  .earlier { border-top: 1px solid var(--line-soft); padding-block: 1rem; }
   .earlier summary { cursor: pointer; font-weight: 600; }
   .earlier p { margin-top: 0.8rem; }
 </style>
