@@ -1,94 +1,326 @@
 {
   "date": "2026-10-16",
-  "startedAt": "2026-10-16T08:24:50.497Z",
-  "durationMs": 32331,
-  "status": "rejected",
+  "startedAt": "2026-10-16T09:39:14.190Z",
+  "durationMs": 61327,
+  "status": "published",
   "counts": {
     "collectes": 205,
-    "nouveaux": 117,
-    "retenus": 1,
-    "faitsProposes": 6,
-    "faitsCites": 6,
-    "faitsValides": 6,
+    "nouveaux": 139,
+    "retenus": 6,
+    "faitsProposes": 31,
+    "faitsCites": 31,
+    "faitsValides": 21,
     "confirmationsCitees": 1,
     "confirmationsValides": 0,
-    "sujetsRecoupes": 0
+    "sujetsRecoupes": 0,
+    "mouvementsRadar": 2,
+    "publies": 9
   },
   "stages": [
     {
       "stage": "triage",
       "model": "claude-haiku-5-5",
-      "ms": 7727,
-      "inputTokens": 22712,
-      "outputTokens": 670,
-      "costUsd": 0.0026062000000000004
+      "ms": 5394,
+      "inputTokens": 24832,
+      "outputTokens": 772,
+      "costUsd": 0.0028692
     },
     {
       "stage": "research",
       "model": "claude-sonnet-5-5",
-      "ms": 2136,
-      "inputTokens": 2570,
+      "ms": 1481,
+      "inputTokens": 2494,
+      "outputTokens": 97,
+      "costUsd": 0.005958
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1737,
+      "inputTokens": 2482,
+      "outputTokens": 89,
+      "costUsd": 0.005854
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1747,
+      "inputTokens": 2470,
+      "outputTokens": 65,
+      "costUsd": 0.00559
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1807,
+      "inputTokens": 2582,
       "outputTokens": 169,
-      "costUsd": 0.00683
+      "costUsd": 0.006854
     },
     {
       "stage": "research",
       "model": "claude-sonnet-5-5",
-      "ms": 8682,
-      "inputTokens": 22352,
-      "outputTokens": 1599,
-      "costUsd": 0.060694
+      "ms": 3221,
+      "inputTokens": 2458,
+      "outputTokens": 75,
+      "costUsd": 0.005666
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 3324,
+      "inputTokens": 2494,
+      "outputTokens": 96,
+      "costUsd": 0.005948
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4072,
+      "inputTokens": 4372,
+      "outputTokens": 682,
+      "costUsd": 0.015564
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 7224,
+      "inputTokens": 9614,
+      "outputTokens": 1300,
+      "costUsd": 0.032228
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 7022,
+      "inputTokens": 7208,
+      "outputTokens": 1007,
+      "costUsd": 0.024486
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 6311,
+      "inputTokens": 5586,
+      "outputTokens": 1057,
+      "costUsd": 0.021742
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 7868,
+      "inputTokens": 22364,
+      "outputTokens": 1320,
+      "costUsd": 0.057928
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 8273,
+      "inputTokens": 12533,
+      "outputTokens": 1249,
+      "costUsd": 0.037556
     },
     {
       "stage": "verify",
       "model": "claude-sonnet-5-5",
-      "ms": 3914,
-      "inputTokens": 3393,
-      "outputTokens": 504,
-      "costUsd": 0.011826
+      "ms": 10297,
+      "inputTokens": 8697,
+      "outputTokens": 1769,
+      "costUsd": 0.035084
+    },
+    {
+      "stage": "curate",
+      "model": "claude-opus-5-5",
+      "ms": 14515,
+      "inputTokens": 4922,
+      "outputTokens": 1407,
+      "costUsd": 0.047828
+    },
+    {
+      "stage": "write",
+      "model": "claude-sonnet-5-5",
+      "ms": 17878,
+      "inputTokens": 4710,
+      "outputTokens": 3301,
+      "costUsd": 0.04243
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 8924,
+      "inputTokens": 9957,
+      "outputTokens": 1478,
+      "costUsd": 0.034694
     }
   ],
   "gates": [
     {
       "name": "literal_quotes",
       "pass": true,
-      "detail": "6/6"
+      "detail": "31/31"
     },
     {
       "name": "supported_claims",
       "pass": true,
-      "detail": "6/6"
+      "detail": "21/31"
     },
     {
-      "name": "corroboration",
-      "pass": false,
-      "detail": "0/1"
+      "name": "verifier",
+      "pass": true,
+      "detail": "9/10 (>= 50%)"
+    },
+    {
+      "name": "volume",
+      "pass": true,
+      "detail": "radar 2, state 3 (max 3)"
+    },
+    {
+      "name": "budget",
+      "pass": true,
+      "detail": "0.388/2 USD"
     }
   ],
   "rejected": [
     {
       "what": {
-        "fr": "Welcome Muse Spark Open: open-weight frontier multimodal mixture-of-experts model from Meta",
-        "en": "Welcome Muse Spark Open: open-weight frontier multimodal mixture-of-experts model from Meta"
+        "fr": "Un corpus de graphes vérifiés par exécution liste les graphes qui ont résolu une requête sans jamais les classer, ce qui laisse le SFT continu sans préférence par requête à exploiter.",
+        "en": "A corpus of execution-verified graphs lists the graphs that solved a query but never ranks them, leaving continued supervised fine-tuning (SFT) with no per-query preference to exploit."
       },
-      "reason": "not_corroborated"
+      "reason": "claim_unsupported",
+      "detail": "The quote says 'a corpus' without 'execution-verified', so the claim adds a qualifier not present in the quote."
+    },
+    {
+      "what": {
+        "fr": "AWS appelle « Trust in Depth » l'approche qui repose sur des couches indépendantes, inspirée de la défense en profondeur, et qui vise à élargir ce que l'on peut autoriser en toute sécurité.",
+        "en": "AWS calls its approach \"Trust in Depth\": independent layers modeled on Defense in Depth, aimed at expanding what you can safely allow."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not say the approach relies on independent layers or is modeled on Defense in Depth; it only contrasts the two and names Trust in Depth."
+    },
+    {
+      "what": {
+        "fr": "Avec les Policies d'Amazon Bedrock AgentCore, on décrit en langage naturel les outils, API et données accessibles à l'agent, et le raisonnement automatisé vérifie la politique avant son entrée en vigu",
+        "en": "With Policies in Amazon Bedrock AgentCore, you describe in plain language which tools, APIs, and data the agent may reach, and automated reasoning checks the policy before it takes effect."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote says automated reasoning checks the policy for gaps, but not that it does so before the policy takes effect."
+    },
+    {
+      "what": {
+        "fr": "Amazon CloudWatch Omni capture chaque trace et présente chaque étape de l'agent, des appels de modèle aux invocations d'outils, sur une chronologie.",
+        "en": "Amazon CloudWatch Omni captures every trace and lays out each step an agent took, from model calls to tool invocations, on a timeline."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote says 'It captures' without naming Amazon CloudWatch Omni, and the quote alone does not establish the product name."
+    },
+    {
+      "what": {
+        "fr": "Magnetar prouve l'exécution de RISC-V ; un développeur écrit en Rust, Go ou C, compile normalement, et Magnetar prouve le programme tel qu'il est écrit.",
+        "en": "Magnetar proves the execution of RISC-V; a developer writes a program in Rust, Go, or C, compiles it as usual, and Magnetar proves it as written."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote covers writing in Rust, Go or C and proving as written, but not that Magnetar proves RISC-V execution."
+    },
+    {
+      "what": {
+        "fr": "Sur 15 programmes de test, Magnetar est en moyenne 10 à 39 fois plus rapide que les zkVM existants les plus rapides sur la même machine.",
+        "en": "Across 15 benchmark programs, Magnetar is 10 to 39 times faster on average than the fastest existing zkVMs on the same machine."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not mention 15 benchmark programs, so the claim adds a figure."
+    },
+    {
+      "what": {
+        "fr": "Muse Spark Open est un modèle à poids ouverts de Meta, de type mixture d'experts, avec environ 816 milliards de paramètres, dont environ 42 milliards actifs par token, et une fenêtre de contexte pouva",
+        "en": "Muse Spark Open is an open-weight mixture-of-experts model from Meta with approximately 816 billion parameters, around 42 billion active per token, and a context window of up to one million tokens."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote omits Meta, open weights and mixture-of-experts; the confirmation quote does not mention open weights, Meta or the one-million-token context."
+    },
+    {
+      "what": {
+        "fr": "Muse Spark Open n'accepte pas de désactiver le raisonnement ; le niveau par défaut est xhigh dans l'interface oMLX.",
+        "en": "It is not possible to turn reasoning off in Muse Spark Open; in the oMLX interface the default (Auto) uses xhigh."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not mention oMLX or Muse Spark Open by name; the oMLX interface is not established by the quote alone."
+    },
+    {
+      "what": {
+        "fr": "Muse Spark Open est un modèle multimodal à mélange d'experts de Meta, avec 816 Md de paramètres au total (42 Md actifs par token) et une fenêtre de contexte allant jusqu'à 1 048 576 tokens.",
+        "en": "Muse Spark Open is a multimodal mixture-of-experts model from Meta with 816B total parameters (42B active per token) and a context window of up to 1,048,576 tokens."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not state that the model is multimodal from Meta or mixture-of-experts, only parameters and context."
+    },
+    {
+      "what": {
+        "fr": "Ling 3.0 Flash est pris en charge nativement dans Transformers sous le nom BailingHybridForCausalLM, donc sans trust_remote_code=True.",
+        "en": "Ling 3.0 Flash is natively supported in Transformers as BailingHybridForCausalLM, so it loads without trust_remote_code=True."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote says 'It' without naming Ling 3.0 Flash, so the model name is not established by the quote alone."
+    },
+    {
+      "what": {
+        "fr": "Anthropic : la réplication de petits modèles sur appareils IoT reste hors de portée aujourd'hui",
+        "en": "Anthropic: small-model replication across IoT devices is out of reach today"
+      },
+      "reason": "statement_unsupported",
+      "detail": "The headline says replication is out of reach today, and the 'specific setup, not a general limit' remark adds an interpretation beyond the claims; more notably, the headline overgeneralizes to IoT replication being out of reach."
     }
   ],
   "toolCalls": [
     {
       "tool": "fetch_page",
+      "input": "https://aws.amazon.com/blogs/machine-learning/trust-in-depth-giving-agents-more-autonomy-without-losing-control/",
+      "ok": true,
+      "ms": 64,
+      "item": "https://aws.amazon.com/blogs/machine-learning/trust-in-depth-giving-agents-more-autonomy-without-losing-control/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://arxiv.org/abs/2610.20628",
+      "ok": true,
+      "ms": 24,
+      "item": "https://arxiv.org/abs/2610.20628"
+    },
+    {
+      "tool": "fetch_page",
       "input": "https://huggingface.co/blog/meta-muse-spark-open",
       "ok": true,
-      "ms": 131,
+      "ms": 72,
       "item": "https://huggingface.co/blog/meta-muse-spark-open"
     },
     {
       "tool": "fetch_page",
       "input": "https://aws.amazon.com/blogs/machine-learning/metas-muse-spark-open-now-available-in-amazon-sagemaker-jumpstart/",
       "ok": true,
-      "ms": 117,
+      "ms": 58,
       "item": "https://huggingface.co/blog/meta-muse-spark-open"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://www.microsoft.com/en-us/research/blog/proof-based-general-purpose-computing-with-magnetar/",
+      "ok": true,
+      "ms": 328,
+      "item": "https://www.microsoft.com/en-us/research/blog/proof-based-general-purpose-computing-with-magnetar/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://arstechnica.com/security/2026/10/anthropic-warns-small-ai-models-could-self-replicate-through-iot-devices/",
+      "ok": true,
+      "ms": 105,
+      "item": "https://arstechnica.com/security/2026/10/anthropic-warns-small-ai-models-could-self-replicate-through-iot-devices/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://github.com/huggingface/transformers/releases/tag/v5.20.0",
+      "ok": true,
+      "ms": 926,
+      "item": "https://github.com/huggingface/transformers/releases/tag/v5.20.0"
     }
   ],
-  "costUsd": 0.0819562
+  "costUsd": 0.38827920000000005
 }

@@ -43,6 +43,94 @@
           "ring": "evaluer"
         }
       ]
+    },
+    {
+      "name": "Muse Spark Open",
+      "ring": "evaluer",
+      "rationale": {
+        "fr": "Ce modèle MoE (256 experts par bloc, 8 sélectionnés par token) est déjà utilisable dans transformers, où son checkpoint NVFP4 tourne sur un seul nœud B200, et dans SageMaker JumpStart, sur ml.p5e.48xlarge en NVFP4 et ml.p6-b300.48xlarge en BF16. Avec environ 1,5 To pour le checkpoint BF16 et aucun résultat de qualité dans les faits, il est à suivre de près avant tout pilote.",
+        "en": "This MoE model (256 experts per block, 8 selected per token) is already usable in transformers, where its NVFP4 checkpoint runs on a single B200 node, and in SageMaker JumpStart, on ml.p5e.48xlarge for NVFP4 and ml.p6-b300.48xlarge for BF16. With a BF16 checkpoint of about 1.5 TB and no quality results in the facts, it is one to watch closely before any pilot."
+      },
+      "evidence": [
+        {
+          "id": "9d251ac6836a-1",
+          "text": {
+            "fr": "Chaque bloc MoE de Muse Spark Open compte 256 experts, et un routeur en sélectionne 8 pour chaque token.",
+            "en": "Each Muse Spark Open MoE block has 256 experts, and a router selects 8 experts for each token."
+          },
+          "quote": "Each MoE block has 256 experts, and a router selects 8 experts for each token.",
+          "url": "https://huggingface.co/blog/meta-muse-spark-open"
+        },
+        {
+          "id": "9d251ac6836a-2",
+          "text": {
+            "fr": "Le checkpoint BF16 de Muse Spark Open pèse environ 1,5 To au format safetensors.",
+            "en": "The Muse Spark Open BF16 checkpoint is about 1.5 TB in safetensors format."
+          },
+          "quote": "The BF16 checkpoint is about 1.5 TB in safetensors format.",
+          "url": "https://huggingface.co/blog/meta-muse-spark-open"
+        },
+        {
+          "id": "9d251ac6836a-3",
+          "text": {
+            "fr": "Dans transformers, le checkpoint NVFP4 de Muse Spark Open tourne sur un seul nœud B200.",
+            "en": "In transformers, the Muse Spark Open NVFP4 checkpoint runs on a single B200 node."
+          },
+          "quote": "In transformers, the BF16 checkpoint runs across 4 nodes of 8 H200 GPUs with tensor parallelism (TP=32) and the NVFP4 runs on a single B200 node.",
+          "url": "https://huggingface.co/blog/meta-muse-spark-open"
+        },
+        {
+          "id": "9d251ac6836a-5",
+          "text": {
+            "fr": "Dans SageMaker JumpStart, la variante NVFP4 de Muse Spark Open s'exécute sur ml.p5e.48xlarge et la variante BF16 sur ml.p6-b300.48xlarge.",
+            "en": "In SageMaker JumpStart, the NVFP4 variant of Muse Spark Open runs on ml.p5e.48xlarge and the BF16 variant runs on ml.p6-b300.48xlarge."
+          },
+          "quote": "the NVFP4 variant runs on ml.p5e.48xlarge , and the BF16 variant runs on ml.p6-b300.48xlarge",
+          "url": "https://aws.amazon.com/blogs/machine-learning/metas-muse-spark-open-now-available-in-amazon-sagemaker-jumpstart/"
+        }
+      ],
+      "since": "2026-10-16",
+      "history": [
+        {
+          "date": "2026-10-16",
+          "ring": "evaluer"
+        }
+      ]
+    },
+    {
+      "name": "AgentCore",
+      "ring": "evaluer",
+      "rationale": {
+        "fr": "D'après AWS, Policy dans AgentCore applique les règles à chaque appel d'outil passant par AgentCore Gateway, et AgentCore donne à chaque agent sa propre identité, vérifiée à chaque requête. C'est une piste à suivre pour encadrer des agents plus autonomes ; la seule source est l'éditeur.",
+        "en": "According to AWS, Policy in AgentCore enforces rules on every tool call routed through AgentCore Gateway, and AgentCore gives each agent its own identity, checked on every request. It is worth watching as a way to govern more autonomous agents; the only source is the vendor."
+      },
+      "evidence": [
+        {
+          "id": "36341170f856-3",
+          "text": {
+            "fr": "Policy dans AgentCore applique les règles à chaque appel d'outil passant par AgentCore Gateway.",
+            "en": "Policy in AgentCore enforces rules on every tool call routed through AgentCore Gateway."
+          },
+          "quote": "Policy in AgentCore enforces it on every tool call routed through AgentCore Gateway",
+          "url": "https://aws.amazon.com/blogs/machine-learning/trust-in-depth-giving-agents-more-autonomy-without-losing-control/"
+        },
+        {
+          "id": "36341170f856-4",
+          "text": {
+            "fr": "AgentCore attribue à chaque agent sa propre identité et la vérifie à chaque requête.",
+            "en": "AgentCore issues each agent its own identity and checks it on every request."
+          },
+          "quote": "AgentCore issues each agent its own identity and checks it on every request",
+          "url": "https://aws.amazon.com/blogs/machine-learning/trust-in-depth-giving-agents-more-autonomy-without-losing-control/"
+        }
+      ],
+      "since": "2026-10-16",
+      "history": [
+        {
+          "date": "2026-10-16",
+          "ring": "evaluer"
+        }
+      ]
     }
   ]
 }

@@ -157,6 +157,117 @@
           "url": "https://www.latent.space/p/lab-in-the-loop-at-compute-speed"
         }
       ]
+    },
+    {
+      "date": "2026-10-16",
+      "sectionId": "evals",
+      "text": {
+        "fr": "Dans un test d'Anthropic, Gemma4-26B-A4B réparti sur 15 boîtiers Android TV de 4 Go chacun n'a atteint que 0,39 token par seconde, et aucun des modèles légers testés n'a réalisé de réplication de bout en bout ; la réplication observée était orchestrée par GLM-5.2.",
+        "en": "In an Anthropic test, Gemma4-26B-A4B distributed over 15 Android TV boxes with 4GB each reached only 0.39 tokens per second, and none of the light-weight models tested achieved end-to-end replication; the replication observed was orchestrated by GLM-5.2."
+      },
+      "evidence": [
+        {
+          "id": "7923e9fedadd-0",
+          "text": {
+            "fr": "Le modèle léger Gemma4-26B-A4B n'a eu besoin que de 15 boîtiers, chacun avec seulement 4 Go de mémoire, pour réaliser l'inférence.",
+            "en": "The lightweight Gemma4-26B-A4B model required just 15 boxes, each with only 4GB of memory, to achieve inference."
+          },
+          "quote": "The lightweight Gemma4-26B-A4B model required just 15 boxes, each equipped with only 4GB of memory, to achieve inference.",
+          "url": "https://arstechnica.com/security/2026/10/anthropic-warns-small-ai-models-could-self-replicate-through-iot-devices/"
+        },
+        {
+          "id": "7923e9fedadd-1",
+          "text": {
+            "fr": "Gemma4-26B-A4B, réparti sur les 15 boîtiers Android TV, n'a atteint que 0,39 token par seconde.",
+            "en": "Gemma4-26B-A4B, distributed over the 15 Android TV boxes, performed at just 0.39 tokens per second."
+          },
+          "quote": "Gemma4-26B-A4B, distributed over the 15 Android TV boxes, performed at just 0.39 tokens per second.",
+          "url": "https://arstechnica.com/security/2026/10/anthropic-warns-small-ai-models-could-self-replicate-through-iot-devices/"
+        },
+        {
+          "id": "7923e9fedadd-2",
+          "text": {
+            "fr": "Aucun des modèles légers testés n'est actuellement capable de réaliser une réplication de bout en bout.",
+            "en": "At the moment, none of the light-weight models tested are able to mount end-to-end replication."
+          },
+          "quote": "At the moment, however, none of the light-weight models tested are able to mount end-to-end replication",
+          "url": "https://arstechnica.com/security/2026/10/anthropic-warns-small-ai-models-could-self-replicate-through-iot-devices/"
+        },
+        {
+          "id": "7923e9fedadd-4",
+          "text": {
+            "fr": "La réplication n'a pas été effectuée par les petits modèles eux-mêmes : GLM-5.2 orchestrait le processus pendant que les cibles faisaient tourner un modèle Llama plus petit.",
+            "en": "The replication was not performed by the small models themselves: GLM-5.2 orchestrated the process while the targets ran a smaller Llama model."
+          },
+          "quote": "the replication wasn’t performed by the small models themselves, but rather with GLM-5.2 to orchestrate the process while the targets ran a smaller Llama model.",
+          "url": "https://arstechnica.com/security/2026/10/anthropic-warns-small-ai-models-could-self-replicate-through-iot-devices/"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-16",
+      "sectionId": "open",
+      "text": {
+        "fr": "Magnetar prouve 7,2 à 8,7 millions d'instructions de processeur par seconde sur un ordinateur portable, avec des preuves vérifiables en environ 12 ms et sans configuration de confiance.",
+        "en": "Magnetar proves 7.2 to 8.7 million processor instructions per second on a laptop, with proofs verifiable in about 12 ms and no trusted setup."
+      },
+      "evidence": [
+        {
+          "id": "4069e5410c3e-1",
+          "text": {
+            "fr": "Magnetar prouve 7,2 à 8,7 millions d'instructions de processeur par seconde sur un ordinateur portable.",
+            "en": "Magnetar proves 7.2 to 8.7 million processor instructions per second on a laptop."
+          },
+          "quote": "Magnetar proves 7.2 to 8.7 million processor instructions per second on a laptop.",
+          "url": "https://www.microsoft.com/en-us/research/blog/proof-based-general-purpose-computing-with-magnetar/"
+        },
+        {
+          "id": "4069e5410c3e-3",
+          "text": {
+            "fr": "Les preuves de Magnetar se vérifient en environ 12 millisecondes.",
+            "en": "Magnetar proofs verify in about 12 milliseconds."
+          },
+          "quote": "Its proofs verify in about 12 milliseconds.",
+          "url": "https://www.microsoft.com/en-us/research/blog/proof-based-general-purpose-computing-with-magnetar/"
+        },
+        {
+          "id": "4069e5410c3e-4",
+          "text": {
+            "fr": "Magnetar ne requiert ni courbes elliptiques, ni réseaux euclidiens, ni fonctions de hachage spéciales, ni configuration de confiance, ni conjecture non prouvée sur les codes correcteurs.",
+            "en": "Magnetar requires no elliptic curves, no lattices, no special-purpose hash functions, no trusted setup, and no unproven conjecture about error-correcting codes."
+          },
+          "quote": "It requires no elliptic curves, no lattices, no special-purpose hash functions, no trusted setup, and no unproven conjecture about error-correcting codes.",
+          "url": "https://www.microsoft.com/en-us/research/blog/proof-based-general-purpose-computing-with-magnetar/"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-16",
+      "sectionId": "agents",
+      "text": {
+        "fr": "Sur six benchmarks variés, PRISM, méthode de conception de topologie multi-agents utilisant un enseignant qui lit un graphe « frère » indisponible au déploiement, s'améliore par rapport à toutes les méthodes de référence de conception de topologie évaluées.",
+        "en": "Across six diverse benchmarks, PRISM, a multi-agent topology-design method using a teacher that reads a sibling graph unavailable at deployment, improves over every topology-design baseline evaluated."
+      },
+      "evidence": [
+        {
+          "id": "0610369902be-0",
+          "text": {
+            "fr": "PRISM utilise un enseignant qui lit, via une branche low-rank initialisée à zéro, un graphe « frère » ayant aussi résolu la requête et indisponible au déploiement ; l'étudiant imite ses cibles par décision sur des trajectoires qu'il échantillonne lui-même.",
+            "en": "PRISM uses a teacher that reads, through a zero-initialized low-rank branch, a sibling graph that also solved the query and is unavailable at deployment, and the student matches its per-decision targets on trajectories the student samples itself."
+          },
+          "quote": "a teacher reads, through a zero-initialized low-rank branch, a sibling graph that also solved the query and is unavailable at deployment, and the student matches its per-decision targets on trajectories the student samples itself",
+          "url": "https://arxiv.org/abs/2610.20628"
+        },
+        {
+          "id": "0610369902be-1",
+          "text": {
+            "fr": "Sur six benchmarks variés, PRISM s'améliore par rapport à toutes les méthodes de référence de conception de topologie évaluées.",
+            "en": "Across six diverse benchmarks, PRISM improves over every topology-design baseline evaluated."
+          },
+          "quote": "Across six diverse benchmarks PRISM improves over every topology-design baseline evaluated",
+          "url": "https://arxiv.org/abs/2610.20628"
+        }
+      ]
     }
   ]
 }

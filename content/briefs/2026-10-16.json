@@ -1,0 +1,193 @@
+{
+  "date": "2026-10-16",
+  "headline": {
+    "fr": "Muse Spark Open : un MoE multimodal à poids ouverts signé Meta ; Magnetar : du calcul général avec preuve, vérifiable en 12 ms ; AWS : identité par agent et règles sur chaque appel d'outil dans AgentCore ; Transformers v5.20.0 : quantification à l'export et repli des kernels",
+    "en": "Muse Spark Open: an open-weight multimodal MoE from Meta; Magnetar: proof-based general-purpose computing, verifiable in 12 ms; AWS: per-agent identity and rules on every tool call in AgentCore; Transformers v5.20.0: quantization at export and kernel fallback"
+  },
+  "items": [
+    {
+      "title": {
+        "fr": "Muse Spark Open : un MoE multimodal à poids ouverts signé Meta",
+        "en": "Muse Spark Open: an open-weight multimodal MoE from Meta"
+      },
+      "url": "https://huggingface.co/blog/meta-muse-spark-open",
+      "source": "Hugging Face",
+      "primary": true,
+      "summary": {
+        "fr": "Chaque bloc MoE de Muse Spark Open compte 256 experts, dont 8 sont sélectionnés par un routeur pour chaque token. Le checkpoint BF16 pèse environ 1,5 To au format safetensors. Dans transformers, le checkpoint NVFP4 tourne sur un seul nœud B200.",
+        "en": "Each Muse Spark Open MoE block has 256 experts, of which a router selects 8 for each token. The BF16 checkpoint is about 1.5 TB in safetensors format. In transformers, the NVFP4 checkpoint runs on a single B200 node."
+      },
+      "why": {
+        "fr": "Pour une équipe qui envisage un déploiement auto-hébergé, l'écart de taille entre BF16 et NVFP4 conditionne probablement le matériel à prévoir.",
+        "en": "For a team considering self-hosting, the size gap between BF16 and NVFP4 likely determines the hardware to plan for."
+      },
+      "claims": [
+        {
+          "id": "9d251ac6836a-1",
+          "text": {
+            "fr": "Chaque bloc MoE de Muse Spark Open compte 256 experts, et un routeur en sélectionne 8 pour chaque token.",
+            "en": "Each Muse Spark Open MoE block has 256 experts, and a router selects 8 experts for each token."
+          },
+          "quote": "Each MoE block has 256 experts, and a router selects 8 experts for each token.",
+          "url": "https://huggingface.co/blog/meta-muse-spark-open"
+        },
+        {
+          "id": "9d251ac6836a-2",
+          "text": {
+            "fr": "Le checkpoint BF16 de Muse Spark Open pèse environ 1,5 To au format safetensors.",
+            "en": "The Muse Spark Open BF16 checkpoint is about 1.5 TB in safetensors format."
+          },
+          "quote": "The BF16 checkpoint is about 1.5 TB in safetensors format.",
+          "url": "https://huggingface.co/blog/meta-muse-spark-open"
+        },
+        {
+          "id": "9d251ac6836a-3",
+          "text": {
+            "fr": "Dans transformers, le checkpoint NVFP4 de Muse Spark Open tourne sur un seul nœud B200.",
+            "en": "In transformers, the Muse Spark Open NVFP4 checkpoint runs on a single B200 node."
+          },
+          "quote": "In transformers, the BF16 checkpoint runs across 4 nodes of 8 H200 GPUs with tensor parallelism (TP=32) and the NVFP4 runs on a single B200 node.",
+          "url": "https://huggingface.co/blog/meta-muse-spark-open"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Magnetar : du calcul général avec preuve, vérifiable en 12 ms",
+        "en": "Magnetar: proof-based general-purpose computing, verifiable in 12 ms"
+      },
+      "url": "https://www.microsoft.com/en-us/research/blog/proof-based-general-purpose-computing-with-magnetar/",
+      "source": "Microsoft Research",
+      "primary": true,
+      "summary": {
+        "fr": "Magnetar prouve 7,2 à 8,7 millions d'instructions de processeur par seconde sur un ordinateur portable. Ses preuves se vérifient en environ 12 millisecondes. Le système ne requiert ni courbes elliptiques, ni réseaux euclidiens, ni fonctions de hachage spéciales, ni configuration de confiance, ni conjecture non prouvée sur les codes correcteurs.",
+        "en": "Magnetar proves 7.2 to 8.7 million processor instructions per second on a laptop. Its proofs verify in about 12 milliseconds. The system requires no elliptic curves, no lattices, no special-purpose hash functions, no trusted setup, and no unproven conjecture about error-correcting codes."
+      },
+      "why": {
+        "fr": "Des hypothèses cryptographiques réduites et une vérification rapide sont des critères à examiner si l'on envisage de faire vérifier des calculs par un tiers.",
+        "en": "Fewer cryptographic assumptions and fast verification are criteria worth examining if you plan to have computations checked by a third party."
+      },
+      "claims": [
+        {
+          "id": "4069e5410c3e-1",
+          "text": {
+            "fr": "Magnetar prouve 7,2 à 8,7 millions d'instructions de processeur par seconde sur un ordinateur portable.",
+            "en": "Magnetar proves 7.2 to 8.7 million processor instructions per second on a laptop."
+          },
+          "quote": "Magnetar proves 7.2 to 8.7 million processor instructions per second on a laptop.",
+          "url": "https://www.microsoft.com/en-us/research/blog/proof-based-general-purpose-computing-with-magnetar/"
+        },
+        {
+          "id": "4069e5410c3e-3",
+          "text": {
+            "fr": "Les preuves de Magnetar se vérifient en environ 12 millisecondes.",
+            "en": "Magnetar proofs verify in about 12 milliseconds."
+          },
+          "quote": "Its proofs verify in about 12 milliseconds.",
+          "url": "https://www.microsoft.com/en-us/research/blog/proof-based-general-purpose-computing-with-magnetar/"
+        },
+        {
+          "id": "4069e5410c3e-4",
+          "text": {
+            "fr": "Magnetar ne requiert ni courbes elliptiques, ni réseaux euclidiens, ni fonctions de hachage spéciales, ni configuration de confiance, ni conjecture non prouvée sur les codes correcteurs.",
+            "en": "Magnetar requires no elliptic curves, no lattices, no special-purpose hash functions, no trusted setup, and no unproven conjecture about error-correcting codes."
+          },
+          "quote": "It requires no elliptic curves, no lattices, no special-purpose hash functions, no trusted setup, and no unproven conjecture about error-correcting codes.",
+          "url": "https://www.microsoft.com/en-us/research/blog/proof-based-general-purpose-computing-with-magnetar/"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "AWS : identité par agent et règles sur chaque appel d'outil dans AgentCore",
+        "en": "AWS: per-agent identity and rules on every tool call in AgentCore"
+      },
+      "url": "https://aws.amazon.com/blogs/machine-learning/trust-in-depth-giving-agents-more-autonomy-without-losing-control/",
+      "source": "AWS Machine Learning",
+      "primary": true,
+      "summary": {
+        "fr": "Policy dans AgentCore applique les règles à chaque appel d'outil passant par AgentCore Gateway. AgentCore attribue à chaque agent sa propre identité et la vérifie à chaque requête. AWS précise utiliser le raisonnement automatisé en production depuis plus de dix ans, notamment pour IAM, à plus de 2,1 milliards de requêtes par seconde.",
+        "en": "Policy in AgentCore enforces rules on every tool call routed through AgentCore Gateway. AgentCore issues each agent its own identity and checks it on every request. AWS states it has run automated reasoning in production for more than a decade, including for IAM at more than 2.1 billion requests per second."
+      },
+      "why": {
+        "fr": "Une identité distincte par agent et un contrôle à chaque appel d'outil sont une façon de borner l'autonomie des agents sans la supprimer.",
+        "en": "A distinct identity per agent and a check on each tool call is one way to bound agent autonomy without removing it."
+      },
+      "claims": [
+        {
+          "id": "36341170f856-1",
+          "text": {
+            "fr": "AWS utilise le raisonnement automatisé en production depuis plus de dix ans, notamment pour IAM, à plus de 2,1 milliards de requêtes par seconde.",
+            "en": "AWS has run automated reasoning in production for more than a decade, including for IAM at more than 2.1 billion requests per second."
+          },
+          "quote": "AWS has run automated reasoning in production for more than a decade , from Identity and Access Management (IAM) at more than 2.1 billion requests per second",
+          "url": "https://aws.amazon.com/blogs/machine-learning/trust-in-depth-giving-agents-more-autonomy-without-losing-control/"
+        },
+        {
+          "id": "36341170f856-3",
+          "text": {
+            "fr": "Policy dans AgentCore applique les règles à chaque appel d'outil passant par AgentCore Gateway.",
+            "en": "Policy in AgentCore enforces rules on every tool call routed through AgentCore Gateway."
+          },
+          "quote": "Policy in AgentCore enforces it on every tool call routed through AgentCore Gateway",
+          "url": "https://aws.amazon.com/blogs/machine-learning/trust-in-depth-giving-agents-more-autonomy-without-losing-control/"
+        },
+        {
+          "id": "36341170f856-4",
+          "text": {
+            "fr": "AgentCore attribue à chaque agent sa propre identité et la vérifie à chaque requête.",
+            "en": "AgentCore issues each agent its own identity and checks it on every request."
+          },
+          "quote": "AgentCore issues each agent its own identity and checks it on every request",
+          "url": "https://aws.amazon.com/blogs/machine-learning/trust-in-depth-giving-agents-more-autonomy-without-losing-control/"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Transformers v5.20.0 : quantification à l'export et repli des kernels",
+        "en": "Transformers v5.20.0: quantization at export and kernel fallback"
+      },
+      "url": "https://github.com/huggingface/transformers/releases/tag/v5.20.0",
+      "source": "Transformers (releases)",
+      "primary": true,
+      "summary": {
+        "fr": "Les exporters prennent en charge la quantification directement à l'export, pour Dynamo, ONNX, OpenVINO et ExecuTorch. La version minimale de kernels passe à 0.17.2, ce qui permet à use_fallback=KernelizeFallback.ALL de revenir à l'implémentation d'origine si un kernel ne se charge pas. Les notes de version signalent des régressions de vitesse en inférence avec le parallélisme d'experts, en cours de correction.",
+        "en": "Exporters now support quantization directly during export across Dynamo, ONNX, OpenVINO, and ExecuTorch. The minimum kernels version is now 0.17.2, which allows use_fallback=KernelizeFallback.ALL so a failed kernel load falls back to the original implementation. The release notes warn of speed regressions in inference with expert parallelism, which are being worked on."
+      },
+      "why": {
+        "fr": "Les équipes qui servent des modèles MoE avec parallélisme d'experts ont intérêt à mesurer leurs performances avant de migrer.",
+        "en": "Teams serving MoE models with expert parallelism should benchmark before upgrading."
+      },
+      "claims": [
+        {
+          "id": "e812566e88ff-2",
+          "text": {
+            "fr": "La version de kernels minimale passe à 0.17.2, ce qui permet à use_fallback=KernelizeFallback.ALL de revenir à l'implémentation d'origine plutôt que de lever une erreur quand un kernel ne se charge pas.",
+            "en": "The minimum kernels version is now 0.17.2, which allows use_fallback=KernelizeFallback.ALL so that a failed kernel load falls back to the original implementation instead of raising an error."
+          },
+          "quote": "The minimum kernels version is now 0.17.2, which allows use_fallback=KernelizeFallback.ALL so that a failed kernel load falls back to the original implementation instead of raising an error.",
+          "url": "https://github.com/huggingface/transformers/releases/tag/v5.20.0"
+        },
+        {
+          "id": "e812566e88ff-3",
+          "text": {
+            "fr": "Les exporters de Transformers prennent en charge la quantification directement à l'export, pour Dynamo, ONNX, OpenVINO et ExecuTorch.",
+            "en": "Transformers exporters now support quantization directly during export across Dynamo, ONNX, OpenVINO, and ExecuTorch."
+          },
+          "quote": "Transformers exporters now support quantization directly during export across Dynamo, ONNX, OpenVINO, and ExecuTorch.",
+          "url": "https://github.com/huggingface/transformers/releases/tag/v5.20.0"
+        },
+        {
+          "id": "e812566e88ff-4",
+          "text": {
+            "fr": "La version signale que l'inférence avec le parallélisme d'experts (EP) subit des régressions de vitesse, en cours de correction.",
+            "en": "The release notes warn that inference with expert parallelism (EP) has speed regressions, which are being worked on."
+          },
+          "quote": "General breaking notice that inference with EP has regressions in speed; we are working on fixing this ASAP!",
+          "url": "https://github.com/huggingface/transformers/releases/tag/v5.20.0"
+        }
+      ]
+    }
+  ]
+}
