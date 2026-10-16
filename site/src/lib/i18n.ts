@@ -33,7 +33,7 @@ const fr = {
   rings: { adopter: "Adopter", essayer: "Essayer", evaluer: "Évaluer", attendre: "Attendre" },
   ringHints: { adopter: "À utiliser par défaut.", essayer: "Vaut un pilote.", evaluer: "À suivre de près.", attendre: "Pas encore, ou à éviter." },
   sections: { modeles: "Modèles", agents: "Agents et harness", outils: "Outils de développement", evals: "Évaluation et sécurité", open: "Open source et recherche" },
-  gates: { literal_quotes: "citations littérales", supported_claims: "faits soutenus par leur citation", verifier: "vérificateur (énoncés)", volume: "volume", budget: "budget" } as Record<string, string>,
+  gates: { literal_quotes: "citations littérales", supported_claims: "faits soutenus par leur citation", verifier: "vérificateur (énoncés)", volume: "volume", budget: "budget", corroboration: "recoupement (abandonné depuis)" } as Record<string, string>,
   reasons: {
     quote_too_short: "citation trop courte",
     quote_too_long: "citation trop longue",
@@ -45,6 +45,7 @@ const fr = {
     statement_unsupported: "le vérificateur ne valide pas cet énoncé",
     feed_unreadable: "flux illisible",
     item_failed: "sujet abandonné",
+    not_corroborated: "sans seconde source (règle abandonnée)",
   } as Record<string, string>,
   home: {
     h1: "L'actualité de l'IA, écrite et vérifiée par des agents.",
@@ -151,7 +152,7 @@ const en: typeof fr = {
   rings: { adopter: "Adopt", essayer: "Trial", evaluer: "Assess", attendre: "Hold" },
   ringHints: { adopter: "Use by default.", essayer: "Worth a pilot.", evaluer: "Watch closely.", attendre: "Not yet, or avoid." },
   sections: { modeles: "Models", agents: "Agents and harnesses", outils: "Developer tools", evals: "Evaluation and safety", open: "Open source and research" },
-  gates: { literal_quotes: "literal quotes", supported_claims: "facts supported by their quote", verifier: "verifier (statements)", volume: "volume", budget: "budget" },
+  gates: { literal_quotes: "literal quotes", supported_claims: "facts supported by their quote", verifier: "verifier (statements)", volume: "volume", budget: "budget", corroboration: "corroboration (since dropped)" },
   reasons: {
     quote_too_short: "quote too short",
     quote_too_long: "quote too long",
@@ -163,6 +164,7 @@ const en: typeof fr = {
     statement_unsupported: "the verifier does not accept this statement",
     feed_unreadable: "feed unreadable",
     item_failed: "topic dropped",
+    not_corroborated: "no second source (rule since dropped)",
   },
   home: {
     h1: "AI news, written and verified by agents.",
@@ -202,7 +204,7 @@ const en: typeof fr = {
     stages: [
       ["Collect", "code", "Reads feeds from a hand-kept allowlist. Drops what was already seen."],
       ["Triage", "Haiku 5.5", "Scores the items. Topics that another, independent source also covers come first. Eight topics at most, or none."],
-      ["Research", "Sonnet 5.5 × N", "One agent per topic, with a single tool: fetch_page. Allowlist, at most 3 pages plus the confirming one, 6 turns, every call traced. For each fact it also quotes, when there is one, the second source's sentence that confirms it; without it the topic is published as "single source"."],
+      ["Research", "Sonnet 5.5 × N", "One agent per topic, with a single tool: fetch_page. Allowlist, at most 3 pages plus the confirming one, 6 turns, every call traced. For each fact it also quotes, when there is one, the second source's sentence that confirms it; without it the topic is published as “single source”."],
       ["Gate 1", "code", "Each quote must appear word for word in a page the agent actually read. Otherwise the fact is gone."],
       ["Fact check", "Sonnet 5.5", "Fresh context. Judges each fact against its quote, in both languages. A refused fact never reaches the writer."],
       ["Writing", "Sonnet 5.5", "Writes in French and English from validated facts only. Never sees the web."],

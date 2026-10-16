@@ -21,9 +21,11 @@ export const REASONS = [
   "statement_unsupported",
   "feed_unreadable",
   "item_failed",
+  // Plus produit : lisible seulement dans les traces du 2026-10-16, quand le recoupement était obligatoire.
+  "not_corroborated",
 ] as const;
 export type Reason = (typeof REASONS)[number];
-export const GATES = ["literal_quotes", "supported_claims", "verifier", "volume", "budget"] as const;
+export const GATES = ["literal_quotes", "supported_claims", "verifier", "volume", "budget", "corroboration"] as const;
 
 const SectionId = z.enum(SECTIONS.map((s) => s.id));
 const Ring = z.enum(RINGS);
