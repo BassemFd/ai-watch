@@ -3,7 +3,11 @@ name: Run quotidien
 on:
   schedule:
     # Pas pile sur l'heure : c'est le créneau le plus chargé, où GitHub retarde ou saute les runs programmés.
+    # GitHub ne garantit aucun horaire et saute des runs : trois créneaux, et l'étape « Édition du jour » ne
+    # lance le pipeline que si l'édition d'aujourd'hui n'est pas déjà publiée.
     - cron: "17 4 * * *" # 4 h 17 UTC : 6 h 17 à Paris en été, 5 h 17 en hiver
+    - cron: "43 6 * * *"
+    - cron: "37 9 * * *"
   workflow_dispatch:
     inputs:
       replay:
@@ -31,7 +35,10 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm test
-      - if: env.HAS_KEY == 'true'
+      - id: edition
+        run: echo "done=$([ -f content/briefs/$(date -u +%F).json ] && echo true || echo false)" >> "$GITHUB_OUTPUT"
+      # Un lancement manuel passe toujours ; un lancement programmé saute si l'édition du jour existe déjà.
+      - if: env.HAS_KEY == 'true' && (github.event_name == 'workflow_dispatch' || steps.edition.outputs.done == 'false')
         run: npm run pipeline -- ${{ inputs.replay && '--replay' || '' }}
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
