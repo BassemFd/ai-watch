@@ -1,0 +1,94 @@
+{
+  "date": "2026-10-16",
+  "startedAt": "2026-10-16T08:24:50.497Z",
+  "durationMs": 32331,
+  "status": "rejected",
+  "counts": {
+    "collectes": 205,
+    "nouveaux": 117,
+    "retenus": 1,
+    "faitsProposes": 6,
+    "faitsCites": 6,
+    "faitsValides": 6,
+    "confirmationsCitees": 1,
+    "confirmationsValides": 0,
+    "sujetsRecoupes": 0
+  },
+  "stages": [
+    {
+      "stage": "triage",
+      "model": "claude-haiku-5-5",
+      "ms": 7727,
+      "inputTokens": 22712,
+      "outputTokens": 670,
+      "costUsd": 0.0026062000000000004
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 2136,
+      "inputTokens": 2570,
+      "outputTokens": 169,
+      "costUsd": 0.00683
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 8682,
+      "inputTokens": 22352,
+      "outputTokens": 1599,
+      "costUsd": 0.060694
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 3914,
+      "inputTokens": 3393,
+      "outputTokens": 504,
+      "costUsd": 0.011826
+    }
+  ],
+  "gates": [
+    {
+      "name": "literal_quotes",
+      "pass": true,
+      "detail": "6/6"
+    },
+    {
+      "name": "supported_claims",
+      "pass": true,
+      "detail": "6/6"
+    },
+    {
+      "name": "corroboration",
+      "pass": false,
+      "detail": "0/1"
+    }
+  ],
+  "rejected": [
+    {
+      "what": {
+        "fr": "Welcome Muse Spark Open: open-weight frontier multimodal mixture-of-experts model from Meta",
+        "en": "Welcome Muse Spark Open: open-weight frontier multimodal mixture-of-experts model from Meta"
+      },
+      "reason": "not_corroborated"
+    }
+  ],
+  "toolCalls": [
+    {
+      "tool": "fetch_page",
+      "input": "https://huggingface.co/blog/meta-muse-spark-open",
+      "ok": true,
+      "ms": 131,
+      "item": "https://huggingface.co/blog/meta-muse-spark-open"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://aws.amazon.com/blogs/machine-learning/metas-muse-spark-open-now-available-in-amazon-sagemaker-jumpstart/",
+      "ok": true,
+      "ms": 117,
+      "item": "https://huggingface.co/blog/meta-muse-spark-open"
+    }
+  ],
+  "costUsd": 0.0819562
+}
