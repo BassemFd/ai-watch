@@ -21,10 +21,9 @@ export const REASONS = [
   "statement_unsupported",
   "feed_unreadable",
   "item_failed",
-  "not_corroborated",
 ] as const;
 export type Reason = (typeof REASONS)[number];
-export const GATES = ["literal_quotes", "supported_claims", "corroboration", "verifier", "volume", "budget"] as const;
+export const GATES = ["literal_quotes", "supported_claims", "verifier", "volume", "budget"] as const;
 
 const SectionId = z.enum(SECTIONS.map((s) => s.id));
 const Ring = z.enum(RINGS);
@@ -99,7 +98,7 @@ export const Brief = z.object({
       title: Text,
       url: z.string(),
       source: z.string(),
-      /** La source indépendante qui recoupe le sujet. */
+      /** La source indépendante qui recoupe le sujet ; absente : source unique. */
       confirmedBy: z.object({ source: z.string(), url: z.string() }).optional(),
       summary: Text,
       why: Text,

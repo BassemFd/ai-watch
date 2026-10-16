@@ -534,39 +534,57 @@ test("sujets : un identifiant inconnu est ignoré", () => {
   assert.deepEqual(pickTopics(scored("zz", "b1"), topics, capOf({}), 6).map((i) => i.id), ["b1"]);
 });
 
-// --- Second source : un sujet n'est étudié que si une source indépendante couvre la même histoire
+// --- Second source : un sujet recoupé par une source indépendante passe avant les autres, qui restent publiables
 
 const from = (id: string, source: string): Item => ({ ...item(id), source });
 const world = (...items: Item[]) => new Map(items.map((i) => [i.id, i]));
 const groupOf = (source: string) => (source.startsWith("Google") ? "google" : source);
+const viaOf = (picks: Parameters<typeof withSecondSource>[0], items: ReturnType<typeof world>) => withSecondSource(picks, items, groupOf).map((p) => [p.id, p.via?.id]);
 
-test("second source : un sujet sans autre source sur la même histoire est écarté", () => {
+test("second source : un sujet sans autre source sur la même histoire reste, sans second item", () => {
   const items = world(from("a", "A"), from("b", "B"));
-  assert.deepEqual(withSecondSource([{ id: "a", score: 9 }, { id: "b", score: 8, sameStory: [] }], items, groupOf), []);
+  assert.deepEqual(viaOf([{ id: "a", score: 9 }, { id: "b", score: 8, sameStory: [] }], items), [["a", undefined], ["b", undefined]]);
 });
 
-test("second source : le sujet reçoit l'item de l'autre source", () => {
+test("second source : le sujet reçoit l'item de l'autre source, qui n'est plus un sujet à part", () => {
   const items = world(from("a", "A"), from("b", "B"));
-  const [paired] = withSecondSource([{ id: "a", score: 9, sameStory: ["b"] }], items, groupOf);
-  assert.deepEqual([paired.id, paired.via.id], ["a", "b"]);
+  assert.deepEqual(viaOf([{ id: "a", score: 9, sameStory: ["b"] }, { id: "b", score: 8 }], items), [["a", "b"]]);
 });
 
 test("second source : deux sources du même groupe ne se recoupent pas", () => {
   const items = world(from("a", "Google AI"), from("b", "Google DeepMind"));
-  assert.deepEqual(withSecondSource([{ id: "a", score: 9, sameStory: ["b"] }], items, groupOf), []);
+  assert.deepEqual(viaOf([{ id: "a", score: 9, sameStory: ["b"] }], items), [["a", undefined]]);
 });
 
 test("second source : un identifiant inconnu ou l'item lui-même ne recoupe rien", () => {
   const items = world(from("a", "A"));
-  assert.deepEqual(withSecondSource([{ id: "a", score: 9, sameStory: ["a", "inconnu"] }], items, groupOf), []);
+  assert.deepEqual(viaOf([{ id: "a", score: 9, sameStory: ["a", "inconnu"] }], items), [["a", undefined]]);
 });
 
-test("second source : un item qui en recoupe un mieux noté n'est pas un sujet à part, ni ne le recoupe deux fois", () => {
+test("second source : un item ne recoupe qu'un sujet, le suivant reste sans second item", () => {
   const items = world(from("a", "A"), from("b", "B"), from("c", "C"));
   const picks = [
     { id: "a", score: 9, sameStory: ["b"] },
     { id: "b", score: 8, sameStory: ["a"] },
     { id: "c", score: 7, sameStory: ["b"] },
   ];
-  assert.deepEqual(withSecondSource(picks, items, groupOf).map((p) => [p.id, p.via.id]), [["a", "b"]]);
+  assert.deepEqual(viaOf(picks, items), [["a", "b"], ["c", undefined]]);
+});
+
+test("second source : un sujet mieux noté mais seul laisse la place à celui qui le recoupe", () => {
+  const items = world(from("a", "A"), from("b", "B"));
+  assert.deepEqual(viaOf([{ id: "a", score: 9 }, { id: "b", score: 5, sameStory: ["a"] }], items), [["b", "a"]]);
+});
+
+test("sujets : ceux qu'une seconde source recoupe passent avant les mieux notés", () => {
+  const topics = world(from("a", "A"), from("b", "B"));
+  const picked = pickTopics([{ id: "a", score: 9 }, { id: "b", score: 5, via: {} }], topics, () => 5, 1);
+  assert.deepEqual(picked.map((i) => i.id), ["b"]);
+});
+
+test("brève : le sujet recoupé nomme sa seconde source et passe en tête, l'autre reste sans", () => {
+  const draft = draftOf({ items: [briefItem(["c1"], "i1"), briefItem(["c1"], "i2")], radar: [], state: [] });
+  const claims = claimsOf("c1");
+  const result = decide(input({ draft, claims, verdict: verdictOf(draft, claims), items: world(item("i1"), item("i2")), via: world(from("v", "Autre")).has("v") ? new Map([["i2", from("v", "Autre")]]) : undefined }));
+  assert.deepEqual(result.brief?.items.map((x) => x.confirmedBy?.source), ["Autre", undefined]);
 });

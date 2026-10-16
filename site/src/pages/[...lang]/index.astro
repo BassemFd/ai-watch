@@ -44,7 +44,7 @@ const specimen = today?.items[0]?.claims[0];
           <summary>
             <h3>{item.title[lang]}</h3>
             <span class="teaser">{item.summary[lang]}</span>
-            <span class="meta"><span>{item.source}{item.confirmedBy && ` + ${item.confirmedBy.source}`}</span><span class="count">{t.evidence(item.claims.length)}</span></span>
+            <span class="meta"><span>{item.source}{item.confirmedBy && ` + ${item.confirmedBy.source}`}</span>{!item.confirmedBy && <span class="single">{t.home.singleSource}</span>}<span class="count">{t.evidence(item.claims.length)}</span></span>
           </summary>
           <div class="pair">
             <div>
@@ -94,6 +94,7 @@ const specimen = today?.items[0]?.claims[0];
   .item h3 { margin: 0; }
   .teaser { color: var(--muted); overflow: hidden; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
   .item[open] .teaser { display: none; }
+  .single { border: 1px solid var(--line); border-radius: 9999px; padding: 0.1em 0.7em; font-size: 0.8125rem; font-weight: 500; }
   .meta { display: flex; flex-wrap: wrap; gap: 0.3rem 0.9rem; align-items: center; font-size: 0.875rem; color: var(--muted); }
   .item > .pair { padding-top: 1.25rem; padding-bottom: 1.5rem; }
   @media (prefers-reduced-motion: reduce) { .item summary::after { transition: none; } }

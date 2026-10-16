@@ -67,7 +67,7 @@ export async function collect(o: Pick<Options, "root" | "date" | "fetchText" | "
 }
 
 // 2. Tri
-// Un sujet n'est retenu que si une source indépendante (un autre groupe) couvre la même histoire : `via` la désigne.
+// Les sujets qu'une source indépendante (un autre groupe) couvre aussi passent d'abord : `via` la désigne.
 async function triage(llm: Llm, fresh: Item[], byId: ReadonlyMap<string, Item>, sources: Source[]) {
   const tri = await llm.call(
     "triage",
@@ -78,7 +78,7 @@ async function triage(llm: Llm, fresh: Item[], byId: ReadonlyMap<string, Item>, 
   const group = new Map(sources.map((s) => [s.name, s.group ?? s.id]));
   const paired = withSecondSource(tri.picks, byId, (source) => group.get(source) ?? source);
   const topics = pickTopics(paired, byId, (source) => caps.get(source) ?? MAX_PER_SOURCE, MAX_ITEMS);
-  return { topics, via: new Map(paired.map((p) => [p.id, p.via] as const)) };
+  return { topics, via: new Map(paired.flatMap((p) => (p.via ? [[p.id, p.via] as const] : []))) };
 }
 
 type Sheet = { item: Item; claims: Claim[] };
@@ -272,16 +272,11 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
       return { trace };
     }
 
-    // 4 (suite). Recoupement — porte : un sujet n'est publié que si un de ses faits est confirmé par la seconde source
-    const checkedSheets = sheets.map((s) => ({ ...s, claims: s.claims.flatMap((c) => valid.get(c.id) ?? []) })).filter((s) => s.claims.length);
-    const kept = checkedSheets.filter((s) => s.claims.some((c) => c.confirmation));
-    checkedSheets.filter((s) => !kept.includes(s)).forEach((s) => reject({ what: untranslated(s.item.title), reason: "not_corroborated" }));
-    trace.counts.sujetsRecoupes = kept.length;
-    trace.gates.push({ name: "corroboration", pass: kept.length > 0, detail: `${kept.length}/${checkedSheets.length}` });
-    if (!kept.length) {
-      trace.status = "rejected";
-      return { trace };
-    }
+    // 4 (suite). Recoupement — un sujet est « recoupé » si un de ses faits est confirmé par la seconde source ;
+    // les autres sont publiés comme « source unique ».
+    const kept = sheets.map((s) => ({ ...s, claims: s.claims.flatMap((c) => valid.get(c.id) ?? []) })).filter((s) => s.claims.length);
+    const confirmed = new Map(kept.flatMap((s) => (via.has(s.item.id) && s.claims.some((c) => c.confirmation) ? [[s.item.id, via.get(s.item.id)!] as const] : [])));
+    trace.counts.sujetsRecoupes = confirmed.size;
 
     // 5. Rédaction
     const radar = readJson<Radar>(join(o.root, "content/radar.json"), { entries: [] });
@@ -297,7 +292,7 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
     const verdict = await verifyStatements(o.llm, valid, statements, topics);
     // 6 (suite) à 8. Énoncés publiables, portes, publication — décidés par du code pur (decide.ts)
     const state = readJson<State>(join(o.root, "content/state.json"), { points: [] });
-    const d = decide({ date: o.date, draft, claims: valid, items: byId, via, verdict, radar, state, spentUsd: o.llm.spent, budgetUsd: o.budgetUsd });
+    const d = decide({ date: o.date, draft, claims: valid, items: byId, via: confirmed, verdict, radar, state, spentUsd: o.llm.spent, budgetUsd: o.budgetUsd });
     trace.rejected.push(...d.rejected);
     trace.gates.push(...d.gates);
     if (d.status === "rejected") {

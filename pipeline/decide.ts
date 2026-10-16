@@ -100,6 +100,7 @@ export function decide(o: {
   draft.state.forEach((x, i) => {
     if (publishable.has(`state:${i}`)) state.points.push({ date, sectionId: x.sectionId, text: x.text, evidence: evidence(x.claimIds) });
   });
+  items.sort((a, b) => Number(!!b.confirmedBy) - Number(!!a.confirmedBy)); // les sujets recoupés d'abord
   // Le titre de l'édition n'est pas jugé par le vérificateur : il est donc fait des titres publiés, qui le sont.
   const headline = { fr: items.map((x) => x.title.fr).join(" ; "), en: items.map((x) => x.title.en).join("; ") };
   const brief = items.length ? Brief.parse({ date, headline, items }) : undefined;
@@ -108,17 +109,17 @@ export function decide(o: {
 
 /**
  * Les sujets étudiés par un run : les mieux notés d'abord, sans qu'une source dépasse son plafond.
- * Sans ce plafond, la source qui publie le plus finit par écrire toute l'édition.
+ * Sans ce plafond, la source qui publie le plus finit par écrire toute l'édition. Les sujets recoupés passent avant les autres.
  */
 export function pickTopics(
-  picks: { id: string; score: number }[],
+  picks: { id: string; score: number; via?: unknown }[],
   items: ReadonlyMap<string, Item>,
   maxPerSource: (source: string) => number,
   maxTotal: number,
 ): Item[] {
   const taken = new Map<string, number>();
   const out: Item[] = [];
-  for (const pick of [...picks].sort((a, b) => b.score - a.score)) {
+  for (const pick of [...picks].sort((a, b) => Number(!!b.via) - Number(!!a.via) || b.score - a.score)) {
     const item = items.get(pick.id);
     if (!item || out.length >= maxTotal) continue;
     const n = taken.get(item.source) ?? 0;
@@ -130,17 +131,19 @@ export function pickTopics(
 }
 
 /**
- * Ne garde que les sujets que le tri dit couverts par une autre source, indépendante (un autre groupe), et leur
- * associe cet item. Les mieux notés d'abord : un item qui en recoupe un meilleur n'est pas un sujet à part.
+ * Associe à chaque sujet l'item d'une autre source, indépendante (un autre groupe), qui couvre la même histoire :
+ * `via`. Les sujets sans second item restent, sans `via`. Les mieux notés d'abord : un item qui en recoupe
+ * un autre n'est pas un sujet à part, et un item ne recoupe qu'un seul sujet.
  */
 export function withSecondSource(
   picks: { id: string; score: number; sameStory?: string[] }[],
   items: ReadonlyMap<string, Item>,
   groupOf: (source: string) => string,
-): { id: string; score: number; via: Item }[] {
+): { id: string; score: number; via?: Item }[] {
+  const sorted = [...picks].sort((a, b) => b.score - a.score);
   const used = new Set<string>();
-  const out: { id: string; score: number; via: Item }[] = [];
-  for (const pick of [...picks].sort((a, b) => b.score - a.score)) {
+  const out: { id: string; score: number; via?: Item }[] = [];
+  for (const pick of sorted) {
     const item = items.get(pick.id);
     if (!item || used.has(item.id)) continue;
     const via = (pick.sameStory ?? []).map((id) => items.get(id)).find((v) => v && !used.has(v.id) && v.id !== item.id && groupOf(v.source) !== groupOf(item.source));
@@ -148,5 +151,6 @@ export function withSecondSource(
     used.add(item.id).add(via.id);
     out.push({ id: pick.id, score: pick.score, via });
   }
+  for (const pick of sorted) if (items.has(pick.id) && !used.has(pick.id)) out.push({ id: pick.id, score: pick.score });
   return out;
 }
