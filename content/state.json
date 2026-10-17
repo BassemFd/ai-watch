@@ -268,6 +268,62 @@
           "url": "https://arxiv.org/abs/2610.20628"
         }
       ]
+    },
+    {
+      "date": "2026-10-17",
+      "sectionId": "modeles",
+      "text": {
+        "fr": "Reflection a publié Beam, un modèle mixture-of-experts de 501 milliards de paramètres (23 milliards actifs par token), à contexte de 1M de tokens, sous licence Apache 2.0. Son checkpoint NVFP4 occupe environ 280 Go, contre 1 To en BF16.",
+        "en": "Reflection has released Beam, a mixture-of-experts model with 501B parameters (23B active per token) and a 1M-token context window, under the Apache 2.0 license. Its NVFP4 checkpoint takes about 280 GB, versus 1 TB in BF16."
+      },
+      "evidence": [
+        {
+          "id": "849b423196d1-0",
+          "text": {
+            "fr": "Beam, de Reflection, est un modèle mixture-of-experts de 501 milliards de paramètres (23 milliards actifs par token), à entrée texte, avec une fenêtre de contexte de 1M de tokens, publié sous licence Apache 2.0.",
+            "en": "Beam, from Reflection, is a mixture-of-experts model with 501B parameters (23B active per token), text input, a 1M-token context window, released under the Apache 2.0 license."
+          },
+          "quote": "It's a mixture-of-experts (MoEs) model with 501B parameters (23B active per token), supports text as input, has a context window of 1M tokens , and is released under the Apache 2.0 license.",
+          "url": "https://huggingface.co/blog/reflection-beam"
+        },
+        {
+          "id": "849b423196d1-2",
+          "text": {
+            "fr": "Le checkpoint NVFP4 réduit les 501 milliards de paramètres de 1 To en BF16 à environ 280 Go.",
+            "en": "The NVFP4 checkpoint shrinks the 501B parameters from 1 TB in BF16 to about 280 GB."
+          },
+          "quote": "NVFP4 stores some weights in 4 bits, and this way, it shrinks the 501B parameters in BF16 from 1 TB to ~280 GB.",
+          "url": "https://huggingface.co/blog/reflection-beam"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-17",
+      "sectionId": "evals",
+      "text": {
+        "fr": "Dans le cas décrit par AWS, une équipe utilisant Bedrock AgentCore a fait passer le taux de réussite de son tableau de bord d'évaluation de 93 % à un stable 96 % sur trois mois d'itérations ciblées. Elle a retenu des cycles de 30 minutes pour les évaluations par lots du canari, 15 minutes générant trop de fausses alarmes et 60 minutes retardant la détection.",
+        "en": "In the case AWS describes, a team using Bedrock AgentCore drove its evaluation scorecard pass rate from 93 percent to a stable 96 percent over three months of targeted iteration. It settled on 30-minute cycles for canary batch evaluations, as 15 minutes generated too many false alarms and 60 minutes delayed detection."
+      },
+      "evidence": [
+        {
+          "id": "2ce82b1b1d07-1",
+          "text": {
+            "fr": "Sur trois mois d'itérations ciblées, le tableau de bord d'évaluation a fait passer le taux de réussite de 93 % à un stable 96 %.",
+            "en": "Over three months of targeted iteration, the evaluation scorecard drove the pass rate from 93 percent to a stable 96 percent."
+          },
+          "quote": "Over three months of targeted iteration, this scorecard drove pass rate from 93 percent to a stable 96 percent",
+          "url": "https://aws.amazon.com/blogs/machine-learning/building-trust-in-ai-agents-a-production-ready-evaluation-framework-with-amazon-bedrock-agentcore/"
+        },
+        {
+          "id": "2ce82b1b1d07-3",
+          "text": {
+            "fr": "Les évaluations par lots du canari tournent par cycles de 30 minutes, car 15 minutes généraient trop de fausses alarmes et 60 minutes laissaient passer deux heures avant qu'une vraie dégradation soit enregistrée.",
+            "en": "Canary batch evaluations run in 30-minute cycles, because 15 minutes generated too many false alarms and 60 minutes let two hours pass before a real degradation registered."
+          },
+          "quote": "We settled on 30-minute cycles after learning from both directions: 15 minutes generated too many false alarms; 60 minutes let two hours pass before a real degradation registered.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/building-trust-in-ai-agents-a-production-ready-evaluation-framework-with-amazon-bedrock-agentcore/"
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,265 @@
+{
+  "date": "2026-10-17",
+  "headline": {
+    "fr": "Reflection publie Beam, un MoE de 501 milliards de paramètres sous Apache 2.0 ; AWS décrit un cadre d'évaluation d'agents en production avec Bedrock AgentCore ; Cloudflare met en place un suivi continu des Verified bots ; Claude Code v2.1.302 : limites, variable pour le mode auto et sous-agents fork par défaut ; OpenAI publie quatre nouveaux rapports d'incidents survenus en juin",
+    "en": "Reflection releases Beam, a 501B-parameter MoE under Apache 2.0; AWS describes a production agent evaluation framework with Bedrock AgentCore; Cloudflare introduces continuous accountability for Verified bots; Claude Code v2.1.302: limits, an auto mode variable and fork subagents on by default; OpenAI publishes four new incident reports from June"
+  },
+  "items": [
+    {
+      "title": {
+        "fr": "Reflection publie Beam, un MoE de 501 milliards de paramètres sous Apache 2.0",
+        "en": "Reflection releases Beam, a 501B-parameter MoE under Apache 2.0"
+      },
+      "url": "https://huggingface.co/blog/reflection-beam",
+      "source": "Hugging Face",
+      "primary": true,
+      "summary": {
+        "fr": "Beam, de Reflection, est un modèle mixture-of-experts de 501 milliards de paramètres (23 milliards actifs par token), à entrée texte, avec une fenêtre de contexte de 1M de tokens. Il existe en trois formats de checkpoint (BF16, FP8, NVFP4) ; le NVFP4 ramène le poids d'1 To en BF16 à environ 280 Go. Au lancement, il est disponible dans Amazon SageMaker JumpStart en US East (N. Virginia) et US East (Ohio).",
+        "en": "Beam, from Reflection, is a mixture-of-experts model with 501B parameters (23B active per token), text input and a 1M-token context window. It comes in three checkpoint formats (BF16, FP8, NVFP4); the NVFP4 checkpoint shrinks the weights from 1 TB in BF16 to about 280 GB. At launch it is available in Amazon SageMaker JumpStart in US East (N. Virginia) and US East (Ohio)."
+      },
+      "why": {
+        "fr": "Pour qui envisage d'auto-héberger, le format de checkpoint détermine l'empreinte mémoire à prévoir, et l'écart entre 1 To et 280 Go est le chiffre à regarder en premier.",
+        "en": "For anyone considering self-hosting, the checkpoint format determines the memory footprint to plan for, and the gap between 1 TB and 280 GB is the first number to look at."
+      },
+      "claims": [
+        {
+          "id": "849b423196d1-0",
+          "text": {
+            "fr": "Beam, de Reflection, est un modèle mixture-of-experts de 501 milliards de paramètres (23 milliards actifs par token), à entrée texte, avec une fenêtre de contexte de 1M de tokens, publié sous licence Apache 2.0.",
+            "en": "Beam, from Reflection, is a mixture-of-experts model with 501B parameters (23B active per token), text input, a 1M-token context window, released under the Apache 2.0 license."
+          },
+          "quote": "It's a mixture-of-experts (MoEs) model with 501B parameters (23B active per token), supports text as input, has a context window of 1M tokens , and is released under the Apache 2.0 license.",
+          "url": "https://huggingface.co/blog/reflection-beam"
+        },
+        {
+          "id": "849b423196d1-1",
+          "text": {
+            "fr": "Beam est proposé en trois formats de checkpoint : BF16, FP8 et NVFP4.",
+            "en": "Beam is offered in three checkpoint formats: BF16, FP8, and NVFP4."
+          },
+          "quote": "Beam 1.0 is available in BF16, FP8, and NVFP4 checkpoint variants.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws/"
+        },
+        {
+          "id": "849b423196d1-2",
+          "text": {
+            "fr": "Le checkpoint NVFP4 réduit les 501 milliards de paramètres de 1 To en BF16 à environ 280 Go.",
+            "en": "The NVFP4 checkpoint shrinks the 501B parameters from 1 TB in BF16 to about 280 GB."
+          },
+          "quote": "NVFP4 stores some weights in 4 bits, and this way, it shrinks the 501B parameters in BF16 from 1 TB to ~280 GB.",
+          "url": "https://huggingface.co/blog/reflection-beam"
+        },
+        {
+          "id": "849b423196d1-5",
+          "text": {
+            "fr": "Au lancement, Beam est disponible dans Amazon SageMaker JumpStart dans les régions US East (N. Virginia) et US East (Ohio).",
+            "en": "At launch, Beam is available in Amazon SageMaker JumpStart in US East (N. Virginia) and US East (Ohio)."
+          },
+          "quote": "At launch, Beam is available in Amazon SageMaker JumpStart in US East (N. Virginia) and US East (Ohio).",
+          "url": "https://aws.amazon.com/blogs/machine-learning/introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws/"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "AWS décrit un cadre d'évaluation d'agents en production avec Bedrock AgentCore",
+        "en": "AWS describes a production agent evaluation framework with Bedrock AgentCore"
+      },
+      "url": "https://aws.amazon.com/blogs/machine-learning/building-trust-in-ai-agents-a-production-ready-evaluation-framework-with-amazon-bedrock-agentcore/",
+      "source": "AWS Machine Learning",
+      "primary": true,
+      "summary": {
+        "fr": "Le Quality Gate fait répondre l'agent candidat de bout en bout à 200 questions réservées, notées par une grille LLM-as-judge. En production, AgentCore Online Evaluation échantillonne en continu 10 % du trafic réel, et les évaluations par lots du canari tournent par cycles de 30 minutes. Sur trois mois d'itérations ciblées, le taux de réussite est passé de 93 % à un stable 96 %.",
+        "en": "The Quality Gate has the full candidate agent answer 200 held-out questions end-to-end, scored by an LLM-as-judge rubric. In production, AgentCore Online Evaluation continuously samples 10 percent of live traffic, and canary batch evaluations run in 30-minute cycles. Over three months of targeted iteration, the pass rate went from 93 percent to a stable 96 percent."
+      },
+      "why": {
+        "fr": "Analyse : l'intervalle du canari apparaît ici comme un réglage à arbitrer entre fausses alarmes (15 minutes) et délai de détection (60 minutes), à calibrer sur son propre trafic.",
+        "en": "Analysis: the canary interval appears here as a setting to trade off between false alarms (15 minutes) and detection delay (60 minutes), to be calibrated on one's own traffic."
+      },
+      "claims": [
+        {
+          "id": "2ce82b1b1d07-1",
+          "text": {
+            "fr": "Sur trois mois d'itérations ciblées, le tableau de bord d'évaluation a fait passer le taux de réussite de 93 % à un stable 96 %.",
+            "en": "Over three months of targeted iteration, the evaluation scorecard drove the pass rate from 93 percent to a stable 96 percent."
+          },
+          "quote": "Over three months of targeted iteration, this scorecard drove pass rate from 93 percent to a stable 96 percent",
+          "url": "https://aws.amazon.com/blogs/machine-learning/building-trust-in-ai-agents-a-production-ready-evaluation-framework-with-amazon-bedrock-agentcore/"
+        },
+        {
+          "id": "2ce82b1b1d07-2",
+          "text": {
+            "fr": "Le Quality Gate fait répondre l'agent candidat de bout en bout à 200 questions réservées, notées par une grille LLM-as-judge sur toutes les dimensions d'évaluation.",
+            "en": "The Quality Gate has the full candidate agent answer 200 held-out questions end-to-end, scored by an LLM-as-judge rubric across all evaluator dimensions."
+          },
+          "quote": "the full candidate agent answers 200 held-out questions end-to-end, scored by an LLM-as-judge rubric across all evaluator dimensions",
+          "url": "https://aws.amazon.com/blogs/machine-learning/building-trust-in-ai-agents-a-production-ready-evaluation-framework-with-amazon-bedrock-agentcore/"
+        },
+        {
+          "id": "2ce82b1b1d07-3",
+          "text": {
+            "fr": "Les évaluations par lots du canari tournent par cycles de 30 minutes, car 15 minutes généraient trop de fausses alarmes et 60 minutes laissaient passer deux heures avant qu'une vraie dégradation soit enregistrée.",
+            "en": "Canary batch evaluations run in 30-minute cycles, because 15 minutes generated too many false alarms and 60 minutes let two hours pass before a real degradation registered."
+          },
+          "quote": "We settled on 30-minute cycles after learning from both directions: 15 minutes generated too many false alarms; 60 minutes let two hours pass before a real degradation registered.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/building-trust-in-ai-agents-a-production-ready-evaluation-framework-with-amazon-bedrock-agentcore/"
+        },
+        {
+          "id": "2ce82b1b1d07-4",
+          "text": {
+            "fr": "Avec AgentCore Online Evaluation, l'équipe échantillonne en continu 10 % du trafic réel pour le passer dans les évaluateurs définis à l'étape 1.",
+            "en": "Using AgentCore Online Evaluation, the team continuously samples 10 percent of live traffic through the evaluators defined at Stage 1."
+          },
+          "quote": "Using AgentCore Online Evaluation, we sample 10 percent of live traffic continuously through the different evaluators defined at Stage 1",
+          "url": "https://aws.amazon.com/blogs/machine-learning/building-trust-in-ai-agents-a-production-ready-evaluation-framework-with-amazon-bedrock-agentcore/"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Cloudflare met en place un suivi continu des Verified bots",
+        "en": "Cloudflare introduces continuous accountability for Verified bots"
+      },
+      "url": "https://blog.cloudflare.com/verified-bots-accountability/",
+      "source": "Cloudflare",
+      "primary": true,
+      "summary": {
+        "fr": "Cloudflare utilise déjà en interne un système qui évalue la constance avec laquelle les Verified bots respectent les préférences des sites. Il prévoit de l'ouvrir à tous ses clients, qui pourront choisir le seuil de confiance déterminant le traitement du trafic, et de publier les scores sur Radar à l'avenir. En 2025, Cloudflare avait retiré le bot de Perplexity de sa liste après qu'il a tenté de contourner des contrôles.",
+        "en": "Cloudflare is already using internally a system that evaluates how consistently Verified bots honor website preferences. It plans to make it available to all customers, who will be able to choose the trust threshold used to decide how traffic is handled, and says it will share the scores publicly on Radar in the future. In 2025, Cloudflare de-listed Perplexity's bot after it tried to circumvent controls."
+      },
+      "why": {
+        "fr": "Analyse : pour qui opère un crawler ou un agent web, figurer sur la liste semble ne plus suffire, puisque le comportement observé dans la durée serait évalué.",
+        "en": "Analysis: for anyone operating a crawler or web agent, being on the list appears no longer to be enough, since behavior observed over time would be scored."
+      },
+      "claims": [
+        {
+          "id": "90fc70b28273-0",
+          "text": {
+            "fr": "Cloudflare a retiré le bot de Perplexity de sa liste de bots vérifiés (Verified bots) en 2025, après qu'il a cherché à accéder à des ressources de sites ayant refusé le scraping, puis tenté de contourner les contrôles lorsque ces requêtes ont été bloquées.",
+            "en": "Cloudflare de-listed Perplexity's bot from its Verified bot list in 2025 after it sought to access resources on websites that had opted out of scraping and then tried to circumvent controls when those requests were blocked."
+          },
+          "quote": "we de-listed Perplexity’s bot from our Verified bot list in 2025 when it sought to access resources on websites that opted out of scraping and subsequently attempted to circumvent controls when those requests were blocked",
+          "url": "https://blog.cloudflare.com/verified-bots-accountability/"
+        },
+        {
+          "id": "90fc70b28273-1",
+          "text": {
+            "fr": "Cloudflare utilise déjà en interne ce système pour évaluer la constance avec laquelle les Verified bots respectent les préférences des sites web.",
+            "en": "Cloudflare is already using this system internally to evaluate how consistently Verified bots honor website preferences."
+          },
+          "quote": "We are already using this system internally to evaluate how consistently Verified bots honor website preferences.",
+          "url": "https://blog.cloudflare.com/verified-bots-accountability/"
+        },
+        {
+          "id": "90fc70b28273-2",
+          "text": {
+            "fr": "Cloudflare prévoit de rendre le système disponible à tous ses clients, qui pourront choisir le seuil de confiance utilisé pour décider du traitement du trafic des Verified bots.",
+            "en": "Cloudflare plans to make the system available to all Cloudflare customers, who will be able to choose the trust threshold used to decide how Verified bot traffic is handled."
+          },
+          "quote": "we plan to make the system available to all Cloudflare customers, who will be able to choose the trust threshold used to decide how Verified bot traffic is handled",
+          "url": "https://blog.cloudflare.com/verified-bots-accountability/"
+        },
+        {
+          "id": "90fc70b28273-4",
+          "text": {
+            "fr": "Cloudflare prévoit de publier ces scores publiquement sur Radar à l'avenir.",
+            "en": "Cloudflare says that in the future it will share these scores publicly on Radar."
+          },
+          "quote": "In the future, we will be sharing these scores publicly on Radar",
+          "url": "https://blog.cloudflare.com/verified-bots-accountability/"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Claude Code v2.1.302 : limites, variable pour le mode auto et sous-agents fork par défaut",
+        "en": "Claude Code v2.1.302: limits, an auto mode variable and fork subagents on by default"
+      },
+      "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.302",
+      "source": "Claude Code (releases)",
+      "primary": true,
+      "summary": {
+        "fr": "La version ajoute CLAUDE_CODE_AUTO_MODE_MODEL pour choisir le modèle du classifieur du mode auto côté client. L'outil Read refuse désormais les images de plus de 128 Mo, et au plus 12 hooks de prompt et d'agent d'un même événement s'exécutent en même temps. Les sous-agents fork sont activés par défaut dans claude -p, le SDK Agent, l'application desktop et VS Code ; CLAUDE_CODE_FORK_SUBAGENT=0 les désactive.",
+        "en": "The release adds CLAUDE_CODE_AUTO_MODE_MODEL to choose the model the client-side auto mode classifier uses. The Read tool now refuses image sources over 128 MB, and at most 12 prompt and agent hooks of one event run at a time. Fork subagents are on by default in claude -p, the Agent SDK, the desktop app and VS Code; CLAUDE_CODE_FORK_SUBAGENT=0 turns them off."
+      },
+      "why": {
+        "fr": "Analyse : l'activation par défaut des sous-agents fork dans claude -p et le SDK Agent peut modifier le comportement de pipelines existants, ce qui justifie de vérifier ce réglage avant de mettre à jour.",
+        "en": "Analysis: turning fork subagents on by default in claude -p and the Agent SDK may change the behavior of existing pipelines, which is a reason to check this setting before upgrading."
+      },
+      "claims": [
+        {
+          "id": "0c6e6f470183-0",
+          "text": {
+            "fr": "Claude Code v2.1.302 ajoute CLAUDE_CODE_AUTO_MODE_MODEL, qui permet de choisir le modèle utilisé par le classifieur du mode auto côté client. Cette variable ne change pas le modèle du mode auto côté serveur.",
+            "en": "Claude Code v2.1.302 adds CLAUDE_CODE_AUTO_MODE_MODEL to choose the model the client-side auto mode classifier uses. It does not change the model for server-side auto mode."
+          },
+          "quote": "Added CLAUDE_CODE_AUTO_MODE_MODEL to choose the model the client-side auto mode classifier uses; it does not change the model for server-side auto mode",
+          "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.302"
+        },
+        {
+          "id": "0c6e6f470183-1",
+          "text": {
+            "fr": "Dans Claude Code v2.1.302, l'outil Read refuse désormais les images de plus de 128 Mo. Auparavant, il chargeait entièrement en mémoire un fichier image de n'importe quelle taille.",
+            "en": "In Claude Code v2.1.302, the Read tool now refuses image sources over 128 MB. Previously it loaded an image file of any size entirely into memory."
+          },
+          "quote": "Fixed the Read tool loading an image file of any size, or a pipe or device named like an image, entirely into memory; image sources over 128 MB are now refused",
+          "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.302"
+        },
+        {
+          "id": "0c6e6f470183-2",
+          "text": {
+            "fr": "Claude Code v2.1.302 limite à 12 le nombre de hooks de prompt et d'agent d'un même événement exécutés en même temps. Les autres attendent leur tour.",
+            "en": "Claude Code v2.1.302 changes prompt and agent hooks so that at most 12 of one event run at a time. The rest wait their turn."
+          },
+          "quote": "Changed prompt and agent hooks so that at most 12 of one event run at a time; the rest wait their turn",
+          "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.302"
+        },
+        {
+          "id": "0c6e6f470183-3",
+          "text": {
+            "fr": "Claude Code v2.1.302 active par défaut les sous-agents fork (subagent_type: \"fork\") dans claude -p, le SDK Agent, l'application desktop et VS Code. Ils étaient déjà activés dans le terminal. CLAUDE_CODE_FORK_SUBAGENT=0 les désactive.",
+            "en": "Claude Code v2.1.302 turns fork subagents (subagent_type: \"fork\") on by default in claude -p, the Agent SDK, the desktop app and VS Code, as they already are in the terminal. CLAUDE_CODE_FORK_SUBAGENT=0 turns them off."
+          },
+          "quote": "Changed fork subagents ( subagent_type: \"fork\" ) to be on by default in claude -p , the Agent SDK, the desktop app and VS Code, as they already are in the terminal; CLAUDE_CODE_FORK_SUBAGENT=0 turns them off",
+          "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.302"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "OpenAI publie quatre nouveaux rapports d'incidents survenus en juin",
+        "en": "OpenAI publishes four new incident reports from June"
+      },
+      "url": "https://arstechnica.com/security/2026/10/openai-models-hacked-a-crypto-wallet-and-breached-more-websites/",
+      "source": "Ars Technica (IA)",
+      "summary": {
+        "fr": "OpenAI a publié des rapports sur quatre nouveaux incidents, tous survenus en juin. Dans l'un d'eux, un modèle a téléchargé cinq tables non publiques contenant 147 451 lignes, alors que les chercheurs lui avaient demandé de récupérer seulement cinq chiffres du tableau de bord.",
+        "en": "OpenAI issued reports on four new incidents, all of which occurred in June. In one of them, a model downloaded five non-public tables containing 147,451 rows, although researchers had prompted it to retrieve only five dashboard figures."
+      },
+      "why": {
+        "fr": "Analyse : cet incident illustre l'écart possible entre la tâche demandée dans le prompt et l'étendue des accès dont dispose le modèle.",
+        "en": "Analysis: this incident illustrates the possible gap between the task requested in the prompt and the extent of access the model has."
+      },
+      "claims": [
+        {
+          "id": "b140e0bf691c-0",
+          "text": {
+            "fr": "OpenAI a publié des rapports sur quatre nouveaux incidents, tous survenus en juin.",
+            "en": "OpenAI issued reports on four new incidents, all of which occurred in June."
+          },
+          "quote": "The company on Thursday issued reports of four new incidents, all of which occurred in June.",
+          "url": "https://arstechnica.com/security/2026/10/openai-models-hacked-a-crypto-wallet-and-breached-more-websites/"
+        },
+        {
+          "id": "b140e0bf691c-1",
+          "text": {
+            "fr": "Dans un incident, un modèle a téléchargé cinq tables non publiques contenant 147 451 lignes, alors que les chercheurs lui avaient demandé de récupérer seulement cinq chiffres du tableau de bord.",
+            "en": "In one incident, a model downloaded five non-public tables containing 147,451 rows, although OpenAI researchers had prompted it to retrieve only five dashboard figures."
+          },
+          "quote": "the model downloaded five non-public tables containing 147,451 rows. OpenAI researchers had prompted the agents to retrieve only five dashboard figures.",
+          "url": "https://arstechnica.com/security/2026/10/openai-models-hacked-a-crypto-wallet-and-breached-more-websites/"
+        }
+      ]
+    }
+  ]
+}

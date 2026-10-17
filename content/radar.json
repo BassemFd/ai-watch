@@ -131,6 +131,59 @@
           "ring": "evaluer"
         }
       ]
+    },
+    {
+      "name": "Beam",
+      "ring": "evaluer",
+      "rationale": {
+        "fr": "Beam, de Reflection, est un modèle mixture-of-experts de 501 milliards de paramètres (23 milliards actifs par token), à entrée texte, avec un contexte de 1M de tokens, publié sous licence Apache 2.0. Il est proposé en checkpoints BF16, FP8 et NVFP4, ce dernier ramenant 1 To à environ 280 Go, et il est disponible au lancement dans Amazon SageMaker JumpStart (US East N. Virginia et Ohio). Faute de résultat de qualité dans ces faits, il est à suivre de près avant tout pilote.",
+        "en": "Beam, from Reflection, is a 501B-parameter mixture-of-experts model (23B active per token) with text input and a 1M-token context, released under the Apache 2.0 license. It comes in BF16, FP8 and NVFP4 checkpoints, the latter shrinking 1 TB to about 280 GB, and is available at launch in Amazon SageMaker JumpStart (US East N. Virginia and Ohio). With no quality results in these facts, it is worth watching closely before any pilot."
+      },
+      "evidence": [
+        {
+          "id": "849b423196d1-0",
+          "text": {
+            "fr": "Beam, de Reflection, est un modèle mixture-of-experts de 501 milliards de paramètres (23 milliards actifs par token), à entrée texte, avec une fenêtre de contexte de 1M de tokens, publié sous licence Apache 2.0.",
+            "en": "Beam, from Reflection, is a mixture-of-experts model with 501B parameters (23B active per token), text input, a 1M-token context window, released under the Apache 2.0 license."
+          },
+          "quote": "It's a mixture-of-experts (MoEs) model with 501B parameters (23B active per token), supports text as input, has a context window of 1M tokens , and is released under the Apache 2.0 license.",
+          "url": "https://huggingface.co/blog/reflection-beam"
+        },
+        {
+          "id": "849b423196d1-1",
+          "text": {
+            "fr": "Beam est proposé en trois formats de checkpoint : BF16, FP8 et NVFP4.",
+            "en": "Beam is offered in three checkpoint formats: BF16, FP8, and NVFP4."
+          },
+          "quote": "Beam 1.0 is available in BF16, FP8, and NVFP4 checkpoint variants.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws/"
+        },
+        {
+          "id": "849b423196d1-2",
+          "text": {
+            "fr": "Le checkpoint NVFP4 réduit les 501 milliards de paramètres de 1 To en BF16 à environ 280 Go.",
+            "en": "The NVFP4 checkpoint shrinks the 501B parameters from 1 TB in BF16 to about 280 GB."
+          },
+          "quote": "NVFP4 stores some weights in 4 bits, and this way, it shrinks the 501B parameters in BF16 from 1 TB to ~280 GB.",
+          "url": "https://huggingface.co/blog/reflection-beam"
+        },
+        {
+          "id": "849b423196d1-5",
+          "text": {
+            "fr": "Au lancement, Beam est disponible dans Amazon SageMaker JumpStart dans les régions US East (N. Virginia) et US East (Ohio).",
+            "en": "At launch, Beam is available in Amazon SageMaker JumpStart in US East (N. Virginia) and US East (Ohio)."
+          },
+          "quote": "At launch, Beam is available in Amazon SageMaker JumpStart in US East (N. Virginia) and US East (Ohio).",
+          "url": "https://aws.amazon.com/blogs/machine-learning/introducing-reflection-beam-an-open-weight-model-for-agentic-coding-on-aws/"
+        }
+      ],
+      "since": "2026-10-17",
+      "history": [
+        {
+          "date": "2026-10-17",
+          "ring": "evaluer"
+        }
+      ]
     }
   ]
 }
