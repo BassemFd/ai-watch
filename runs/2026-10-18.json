@@ -1,0 +1,147 @@
+{
+  "date": "2026-10-18",
+  "startedAt": "2026-10-18T08:53:41.584Z",
+  "durationMs": 47195,
+  "status": "published",
+  "counts": {
+    "collectes": 118,
+    "nouveaux": 4,
+    "retenus": 2,
+    "faitsProposes": 7,
+    "faitsCites": 7,
+    "faitsValides": 7,
+    "confirmationsCitees": 0,
+    "confirmationsValides": 0,
+    "sujetsRecoupes": 0,
+    "mouvementsRadar": 0,
+    "publies": 2
+  },
+  "stages": [
+    {
+      "stage": "triage",
+      "model": "claude-haiku-5-5",
+      "ms": 4123,
+      "inputTokens": 1475,
+      "outputTokens": 160,
+      "costUsd": 0.0002275
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 3717,
+      "inputTokens": 2471,
+      "outputTokens": 79,
+      "costUsd": 0.005732
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 3785,
+      "inputTokens": 2459,
+      "outputTokens": 78,
+      "costUsd": 0.005698
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 3371,
+      "inputTokens": 3866,
+      "outputTokens": 527,
+      "costUsd": 0.013002
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4964,
+      "inputTokens": 6894,
+      "outputTokens": 728,
+      "costUsd": 0.021068
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 4474,
+      "inputTokens": 2760,
+      "outputTokens": 414,
+      "costUsd": 0.00966
+    },
+    {
+      "stage": "curate",
+      "model": "claude-opus-5-5",
+      "ms": 7013,
+      "inputTokens": 3540,
+      "outputTokens": 303,
+      "costUsd": 0.02022
+    },
+    {
+      "stage": "write",
+      "model": "claude-sonnet-5-5",
+      "ms": 15145,
+      "inputTokens": 2639,
+      "outputTokens": 2108,
+      "costUsd": 0.026358
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 4336,
+      "inputTokens": 4268,
+      "outputTokens": 598,
+      "costUsd": 0.014516
+    }
+  ],
+  "gates": [
+    {
+      "name": "literal_quotes",
+      "pass": true,
+      "detail": "7/7"
+    },
+    {
+      "name": "supported_claims",
+      "pass": true,
+      "detail": "7/7"
+    },
+    {
+      "name": "verifier",
+      "pass": true,
+      "detail": "2/3 (>= 50%)"
+    },
+    {
+      "name": "volume",
+      "pass": true,
+      "detail": "radar 0, state 1 (max 3)"
+    },
+    {
+      "name": "budget",
+      "pass": true,
+      "detail": "0.116/2 USD"
+    }
+  ],
+  "rejected": [
+    {
+      "what": {
+        "fr": "Muse Spark Open, modèle à poids ouverts de 816 Md de paramètres au total (42 Md actifs) et de 1M de tokens de contexte, est publié sous une licence qui impose un accord distinct avec Meta aux entrepri",
+        "en": "Muse Spark Open, an open-weights model with 816B total parameters (42B active) and a 1M-token context window, is released under a license requiring a separate agreement with Meta for companies making "
+      },
+      "reason": "statement_unsupported",
+      "detail": "The statement says the model is 'released under' the license, which implies a release fact not stated in the cited claims, although the license conditions themselves are covered; with doubt meaning refusal, it is rejected."
+    }
+  ],
+  "toolCalls": [
+    {
+      "tool": "fetch_page",
+      "input": "https://www.interconnects.ai/p/meta-shakes-up-the-frontiers-open",
+      "ok": true,
+      "ms": 120,
+      "item": "https://www.interconnects.ai/p/meta-shakes-up-the-frontiers-open"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://github.com/ollama/ollama/releases/tag/v0.40.7-rc0",
+      "ok": true,
+      "ms": 504,
+      "item": "https://github.com/ollama/ollama/releases/tag/v0.40.7-rc0"
+    }
+  ],
+  "costUsd": 0.11648150000000002
+}

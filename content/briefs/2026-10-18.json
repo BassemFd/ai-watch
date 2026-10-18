@@ -1,0 +1,109 @@
+{
+  "date": "2026-10-18",
+  "headline": {
+    "fr": "Ollama v0.40.7-rc0 : effort sans mode thinking et déduction du type spéculatif ; Muse Spark Open : un modèle à poids ouverts de 816 Md de paramètres, sous licence conditionnelle",
+    "en": "Ollama v0.40.7-rc0: effort without thinking mode and inferred speculative type; Muse Spark Open: an 816B-parameter open-weights model under a conditional license"
+  },
+  "items": [
+    {
+      "title": {
+        "fr": "Ollama v0.40.7-rc0 : effort sans mode thinking et déduction du type spéculatif",
+        "en": "Ollama v0.40.7-rc0: effort without thinking mode and inferred speculative type"
+      },
+      "url": "https://github.com/ollama/ollama/releases/tag/v0.40.7-rc0",
+      "source": "Ollama (releases)",
+      "primary": true,
+      "summary": {
+        "fr": "Ollama v0.40.7-rc0 permet au paramètre d'effort de l'API Responses d'OpenAI d'être utilisé avec des modèles sans mode « thinking ». Cette version laisse aussi llama-server déduire lui-même le type spéculatif du brouillon (draft), et ajoute la prise en charge de PPLX Decider v1.2 dans mlx.",
+        "en": "Ollama v0.40.7-rc0 allows the OpenAI Responses effort setting to be used on non-thinking models. It also lets llama-server infer the draft speculative type, and adds PPLX Decider v1.2 support to mlx."
+      },
+      "why": {
+        "fr": "Pour du code client qui cible l'API Responses sur plusieurs modèles locaux, il peut devenir inutile de distinguer ceux qui ont un mode thinking de ceux qui n'en ont pas pour ce réglage.",
+        "en": "For client code targeting the Responses API across several local models, it may no longer be necessary to distinguish models with a thinking mode from those without for this setting."
+      },
+      "claims": [
+        {
+          "id": "1096e0af71c7-0",
+          "text": {
+            "fr": "Ollama v0.40.7-rc0 permet au paramètre d'effort de l'API Responses d'OpenAI d'être utilisé avec des modèles sans mode « thinking ».",
+            "en": "Ollama v0.40.7-rc0 allows the OpenAI Responses effort setting to be used on non-thinking models."
+          },
+          "quote": "openai: allow Responses effort on non-thinking models by @hoyyeva in #19010",
+          "url": "https://github.com/ollama/ollama/releases/tag/v0.40.7-rc0"
+        },
+        {
+          "id": "1096e0af71c7-1",
+          "text": {
+            "fr": "Ollama v0.40.7-rc0 laisse llama-server déduire lui-même le type spéculatif du brouillon (draft).",
+            "en": "Ollama v0.40.7-rc0 lets llama-server infer the draft speculative type."
+          },
+          "quote": "llama-server: let llama-server infer the draft speculative type by @dhiltgen in #19064",
+          "url": "https://github.com/ollama/ollama/releases/tag/v0.40.7-rc0"
+        },
+        {
+          "id": "1096e0af71c7-2",
+          "text": {
+            "fr": "Ollama v0.40.7-rc0 ajoute la prise en charge de PPLX Decider v1.2 dans mlx.",
+            "en": "Ollama v0.40.7-rc0 adds PPLX Decider v1.2 support to mlx."
+          },
+          "quote": "mlx: add PPLX Decider v1.2 support by @dhiltgen in #19072",
+          "url": "https://github.com/ollama/ollama/releases/tag/v0.40.7-rc0"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Muse Spark Open : un modèle à poids ouverts de 816 Md de paramètres, sous licence conditionnelle",
+        "en": "Muse Spark Open: an 816B-parameter open-weights model under a conditional license"
+      },
+      "url": "https://www.interconnects.ai/p/meta-shakes-up-the-frontiers-open",
+      "source": "Interconnects",
+      "summary": {
+        "fr": "Muse Spark Open est un modèle à poids ouverts de 816 Md de paramètres au total (42 Md actifs), avec une fenêtre de contexte de 1M de tokens. Sa licence impose un accord distinct avec Meta aux entreprises dont le chiffre d'affaires dépasse 20 M$ par mois sur l'ensemble de leur activité et qui déploient le modèle, et exige l'affichage de « Built with Muse » dans les produits qui l'utilisent. Selon l'auteur, c'est le modèle ouvert américain le plus fort, et de loin.",
+        "en": "Muse Spark Open is an open-weights model with 816B total and 42B active parameters and a 1M-token context window. Its license requires companies making more than $20M per month across their entire business and deploying the model to get a separate license from Meta, and requires products using it to display \"Built with Muse\". The author says it is the strongest American-made open model by quite some margin."
+      },
+      "why": {
+        "fr": "Pour une équipe qui envisage de déployer ce modèle, les conditions de licence (seuil de chiffre d'affaires, mention obligatoire) sont à vérifier avant de s'appuyer sur lui.",
+        "en": "For a team considering deploying this model, the license conditions (revenue threshold, mandatory attribution) are worth checking before building on it."
+      },
+      "claims": [
+        {
+          "id": "987754dece67-0",
+          "text": {
+            "fr": "Muse Spark Open est un modèle à poids ouverts de 816 Md de paramètres au total (42 Md actifs), avec une fenêtre de contexte de 1M de tokens.",
+            "en": "Muse Spark Open is an open-weights model with 816B total and 42B active parameters and a 1M-token context window."
+          },
+          "quote": "Muse Spark Open is an 816B total/42B active parameter open weights model with a context window of 1M tokens.",
+          "url": "https://www.interconnects.ai/p/meta-shakes-up-the-frontiers-open"
+        },
+        {
+          "id": "987754dece67-1",
+          "text": {
+            "fr": "La licence de Muse Spark Open impose un accord distinct avec Meta aux entreprises dont le chiffre d'affaires dépasse 20 M$ par mois sur l'ensemble de leur activité et qui déploient le modèle.",
+            "en": "Muse Spark Open's license requires companies making more than $20M per month across their entire business and deploying the model to get a separate license from Meta."
+          },
+          "quote": "There is a revenue-gating factor, where companies that make more than $20M per month across their entire business deploying the model need a separate license with Meta.",
+          "url": "https://www.interconnects.ai/p/meta-shakes-up-the-frontiers-open"
+        },
+        {
+          "id": "987754dece67-2",
+          "text": {
+            "fr": "La licence de Muse Spark Open exige que les produits qui utilisent le modèle affichent « Built with Muse ».",
+            "en": "Muse Spark Open's license requires products using the model to display \"Built with Muse\"."
+          },
+          "quote": "Users of the models in products must display “Built with Muse” on their products.",
+          "url": "https://www.interconnects.ai/p/meta-shakes-up-the-frontiers-open"
+        },
+        {
+          "id": "987754dece67-3",
+          "text": {
+            "fr": "Selon l'auteur, Muse Spark Open est le modèle ouvert américain le plus fort, et de loin.",
+            "en": "The author says Muse Spark Open is the strongest American-made open model by quite some margin."
+          },
+          "quote": "Muse Spark Open , which is now the strongest American-made open model by quite some margin",
+          "url": "https://www.interconnects.ai/p/meta-shakes-up-the-frontiers-open"
+        }
+      ]
+    }
+  ]
+}
