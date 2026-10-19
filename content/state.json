@@ -324,6 +324,43 @@
           "url": "https://aws.amazon.com/blogs/machine-learning/building-trust-in-ai-agents-a-production-ready-evaluation-framework-with-amazon-bedrock-agentcore/"
         }
       ]
+    },
+    {
+      "date": "2026-10-19",
+      "sectionId": "modeles",
+      "text": {
+        "fr": "Les modèles Apertus 1.5 intègrent images et audio en fusion précoce, sous forme de tokens discrets dans la même séquence que le texte, sans encodeur de vision séparé ; ils comprennent images et audio mais ne génèrent que du texte, avec une fenêtre de contexte de 262 144 tokens.",
+        "en": "Apertus 1.5 models take images and audio in through early fusion, as discrete tokens in the same sequence as text and without a separate vision encoder; they understand images and audio but generate only text, with a 262,144-token context window."
+      },
+      "evidence": [
+        {
+          "id": "e3c36d4422c6-2",
+          "text": {
+            "fr": "La fenêtre de contexte d'Apertus 1.5 passe à 262 144 tokens, soit 4 fois celle d'Apertus 1.0.",
+            "en": "Apertus 1.5's context window grows to 262,144 tokens, a 4x increase over Apertus 1.0."
+          },
+          "quote": "The context window grows to 262,144 tokens, a 4x increase over Apertus 1.0.",
+          "url": "https://huggingface.co/blog/swiss-ai/apertus-v15-release-notes"
+        },
+        {
+          "id": "e3c36d4422c6-3",
+          "text": {
+            "fr": "Apertus 1.5 intègre la multimodalité en fusion précoce : images et audio entrent comme tokens discrets dans la même séquence que le texte, sans encodeur de vision séparé.",
+            "en": "Apertus 1.5 introduces multimodality in an early-fusion manner, where images and audio enter as discrete tokens in the same sequence with text tokens, instead of using a separate vision encoder."
+          },
+          "quote": "images and audio enter Apertus as discrete tokens in the same sequence with text tokens, instead of using a separate vision encoder.",
+          "url": "https://huggingface.co/blog/swiss-ai/apertus-v15-release-notes"
+        },
+        {
+          "id": "e3c36d4422c6-5",
+          "text": {
+            "fr": "Les modèles Apertus 1.5 comprennent images et audio mais ne génèrent que du texte.",
+            "en": "The Apertus 1.5 models understand images and audio but generate only text."
+          },
+          "quote": "The models understand images and audio but generate only text.",
+          "url": "https://huggingface.co/blog/swiss-ai/apertus-v15-release-notes"
+        }
+      ]
     }
   ]
 }

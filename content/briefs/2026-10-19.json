@@ -1,0 +1,118 @@
+{
+  "date": "2026-10-19",
+  "headline": {
+    "fr": "Apertus 1.5 : contexte de 262 144 tokens et multimodalité en fusion précoce ; Anthropic donne à METR un accès « comparable à celui d'un employé »",
+    "en": "Apertus 1.5: 262,144-token context and early-fusion multimodality; Anthropic gives METR \"employee-like\" access"
+  },
+  "items": [
+    {
+      "title": {
+        "fr": "Apertus 1.5 : contexte de 262 144 tokens et multimodalité en fusion précoce",
+        "en": "Apertus 1.5: 262,144-token context and early-fusion multimodality"
+      },
+      "url": "https://huggingface.co/blog/swiss-ai/apertus-v15-release-notes",
+      "source": "Hugging Face",
+      "primary": true,
+      "summary": {
+        "fr": "La fenêtre de contexte d'Apertus 1.5 atteint 262 144 tokens, soit 4 fois celle d'Apertus 1.0. Images et audio entrent comme tokens discrets dans la même séquence que le texte, sans encodeur de vision séparé : le tokenizer Emu3.5 donne 1 024 tokens pour une image 512×512, et WavTokenizer 40 tokens par seconde d'audio. Les modèles comprennent images et audio mais ne génèrent que du texte.",
+        "en": "Apertus 1.5's context window grows to 262,144 tokens, a 4x increase over Apertus 1.0. Images and audio enter as discrete tokens in the same sequence as text, without a separate vision encoder: the Emu3.5 tokenizer turns a 512×512 image into 1,024 tokens, and WavTokenizer yields 40 tokens per second of audio. The models understand images and audio but generate only text."
+      },
+      "why": {
+        "fr": "Ces ratios de tokens permettent d'estimer ce que consommeront images et audio dans la fenêtre de contexte, et l'absence de génération d'images ou d'audio limite les usages aux entrées multimodales avec sortie textuelle.",
+        "en": "These token ratios make it possible to estimate how much of the context window images and audio will consume, and the lack of image or audio generation restricts use to multimodal input with text output."
+      },
+      "claims": [
+        {
+          "id": "e3c36d4422c6-2",
+          "text": {
+            "fr": "La fenêtre de contexte d'Apertus 1.5 passe à 262 144 tokens, soit 4 fois celle d'Apertus 1.0.",
+            "en": "Apertus 1.5's context window grows to 262,144 tokens, a 4x increase over Apertus 1.0."
+          },
+          "quote": "The context window grows to 262,144 tokens, a 4x increase over Apertus 1.0.",
+          "url": "https://huggingface.co/blog/swiss-ai/apertus-v15-release-notes"
+        },
+        {
+          "id": "e3c36d4422c6-3",
+          "text": {
+            "fr": "Apertus 1.5 intègre la multimodalité en fusion précoce : images et audio entrent comme tokens discrets dans la même séquence que le texte, sans encodeur de vision séparé.",
+            "en": "Apertus 1.5 introduces multimodality in an early-fusion manner, where images and audio enter as discrete tokens in the same sequence with text tokens, instead of using a separate vision encoder."
+          },
+          "quote": "images and audio enter Apertus as discrete tokens in the same sequence with text tokens, instead of using a separate vision encoder.",
+          "url": "https://huggingface.co/blog/swiss-ai/apertus-v15-release-notes"
+        },
+        {
+          "id": "e3c36d4422c6-4",
+          "text": {
+            "fr": "Les images sont tokenisées avec le tokenizer Emu3.5 (une image 512×512 donne 1 024 tokens) et l'audio avec WavTokenizer (40 tokens par seconde).",
+            "en": "Images are tokenized with the Emu3.5 tokenizer (a 512×512 image becomes 1,024 tokens) and audio with WavTokenizer (40 tokens per second)."
+          },
+          "quote": "Images are tokenized with the Emu3.5 tokenizer (a 512×512 image becomes 1,024 tokens) and audio with WavTokenizer (40 tokens per second).",
+          "url": "https://huggingface.co/blog/swiss-ai/apertus-v15-release-notes"
+        },
+        {
+          "id": "e3c36d4422c6-5",
+          "text": {
+            "fr": "Les modèles Apertus 1.5 comprennent images et audio mais ne génèrent que du texte.",
+            "en": "The Apertus 1.5 models understand images and audio but generate only text."
+          },
+          "quote": "The models understand images and audio but generate only text.",
+          "url": "https://huggingface.co/blog/swiss-ai/apertus-v15-release-notes"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Anthropic donne à METR un accès « comparable à celui d'un employé »",
+        "en": "Anthropic gives METR \"employee-like\" access"
+      },
+      "url": "https://arstechnica.com/ai/2026/10/anthropic-gives-outside-ai-watchdog-employee-like-access/",
+      "source": "Ars Technica (IA)",
+      "summary": {
+        "fr": "Anthropic a intégré six employés de METR, avec matériel, bureaux et accès à des outils et systèmes internes à peu près équivalent à celui de ses propres équipes d'évaluation des risques. Les évaluateurs publieront leur analyse et Anthropic ne peut pas y opposer son veto, mais elle peut exiger l'expurgation de certaines catégories d'informations : données clients, secret avocat-client, détails sur les architectures de modèles. Anthropic ne paie pas METR pour cet arrangement.",
+        "en": "Anthropic has onboarded six METR employees, giving them hardware, office space and access to internal tools and systems roughly on par with its own risk assessment teams. The evaluators will publish their analysis and Anthropic cannot veto publication, but it can require redaction of certain categories of information: customer data, attorney-client privileged details and information about model architectures. Anthropic is not paying METR for this arrangement."
+      },
+      "why": {
+        "fr": "Pour qui s'appuie sur ces évaluations, la portée réelle des expurgations déterminera ce que les analyses publiées permettront de vérifier.",
+        "en": "For anyone relying on these evaluations, the actual scope of the redactions will determine what the published analyses allow readers to verify."
+      },
+      "claims": [
+        {
+          "id": "c82b8eb2cf96-0",
+          "text": {
+            "fr": "Anthropic a intégré six employés de METR, à qui elle a donné du matériel, des bureaux et un accès à des outils et systèmes internes à peu près équivalent à celui de ses propres équipes d'évaluation des risques.",
+            "en": "Anthropic has onboarded six METR employees, giving them company hardware, office space and access to internal tools and systems roughly on par with what its own risk assessment teams have."
+          },
+          "quote": "Anthropic has now onboarded six METR employees, giving them company hardware, office space and “access to internal tools and systems that are roughly on par with what our own risk assessment teams have access to.”",
+          "url": "https://arstechnica.com/ai/2026/10/anthropic-gives-outside-ai-watchdog-employee-like-access/"
+        },
+        {
+          "id": "c82b8eb2cf96-1",
+          "text": {
+            "fr": "Les évaluateurs publieront leur analyse et Anthropic ne peut pas y opposer son veto.",
+            "en": "The evaluators will publish their analysis, and Anthropic cannot veto publication."
+          },
+          "quote": "The evaluators will publish their analysis, and Anthropic cannot veto publication.",
+          "url": "https://arstechnica.com/ai/2026/10/anthropic-gives-outside-ai-watchdog-employee-like-access/"
+        },
+        {
+          "id": "c82b8eb2cf96-2",
+          "text": {
+            "fr": "Anthropic peut exiger que certaines catégories d'informations soient expurgées, comme les données clients, les éléments couverts par le secret avocat-client ou les détails sur les architectures de modèles.",
+            "en": "Anthropic can require redaction of information in certain categories, such as customer data, details covered by attorney-client privilege or information about model architectures."
+          },
+          "quote": "However, it can require them to redact information that falls into certain categories, such as customer data, details covered by attorney-client privilege or information about model architectures.",
+          "url": "https://arstechnica.com/ai/2026/10/anthropic-gives-outside-ai-watchdog-employee-like-access/"
+        },
+        {
+          "id": "c82b8eb2cf96-3",
+          "text": {
+            "fr": "Anthropic ne paie pas METR pour cet arrangement.",
+            "en": "Anthropic is not paying METR for this arrangement."
+          },
+          "quote": "Anthropic is not paying METR for this arrangement.",
+          "url": "https://arstechnica.com/ai/2026/10/anthropic-gives-outside-ai-watchdog-employee-like-access/"
+        }
+      ]
+    }
+  ]
+}
