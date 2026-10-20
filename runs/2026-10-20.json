@@ -1,0 +1,287 @@
+{
+  "date": "2026-10-20",
+  "startedAt": "2026-10-20T09:28:59.927Z",
+  "durationMs": 76775,
+  "status": "published",
+  "counts": {
+    "collectes": 211,
+    "nouveaux": 111,
+    "retenus": 5,
+    "faitsProposes": 28,
+    "faitsCites": 27,
+    "faitsValides": 19,
+    "confirmationsCitees": 0,
+    "confirmationsValides": 0,
+    "sujetsRecoupes": 0,
+    "mouvementsRadar": 1,
+    "publies": 8
+  },
+  "stages": [
+    {
+      "stage": "triage",
+      "model": "claude-haiku-5-5",
+      "ms": 5132,
+      "inputTokens": 22235,
+      "outputTokens": 690,
+      "costUsd": 0.0025685
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1591,
+      "inputTokens": 2471,
+      "outputTokens": 73,
+      "costUsd": 0.005672
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1631,
+      "inputTokens": 2490,
+      "outputTokens": 95,
+      "costUsd": 0.00593
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1677,
+      "inputTokens": 2499,
+      "outputTokens": 101,
+      "costUsd": 0.006008
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1760,
+      "inputTokens": 2521,
+      "outputTokens": 112,
+      "costUsd": 0.006162
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 2047,
+      "inputTokens": 2474,
+      "outputTokens": 65,
+      "costUsd": 0.005598
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 6772,
+      "inputTokens": 8512,
+      "outputTokens": 777,
+      "costUsd": 0.024794
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 7391,
+      "inputTokens": 13060,
+      "outputTokens": 1265,
+      "costUsd": 0.03877
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 7773,
+      "inputTokens": 4628,
+      "outputTokens": 1250,
+      "costUsd": 0.021756
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 10877,
+      "inputTokens": 6452,
+      "outputTokens": 1320,
+      "costUsd": 0.026104
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 12063,
+      "inputTokens": 9005,
+      "outputTokens": 1527,
+      "costUsd": 0.03328
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 11010,
+      "inputTokens": 7715,
+      "outputTokens": 1626,
+      "costUsd": 0.03169
+    },
+    {
+      "stage": "curate",
+      "model": "claude-opus-5-5",
+      "ms": 13145,
+      "inputTokens": 5448,
+      "outputTokens": 1250,
+      "costUsd": 0.046792
+    },
+    {
+      "stage": "write",
+      "model": "claude-sonnet-5-5",
+      "ms": 30833,
+      "inputTokens": 4549,
+      "outputTokens": 5016,
+      "costUsd": 0.059258
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 9542,
+      "inputTokens": 9145,
+      "outputTokens": 1458,
+      "costUsd": 0.03287
+    }
+  ],
+  "gates": [
+    {
+      "name": "literal_quotes",
+      "pass": true,
+      "detail": "27/28"
+    },
+    {
+      "name": "supported_claims",
+      "pass": true,
+      "detail": "19/27"
+    },
+    {
+      "name": "verifier",
+      "pass": true,
+      "detail": "8/9 (>= 50%)"
+    },
+    {
+      "name": "volume",
+      "pass": true,
+      "detail": "radar 1, state 3 (max 3)"
+    },
+    {
+      "name": "budget",
+      "pass": true,
+      "detail": "0.347/2 USD"
+    }
+  ],
+  "rejected": [
+    {
+      "what": {
+        "fr": "Les modifications manuelles faites dans VS Code s'appliquent directement au worktree existant de la session, sans copier de fichiers entre répertoires.",
+        "en": "Manual edits made in VS Code are applied to the session's existing worktree, building directly on the agent's work, with no need to copy files between directories."
+      },
+      "reason": "quote_not_found"
+    },
+    {
+      "what": {
+        "fr": "Le premier appel d'une session ne trouvait un préfixe en cache que 14 % à 26 % du temps, car OpenCode v1 construisait un seul bloc de prompt système avec un unique point d'arrêt de cache à la fin.",
+        "en": "The first request of a session found a cached prefix only 14% to 26% of the time, because OpenCode v1 built the system prompt as a single block with the only cache breakpoint at its end."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote gives only the 14% to 26% cached-prefix rate and does not establish the OpenCode v1 single-block system prompt cause."
+    },
+    {
+      "what": {
+        "fr": "Après deux jours et demi, Sonnet 5.5 était 62 % moins cher par exécution que Sonnet 5 pour la revue de qualité du code, 58 % pour la performance et 47 % pour la sécurité, au même coût par token.",
+        "en": "After two and a half days, Sonnet 5.5 was 62% cheaper per run for code quality, 58% for performance and 47% for security, at the same cost per token as Sonnet 5."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not state that Sonnet 5.5 has the same cost per token as Sonnet 5, so the claim adds an unsupported detail."
+    },
+    {
+      "what": {
+        "fr": "Sur quatre suites AgentDojo, pour un agent Qwen3 sans réflexion (thinking), 0,91 de la variance du résultat se situe entre les états, c'est-à-dire qu'il est largement décidé à la lecture de l'injectio",
+        "en": "Across four AgentDojo suites, for a Qwen3 agent without thinking, 0.91 of the outcome variance lies between states, meaning it is largely decided when the injection is read."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not mention four AgentDojo suites, so the claim's scope goes beyond it."
+    },
+    {
+      "what": {
+        "fr": "Dans la première transaction, en septembre, Disney a versé 5,5 millions de dollars à Character.AI, plus un dépôt de bonne foi remboursable de 2 millions de dollars.",
+        "en": "In the first transaction, in September, Disney paid Character.AI $5.5 million, plus a refundable $2 million good faith deposit."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not say the first transaction was in September, so that date is not established."
+    },
+    {
+      "what": {
+        "fr": "Disney cherche à obtenir, via la faillite, une licence perpétuelle, mondiale et non exclusive sur une large part du code, de la documentation et des outils de Character.AI, y compris la modération, l'",
+        "en": "Through the bankruptcy, Disney hopes to secure a perpetual, worldwide, nonexclusive license to a wide range of Character.AI's code, documentation, frameworks and tools, including its trust and safety "
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not mention trust and safety moderation, training infrastructure or age-prediction technology, so the claim adds details."
+    },
+    {
+      "what": {
+        "fr": "Dans un benchmark Qwen3-32B en 1P1D sur instances Amazon EC2 P5en reliées par EFA, le mode push a donné jusqu'à 3x de meilleur TTFT et 30 % de meilleur TPOT que le mode pull.",
+        "en": "In a Qwen3-32B benchmark on a 1P1D deployment using Amazon EC2 P5en instances connected with EFA, push mode delivered up to 3x better TTFT and up to 30 percent better TPOT than pull mode."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote omits the Qwen3-32B 1P1D setup and the EC2 P5en with EFA details, so the claim goes beyond it."
+    },
+    {
+      "what": {
+        "fr": "Le mode push enregistre à l'avance les blocs de destination côté décodage et le préremplissage émet un NIXL WRITE qui copie directement les blocs KV dans la mémoire enregistrée du décodeur.",
+        "en": "In push mode, the producer issues an NIXL WRITE that copies the KV blocks directly into the decoder's registered memory."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The French version adds that push mode pre-registers the destination blocks on the decode side, which the quote does not state, and the English version omits it."
+    },
+    {
+      "what": {
+        "fr": "Le mode push choisit l'instance de décodage plus tôt afin que la préparation de la destination chevauche le préremplissage, alors que le mode pull permet au routeur de la choisir après le préremplissa",
+        "en": "Push mode selects the decode instance earlier so that destination setup can overlap with prefill, whereas pull mode lets the router select a decode instance after prefill completes."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not say that pull mode lets the router choose the decode instance after prefill."
+    },
+    {
+      "what": {
+        "fr": "Character.AI est en faillite (chapitre 11), Disney est en position d'acquéreur",
+        "en": "Character.AI files for chapter 11, with Disney as a potential buyer"
+      },
+      "reason": "statement_unsupported",
+      "detail": "The headline says Disney is in the position of acquirer or potential buyer, which the cited claims do not establish beyond a conditional winning-bid payment."
+    }
+  ],
+  "toolCalls": [
+    {
+      "tool": "fetch_page",
+      "input": "https://blog.cloudflare.com/obsessive-inference-optimization/",
+      "ok": true,
+      "ms": 50,
+      "item": "https://blog.cloudflare.com/obsessive-inference-optimization/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://github.blog/ai-and-ml/github-copilot/how-to-continue-a-github-copilot-app-session-in-vs-code/",
+      "ok": true,
+      "ms": 40,
+      "item": "https://github.blog/ai-and-ml/github-copilot/how-to-continue-a-github-copilot-app-session-in-vs-code/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://arstechnica.com/tech-policy/2026/10/disney-found-a-way-to-buy-character-ai-without-buying-its-lawsuits/",
+      "ok": true,
+      "ms": 130,
+      "item": "https://arstechnica.com/tech-policy/2026/10/disney-found-a-way-to-buy-character-ai-without-buying-its-lawsuits/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://aws.amazon.com/blogs/machine-learning/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in-vllm/",
+      "ok": true,
+      "ms": 82,
+      "item": "https://aws.amazon.com/blogs/machine-learning/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in-vllm/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://arxiv.org/abs/2610.24048",
+      "ok": true,
+      "ms": 101,
+      "item": "https://arxiv.org/abs/2610.24048"
+    }
+  ],
+  "costUsd": 0.34725249999999996
+}

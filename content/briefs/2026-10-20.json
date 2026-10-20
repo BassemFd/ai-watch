@@ -1,0 +1,201 @@
+{
+  "date": "2026-10-20",
+  "headline": {
+    "fr": "Cloudflare réduit de 68 % le coût moyen d'une revue de code par IA ; vLLM : le transfert de cache KV en mode push réduit TTFT et TPOT en inférence désagrégée ; GitHub : poursuivre une session Copilot app dans VS Code ; Injections de prompt : la décision de suivre l'attaque se forme pendant le raisonnement de l'agent",
+    "en": "Cloudflare cuts the average cost of an AI code review by 68%; vLLM: push-based KV transfer lowers TTFT and TPOT in disaggregated inference; GitHub: continuing a Copilot app session in VS Code; Prompt injection: the decision to follow the attack forms during the agent's reasoning"
+  },
+  "items": [
+    {
+      "title": {
+        "fr": "Cloudflare réduit de 68 % le coût moyen d'une revue de code par IA",
+        "en": "Cloudflare cuts the average cost of an AI code review by 68%"
+      },
+      "url": "https://blog.cloudflare.com/obsessive-inference-optimization/",
+      "source": "Cloudflare",
+      "primary": true,
+      "summary": {
+        "fr": "Avec la qualité du code en effort élevé, une revue coûte en moyenne 0,77 $, soit 68 % de moins que les 2,43 $ de moyenne des deux semaines les plus coûteuses avant l'optimisation. La durée médiane d'une revue est passée de 4 min 09 s à 1 min 32 s. Environ 40 % des économies viennent de changements dans le code du reviewer, le reste d'essais sur les modèles utilisés et l'effort fourni.",
+        "en": "With code quality at high effort, the average review now costs $0.77, down 68% from the $2.43 average over the two most expensive weeks before the optimization work. The median review time fell from 4m 09s to 1m 32s. About 40% of the savings came from changes to the reviewer's code, and the rest from experimenting with which models are used and how much effort they put in."
+      },
+      "why": {
+        "fr": "Analyse : une part notable du gain vient du code qui entoure le modèle, pas seulement du choix du modèle ou du niveau d'effort.",
+        "en": "Analysis: a notable share of the gain comes from the code around the model, not only from the choice of model or effort level."
+      },
+      "claims": [
+        {
+          "id": "a26c408d34d1-0",
+          "text": {
+            "fr": "Avec la qualité du code en effort élevé, une revue coûte en moyenne 0,77 $, soit 68 % de moins que les 2,43 $ de moyenne sur les deux semaines les plus coûteuses avant l'optimisation.",
+            "en": "With code quality at high effort, the average review now costs $0.77, down 68% from the $2.43 it averaged over the two most expensive weeks before the optimization work."
+          },
+          "quote": "With code quality at high effort, the average review now costs just $0.77, down 68% from the $2.43 it averaged over our two most expensive weeks before we started.",
+          "url": "https://blog.cloudflare.com/obsessive-inference-optimization/"
+        },
+        {
+          "id": "a26c408d34d1-1",
+          "text": {
+            "fr": "La durée médiane d'une revue est passée de 4 min 09 s à 1 min 32 s.",
+            "en": "The median review now takes 1m 32s instead of the 4m 09s it took before."
+          },
+          "quote": "the median review now takes just 1m 32s instead of the 4m 09s it took before",
+          "url": "https://blog.cloudflare.com/obsessive-inference-optimization/"
+        },
+        {
+          "id": "a26c408d34d1-2",
+          "text": {
+            "fr": "Environ 40 % des économies viennent de changements dans le code du reviewer, le reste d'essais sur les modèles utilisés et l'effort fourni.",
+            "en": "About 40% of the savings came from changes and optimizations to the reviewer's code, and the rest from experimenting with which models are used and how much effort they put in."
+          },
+          "quote": "About 40% of the savings came from changes and optimizations to the reviewer's code, and the rest from experimenting with which models we use and how much effort they put in.",
+          "url": "https://blog.cloudflare.com/obsessive-inference-optimization/"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "vLLM : le transfert de cache KV en mode push réduit TTFT et TPOT en inférence désagrégée",
+        "en": "vLLM: push-based KV transfer lowers TTFT and TPOT in disaggregated inference"
+      },
+      "url": "https://aws.amazon.com/blogs/machine-learning/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in-vllm/",
+      "source": "AWS Machine Learning",
+      "primary": true,
+      "summary": {
+        "fr": "Avec 16k tokens d'entrée et 8 QPS, le mode pull atteint environ 1 744 ms de TTFT, contre environ 540 ms pour le mode push. Pour le TPOT à forte charge et 16k de contexte, le mode pull monte à environ 10,4 ms à 4–8 QPS, tandis que le mode push reste autour de 7 ms. Le mode push s'active en configurant les serveurs de préremplissage et de décodage avec NixlPushConnector au lieu de NixlConnector.",
+        "en": "At 8 QPS and 16k input length, pull mode reaches about 1,744 ms TTFT, while push mode stays at roughly 540 ms. For TPOT under high load with 16k inputs, pull climbs to about 10.4 ms at 4–8 QPS, while push holds near 7 ms. Push mode is enabled by configuring both the prefill and decode servers to use NixlPushConnector instead of NixlConnector."
+      },
+      "why": {
+        "fr": "Analyse : le passage au mode push se résume à un changement de connecteur, ce qui permet de le tester sur sa propre charge, les chiffres publiés portant sur des entrées de 16k tokens.",
+        "en": "Analysis: switching to push mode comes down to changing the connector, so it can be tested on your own workload, since the published figures are for 16k-token inputs."
+      },
+      "claims": [
+        {
+          "id": "83ef29d5138f-1",
+          "text": {
+            "fr": "Avec 16k tokens d'entrée et 8 QPS, le mode pull atteint environ 1 744 ms de TTFT, contre environ 540 ms pour le mode push.",
+            "en": "At 8 QPS and 16k input length, pull mode reaches about 1,744 ms TTFT, while push mode stays at roughly 540 ms."
+          },
+          "quote": "pull mode degrades sharply, reaching about 1,744 ms at 8 QPS and 16k. Push mode stays far lower at roughly 540 ms, around 3x reduction.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in-vllm/"
+        },
+        {
+          "id": "83ef29d5138f-2",
+          "text": {
+            "fr": "Pour le TPOT à forte charge et 16k de contexte, le mode pull monte à environ 10,4 ms à 4–8 QPS, tandis que le mode push reste autour de 7 ms.",
+            "en": "For TPOT under high load with 16k inputs, pull climbs to about 10.4 ms at 4–8 QPS, while push holds near 7 ms."
+          },
+          "quote": "pull climbs to about 10.4 ms at 4–8 QPS and 16k, while push holds near 7 ms",
+          "url": "https://aws.amazon.com/blogs/machine-learning/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in-vllm/"
+        },
+        {
+          "id": "83ef29d5138f-4",
+          "text": {
+            "fr": "Pour utiliser le mode push, il faut configurer les serveurs de préremplissage et de décodage avec NixlPushConnector au lieu de NixlConnector.",
+            "en": "To use push mode, configure both the prefill and decode servers to use NixlPushConnector instead of NixlConnector."
+          },
+          "quote": "To use push mode, configure both the prefill and decode servers to use NixlPushConnector instead of NixlConnector .",
+          "url": "https://aws.amazon.com/blogs/machine-learning/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in-vllm/"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "GitHub : poursuivre une session Copilot app dans VS Code",
+        "en": "GitHub: continuing a Copilot app session in VS Code"
+      },
+      "url": "https://github.blog/ai-and-ml/github-copilot/how-to-continue-a-github-copilot-app-session-in-vs-code/",
+      "source": "GitHub",
+      "primary": true,
+      "summary": {
+        "fr": "Depuis une session de la Copilot app, on sélectionne « Open in VS Code » pour la poursuivre dans l'éditeur. VS Code ouvre le projet dans le worktree associé à la session et affiche la session existante dans la barre latérale Copilot. Pousser la branche met alors à jour la pull request qui suit déjà ce travail.",
+        "en": "From a Copilot app session, you select \"Open in VS Code\" to continue it in the editor. VS Code opens the project using the worktree associated with the session and displays the existing session in the Copilot sidebar. Pushing the branch then updates the pull request already tracking that work."
+      },
+      "why": {
+        "fr": "Analyse : le passage de l'app à l'éditeur conserve le worktree, la branche et la pull request, sans reprise manuelle du contexte de travail.",
+        "en": "Analysis: moving from the app to the editor keeps the worktree, branch and pull request, with no manual rebuilding of the working context."
+      },
+      "claims": [
+        {
+          "id": "0f3dfef227c0-0",
+          "text": {
+            "fr": "VS Code ouvre le projet dans le worktree associé à la session Copilot app et affiche la session existante dans la barre latérale Copilot.",
+            "en": "VS Code opens the project using the worktree associated with the Copilot app session and displays the existing session in the Copilot sidebar."
+          },
+          "quote": "VS Code opens the project using the worktree associated with the session. It also displays the existing session in the Copilot sidebar.",
+          "url": "https://github.blog/ai-and-ml/github-copilot/how-to-continue-a-github-copilot-app-session-in-vs-code/"
+        },
+        {
+          "id": "0f3dfef227c0-1",
+          "text": {
+            "fr": "Depuis une session de la Copilot app, on sélectionne « Open in VS Code » pour la poursuivre dans l'éditeur.",
+            "en": "From a Copilot app session, you select \"Open in VS Code\" to continue it in the editor."
+          },
+          "quote": "From the session, select Open in VS Code .",
+          "url": "https://github.blog/ai-and-ml/github-copilot/how-to-continue-a-github-copilot-app-session-in-vs-code/"
+        },
+        {
+          "id": "0f3dfef227c0-2",
+          "text": {
+            "fr": "Comme VS Code ouvre le worktree et la branche associés à la session, pousser la branche met à jour la pull request qui suit déjà ce travail.",
+            "en": "Because VS Code opened the worktree and branch associated with the session, pushing the branch updates the pull request already tracking that work."
+          },
+          "quote": "Because VS Code opened the worktree and branch associated with the session, pushing the branch updates the pull request already tracking that work.",
+          "url": "https://github.blog/ai-and-ml/github-copilot/how-to-continue-a-github-copilot-app-session-in-vs-code/"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Injections de prompt : la décision de suivre l'attaque se forme pendant le raisonnement de l'agent",
+        "en": "Prompt injection: the decision to follow the attack forms during the agent's reasoning"
+      },
+      "url": "https://arxiv.org/abs/2610.24048",
+      "source": "arXiv cs.CL",
+      "summary": {
+        "fr": "Avec la réflexion activée, la part de variance de l'issue fixée à la lecture tombe à 0,62 pour l'agent Qwen3. La réflexion réduit le taux de réussite des attaques pour Qwen3 mais l'augmente pour deux autres modèles. Le rééchantillonnage à partir de préfixes de raisonnement montre que la décision se forme progressivement. Les étiquettes d'une seule exécution diffèrent d'une nouvelle exécution jusqu'à 35 % du temps.",
+        "en": "With thinking on, the share of outcome variance fixed at read time drops to 0.62 for the Qwen3 agent. Thinking lowers the attack success rate of Qwen3 but raises it for two other models. Resampling from reasoning prefixes shows that the decision forms gradually. Single-run labels disagree with a rerun up to 35% of the time."
+      },
+      "why": {
+        "fr": "Analyse : pour évaluer une défense contre les injections, une seule exécution par tâche semble insuffisante, et l'effet de la réflexion ne se transpose pas d'un modèle à l'autre.",
+        "en": "Analysis: when evaluating an injection defense, a single run per task looks insufficient, and the effect of thinking does not carry over from one model to another."
+      },
+      "claims": [
+        {
+          "id": "6ac70cf2274c-1",
+          "text": {
+            "fr": "Avec la réflexion activée, la part de variance fixée à la lecture tombe à 0,62 pour l'agent Qwen3 (IC à 95 % de la baisse : [-0,38, -0,22]).",
+            "en": "With thinking on, the share of outcome variance fixed at read time drops to 0.62 for the Qwen3 agent (95% CI of the drop [-0.38, -0.22])."
+          },
+          "quote": "with thinking on, this share drops to 0.62 (95% CI of the drop [-0.38, -0.22])",
+          "url": "https://arxiv.org/abs/2610.24048"
+        },
+        {
+          "id": "6ac70cf2274c-2",
+          "text": {
+            "fr": "La réflexion réduit le taux de réussite des attaques pour Qwen3 mais l'augmente pour deux autres modèles.",
+            "en": "Thinking lowers the attack success rate of Qwen3 but raises it for two other models."
+          },
+          "quote": "thinking lowers the attack success rate of Qwen3 but raises it for two other models",
+          "url": "https://arxiv.org/abs/2610.24048"
+        },
+        {
+          "id": "6ac70cf2274c-3",
+          "text": {
+            "fr": "Le rééchantillonnage à partir de préfixes de raisonnement montre que la décision se forme progressivement pendant le raisonnement de l'agent.",
+            "en": "Resampling from reasoning prefixes shows that the decision forms gradually as the agent reasons."
+          },
+          "quote": "Resampling from reasoning prefixes shows that the decision forms gradually as the agent reasons.",
+          "url": "https://arxiv.org/abs/2610.24048"
+        },
+        {
+          "id": "6ac70cf2274c-5",
+          "text": {
+            "fr": "Les étiquettes d'une seule exécution des agents avec réflexion diffèrent d'une nouvelle exécution jusqu'à 35 % du temps, d'où le besoin d'exécutions répétées par tâche dans les benchmarks.",
+            "en": "Single-run labels of thinking agents disagree with a rerun up to 35% of the time, so benchmarks need repeated runs per task."
+          },
+          "quote": "single-run labels of thinking agents disagree with a rerun up to 35% of the time, so benchmarks need repeated runs per task",
+          "url": "https://arxiv.org/abs/2610.24048"
+        }
+      ]
+    }
+  ]
+}

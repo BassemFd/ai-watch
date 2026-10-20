@@ -361,6 +361,81 @@
           "url": "https://huggingface.co/blog/swiss-ai/apertus-v15-release-notes"
         }
       ]
+    },
+    {
+      "date": "2026-10-20",
+      "sectionId": "evals",
+      "text": {
+        "fr": "Une étude sur des agents LLM face aux injections de prompt montre que, pour l'agent Qwen3, activer la réflexion fait tomber à 0,62 la part de variance de l'issue fixée à la lecture. La réflexion réduit le taux de réussite des attaques pour Qwen3 mais l'augmente pour deux autres modèles.",
+        "en": "A study of LLM agents facing prompt injections shows that, for the Qwen3 agent, turning thinking on drops the share of outcome variance fixed at read time to 0.62. Thinking lowers the attack success rate of Qwen3 but raises it for two other models."
+      },
+      "evidence": [
+        {
+          "id": "6ac70cf2274c-1",
+          "text": {
+            "fr": "Avec la réflexion activée, la part de variance fixée à la lecture tombe à 0,62 pour l'agent Qwen3 (IC à 95 % de la baisse : [-0,38, -0,22]).",
+            "en": "With thinking on, the share of outcome variance fixed at read time drops to 0.62 for the Qwen3 agent (95% CI of the drop [-0.38, -0.22])."
+          },
+          "quote": "with thinking on, this share drops to 0.62 (95% CI of the drop [-0.38, -0.22])",
+          "url": "https://arxiv.org/abs/2610.24048"
+        },
+        {
+          "id": "6ac70cf2274c-2",
+          "text": {
+            "fr": "La réflexion réduit le taux de réussite des attaques pour Qwen3 mais l'augmente pour deux autres modèles.",
+            "en": "Thinking lowers the attack success rate of Qwen3 but raises it for two other models."
+          },
+          "quote": "thinking lowers the attack success rate of Qwen3 but raises it for two other models",
+          "url": "https://arxiv.org/abs/2610.24048"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-20",
+      "sectionId": "outils",
+      "text": {
+        "fr": "Dans vLLM en inférence désagrégée, avec 16k tokens d'entrée et 8 QPS, le transfert de KV en mode push mesure environ 540 ms de TTFT, contre environ 1 744 ms en mode pull.",
+        "en": "In vLLM with disaggregated inference, at 16k input tokens and 8 QPS, push-based KV transfer measures about 540 ms TTFT, versus about 1,744 ms in pull mode."
+      },
+      "evidence": [
+        {
+          "id": "83ef29d5138f-1",
+          "text": {
+            "fr": "Avec 16k tokens d'entrée et 8 QPS, le mode pull atteint environ 1 744 ms de TTFT, contre environ 540 ms pour le mode push.",
+            "en": "At 8 QPS and 16k input length, pull mode reaches about 1,744 ms TTFT, while push mode stays at roughly 540 ms."
+          },
+          "quote": "pull mode degrades sharply, reaching about 1,744 ms at 8 QPS and 16k. Push mode stays far lower at roughly 540 ms, around 3x reduction.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in-vllm/"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-20",
+      "sectionId": "agents",
+      "text": {
+        "fr": "Cloudflare rapporte, pour son reviewer de code par IA, un coût moyen de 0,77 $ par revue en effort élevé, soit 68 % de moins que la moyenne des deux semaines les plus coûteuses avant optimisation. Environ 40 % des économies viennent de changements dans le code du reviewer.",
+        "en": "Cloudflare reports, for its AI code reviewer, an average cost of $0.77 per review at high effort, down 68% from the average of the two most expensive weeks before optimization. About 40% of the savings came from changes to the reviewer's code."
+      },
+      "evidence": [
+        {
+          "id": "a26c408d34d1-0",
+          "text": {
+            "fr": "Avec la qualité du code en effort élevé, une revue coûte en moyenne 0,77 $, soit 68 % de moins que les 2,43 $ de moyenne sur les deux semaines les plus coûteuses avant l'optimisation.",
+            "en": "With code quality at high effort, the average review now costs $0.77, down 68% from the $2.43 it averaged over the two most expensive weeks before the optimization work."
+          },
+          "quote": "With code quality at high effort, the average review now costs just $0.77, down 68% from the $2.43 it averaged over our two most expensive weeks before we started.",
+          "url": "https://blog.cloudflare.com/obsessive-inference-optimization/"
+        },
+        {
+          "id": "a26c408d34d1-2",
+          "text": {
+            "fr": "Environ 40 % des économies viennent de changements dans le code du reviewer, le reste d'essais sur les modèles utilisés et l'effort fourni.",
+            "en": "About 40% of the savings came from changes and optimizations to the reviewer's code, and the rest from experimenting with which models are used and how much effort they put in."
+          },
+          "quote": "About 40% of the savings came from changes and optimizations to the reviewer's code, and the rest from experimenting with which models we use and how much effort they put in.",
+          "url": "https://blog.cloudflare.com/obsessive-inference-optimization/"
+        }
+      ]
     }
   ]
 }

@@ -184,6 +184,50 @@
           "ring": "evaluer"
         }
       ]
+    },
+    {
+      "name": "NixlPushConnector",
+      "ring": "essayer",
+      "rationale": {
+        "fr": "D'après les mesures publiées par AWS Machine Learning, le mode push garde un TTFT d'environ 540 ms contre environ 1 744 ms en mode pull, avec 16k tokens d'entrée et 8 QPS. À forte charge, son TPOT reste autour de 7 ms quand le mode pull monte à environ 10,4 ms à 4–8 QPS. Comme il suffit de configurer les serveurs de préremplissage et de décodage avec NixlPushConnector au lieu de NixlConnector, un pilote se justifie, mais ces chiffres ne viennent que de cette seule publication.",
+        "en": "According to measurements published by AWS Machine Learning, push mode keeps TTFT at roughly 540 ms versus about 1,744 ms in pull mode, at 16k input length and 8 QPS. Under high load, its TPOT holds near 7 ms while pull mode climbs to about 10.4 ms at 4–8 QPS. Since adoption only requires configuring the prefill and decode servers with NixlPushConnector instead of NixlConnector, a pilot is warranted, but these figures come from this single publication only."
+      },
+      "evidence": [
+        {
+          "id": "83ef29d5138f-1",
+          "text": {
+            "fr": "Avec 16k tokens d'entrée et 8 QPS, le mode pull atteint environ 1 744 ms de TTFT, contre environ 540 ms pour le mode push.",
+            "en": "At 8 QPS and 16k input length, pull mode reaches about 1,744 ms TTFT, while push mode stays at roughly 540 ms."
+          },
+          "quote": "pull mode degrades sharply, reaching about 1,744 ms at 8 QPS and 16k. Push mode stays far lower at roughly 540 ms, around 3x reduction.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in-vllm/"
+        },
+        {
+          "id": "83ef29d5138f-2",
+          "text": {
+            "fr": "Pour le TPOT à forte charge et 16k de contexte, le mode pull monte à environ 10,4 ms à 4–8 QPS, tandis que le mode push reste autour de 7 ms.",
+            "en": "For TPOT under high load with 16k inputs, pull climbs to about 10.4 ms at 4–8 QPS, while push holds near 7 ms."
+          },
+          "quote": "pull climbs to about 10.4 ms at 4–8 QPS and 16k, while push holds near 7 ms",
+          "url": "https://aws.amazon.com/blogs/machine-learning/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in-vllm/"
+        },
+        {
+          "id": "83ef29d5138f-4",
+          "text": {
+            "fr": "Pour utiliser le mode push, il faut configurer les serveurs de préremplissage et de décodage avec NixlPushConnector au lieu de NixlConnector.",
+            "en": "To use push mode, configure both the prefill and decode servers to use NixlPushConnector instead of NixlConnector."
+          },
+          "quote": "To use push mode, configure both the prefill and decode servers to use NixlPushConnector instead of NixlConnector .",
+          "url": "https://aws.amazon.com/blogs/machine-learning/push-based-kv-transfer-to-improve-ttft-and-tpot-for-disaggregated-inference-in-vllm/"
+        }
+      ],
+      "since": "2026-10-20",
+      "history": [
+        {
+          "date": "2026-10-20",
+          "ring": "essayer"
+        }
+      ]
     }
   ]
 }
