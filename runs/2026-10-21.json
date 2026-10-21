@@ -1,0 +1,405 @@
+{
+  "date": "2026-10-21",
+  "startedAt": "2026-10-21T09:24:50.684Z",
+  "durationMs": 82604,
+  "status": "published",
+  "counts": {
+    "collectes": 216,
+    "nouveaux": 70,
+    "retenus": 8,
+    "faitsProposes": 43,
+    "faitsCites": 43,
+    "faitsValides": 27,
+    "confirmationsCitees": 0,
+    "confirmationsValides": 0,
+    "sujetsRecoupes": 0,
+    "mouvementsRadar": 3,
+    "publies": 11
+  },
+  "stages": [
+    {
+      "stage": "triage",
+      "model": "claude-haiku-5-5",
+      "ms": 8613,
+      "inputTokens": 12312,
+      "outputTokens": 1512,
+      "costUsd": 0.0019872
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 3931,
+      "inputTokens": 2467,
+      "outputTokens": 76,
+      "costUsd": 0.005694
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4047,
+      "inputTokens": 2469,
+      "outputTokens": 68,
+      "costUsd": 0.005618
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4226,
+      "inputTokens": 2497,
+      "outputTokens": 98,
+      "costUsd": 0.005974
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4401,
+      "inputTokens": 2457,
+      "outputTokens": 76,
+      "costUsd": 0.005674
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4412,
+      "inputTokens": 2473,
+      "outputTokens": 65,
+      "costUsd": 0.005596
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4800,
+      "inputTokens": 2448,
+      "outputTokens": 66,
+      "costUsd": 0.005556
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4952,
+      "inputTokens": 2492,
+      "outputTokens": 75,
+      "costUsd": 0.005734
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 5662,
+      "inputTokens": 2549,
+      "outputTokens": 126,
+      "costUsd": 0.006358
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4550,
+      "inputTokens": 3223,
+      "outputTokens": 684,
+      "costUsd": 0.013286
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 5926,
+      "inputTokens": 4460,
+      "outputTokens": 960,
+      "costUsd": 0.01852
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 6509,
+      "inputTokens": 5902,
+      "outputTokens": 1140,
+      "costUsd": 0.023204
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 6571,
+      "inputTokens": 9886,
+      "outputTokens": 1228,
+      "costUsd": 0.032052
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 8119,
+      "inputTokens": 5443,
+      "outputTokens": 1046,
+      "costUsd": 0.021346
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 8334,
+      "inputTokens": 5918,
+      "outputTokens": 1550,
+      "costUsd": 0.027336
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 8225,
+      "inputTokens": 8081,
+      "outputTokens": 1382,
+      "costUsd": 0.029982
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 7602,
+      "inputTokens": 11814,
+      "outputTokens": 1388,
+      "costUsd": 0.037508
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 14251,
+      "inputTokens": 11356,
+      "outputTokens": 2351,
+      "costUsd": 0.046222
+    },
+    {
+      "stage": "curate",
+      "model": "claude-opus-5-5",
+      "ms": 23895,
+      "inputTokens": 6995,
+      "outputTokens": 2446,
+      "costUsd": 0.0769
+    },
+    {
+      "stage": "write",
+      "model": "claude-sonnet-5-5",
+      "ms": 31841,
+      "inputTokens": 5819,
+      "outputTokens": 5078,
+      "costUsd": 0.062418
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 8759,
+      "inputTokens": 12547,
+      "outputTokens": 1554,
+      "costUsd": 0.040634
+    }
+  ],
+  "gates": [
+    {
+      "name": "literal_quotes",
+      "pass": true,
+      "detail": "43/43"
+    },
+    {
+      "name": "supported_claims",
+      "pass": true,
+      "detail": "27/43"
+    },
+    {
+      "name": "verifier",
+      "pass": true,
+      "detail": "11/11 (>= 50%)"
+    },
+    {
+      "name": "volume",
+      "pass": true,
+      "detail": "radar 3, state 2 (max 3)"
+    },
+    {
+      "name": "budget",
+      "pass": true,
+      "detail": "0.478/2 USD"
+    }
+  ],
+  "rejected": [
+    {
+      "what": {
+        "fr": "La méthode échantillonne K tactiques candidates à chaque étape et répare une tactique échouée au plus R fois, en fournissant le message d'erreur du compilateur à un modèle de réparation pré-entraîné.",
+        "en": "The method samples K candidate tactics at each step and repairs a failed tactic at most R times, feeding the compiler's error message to a pretrained repair model."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not mention feeding the compiler's error message to a pretrained repair model, which goes beyond it."
+    },
+    {
+      "what": {
+        "fr": "La réparation améliore le taux de résolution par rapport à une base d'échantillonnage seul pour tous les budgets testés (K ∈ {1,3,5,8}), jusqu'à 32 % de gain relatif et 82 théorèmes supplémentaires ré",
+        "en": "Repair improves the solve rate over a sampling-only baseline across all tested budgets (K ∈ {1,3,5,8}), with up to 32% relative gain and 82 additional theorems solved on a 1,990-theorem subset of Lean"
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not establish that repair improves the solve rate across all tested budgets K ∈ {1,3,5,8} or the sampling-only baseline comparison."
+    },
+    {
+      "what": {
+        "fr": "Sur Lean Workbook, la réparation ciblée réplique le résultat, quasiment en doublant le taux de résolution sans aucune régression.",
+        "en": "On Lean Workbook, the targeted repair replicates, nearly doubling the solve rate with zero regressions."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not mention Lean Workbook or targeted repair replicating the result; it only says the solve rate nearly doubles with zero regressions."
+    },
+    {
+      "what": {
+        "fr": "Avec un kernel ragged-dot du Hub sur TPU v6e-8, à batch size 64, le décodage est 21,5× plus rapide sur Qwen3-30B-A3B et 12,8× plus rapide sur Gemma 4 26B-A4B que l'implémentation par défaut.",
+        "en": "With the Hub ragged-dot kernel on a TPU v6e-8, at batch size 64, decoding is 21.5× faster on Qwen3-30B-A3B and 12.8× faster on Gemma 4 26B-A4B than the default implementation."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not mention the Hub ragged-dot kernel, the TPU v6e-8, or the comparison to the default implementation."
+    },
+    {
+      "what": {
+        "fr": "Parmi les tests de Transformers exécutés sur TPU, 96,5 % passent.",
+        "en": "Of the Transformers tests that run on TPU, 96.5% pass."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not say the tests are Transformers tests; it only says the tests that run on TPU pass at 96.5%."
+    },
+    {
+      "what": {
+        "fr": "34 problèmes ont été signalés sur le dépôt TorchTPU, dont 19 déjà corrigés.",
+        "en": "34 issues have been reported on the TorchTPU repo, and 19 are already fixed."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not say the issues were reported on the TorchTPU repo."
+    },
+    {
+      "what": {
+        "fr": "Voxtral Mini Transcribe Realtime 3 offre des transcriptions de haute qualité avec une latence inférieure à 500 ms dans plus de 35 langues, avec diarisation et biaisage de contexte.",
+        "en": "Voxtral Realtime Transcribe 3 achieves high-quality transcriptions at sub-500ms latency in over 35 languages, including with diarization and context biasing."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The French version says Voxtral Mini Transcribe Realtime 3 while the English says Voxtral Realtime Transcribe 3, so the names differ."
+    },
+    {
+      "what": {
+        "fr": "Asaf Aprozper, cofondateur et CTO de Claroc, dit avoir signalé ces constats via le programme de bug bounty de Meta le 8 octobre.",
+        "en": "Asaf Aprozper, co-founder and CTO of Claroc, said he reported the findings through Meta's bug bounty program on October 8."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not state that Asaf Aprozper is Claroc's co-founder and CTO."
+    },
+    {
+      "what": {
+        "fr": "La version 2.1.305 corrige une régression de la 2.1.304 où chaque requête échouait sur Vertex, Bedrock et d'autres fournisseurs quand le point d'accès ou une passerelle rejetait la recherche d'outils ",
+        "en": "Version 2.1.305 fixes a 2.1.304 regression where every request failed on Vertex, Bedrock and other providers when the endpoint or a gateway rejected tool search; Claude Code now retries without it."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not establish that this was a regression from 2.1.304 or that Claude Code retries without tool search."
+    },
+    {
+      "what": {
+        "fr": "Avec GPT-4.1 sur la base ReAct standard de τ²-bench et des consignes apprises ajoutées au prompt système, l'agent atteint 67,5 % de Pass^4 sur le domaine retail.",
+        "en": "Using GPT-4.1 on the stock τ²-bench ReAct scaffold with learned guidelines appended to the system prompt, the agent reaches 67.5% Pass^4 on τ²-bench retail."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not mention GPT-4.1 or the 67.5% Pass^4 figure."
+    },
+    {
+      "what": {
+        "fr": "Sur le jeu de test retail (40 tâches), la configuration lossless (292 consignes) fait passer le Pass^4 de 57,5 % (baseline) à 67,5 %.",
+        "en": "On held-out retail tasks (40), the lossless configuration (292 guidelines) raises Pass^4 from 57.5% (baseline) to 67.5%."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote's table does not mention 292 guidelines for the lossless configuration or define the held-out set of 40 tasks as stated."
+    },
+    {
+      "what": {
+        "fr": "Les consignes sont extraites des trajectoires de l'agent sur les tâches d'entraînement par gpt-4.1, le même modèle que l'agent, sans mise à jour des poids ni annotation humaine.",
+        "en": "Guidelines are extracted from the agent's training-task trajectories using gpt-4.1, the same model that powers the agent, with no weight updates or human annotation."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not say guidelines are extracted from training-task trajectories."
+    },
+    {
+      "what": {
+        "fr": "Dans le domaine retail, la configuration lossless fait passer le coût par conversation d'environ 0,084 $ à 0,139 $ (+65 %).",
+        "en": "In retail, the lossless configuration raises cost per conversation from about $0.084 to $0.139 (+65%)."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not say the +65% increase or that it is the lossless configuration."
+    },
+    {
+      "what": {
+        "fr": "Avec gpt-5.5 sur le domaine airline, les consignes lossless font passer le Pass^4 de 55,0 % à 70,0 % et la précision de 72,5 % à 82,5 % sur 20 tâches de test.",
+        "en": "With gpt-5.5 on airline, lossless guidelines raise Pass^4 from 55.0% to 70.0% and accuracy from 72.5% to 82.5% on 20 held-out tasks."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote omits gpt-5.5, the airline domain, lossless guidelines and the 20 held-out tasks."
+    },
+    {
+      "what": {
+        "fr": "Sur le split de base, l'agent retail avec consignes apprises (67,5 % de Pass^4) devance RAFT-30B-A3B (61,4 %), modèle affiné sur des données synthétiques retail de τ²-bench.",
+        "en": "On the base split, the retail agent with learned guidelines (67.5% Pass^4) is ahead of RAFT-30B-A3B (61.4%), a model fine-tuned on synthetic τ²-bench retail data."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not mention the agent's 67.5% score or the base split."
+    },
+    {
+      "what": {
+        "fr": "Le service passe par un moteur vLLM non modifié ; passer le prompt de 2 048 à 8 192 tokens n'a ajouté que 0,5 % au coût par token de sortie.",
+        "en": "Served through an unmodified vLLM engine, increasing the prompt from 2,048 to 8,192 tokens added only 0.5% to the cost per output token."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not mention the unmodified vLLM engine."
+    }
+  ],
+  "toolCalls": [
+    {
+      "tool": "fetch_page",
+      "input": "https://simonwillison.net/2026/Oct/20/emudhra-certificates/",
+      "ok": true,
+      "ms": 34,
+      "item": "https://simonwillison.net/2026/Oct/20/emudhra-certificates/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://huggingface.co/blog/hf-torchtpu",
+      "ok": true,
+      "ms": 44,
+      "item": "https://huggingface.co/blog/hf-torchtpu"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://arstechnica.com/security/2026/10/meta-muse-exposes-users-personal-and-business-secrets-when-they-share-conversations/",
+      "ok": true,
+      "ms": 149,
+      "item": "https://arstechnica.com/security/2026/10/meta-muse-exposes-users-personal-and-business-secrets-when-they-share-conversations/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://arxiv.org/abs/2610.26942",
+      "ok": true,
+      "ms": 111,
+      "item": "https://arxiv.org/abs/2610.26942"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://github.com/anthropics/claude-code/releases/tag/v2.1.305",
+      "ok": true,
+      "ms": 332,
+      "item": "https://github.com/anthropics/claude-code/releases/tag/v2.1.305"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://mistral.ai/news/voxtral-3/",
+      "ok": true,
+      "ms": 90,
+      "item": "https://mistral.ai/news/voxtral-3/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://huggingface.co/blog/ibm-research/altk-evolve-bc",
+      "ok": true,
+      "ms": 46,
+      "item": "https://huggingface.co/blog/ibm-research/altk-evolve-bc"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://aws.amazon.com/blogs/machine-learning/beyond-the-kv-cache-training-and-serving-i14s-laplace-3b-linear-attention-model-on-aws-trainium2-with-native-pytorch/",
+      "ok": true,
+      "ms": 88,
+      "item": "https://aws.amazon.com/blogs/machine-learning/beyond-the-kv-cache-training-and-serving-i14s-laplace-3b-linear-attention-model-on-aws-trainium2-with-native-pytorch/"
+    }
+  ],
+  "costUsd": 0.47759919999999995
+}

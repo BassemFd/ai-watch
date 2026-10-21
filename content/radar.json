@@ -228,6 +228,129 @@
           "ring": "essayer"
         }
       ]
+    },
+    {
+      "name": "Voxtral 3",
+      "ring": "essayer",
+      "rationale": {
+        "fr": "Voxtral 3 est disponible via l'API Mistral, sur des endpoints européen, américain et global. Il inclut un SDK d'agent vocal construit sur LiveKit, qui enchaîne entrée parole, raisonnement et sortie parole dans un seul pipeline de streaming, avec une API d'agent vocal à 0,04 $/min avec Mistral Small 4 et à 0,08 $/min avec tout autre modèle de raisonnement. Un pilote se justifie pour les agents vocaux, mais ces prix et la comparaison qui place Voxtral Speech 3, à 13 $ par million de caractères, sous OpenAI TTS-1, Deepgram, ElevenLabs Flash et Gemini Flash viennent de la seule page de Mistral AI.",
+        "en": "Voxtral 3 is available through the Mistral API, on European, US and global endpoints. It includes a voice agent SDK built on LiveKit that runs speech in, reasoning and speech out as one streaming pipeline, with a voice agent API at $0.04/min with Mistral Small 4 and $0.08/min with any other reasoning model. A pilot is warranted for voice agents, but these prices and the comparison placing Voxtral Speech 3, at $13 per 1M characters, below OpenAI TTS-1, Deepgram, ElevenLabs Flash and Gemini Flash come only from Mistral AI's own page."
+      },
+      "evidence": [
+        {
+          "id": "835e678b11fa-0",
+          "text": {
+            "fr": "Voxtral 3 inclut un SDK d'agent vocal, construit sur LiveKit, qui exécute l'entrée parole, le raisonnement et la sortie parole en un seul pipeline de streaming.",
+            "en": "Voxtral 3 introduces a voice agent SDK, built on LiveKit, that runs speech in, reasoning, and speech out as one streaming pipeline."
+          },
+          "quote": "Voxtral 3 introduces a voice agent SDK, built on LiveKit, that runs speech in, reasoning, and speech out as one streaming pipeline.",
+          "url": "https://mistral.ai/news/voxtral-3/"
+        },
+        {
+          "id": "835e678b11fa-3",
+          "text": {
+            "fr": "Voxtral Speech 3 est facturé 13 $ par million de caractères, moins cher selon la page que OpenAI TTS-1, Deepgram, ElevenLabs Flash et Gemini Flash.",
+            "en": "At $13 per 1M characters, Voxtral Speech 3 costs less to run than comparable models from OpenAI TTS-1, Deepgram, ElevenLabs Flash and Gemini Flash."
+          },
+          "quote": "At $13 per 1M characters, Voxtral Speech 3 costs less to run than comparable models from OpenAI TTS-1, Deepgram, ElevenLabs Flash and Gemini Flash.",
+          "url": "https://mistral.ai/news/voxtral-3/"
+        },
+        {
+          "id": "835e678b11fa-4",
+          "text": {
+            "fr": "L'API d'agent vocal coûte 0,04 $/min avec Mistral Small 4 pour le raisonnement et 0,08 $/min avec tout autre modèle de raisonnement.",
+            "en": "The voice agent API costs $0.04/min with Mistral Small 4 for reasoning and $0.08/min with any other reasoning model."
+          },
+          "quote": "Voice agent API with Mistral Small 4 for reasoning 0.04$/min Voice agent API with any other reasoning model 0.08$/min",
+          "url": "https://mistral.ai/news/voxtral-3/"
+        },
+        {
+          "id": "835e678b11fa-5",
+          "text": {
+            "fr": "Voxtral 3 est disponible via l'API Mistral, hébergée sur des endpoints européen, américain et global.",
+            "en": "Voxtral 3 is available through the Mistral API, hosted through European, US, and global endpoints."
+          },
+          "quote": "Voxtral 3 is available today through the Mistral API, hosted through our European, US, and global endpoints.",
+          "url": "https://mistral.ai/news/voxtral-3/"
+        }
+      ],
+      "since": "2026-10-21",
+      "history": [
+        {
+          "date": "2026-10-21",
+          "ring": "essayer"
+        }
+      ]
+    },
+    {
+      "name": "TorchTPU",
+      "ring": "essayer",
+      "rationale": {
+        "fr": "D'après Hugging Face, TorchTPU ajoute le TPU comme backend de PyTorch, avec des kernels Pallas optimisés pour TPU, l'entraînement distribué et une intégration de torch.compile ; Optimum TPU n'est plus nécessaire pour exécuter les modèles Hugging Face avec Transformers et Diffusers, et il suffit de passer device_map=\"tpu\". Pour les équipes sur TPU, cela vaut un pilote, en gardant à l'esprit que la seule source est Hugging Face.",
+        "en": "According to Hugging Face, TorchTPU adds TPU as a PyTorch backend, with Pallas kernels tuned for TPUs, distributed training support and a torch.compile integration; Optimum TPU is no longer required to run Hugging Face models with Transformers and Diffusers, and you just pass device_map=\"tpu\". For teams on TPUs this is worth a pilot, bearing in mind that Hugging Face is the only source."
+      },
+      "evidence": [
+        {
+          "id": "84cd8d44e982-0",
+          "text": {
+            "fr": "TorchTPU ajoute le TPU comme nouveau backend de PyTorch, avec des kernels Pallas optimisés pour TPU, l'entraînement distribué et une intégration de torch.compile.",
+            "en": "TorchTPU adds TPU as a new backend to PyTorch, with Pallas kernels tuned for TPUs, support for distributed training, and a torch.compile integration."
+          },
+          "quote": "TorchTPU adds TPU as a new backend to PyTorch. You write regular PyTorch code. It comes with Pallas kernels tuned for TPUs, support for distributed training, and a torch.compile integration for when you want more speed.",
+          "url": "https://huggingface.co/blog/hf-torchtpu"
+        },
+        {
+          "id": "84cd8d44e982-1",
+          "text": {
+            "fr": "Avec TorchTPU, Optimum TPU n'est plus nécessaire pour exécuter les modèles Hugging Face avec Transformers et Diffusers.",
+            "en": "With TorchTPU, Optimum TPU is no longer required to run Hugging Face models with Transformers and Diffusers."
+          },
+          "quote": "Now that TorchTPU brings native support, Optimum TPU is not required anymore to run Hugging Face models with Transformers and Diffusers.",
+          "url": "https://huggingface.co/blog/hf-torchtpu"
+        },
+        {
+          "id": "84cd8d44e982-2",
+          "text": {
+            "fr": "Pour charger un modèle sur TPU avec Transformers, il suffit de passer device_map=\"tpu\".",
+            "en": "To load a model on a TPU with Transformers, you just pass device_map=\"tpu\"."
+          },
+          "quote": "To load a model on a TPU, pass device_map=\"tpu\" . That's it.",
+          "url": "https://huggingface.co/blog/hf-torchtpu"
+        }
+      ],
+      "since": "2026-10-21",
+      "history": [
+        {
+          "date": "2026-10-21",
+          "ring": "essayer"
+        }
+      ]
+    },
+    {
+      "name": "sandbox.allowNestedUserNamespaces",
+      "ring": "attendre",
+      "rationale": {
+        "fr": "Ce paramètre, ajouté dans Claude Code v2.1.305, permet aux commandes en bac à sable sous Linux de créer des espaces de noms utilisateur (Chromium, podman sans root), ce qui leur permet de contourner les protections de fichiers du bac à sable. Mieux vaut ne pas l'activer par défaut tant que ce compromis de sécurité n'est pas accepté explicitement.",
+        "en": "This setting, added in Claude Code v2.1.305, lets sandboxed commands on Linux create user namespaces (Chromium, rootless podman), which lets them get around the sandbox's file protections. It is better not to enable it by default unless that security trade-off is explicitly accepted."
+      },
+      "evidence": [
+        {
+          "id": "d48a46ffc5b7-0",
+          "text": {
+            "fr": "Claude Code v2.1.305 ajoute le paramètre sandbox.allowNestedUserNamespaces, qui permet aux commandes en bac à sable sous Linux de créer des espaces de noms utilisateur (Chromium, podman sans root), ce qui leur permet de contourner les protections de fichiers du bac à sable.",
+            "en": "Claude Code v2.1.305 adds sandbox.allowNestedUserNamespaces so sandboxed commands on Linux can create user namespaces (Chromium, rootless podman), which lets them get around the sandbox's file protections."
+          },
+          "quote": "Added sandbox.allowNestedUserNamespaces so sandboxed commands on Linux can create user namespaces (Chromium, rootless podman); this lets them get around the sandbox's file protections",
+          "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.305"
+        }
+      ],
+      "since": "2026-10-21",
+      "history": [
+        {
+          "date": "2026-10-21",
+          "ring": "attendre"
+        }
+      ]
     }
   ]
 }

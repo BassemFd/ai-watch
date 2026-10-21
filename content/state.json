@@ -436,6 +436,80 @@
           "url": "https://blog.cloudflare.com/obsessive-inference-optimization/"
         }
       ]
+    },
+    {
+      "date": "2026-10-21",
+      "sectionId": "modeles",
+      "text": {
+        "fr": "Laplace 3B, un modèle à attention linéaire, a été entraîné à environ 120 000 tokens par seconde sur une seule instance trn2.48xlarge ; son état récurrent reste à 29,5 Mo par séquence, indépendamment de la longueur du contexte.",
+        "en": "Laplace 3B, a linear attention model, trained at about 120,000 tokens per second on a single trn2.48xlarge instance; its recurrent state stays at 29.5 MB per sequence, independent of context length."
+      },
+      "evidence": [
+        {
+          "id": "88d0e172655b-0",
+          "text": {
+            "fr": "Sur une seule instance trn2.48xlarge, Laplace 3B a été entraîné à environ 120 000 tokens par seconde.",
+            "en": "On one trn2.48xlarge instance, Laplace 3B trained at about 120,000 tokens per second."
+          },
+          "quote": "On one trn2.48xlarge instance, Laplace 3B trained at about 120,000 tokens per second.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/beyond-the-kv-cache-training-and-serving-i14s-laplace-3b-linear-attention-model-on-aws-trainium2-with-native-pytorch/"
+        },
+        {
+          "id": "88d0e172655b-2",
+          "text": {
+            "fr": "L'état récurrent de Laplace 3B reste à 29,5 Mo par séquence, indépendamment de la longueur du contexte.",
+            "en": "Laplace 3B's recurrent state stays at 29.5 MB per sequence, independent of context length."
+          },
+          "quote": "Its recurrent state stays at 29.5 MB per sequence, independent of context length.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/beyond-the-kv-cache-training-and-serving-i14s-laplace-3b-linear-attention-model-on-aws-trainium2-with-native-pytorch/"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-21",
+      "sectionId": "evals",
+      "text": {
+        "fr": "Des chercheurs de Claroc ont énuméré 6 800 liens de partage de conversations créés par des utilisateurs de Meta Muse, car tous partagent le même domaine et placent le titre de la conversation dans le sous-domaine ; Meta a suspendu la fonction de partage.",
+        "en": "Claroc researchers enumerated 6,800 conversation share links created by Meta Muse users, because all of them share one domain and put the conversation title in the subdomain; Meta has paused the sharing functionality."
+      },
+      "evidence": [
+        {
+          "id": "fb9936745ef9-0",
+          "text": {
+            "fr": "Les chercheurs de Claroc ont pu énumérer 6 800 liens que des utilisateurs de Muse avaient créés pour partager des conversations.",
+            "en": "Claroc researchers said they were able to enumerate 6,800 links that Muse users created for sharing conversations."
+          },
+          "quote": "researchers from security firm Claroc said they were able to enumerate 6,800 links Muse users created for sharing conversations with others",
+          "url": "https://arstechnica.com/security/2026/10/meta-muse-exposes-users-personal-and-business-secrets-when-they-share-conversations/"
+        },
+        {
+          "id": "fb9936745ef9-2",
+          "text": {
+            "fr": "Tous les liens de partage de Muse utilisent le nom de domaine cf.metaaiusercontent.com, ce qui a permis à Claroc de les découvrir.",
+            "en": "Claroc researchers were able to discover the Muse share links because all of them use the domain name cf.metaaiusercontent.com."
+          },
+          "quote": "Claroc researchers were able to discover the Muse share links because all of them use the domain name cf.metaaiusercontent.com.",
+          "url": "https://arstechnica.com/security/2026/10/meta-muse-exposes-users-personal-and-business-secrets-when-they-share-conversations/"
+        },
+        {
+          "id": "fb9936745ef9-3",
+          "text": {
+            "fr": "Le titre de la conversation placé dans le sous-domaine plutôt que dans le chemin de l'URL rend possible la découverte publique des liens.",
+            "en": "Putting the conversation title in the subdomain rather than in the URL path makes public discovery possible."
+          },
+          "quote": "It’s this last design decision, putting the conversation title in the subdomain rather than in the URL path, that makes public discovery possible.",
+          "url": "https://arstechnica.com/security/2026/10/meta-muse-exposes-users-personal-and-business-secrets-when-they-share-conversations/"
+        },
+        {
+          "id": "fb9936745ef9-1",
+          "text": {
+            "fr": "Meta a déclaré avoir suspendu la fonction de partage de Muse le temps d'examiner le signalement et d'envisager des changements sur la façon dont ces liens peuvent être découverts.",
+            "en": "Meta said it has paused Muse's sharing functionality while it reviews the report and considers changes to how these links can be discovered."
+          },
+          "quote": "we’ve paused this functionality while we review this report and consider changes to how these links can be discovered.",
+          "url": "https://arstechnica.com/security/2026/10/meta-muse-exposes-users-personal-and-business-secrets-when-they-share-conversations/"
+        }
+      ]
     }
   ]
 }

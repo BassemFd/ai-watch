@@ -1,0 +1,319 @@
+{
+  "date": "2026-10-21",
+  "headline": {
+    "fr": "Voxtral 3 : SDK d'agent vocal et tarifs publiés ; Laplace 3B : un modèle à attention linéaire à état constant par séquence ; Claude Code v2.1.305 : bac à sable, serveurs MCP et nouvelles tentatives ; TorchTPU : le TPU devient un backend PyTorch ; Huit certificats d'AC intermédiaires eMudhra compromis ; Meta Muse : des liens de partage de conversations énumérables",
+    "en": "Voxtral 3: voice agent SDK and published pricing; Laplace 3B: a linear attention model with constant per-sequence state; Claude Code v2.1.305: sandbox, MCP servers and retries; TorchTPU: TPU becomes a PyTorch backend; Eight eMudhra intermediate CA certificates compromised; Meta Muse: enumerable conversation share links"
+  },
+  "items": [
+    {
+      "title": {
+        "fr": "Voxtral 3 : SDK d'agent vocal et tarifs publiés",
+        "en": "Voxtral 3: voice agent SDK and published pricing"
+      },
+      "url": "https://mistral.ai/news/voxtral-3/",
+      "source": "Mistral AI",
+      "primary": true,
+      "summary": {
+        "fr": "Voxtral 3 inclut un SDK d'agent vocal, construit sur LiveKit, qui exécute entrée parole, raisonnement et sortie parole en un seul pipeline de streaming. L'API d'agent vocal coûte 0,04 $/min avec Mistral Small 4 pour le raisonnement et 0,08 $/min avec tout autre modèle ; la version Mini de Voxtral Transcribe 3 (4B de paramètres) coûte 0,0035 $/min. Voxtral Speech 3 est facturé 13 $ par million de caractères, moins cher selon la page que OpenAI TTS-1, Deepgram, ElevenLabs Flash et Gemini Flash.",
+        "en": "Voxtral 3 introduces a voice agent SDK, built on LiveKit, that runs speech in, reasoning, and speech out as one streaming pipeline. The voice agent API costs $0.04/min with Mistral Small 4 for reasoning and $0.08/min with any other reasoning model; the Mini variant of Voxtral Transcribe 3 (4B parameters) costs $0.0035/min. Voxtral Speech 3 is priced at $13 per 1M characters, which the page says is less than OpenAI TTS-1, Deepgram, ElevenLabs Flash and Gemini Flash."
+      },
+      "why": {
+        "fr": "Analyse : avec des prix publiés par minute et par caractère, on peut chiffrer le coût d'un agent vocal avant de choisir le modèle de raisonnement, dont dépend le tarif de l'API.",
+        "en": "Analysis: with per-minute and per-character prices published, you can estimate a voice agent's cost before choosing the reasoning model, which determines the API rate."
+      },
+      "claims": [
+        {
+          "id": "835e678b11fa-0",
+          "text": {
+            "fr": "Voxtral 3 inclut un SDK d'agent vocal, construit sur LiveKit, qui exécute l'entrée parole, le raisonnement et la sortie parole en un seul pipeline de streaming.",
+            "en": "Voxtral 3 introduces a voice agent SDK, built on LiveKit, that runs speech in, reasoning, and speech out as one streaming pipeline."
+          },
+          "quote": "Voxtral 3 introduces a voice agent SDK, built on LiveKit, that runs speech in, reasoning, and speech out as one streaming pipeline.",
+          "url": "https://mistral.ai/news/voxtral-3/"
+        },
+        {
+          "id": "835e678b11fa-2",
+          "text": {
+            "fr": "La version Mini de Voxtral Transcribe 3 compte 4B de paramètres et coûte 0,0035 $/min.",
+            "en": "The Mini variant of Voxtral Transcribe 3 is 4B parameters, at a price of $0.0035/min."
+          },
+          "quote": "The Mini variant is 4B parameters, enabling fast and accurate transcriptions at a price of $0.0035/min.",
+          "url": "https://mistral.ai/news/voxtral-3/"
+        },
+        {
+          "id": "835e678b11fa-3",
+          "text": {
+            "fr": "Voxtral Speech 3 est facturé 13 $ par million de caractères, moins cher selon la page que OpenAI TTS-1, Deepgram, ElevenLabs Flash et Gemini Flash.",
+            "en": "At $13 per 1M characters, Voxtral Speech 3 costs less to run than comparable models from OpenAI TTS-1, Deepgram, ElevenLabs Flash and Gemini Flash."
+          },
+          "quote": "At $13 per 1M characters, Voxtral Speech 3 costs less to run than comparable models from OpenAI TTS-1, Deepgram, ElevenLabs Flash and Gemini Flash.",
+          "url": "https://mistral.ai/news/voxtral-3/"
+        },
+        {
+          "id": "835e678b11fa-4",
+          "text": {
+            "fr": "L'API d'agent vocal coûte 0,04 $/min avec Mistral Small 4 pour le raisonnement et 0,08 $/min avec tout autre modèle de raisonnement.",
+            "en": "The voice agent API costs $0.04/min with Mistral Small 4 for reasoning and $0.08/min with any other reasoning model."
+          },
+          "quote": "Voice agent API with Mistral Small 4 for reasoning 0.04$/min Voice agent API with any other reasoning model 0.08$/min",
+          "url": "https://mistral.ai/news/voxtral-3/"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Laplace 3B : un modèle à attention linéaire à état constant par séquence",
+        "en": "Laplace 3B: a linear attention model with constant per-sequence state"
+      },
+      "url": "https://aws.amazon.com/blogs/machine-learning/beyond-the-kv-cache-training-and-serving-i14s-laplace-3b-linear-attention-model-on-aws-trainium2-with-native-pytorch/",
+      "source": "AWS Machine Learning",
+      "primary": true,
+      "summary": {
+        "fr": "Sur une seule instance trn2.48xlarge, Laplace 3B a été entraîné à environ 120 000 tokens par seconde. Son état récurrent reste à 29,5 Mo par séquence, indépendamment de la longueur du contexte, et le modèle a servi 11 544 tokens de sortie par seconde pour 1 280 séquences concurrentes. La compilation de l'étape de décodage a multiplié le débit par 1,7.",
+        "en": "On one trn2.48xlarge instance, Laplace 3B trained at about 120,000 tokens per second. Its recurrent state stays at 29.5 MB per sequence, independent of context length, and the model served 11,544 output tokens per second across 1,280 concurrent sequences. Compiling the decode step raised throughput 1.7 times."
+      },
+      "why": {
+        "fr": "Analyse : un état par séquence indépendant du contexte rend la mémoire de service plus prévisible pour qui dimensionne un déploiement à forte concurrence.",
+        "en": "Analysis: a per-sequence state that does not grow with context makes serving memory more predictable for anyone sizing a high-concurrency deployment."
+      },
+      "claims": [
+        {
+          "id": "88d0e172655b-0",
+          "text": {
+            "fr": "Sur une seule instance trn2.48xlarge, Laplace 3B a été entraîné à environ 120 000 tokens par seconde.",
+            "en": "On one trn2.48xlarge instance, Laplace 3B trained at about 120,000 tokens per second."
+          },
+          "quote": "On one trn2.48xlarge instance, Laplace 3B trained at about 120,000 tokens per second.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/beyond-the-kv-cache-training-and-serving-i14s-laplace-3b-linear-attention-model-on-aws-trainium2-with-native-pytorch/"
+        },
+        {
+          "id": "88d0e172655b-1",
+          "text": {
+            "fr": "Le modèle a servi 11 544 tokens de sortie par seconde pour 1 280 séquences concurrentes.",
+            "en": "The model served 11,544 output tokens per second across 1,280 concurrent sequences."
+          },
+          "quote": "The model served 11,544 output tokens per second across 1,280 concurrent sequences.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/beyond-the-kv-cache-training-and-serving-i14s-laplace-3b-linear-attention-model-on-aws-trainium2-with-native-pytorch/"
+        },
+        {
+          "id": "88d0e172655b-2",
+          "text": {
+            "fr": "L'état récurrent de Laplace 3B reste à 29,5 Mo par séquence, indépendamment de la longueur du contexte.",
+            "en": "Laplace 3B's recurrent state stays at 29.5 MB per sequence, independent of context length."
+          },
+          "quote": "Its recurrent state stays at 29.5 MB per sequence, independent of context length.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/beyond-the-kv-cache-training-and-serving-i14s-laplace-3b-linear-attention-model-on-aws-trainium2-with-native-pytorch/"
+        },
+        {
+          "id": "88d0e172655b-4",
+          "text": {
+            "fr": "La compilation de l'étape de décodage a multiplié le débit par 1,7, jusqu'à 11 544 tokens de sortie par seconde.",
+            "en": "Compiling the decode step raised throughput 1.7 times, to 11,544 output tokens per second."
+          },
+          "quote": "Compiling the decode step removed per-operator dispatch and raised throughput 1.7 times, to 11,544",
+          "url": "https://aws.amazon.com/blogs/machine-learning/beyond-the-kv-cache-training-and-serving-i14s-laplace-3b-linear-attention-model-on-aws-trainium2-with-native-pytorch/"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Claude Code v2.1.305 : bac à sable, serveurs MCP et nouvelles tentatives",
+        "en": "Claude Code v2.1.305: sandbox, MCP servers and retries"
+      },
+      "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.305",
+      "source": "Claude Code (releases)",
+      "primary": true,
+      "summary": {
+        "fr": "La version 2.1.305 ajoute sandbox.allowNestedUserNamespaces, qui permet aux commandes en bac à sable sous Linux de créer des espaces de noms utilisateur (Chromium, podman sans root), ce qui leur permet de contourner les protections de fichiers du bac à sable. Désormais, allowedMcpServers ne filtre plus les serveurs stdio de managed-mcp.json qui utilisent ${VAR} uniquement dans env : un serveur absent de la liste d'autorisation se charge à la mise à jour, et deniedMcpServers permet de le garder désactivé. Elle corrige aussi un échec d'accès au dépôt du runner auto-hébergé présent depuis la 2.1.296.",
+        "en": "Version 2.1.305 adds sandbox.allowNestedUserNamespaces so sandboxed commands on Linux can create user namespaces (Chromium, rootless podman), which lets them get around the sandbox's file protections. Also, allowedMcpServers no longer filters managed-mcp.json stdio servers that use ${VAR} only in env: one left out of the allowlist now loads on upgrade, and deniedMcpServers keeps it off. It also fixes self-hosted runner repository access failing since 2.1.296."
+      },
+      "why": {
+        "fr": "Analyse : après mise à jour, il vaut la peine de vérifier la liste des serveurs MCP chargés et de décider si le nouveau paramètre du bac à sable est acceptable pour vos protections de fichiers.",
+        "en": "Analysis: after upgrading, it is worth checking which MCP servers load and deciding whether the new sandbox setting is acceptable given your file protections."
+      },
+      "claims": [
+        {
+          "id": "d48a46ffc5b7-0",
+          "text": {
+            "fr": "Claude Code v2.1.305 ajoute le paramètre sandbox.allowNestedUserNamespaces, qui permet aux commandes en bac à sable sous Linux de créer des espaces de noms utilisateur (Chromium, podman sans root), ce qui leur permet de contourner les protections de fichiers du bac à sable.",
+            "en": "Claude Code v2.1.305 adds sandbox.allowNestedUserNamespaces so sandboxed commands on Linux can create user namespaces (Chromium, rootless podman), which lets them get around the sandbox's file protections."
+          },
+          "quote": "Added sandbox.allowNestedUserNamespaces so sandboxed commands on Linux can create user namespaces (Chromium, rootless podman); this lets them get around the sandbox's file protections",
+          "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.305"
+        },
+        {
+          "id": "d48a46ffc5b7-3",
+          "text": {
+            "fr": "Dans la version 2.1.305, allowedMcpServers ne filtre plus les serveurs stdio de managed-mcp.json qui utilisent ${VAR} uniquement dans env ; un serveur absent de la liste d'autorisation se charge à la mise à jour, et deniedMcpServers permet de le garder désactivé.",
+            "en": "In version 2.1.305, allowedMcpServers no longer filters managed-mcp.json stdio servers that use ${VAR} only in env; one left out of the allowlist now loads on upgrade, and deniedMcpServers keeps it off."
+          },
+          "quote": "Changed allowedMcpServers to stop filtering managed-mcp.json stdio servers that use ${VAR} only in env : one your allowlist left out now loads on upgrade; use deniedMcpServers to keep it off",
+          "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.305"
+        },
+        {
+          "id": "d48a46ffc5b7-4",
+          "text": {
+            "fr": "La version 2.1.305 corrige, pour le runner auto-hébergé, un échec d'accès au dépôt présent depuis la 2.1.296 lorsqu'un assistant d'identifiants git ou un programme askpass lit ses paramètres via GIT_CONFIG.",
+            "en": "Version 2.1.305 fixes self-hosted runner repository access failing since 2.1.296 when a git credential helper or askpass program reads its settings through GIT_CONFIG."
+          },
+          "quote": "Self-hosted runner: Fixed repository access failing since 2.1.296 when a git credential helper or askpass program reads its settings through GIT_CONFIG",
+          "url": "https://github.com/anthropics/claude-code/releases/tag/v2.1.305"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "TorchTPU : le TPU devient un backend PyTorch",
+        "en": "TorchTPU: TPU becomes a PyTorch backend"
+      },
+      "url": "https://huggingface.co/blog/hf-torchtpu",
+      "source": "Hugging Face",
+      "primary": true,
+      "summary": {
+        "fr": "TorchTPU ajoute le TPU comme nouveau backend de PyTorch, avec des kernels Pallas optimisés pour TPU, l'entraînement distribué et une intégration de torch.compile. Avec TorchTPU, Optimum TPU n'est plus nécessaire pour exécuter les modèles Hugging Face avec Transformers et Diffusers. Charger un modèle sur TPU avec Transformers demande de passer device_map=\"tpu\".",
+        "en": "TorchTPU adds TPU as a new backend to PyTorch, with Pallas kernels tuned for TPUs, support for distributed training, and a torch.compile integration. With TorchTPU, Optimum TPU is no longer required to run Hugging Face models with Transformers and Diffusers. Loading a model on a TPU with Transformers means passing device_map=\"tpu\"."
+      },
+      "why": {
+        "fr": "Analyse : cela réduit le travail d'adaptation pour une équipe qui voudrait essayer les TPU avec du code Transformers existant.",
+        "en": "Analysis: this lowers the porting effort for a team wanting to try TPUs with existing Transformers code."
+      },
+      "claims": [
+        {
+          "id": "84cd8d44e982-0",
+          "text": {
+            "fr": "TorchTPU ajoute le TPU comme nouveau backend de PyTorch, avec des kernels Pallas optimisés pour TPU, l'entraînement distribué et une intégration de torch.compile.",
+            "en": "TorchTPU adds TPU as a new backend to PyTorch, with Pallas kernels tuned for TPUs, support for distributed training, and a torch.compile integration."
+          },
+          "quote": "TorchTPU adds TPU as a new backend to PyTorch. You write regular PyTorch code. It comes with Pallas kernels tuned for TPUs, support for distributed training, and a torch.compile integration for when you want more speed.",
+          "url": "https://huggingface.co/blog/hf-torchtpu"
+        },
+        {
+          "id": "84cd8d44e982-1",
+          "text": {
+            "fr": "Avec TorchTPU, Optimum TPU n'est plus nécessaire pour exécuter les modèles Hugging Face avec Transformers et Diffusers.",
+            "en": "With TorchTPU, Optimum TPU is no longer required to run Hugging Face models with Transformers and Diffusers."
+          },
+          "quote": "Now that TorchTPU brings native support, Optimum TPU is not required anymore to run Hugging Face models with Transformers and Diffusers.",
+          "url": "https://huggingface.co/blog/hf-torchtpu"
+        },
+        {
+          "id": "84cd8d44e982-2",
+          "text": {
+            "fr": "Pour charger un modèle sur TPU avec Transformers, il suffit de passer device_map=\"tpu\".",
+            "en": "To load a model on a TPU with Transformers, you just pass device_map=\"tpu\"."
+          },
+          "quote": "To load a model on a TPU, pass device_map=\"tpu\" . That's it.",
+          "url": "https://huggingface.co/blog/hf-torchtpu"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Huit certificats d'AC intermédiaires eMudhra compromis",
+        "en": "Eight eMudhra intermediate CA certificates compromised"
+      },
+      "url": "https://simonwillison.net/2026/Oct/20/emudhra-certificates/",
+      "source": "Simon Willison",
+      "summary": {
+        "fr": "Les clés privées de huit certificats d'AC intermédiaires eMudhra ont été compromises. Ces certificats se rattachent à des racines approuvées par les programmes de Mozilla, Microsoft, Apple et Chrome, ainsi que par de nombreux magasins de confiance en aval. uv 0.13.4, pip 26.2.2 et certifi 2026.10.19 ont été publiés avec des listes de certificats mises à jour, et les distributions Linux doivent mettre à jour leurs paquets ca-certificates.",
+        "en": "The private keys of eight eMudhra intermediate CA certificates have been compromised. They chain to roots trusted by the Mozilla, Microsoft, Apple and Chrome root programs and by many downstream trust stores. uv 0.13.4, pip 26.2.2 and certifi 2026.10.19 have been released with upgraded certificate lists, and Linux distros need to update their ca-certificates packages."
+      },
+      "why": {
+        "fr": "Analyse : les outils Python de votre chaîne de build dépendent de ces listes de certificats, il faut donc contrôler qu'ils sont à jour.",
+        "en": "Analysis: the Python tooling in your build chain relies on these certificate lists, so it is worth checking that they are up to date."
+      },
+      "claims": [
+        {
+          "id": "aac036aa8666-0",
+          "text": {
+            "fr": "Les clés privées de huit certificats d'AC intermédiaires eMudhra ont été compromises.",
+            "en": "The private keys of eight eMudhra intermediate CA certificates have been compromised."
+          },
+          "quote": "The private keys of eight eMudhra intermediate CA certificates have been compromised.",
+          "url": "https://simonwillison.net/2026/Oct/20/emudhra-certificates/"
+        },
+        {
+          "id": "aac036aa8666-1",
+          "text": {
+            "fr": "Ces certificats se rattachent à des racines approuvées par les programmes de certificats racine de Mozilla, Microsoft, Apple et Chrome, ainsi que par de nombreux magasins de confiance en aval.",
+            "en": "They chain to roots trusted by the Mozilla, Microsoft, Apple and Chrome root programs and by many downstream trust stores."
+          },
+          "quote": "They chain to roots trusted by the Mozilla, Microsoft, Apple and Chrome root programs and by many downstream trust stores.",
+          "url": "https://simonwillison.net/2026/Oct/20/emudhra-certificates/"
+        },
+        {
+          "id": "aac036aa8666-2",
+          "text": {
+            "fr": "Les distributions Linux doivent mettre à jour leurs paquets ca-certificates.",
+            "en": "Linux distros need to update their ca-certificates packages."
+          },
+          "quote": "Linux distros need to update their ca-certificates packages.",
+          "url": "https://simonwillison.net/2026/Oct/20/emudhra-certificates/"
+        },
+        {
+          "id": "aac036aa8666-3",
+          "text": {
+            "fr": "uv 0.13.4, pip 26.2.2 et certifi 2026.10.19 ont été publiés avec des listes de certificats mises à jour.",
+            "en": "uv 0.13.4, pip 26.2.2 and certifi 2026.10.19 have been released with upgraded certificate lists."
+          },
+          "quote": "uv 0.13.4 and pip 26.2.2 and certifi 2026.10.19 have been released with upgraded certificate lists.",
+          "url": "https://simonwillison.net/2026/Oct/20/emudhra-certificates/"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Meta Muse : des liens de partage de conversations énumérables",
+        "en": "Meta Muse: enumerable conversation share links"
+      },
+      "url": "https://arstechnica.com/security/2026/10/meta-muse-exposes-users-personal-and-business-secrets-when-they-share-conversations/",
+      "source": "Ars Technica (IA)",
+      "summary": {
+        "fr": "Les chercheurs de Claroc disent avoir pu énumérer 6 800 liens que des utilisateurs de Muse avaient créés pour partager des conversations. Tous ces liens utilisent le domaine cf.metaaiusercontent.com, et le titre de la conversation placé dans le sous-domaine plutôt que dans le chemin de l'URL rend leur découverte publique possible. Meta a déclaré avoir suspendu la fonction de partage le temps d'examiner le signalement.",
+        "en": "Claroc researchers said they were able to enumerate 6,800 links that Muse users created for sharing conversations. All of the links use the domain cf.metaaiusercontent.com, and putting the conversation title in the subdomain rather than in the URL path makes public discovery possible. Meta said it has paused the sharing functionality while it reviews the report."
+      },
+      "why": {
+        "fr": "Analyse : pour qui conçoit une fonction de partage de conversations, la forme des URL générées détermine si les liens peuvent être découverts.",
+        "en": "Analysis: for anyone designing a conversation-sharing feature, the structure of the generated URLs determines whether links can be discovered."
+      },
+      "claims": [
+        {
+          "id": "fb9936745ef9-0",
+          "text": {
+            "fr": "Les chercheurs de Claroc ont pu énumérer 6 800 liens que des utilisateurs de Muse avaient créés pour partager des conversations.",
+            "en": "Claroc researchers said they were able to enumerate 6,800 links that Muse users created for sharing conversations."
+          },
+          "quote": "researchers from security firm Claroc said they were able to enumerate 6,800 links Muse users created for sharing conversations with others",
+          "url": "https://arstechnica.com/security/2026/10/meta-muse-exposes-users-personal-and-business-secrets-when-they-share-conversations/"
+        },
+        {
+          "id": "fb9936745ef9-1",
+          "text": {
+            "fr": "Meta a déclaré avoir suspendu la fonction de partage de Muse le temps d'examiner le signalement et d'envisager des changements sur la façon dont ces liens peuvent être découverts.",
+            "en": "Meta said it has paused Muse's sharing functionality while it reviews the report and considers changes to how these links can be discovered."
+          },
+          "quote": "we’ve paused this functionality while we review this report and consider changes to how these links can be discovered.",
+          "url": "https://arstechnica.com/security/2026/10/meta-muse-exposes-users-personal-and-business-secrets-when-they-share-conversations/"
+        },
+        {
+          "id": "fb9936745ef9-2",
+          "text": {
+            "fr": "Tous les liens de partage de Muse utilisent le nom de domaine cf.metaaiusercontent.com, ce qui a permis à Claroc de les découvrir.",
+            "en": "Claroc researchers were able to discover the Muse share links because all of them use the domain name cf.metaaiusercontent.com."
+          },
+          "quote": "Claroc researchers were able to discover the Muse share links because all of them use the domain name cf.metaaiusercontent.com.",
+          "url": "https://arstechnica.com/security/2026/10/meta-muse-exposes-users-personal-and-business-secrets-when-they-share-conversations/"
+        },
+        {
+          "id": "fb9936745ef9-3",
+          "text": {
+            "fr": "Le titre de la conversation placé dans le sous-domaine plutôt que dans le chemin de l'URL rend possible la découverte publique des liens.",
+            "en": "Putting the conversation title in the subdomain rather than in the URL path makes public discovery possible."
+          },
+          "quote": "It’s this last design decision, putting the conversation title in the subdomain rather than in the URL path, that makes public discovery possible.",
+          "url": "https://arstechnica.com/security/2026/10/meta-muse-exposes-users-personal-and-business-secrets-when-they-share-conversations/"
+        }
+      ]
+    }
+  ]
+}
