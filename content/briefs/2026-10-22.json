@@ -1,0 +1,126 @@
+{
+  "date": "2026-10-22",
+  "headline": {
+    "fr": "PHP2Shell : deux CVE PHP, découvertes avec l'aide de modèles d'IA ; Claude Code : les mods, des plugins exécutés dans le harness",
+    "en": "PHP2Shell: two PHP CVEs, found with the help of AI models; Claude Code mods: plugins that run inside the harness"
+  },
+  "items": [
+    {
+      "title": {
+        "fr": "PHP2Shell : deux CVE PHP, découvertes avec l'aide de modèles d'IA",
+        "en": "PHP2Shell: two PHP CVEs, found with the help of AI models"
+      },
+      "url": "https://simonwillison.net/2026/Oct/21/php-security-release/",
+      "source": "Simon Willison",
+      "summary": {
+        "fr": "Wiz Research a découvert la première vulnérabilité PHP le 19 août 2026 avec Wiz Atlas, Gemini 4 Argon et GPT-5.6 Sol. Une exécution de code à distance non authentifiée a été confirmée contre WordPress le 21 août 2026. Les chercheurs ont nommé les failles PHP2Shell (CVE-2026-109618 et CVE-2026-109619). Les deux identifiants ont circulé en ligne le 20 octobre vers 15h00 UTC avec un score CVSS erroné de 10.0, le score réel étant de 9.2.",
+        "en": "Wiz Research discovered the first PHP vulnerability on August 19, 2026 using Wiz Atlas, Gemini 4 Argon and GPT-5.6 Sol. Unauthenticated RCE was confirmed against WordPress on August 21, 2026. The researchers named the vulnerabilities PHP2Shell (CVE-2026-109618 and CVE-2026-109619). The two IDs began circulating online on October 20 around 15:00 UTC with a wrong CVSS score of 10.0; the actual score is 9.2."
+      },
+      "why": {
+        "fr": "Analyse : ce cas montre que des modèles d'IA font partie de l'outillage employé dans une découverte de vulnérabilité sur PHP, et qu'un score CVSS circulant en ligne peut être erroné, d'où l'intérêt de le vérifier à la source.",
+        "en": "Analysis: this case shows AI models being part of the tooling used in a PHP vulnerability discovery, and that a CVSS score circulating online can be wrong, which is a reason to check it at the source."
+      },
+      "claims": [
+        {
+          "id": "952285572a8e-1",
+          "text": {
+            "fr": "Les deux identifiants CVE ont circulé en ligne le 20 octobre vers 15h00 UTC, avec un score CVSS erroné de 10.0, alors que le score réel est de 9.2.",
+            "en": "On October 20, around 15:00 UTC, the two CVE IDs began circulating online with a wrong CVSS score of 10.0; the actual score is 9.2."
+          },
+          "quote": "On Tuesday, October 20th, at around 15:00 UTC, the two CVE IDs began circulating on online forums and social media. They came with a wrong release time and a wrong CVSS score of 10.0 (the actual score is 9.2).",
+          "url": "https://simonwillison.net/2026/Oct/21/php-security-release/"
+        },
+        {
+          "id": "952285572a8e-2",
+          "text": {
+            "fr": "Wiz Research a découvert la première vulnérabilité PHP le 19 août 2026 avec Wiz Atlas, Gemini 4 Argon et GPT-5.6 Sol.",
+            "en": "Wiz Research discovered the first PHP vulnerability on August 19, 2026 using Wiz Atlas, Gemini 4 Argon, and GPT-5.6 Sol."
+          },
+          "quote": "August 19, 2026: Wiz Research discovers the first PHP vulnerability using Wiz Atlas, Gemini 4 Argon, and GPT-5.6 Sol.",
+          "url": "https://simonwillison.net/2026/Oct/21/php-security-release/"
+        },
+        {
+          "id": "952285572a8e-3",
+          "text": {
+            "fr": "Une exécution de code à distance non authentifiée a été confirmée contre WordPress le 21 août 2026.",
+            "en": "Unauthenticated RCE was confirmed against WordPress on August 21, 2026."
+          },
+          "quote": "August 21, 2026: Unauthenticated RCE is confirmed against WordPress.",
+          "url": "https://simonwillison.net/2026/Oct/21/php-security-release/"
+        },
+        {
+          "id": "952285572a8e-5",
+          "text": {
+            "fr": "Les chercheurs ont nommé les vulnérabilités PHP2Shell, identifiées comme CVE-2026-109618 et CVE-2026-109619.",
+            "en": "The researchers named the vulnerabilities PHP2Shell and identified them as CVE-2026-109618 and CVE-2026-109619."
+          },
+          "quote": "The researchers named the vulnerabilities PHP2Shell and identified them as CVE-2026-109618 and CVE-2026-109619.",
+          "url": "https://www.latent.space/p/ainews-openais-patch-the-planet-program"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Claude Code : les mods, des plugins exécutés dans le harness",
+        "en": "Claude Code mods: plugins that run inside the harness"
+      },
+      "url": "https://www.latent.space/p/claude-mods",
+      "source": "Latent Space",
+      "summary": {
+        "fr": "Un mod Claude Code est un plugin composé de fonctions TypeScript ou JavaScript qui s'exécutent à l'intérieur de Claude Code. Anthropic en a livré six, intégrés et visibles via /plugin puis Installed, sous Built-in ; you-should-know, un agent annexe qui affiche une note au-dessus du prompt, est le seul désactivé par défaut. Une compétence intégrée apprend à Claude Code à construire des mods à partir d'une demande en langage naturel.",
+        "en": "A Claude Code mod is a plugin made of TypeScript or JavaScript functions that run inside Claude Code. Anthropic has shipped six built-in mods, visible by running /plugin and opening Installed, under Built-in; you-should-know, a side agent that shows a note above the prompt, is the only one off by default. A built-in skill teaches Claude Code how to build mods from a plain-language request."
+      },
+      "why": {
+        "fr": "Analyse : pour qui personnalise son harness, le fait que les mods intégrés continuent de fonctionner avec --safe-mode est un point à connaître avant de compter sur ce mode.",
+        "en": "Analysis: for anyone customizing their harness, the fact that built-in mods keep running with --safe-mode is worth knowing before relying on that mode."
+      },
+      "claims": [
+        {
+          "id": "0fff47054cc3-0",
+          "text": {
+            "fr": "Un mod Claude Code est un plugin composé de fonctions TypeScript ou JavaScript qui s'exécutent à l'intérieur de Claude Code.",
+            "en": "A Claude Code mod is a plugin made of TypeScript or JavaScript functions that run inside Claude Code."
+          },
+          "quote": "A mod is a Claude Code plugin that consists of TypeScript or JavaScript functions that run inside Claude Code.",
+          "url": "https://www.latent.space/p/claude-mods"
+        },
+        {
+          "id": "0fff47054cc3-1",
+          "text": {
+            "fr": "Anthropic a livré six mods intégrés dans Claude Code, visibles via /plugin puis Installed, sous Built-in.",
+            "en": "Anthropic has shipped six mods built into Claude Code, visible by running /plugin and opening Installed, under Built-in."
+          },
+          "quote": "Anthropic has shipped six of them built-in . You can see these by running /plugin and opening Installed , where they’re listed under Built-in:",
+          "url": "https://www.latent.space/p/claude-mods"
+        },
+        {
+          "id": "0fff47054cc3-2",
+          "text": {
+            "fr": "Le mod intégré you-should-know est le seul des mods intégrés désactivé par défaut ; c'est un agent annexe qui affiche une note au-dessus du prompt.",
+            "en": "The built-in mod you-should-know, a side agent that shows a note above the prompt, is the only built-in mod that is off by default."
+          },
+          "quote": "you-should-know: a side agent that shows a note above the prompt when it finds something you might have missed. It’s the only one that’s off by default.",
+          "url": "https://www.latent.space/p/claude-mods"
+        },
+        {
+          "id": "0fff47054cc3-3",
+          "text": {
+            "fr": "Claude Code dispose d'une compétence intégrée qui lui apprend à construire des mods à partir d'une demande en langage naturel.",
+            "en": "Claude Code has a built-in skill that teaches it how to build mods, so a mod can be requested in plain language."
+          },
+          "quote": "Claude Code has a built-in skill that teaches it how to build mods, so you can ask for the mod you want in plain language and Claude will build it.",
+          "url": "https://www.latent.space/p/claude-mods"
+        },
+        {
+          "id": "0fff47054cc3-5",
+          "text": {
+            "fr": "Les mods intégrés continuent de fonctionner lorsque Claude Code est lancé avec --safe-mode.",
+            "en": "Built-in mods keep running when Claude Code is started with --safe-mode."
+          },
+          "quote": "Built-in mods also keep running when you start Claude Code with --safe-mode .",
+          "url": "https://www.latent.space/p/claude-mods"
+        }
+      ]
+    }
+  ]
+}

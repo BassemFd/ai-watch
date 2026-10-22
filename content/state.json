@@ -510,6 +510,53 @@
           "url": "https://arstechnica.com/security/2026/10/meta-muse-exposes-users-personal-and-business-secrets-when-they-share-conversations/"
         }
       ]
+    },
+    {
+      "date": "2026-10-22",
+      "sectionId": "evals",
+      "text": {
+        "fr": "Dans le cadre de la preuve de la conjecture KLS, les auteurs ont tenté à plusieurs reprises, sans guidage, de la résoudre avec plusieurs modèles d'IA de pointe, avec à peu près le même budget total de tokens que leur processus principal ; ces essais n'ont pas atteint l'objectif.",
+        "en": "In the work on the KLS conjecture proof, the authors made repeated unguided attempts to solve it with several leading AI models, using roughly the same total token budget as their main process; those attempts fell short of the goal."
+      },
+      "evidence": [
+        {
+          "id": "2ed826e28d23-5",
+          "text": {
+            "fr": "Dans un volet séparé, les auteurs ont tenté à plusieurs reprises, sans guidage, de résoudre le problème avec plusieurs modèles d'IA de pointe, avec à peu près le même budget total de tokens que le processus principal, et cela n'a pas atteint l'objectif.",
+            "en": "In a separate track, the authors made repeated unguided attempts to solve the problem with several leading AI models, using roughly the same total token budget as the main process, and that effort fell short of the goal."
+          },
+          "quote": "the authors made repeated unguided attempts to solve the same problem with several leading AI models, using roughly the same total token budget as the main process. That effort fell short of the goal.",
+          "url": "https://www.microsoft.com/en-us/research/blog/solving-a-31-year-old-grand-challenge-in-mathematics-the-kls-conjecture/"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-22",
+      "sectionId": "evals",
+      "text": {
+        "fr": "Wiz Research a découvert la première vulnérabilité PHP le 19 août 2026 avec Wiz Atlas, Gemini 4 Argon et GPT-5.6 Sol, et une exécution de code à distance non authentifiée a été confirmée contre WordPress le 21 août 2026.",
+        "en": "Wiz Research discovered the first PHP vulnerability on August 19, 2026 using Wiz Atlas, Gemini 4 Argon and GPT-5.6 Sol, and unauthenticated RCE was confirmed against WordPress on August 21, 2026."
+      },
+      "evidence": [
+        {
+          "id": "952285572a8e-2",
+          "text": {
+            "fr": "Wiz Research a découvert la première vulnérabilité PHP le 19 août 2026 avec Wiz Atlas, Gemini 4 Argon et GPT-5.6 Sol.",
+            "en": "Wiz Research discovered the first PHP vulnerability on August 19, 2026 using Wiz Atlas, Gemini 4 Argon, and GPT-5.6 Sol."
+          },
+          "quote": "August 19, 2026: Wiz Research discovers the first PHP vulnerability using Wiz Atlas, Gemini 4 Argon, and GPT-5.6 Sol.",
+          "url": "https://simonwillison.net/2026/Oct/21/php-security-release/"
+        },
+        {
+          "id": "952285572a8e-3",
+          "text": {
+            "fr": "Une exécution de code à distance non authentifiée a été confirmée contre WordPress le 21 août 2026.",
+            "en": "Unauthenticated RCE was confirmed against WordPress on August 21, 2026."
+          },
+          "quote": "August 21, 2026: Unauthenticated RCE is confirmed against WordPress.",
+          "url": "https://simonwillison.net/2026/Oct/21/php-security-release/"
+        }
+      ]
     }
   ]
 }
