@@ -1,381 +1,131 @@
 {
   "date": "2026-10-23",
-  "startedAt": "2026-10-23T09:24:05.191Z",
-  "durationMs": 81798,
+  "startedAt": "2026-10-23T14:24:03.353Z",
+  "durationMs": 29934,
   "status": "rejected",
   "counts": {
-    "collectes": 209,
-    "nouveaux": 118,
-    "retenus": 7,
-    "faitsProposes": 37,
-    "faitsCites": 37,
-    "faitsValides": 27,
+    "collectes": 201,
+    "nouveaux": 4,
+    "retenus": 1,
+    "faitsProposes": 3,
+    "faitsCites": 3,
+    "faitsValides": 3,
     "confirmationsCitees": 0,
     "confirmationsValides": 0,
     "sujetsRecoupes": 0,
-    "mouvementsRadar": 2
+    "mouvementsRadar": 0
   },
   "stages": [
     {
       "stage": "triage",
       "model": "claude-haiku-5-5",
-      "ms": 6152,
-      "inputTokens": 23091,
-      "outputTokens": 698,
-      "costUsd": 0.0026581
+      "ms": 2073,
+      "inputTokens": 1657,
+      "outputTokens": 112,
+      "costUsd": 0.00022170000000000002
     },
     {
       "stage": "research",
       "model": "claude-sonnet-5-5",
-      "ms": 3767,
-      "inputTokens": 2472,
-      "outputTokens": 63,
-      "costUsd": 0.005574
+      "ms": 1551,
+      "inputTokens": 2477,
+      "outputTokens": 78,
+      "costUsd": 0.005734
     },
     {
       "stage": "research",
       "model": "claude-sonnet-5-5",
-      "ms": 3797,
-      "inputTokens": 2472,
-      "outputTokens": 76,
-      "costUsd": 0.005704
-    },
-    {
-      "stage": "research",
-      "model": "claude-sonnet-5-5",
-      "ms": 3864,
-      "inputTokens": 2507,
-      "outputTokens": 105,
-      "costUsd": 0.006064
-    },
-    {
-      "stage": "research",
-      "model": "claude-sonnet-5-5",
-      "ms": 3866,
-      "inputTokens": 2491,
-      "outputTokens": 95,
-      "costUsd": 0.005932
-    },
-    {
-      "stage": "research",
-      "model": "claude-sonnet-5-5",
-      "ms": 3922,
-      "inputTokens": 2510,
-      "outputTokens": 99,
-      "costUsd": 0.00601
-    },
-    {
-      "stage": "research",
-      "model": "claude-sonnet-5-5",
-      "ms": 4220,
-      "inputTokens": 2498,
-      "outputTokens": 97,
-      "costUsd": 0.005966
-    },
-    {
-      "stage": "research",
-      "model": "claude-sonnet-5-5",
-      "ms": 4491,
-      "inputTokens": 2479,
-      "outputTokens": 85,
-      "costUsd": 0.005808
-    },
-    {
-      "stage": "research",
-      "model": "claude-sonnet-5-5",
-      "ms": 3071,
-      "inputTokens": 3337,
-      "outputTokens": 394,
-      "costUsd": 0.010614
-    },
-    {
-      "stage": "research",
-      "model": "claude-sonnet-5-5",
-      "ms": 6196,
-      "inputTokens": 6413,
-      "outputTokens": 1013,
-      "costUsd": 0.022956
-    },
-    {
-      "stage": "research",
-      "model": "claude-sonnet-5-5",
-      "ms": 6583,
-      "inputTokens": 4489,
-      "outputTokens": 1204,
-      "costUsd": 0.021018
-    },
-    {
-      "stage": "research",
-      "model": "claude-sonnet-5-5",
-      "ms": 7196,
-      "inputTokens": 7220,
-      "outputTokens": 1333,
-      "costUsd": 0.02777
-    },
-    {
-      "stage": "research",
-      "model": "claude-sonnet-5-5",
-      "ms": 8021,
-      "inputTokens": 15499,
-      "outputTokens": 1262,
-      "costUsd": 0.043618
-    },
-    {
-      "stage": "research",
-      "model": "claude-sonnet-5-5",
-      "ms": 8321,
-      "inputTokens": 14967,
-      "outputTokens": 1324,
-      "costUsd": 0.043174
-    },
-    {
-      "stage": "research",
-      "model": "claude-sonnet-5-5",
-      "ms": 9373,
-      "inputTokens": 6992,
-      "outputTokens": 1209,
-      "costUsd": 0.026074
+      "ms": 3659,
+      "inputTokens": 4089,
+      "outputTokens": 568,
+      "costUsd": 0.013858
     },
     {
       "stage": "verify",
       "model": "claude-sonnet-5-5",
-      "ms": 12763,
-      "inputTokens": 9637,
-      "outputTokens": 2067,
-      "costUsd": 0.039944
+      "ms": 2525,
+      "inputTokens": 2039,
+      "outputTokens": 228,
+      "costUsd": 0.006358
     },
     {
       "stage": "curate",
       "model": "claude-opus-5-5",
-      "ms": 17664,
-      "inputTokens": 7566,
-      "outputTokens": 1719,
-      "costUsd": 0.064644
+      "ms": 2634,
+      "inputTokens": 4139,
+      "outputTokens": 116,
+      "costUsd": 0.018876
     },
     {
       "stage": "write",
       "model": "claude-sonnet-5-5",
-      "ms": 30248,
-      "inputTokens": 5593,
-      "outputTokens": 4915,
-      "costUsd": 0.060336
+      "ms": 5356,
+      "inputTokens": 2172,
+      "outputTokens": 697,
+      "costUsd": 0.011314
     },
     {
       "stage": "verify",
       "model": "claude-sonnet-5-5",
-      "ms": 12011,
-      "inputTokens": 10791,
-      "outputTokens": 1850,
-      "costUsd": 0.040082
+      "ms": 3410,
+      "inputTokens": 2708,
+      "outputTokens": 327,
+      "costUsd": 0.008686
     }
   ],
   "gates": [
     {
       "name": "literal_quotes",
       "pass": true,
-      "detail": "37/37"
+      "detail": "3/3"
     },
     {
       "name": "supported_claims",
       "pass": true,
-      "detail": "27/37"
+      "detail": "3/3"
     },
     {
       "name": "verifier",
       "pass": false,
-      "detail": "5/11 (>= 50%)"
+      "detail": "0/1 (>= 50%)"
     },
     {
       "name": "volume",
       "pass": true,
-      "detail": "radar 2, state 3 (max 3)"
+      "detail": "radar 0, state 0 (max 3)"
     },
     {
       "name": "budget",
       "pass": true,
-      "detail": "0.444/2 USD"
+      "detail": "0.065/2 USD"
     }
   ],
   "rejected": [
     {
       "what": {
-        "fr": "Flint-interactive s'utilise dans un chat ou un canevas via Flint-MCP et MCP Apps ; l'agent peut générer une interaction_spec accompagnant la spécification de graphique Flint.",
-        "en": "Flint-interactive can be used in a chat or canvas environment through Flint-MCP and MCP Apps; the agent can generate an interaction_spec alongside the Flint chart spec."
+        "fr": "Latent Space",
+        "en": "Latent Space"
       },
-      "reason": "claim_unsupported",
-      "detail": "The quote only covers generating an interaction_spec and rendering the chart in conversation; it does not establish use in a chat or canvas through Flint-MCP and MCP Apps."
+      "reason": "feed_unreadable",
+      "detail": "redirected off-host to latent.space"
     },
     {
       "what": {
-        "fr": "Les utilisateurs définissent les interactions en associant des événements sémantiques à des opérateurs de mise à jour du graphique, comme set style, set annotation ou set viewport.",
-        "en": "Users specify interactions by mapping semantic events to chart update operators, such as set style, set annotation, or set viewport."
-      },
-      "reason": "claim_unsupported",
-      "detail": "The quote lists example operators but does not say users define interactions by mapping semantic events to these operators."
-    },
-    {
-      "what": {
-        "fr": "Les sessions d'entraînement (training sessions) de SageMaker AI sont en disponibilité générale ; elles s'ajoutent à la personnalisation de modèles serverless de SageMaker AI.",
-        "en": "SageMaker AI training sessions are generally available, expanding SageMaker AI serverless model customization."
-      },
-      "reason": "claim_unsupported",
-      "detail": "The quote says it is expanding something with general availability of training sessions, but does not name serverless model customization within the quote itself."
-    },
-    {
-      "what": {
-        "fr": "Le SDK Python SageMaker se pilote sous Linux ou macOS avec Python 3.10 à 3.12.",
-        "en": "The SageMaker Python SDK is installed on Linux or macOS with Python 3.10 to 3.12."
-      },
-      "reason": "claim_unsupported",
-      "detail": "The quote says to install the SDK on Linux or macOS with Python 3.10 to 3.12; the French says it is 'piloted' (se pilote) while the English says 'installed', so the versions differ."
-    },
-    {
-      "what": {
-        "fr": "Des agents d'IA ont permis d'identifier 841 modèles représentatifs couvrant l'éventail des architectures de modèles, pour régler et évaluer TorchNeuron.",
-        "en": "AI agents helped identify 841 representative models covering the full spectrum of model architectures, used to tune and benchmark TorchNeuron."
-      },
-      "reason": "claim_unsupported",
-      "detail": "The quote does not mention that the 841 models were used to tune and benchmark TorchNeuron, and the quote is cut off before AI agents are mentioned."
-    },
-    {
-      "what": {
-        "fr": "Dans des tests avec un grand modèle de langage réparti sur plusieurs accélérateurs, les optimisations de cache et de compilation partagée ont réduit d'environ un tiers le temps avant la première étape",
-        "en": "In tests with a large language model spread across accelerators, the caching and shared-compilation optimizations cut the time to the first training step by about a third."
-      },
-      "reason": "claim_unsupported",
-      "detail": "The quote says 'these optimizations' without naming caching and shared compilation."
-    },
-    {
-      "what": {
-        "fr": "Le mode optionnel « adaptive eager » de TorchNeuron regroupe et compile les opérations au lieu de les exécuter une par une, pour approcher les performances d'une exécution entièrement compilée.",
-        "en": "TorchNeuron's optional \"adaptive eager\" mode groups and compiles operations instead of executing them one by one, approaching fully compiled performance."
-      },
-      "reason": "claim_unsupported",
-      "detail": "The quote does not establish that the mode is optional or named 'adaptive eager', nor the contrast with executing operations one by one."
-    },
-    {
-      "what": {
-        "fr": "TorchNeuron convertit un graphe compilé en fichier exécutable NEFF (Neuron executable file format) et met chaque NEFF en cache, en mémoire et sur disque.",
-        "en": "TorchNeuron converts a compiled graph into an executable file called a NEFF (Neuron executable file format) and caches each NEFF, in memory and on disk."
-      },
-      "reason": "claim_unsupported",
-      "detail": "The quote covers in-memory and disk caches but not the conversion of a compiled graph into a NEFF or its definition."
-    },
-    {
-      "what": {
-        "fr": "Le modèle ForTy a identifié le bon type de forêt dans 90 % des cas et distingué forêt et non-forêt dans 95 % des cas, d'après une validation sur plus de 9 000 sites tirés au hasard.",
-        "en": "ForTy picked the right forest type 90% of the time and told forest from non-forest land 95% of the time, per validation against more than 9,000 randomly chosen sites."
-      },
-      "reason": "claim_unsupported",
-      "detail": "The quote does not mention validation against more than 9,000 randomly chosen sites."
-    },
-    {
-      "what": {
-        "fr": "La carte Forest Typology 2020 et la série temporelle sont disponibles gratuitement sur Google Earth Engine sous licence ouverte.",
-        "en": "The Forest Typology 2020 map and the new time series are freely available on Google Earth Engine under an open license."
-      },
-      "reason": "claim_unsupported",
-      "detail": "The quote is a fragment that does not name the Forest Typology 2020 map and time series as the freely available items."
-    },
-    {
-      "what": {
-        "fr": "Vulnérabilités PHP : une tentative d'exploitation quatre jours avant la divulgation",
-        "en": "PHP vulnerabilities: an exploitation attempt four days before disclosure"
+        "fr": "Ollama v0.40.10-rc0 met à jour les moteurs de rendu Gemma",
+        "en": "Ollama v0.40.10-rc0 updates the Gemma renderers"
       },
       "reason": "statement_unsupported",
-      "detail": "The final sentence, that waiting for an advisory may already be too late, is presented as an inference but the claims do not support it as a fact, and it adds an unsupported conclusion."
-    },
-    {
-      "what": {
-        "fr": "SageMaker AI : des sessions d'entraînement sans gestion de GPU",
-        "en": "SageMaker AI: training sessions without GPU management"
-      },
-      "reason": "statement_unsupported",
-      "detail": "The statement says billing by tokens changes how costs are estimated, and that the split leaves training logic to the team; this is analysis, but the claim the meter stopping 'changes cost estimation' is an assertion beyond the facts."
-    },
-    {
-      "what": {
-        "fr": "Anthropic donne le standard Agent Skills à l'Agentic AI Foundation",
-        "en": "Anthropic donates the Agent Skills standard to the Agentic AI Foundation"
-      },
-      "reason": "statement_unsupported",
-      "detail": "The claim that a shared foundation may reduce vendor dependence risk is an added assertion not in the cited facts."
-    },
-    {
-      "what": {
-        "fr": "Modal : un milliard de dollars de revenu annualisé, une capacité entièrement louée",
-        "en": "Modal: $1 billion annualized run rate, all capacity rented"
-      },
-      "reason": "statement_unsupported",
-      "detail": "The closing claim that serverless GPU offerings rest on long-term upfront commitments generalizes beyond Modal's facts."
-    },
-    {
-      "what": {
-        "fr": "ForTy 2020 : une carte mondiale des types de forêt à 10 mètres",
-        "en": "ForTy 2020: a global map of forest types at 10-meter resolution"
-      },
-      "reason": "statement_unsupported",
-      "detail": "The headline says 'global map ... at 10-meter resolution' fine, but the closing sentence characterizes it as an example of embeddings feeding a downstream classifier, which goes beyond the cited facts."
-    },
-    {
-      "what": {
-        "fr": "SageMaker AI training sessions",
-        "en": "SageMaker AI training sessions"
-      },
-      "reason": "statement_unsupported",
-      "detail": "The statement adds the 'only source is the vendor' and 'low-commitment pilot' judgments, and the 'essayer' recommendation is not grounded as such; the vendor-only-source assertion is an unsupported fact."
+      "detail": "The closing sentence claims that rendering order is part of model configuration and that explicit opt-in avoids changing the behavior of existing models, which goes beyond the cited claims; they only say the variant is opt-in and auto-detection is unchanged."
     }
   ],
   "toolCalls": [
     {
       "tool": "fetch_page",
-      "input": "https://simonwillison.net/2026/Oct/22/donating-agent-skills/",
+      "input": "https://github.com/ollama/ollama/releases/tag/v0.40.10-rc0",
       "ok": true,
-      "ms": 24,
-      "item": "https://simonwillison.net/2026/Oct/22/donating-agent-skills/"
-    },
-    {
-      "tool": "fetch_page",
-      "input": "https://www.latent.space/p/modal-d",
-      "ok": true,
-      "ms": 69,
-      "item": "https://www.latent.space/p/modal-d"
-    },
-    {
-      "tool": "fetch_page",
-      "input": "https://aws.amazon.com/blogs/machine-learning/announcing-new-ways-to-customize-models-with-sagemaker-ai-without-managing-gpus/",
-      "ok": true,
-      "ms": 82,
-      "item": "https://aws.amazon.com/blogs/machine-learning/announcing-new-ways-to-customize-models-with-sagemaker-ai-without-managing-gpus/"
-    },
-    {
-      "tool": "fetch_page",
-      "input": "https://www.amazon.science/blog/the-science-behind-torchneuron-amazons-new-pytorch-backend-for-aws-trainium-chips",
-      "ok": true,
-      "ms": 28,
-      "item": "https://www.amazon.science/blog/the-science-behind-torchneuron-amazons-new-pytorch-backend-for-aws-trainium-chips"
-    },
-    {
-      "tool": "fetch_page",
-      "input": "https://arstechnica.com/security/2026/10/hackers-got-a-four-day-head-start-on-epic-php2shell-vulnerability/",
-      "ok": true,
-      "ms": 77,
-      "item": "https://arstechnica.com/security/2026/10/hackers-got-a-four-day-head-start-on-epic-php2shell-vulnerability/"
-    },
-    {
-      "tool": "fetch_page",
-      "input": "https://www.microsoft.com/en-us/research/blog/flint-interactive-a-language-for-creating-interactive-data-visualizations/",
-      "ok": true,
-      "ms": 693,
-      "item": "https://www.microsoft.com/en-us/research/blog/flint-interactive-a-language-for-creating-interactive-data-visualizations/"
-    },
-    {
-      "tool": "fetch_page",
-      "input": "https://deepmind.google/blog/beyond-tree-cover-mapping-the-worlds-forest-types/",
-      "ok": true,
-      "ms": 227,
-      "item": "https://deepmind.google/blog/beyond-tree-cover-mapping-the-worlds-forest-types/"
+      "ms": 493,
+      "item": "https://github.com/ollama/ollama/releases/tag/v0.40.10-rc0"
     }
   ],
-  "costUsd": 0.44394609999999995
+  "costUsd": 0.06504769999999999
 }
