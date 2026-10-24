@@ -1,0 +1,296 @@
+{
+  "date": "2026-10-24",
+  "startedAt": "2026-10-24T08:55:35.250Z",
+  "durationMs": 61464,
+  "status": "rejected",
+  "counts": {
+    "collectes": 138,
+    "nouveaux": 17,
+    "retenus": 5,
+    "faitsProposes": 21,
+    "faitsCites": 21,
+    "faitsValides": 18,
+    "confirmationsCitees": 0,
+    "confirmationsValides": 0,
+    "sujetsRecoupes": 0,
+    "mouvementsRadar": 3
+  },
+  "stages": [
+    {
+      "stage": "triage",
+      "model": "claude-haiku-5-5",
+      "ms": 5420,
+      "inputTokens": 3463,
+      "outputTokens": 923,
+      "costUsd": 0.0008077999999999999
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1232,
+      "inputTokens": 2457,
+      "outputTokens": 76,
+      "costUsd": 0.005674
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1361,
+      "inputTokens": 2458,
+      "outputTokens": 72,
+      "costUsd": 0.005636
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1638,
+      "inputTokens": 2468,
+      "outputTokens": 77,
+      "costUsd": 0.005706
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1733,
+      "inputTokens": 2455,
+      "outputTokens": 74,
+      "costUsd": 0.00565
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1973,
+      "inputTokens": 2520,
+      "outputTokens": 109,
+      "costUsd": 0.00613
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 986,
+      "inputTokens": 2547,
+      "outputTokens": 10,
+      "costUsd": 0.005194
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4102,
+      "inputTokens": 4008,
+      "outputTokens": 717,
+      "costUsd": 0.015186
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 5654,
+      "inputTokens": 3709,
+      "outputTokens": 998,
+      "costUsd": 0.017398
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 7423,
+      "inputTokens": 5186,
+      "outputTokens": 1405,
+      "costUsd": 0.024422
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 9225,
+      "inputTokens": 14899,
+      "outputTokens": 1574,
+      "costUsd": 0.045538
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 7838,
+      "inputTokens": 6384,
+      "outputTokens": 1234,
+      "costUsd": 0.025108
+    },
+    {
+      "stage": "write",
+      "model": "claude-sonnet-5-5",
+      "ms": 20876,
+      "inputTokens": 4518,
+      "outputTokens": 3493,
+      "costUsd": 0.043966
+    },
+    {
+      "stage": "curate",
+      "model": "claude-opus-5-5",
+      "ms": 22808,
+      "inputTokens": 6489,
+      "outputTokens": 2592,
+      "costUsd": 0.077796
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 8476,
+      "inputTokens": 7883,
+      "outputTokens": 1262,
+      "costUsd": 0.028386
+    }
+  ],
+  "gates": [
+    {
+      "name": "literal_quotes",
+      "pass": true,
+      "detail": "21/21"
+    },
+    {
+      "name": "supported_claims",
+      "pass": true,
+      "detail": "18/21"
+    },
+    {
+      "name": "verifier",
+      "pass": false,
+      "detail": "1/8 (>= 50%)"
+    },
+    {
+      "name": "volume",
+      "pass": true,
+      "detail": "radar 3, state 1 (max 3)"
+    },
+    {
+      "name": "budget",
+      "pass": true,
+      "detail": "0.313/2 USD"
+    }
+  ],
+  "rejected": [
+    {
+      "what": {
+        "fr": "Latent Space",
+        "en": "Latent Space"
+      },
+      "reason": "feed_unreadable",
+      "detail": "redirected off-host to latent.space"
+    },
+    {
+      "what": {
+        "fr": "Ollama v0.40.10 ajoute Nemotron 3.5 Bolt E4B, un modèle vision-langage de NVIDIA, plus petit et basé sur Gemma 4, destiné aux conversations locales rapides, à la compréhension d'images et à l'usage d'",
+        "en": "Ollama v0.40.10 adds Nemotron 3.5 Bolt E4B, NVIDIA's smaller, Gemma 4-based vision-language model for fast local conversations, image understanding, and tool use."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not mention Ollama v0.40.10 adding the model, although the URL points to that release page, so the quote alone does not establish the addition."
+    },
+    {
+      "what": {
+        "fr": "MTRL est serverless : on choisit un modèle de base et le service provisionne l'infrastructure d'entraînement et d'échantillonnage ; chaque modèle est entraîné avec un adaptateur LoRA.",
+        "en": "MTRL is serverless: you pick a base model and the service provisions the training and sampling infrastructure, with each model trained using a LoRA adapter."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not mention LoRA adapters, so the claim goes beyond the quote."
+    },
+    {
+      "what": {
+        "fr": "La tarification MTRL se fait par million de jetons selon trois dimensions : prefill, sample et train.",
+        "en": "MTRL is priced per million tokens in three dimensions: prefill, sample and train."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote says pricing is per million tokens in three dimensions but does not name them prefill, sample and train."
+    },
+    {
+      "what": {
+        "fr": "Claude Code v2.1.310 : outil Monitor étendu et correctif sur les hooks sous Windows",
+        "en": "Claude Code v2.1.310: Monitor tool extended and a Windows hooks fix"
+      },
+      "reason": "statement_unsupported",
+      "detail": "The statement adds the recommendation that teams check their configuration and update, which is acceptable as analysis, but its claim that hooks are used as a guardrail is framed conditionally; however the headline and facts are covered, so the failure is the unsupported framing of the Windows fix as the only matter, which is not an issue; this is rejected under the doubt rule because the analysis implies a security guardrail failure not established by the claims."
+    },
+    {
+      "what": {
+        "fr": "Kimi K3.1 Pro : tarifs publiés, poids promis pour le 4 novembre",
+        "en": "Kimi K3.1 Pro: pricing published, weights promised by November 4"
+      },
+      "reason": "statement_unsupported",
+      "detail": "The statement asserts that until the weights are released the model can only be used through the API, which is a new fact not found in the cited claims."
+    },
+    {
+      "what": {
+        "fr": "Apprentissage par renforcement multi-tours sur SageMaker AI : un essai chiffré sur gpt-oss-20b",
+        "en": "Multi-turn reinforcement learning on SageMaker AI: a costed run on gpt-oss-20b"
+      },
+      "reason": "statement_unsupported",
+      "detail": "The statement says the guide gives an order of magnitude of cost and duration for a single run and calls it useful for budgeting, which is acceptable analysis, but the title says SageMaker AI and the claims do not state that the run was on SageMaker AI beyond the source title; also the claim of 'agent' redeploy is covered, yet the 'single run' characterization is not established by the claims."
+    },
+    {
+      "what": {
+        "fr": "Ollama v0.40.10 : Nemotron 3.5 Bolt E4B disponible",
+        "en": "Ollama v0.40.10: Nemotron 3.5 Bolt E4B available"
+      },
+      "reason": "statement_unsupported",
+      "detail": "The statement says the model can be tried locally with the draft already included, and the local run claim is not established by the cited facts, which only give the command."
+    },
+    {
+      "what": {
+        "fr": "Kimi K3.1 Pro",
+        "en": "Kimi K3.1 Pro"
+      },
+      "reason": "statement_unsupported",
+      "detail": "The statement adds that the facts come from a single secondary unconfirmed source, which is not a fact in the cited claims, although the attribution to Simon Willison is admitted."
+    },
+    {
+      "what": {
+        "fr": "MTRL",
+        "en": "MTRL"
+      },
+      "reason": "statement_unsupported",
+      "detail": "The statement says the result rests on a single run published by the vendor, which is not established by the cited claims."
+    },
+    {
+      "what": {
+        "fr": "Nemotron 3.5 Bolt E4B",
+        "en": "Nemotron 3.5 Bolt E4B"
+      },
+      "reason": "statement_unsupported",
+      "detail": "The statement says the facts give no quality results and that the model is easy to try, which goes beyond the cited claims and introduces new assertions."
+    }
+  ],
+  "toolCalls": [
+    {
+      "tool": "fetch_page",
+      "input": "https://openai.com/index/securing-our-frontier-model-training-environment",
+      "ok": false,
+      "detail": "HTTP 403",
+      "ms": 25,
+      "item": "https://openai.com/index/securing-our-frontier-model-training-environment"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://github.com/anthropics/claude-code/releases/tag/v2.1.310",
+      "ok": true,
+      "ms": 224,
+      "item": "https://github.com/anthropics/claude-code/releases/tag/v2.1.310"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://simonwillison.net/2026/Oct/23/kimi-k31-pro/",
+      "ok": true,
+      "ms": 25,
+      "item": "https://simonwillison.net/2026/Oct/23/kimi-k31-pro/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://github.com/ollama/ollama/releases/tag/v0.40.10",
+      "ok": true,
+      "ms": 6,
+      "item": "https://github.com/ollama/ollama/releases/tag/v0.40.10"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://aws.amazon.com/blogs/machine-learning/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-a-hands-on-guide/",
+      "ok": true,
+      "ms": 175,
+      "item": "https://aws.amazon.com/blogs/machine-learning/multi-turn-reinforcement-learning-on-amazon-sagemaker-ai-a-hands-on-guide/"
+    }
+  ],
+  "costUsd": 0.31259780000000004
+}
