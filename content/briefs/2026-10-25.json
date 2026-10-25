@@ -1,0 +1,100 @@
+{
+  "date": "2026-10-25",
+  "headline": {
+    "fr": "Ollama v0.40.11 : génération de parole sur macOS et famille de modèles d3 ; battledrones v14 : une carte à quatre joueurs conçue avec Claude Opus 5.5",
+    "en": "Ollama v0.40.11: speech generation on macOS and the d3 model family; battledrones v14: a four-player map built with Claude Opus 5.5"
+  },
+  "items": [
+    {
+      "title": {
+        "fr": "Ollama v0.40.11 : génération de parole sur macOS et famille de modèles d3",
+        "en": "Ollama v0.40.11: speech generation on macOS and the d3 model family"
+      },
+      "url": "https://github.com/ollama/ollama/releases/tag/v0.40.11",
+      "source": "Ollama (releases)",
+      "primary": true,
+      "summary": {
+        "fr": "Ollama peut désormais générer de la parole sur macOS. Les applications peuvent diffuser l'audio en flux via le point de terminaison /v1/audio/speech, compatible OpenAI. La famille de modèles d3, proposée en tailles 2B, 4B, 9B et 27B, apporte à Ollama les modèles de décision du vLLM Semantic Router.",
+        "en": "Ollama can now generate speech on macOS. Apps can stream audio through the OpenAI-compatible /v1/audio/speech endpoint. The d3 model family, available in 2B, 4B, 9B and 27B sizes, brings vLLM Semantic Router's decision models to Ollama."
+      },
+      "why": {
+        "fr": "Un point de terminaison compatible OpenAI permet, en principe, de brancher la synthèse vocale sur du code client existant sans réécriture, ce qui reste à vérifier au cas par cas.",
+        "en": "An OpenAI-compatible endpoint should in principle let you plug speech synthesis into existing client code without a rewrite, though that needs checking case by case."
+      },
+      "claims": [
+        {
+          "id": "0a4225397bdc-0",
+          "text": {
+            "fr": "Ollama peut désormais générer de la parole sur macOS.",
+            "en": "Ollama can now generate speech on macOS."
+          },
+          "quote": "Ollama can now generate speech on macOS.",
+          "url": "https://github.com/ollama/ollama/releases/tag/v0.40.11"
+        },
+        {
+          "id": "0a4225397bdc-1",
+          "text": {
+            "fr": "Les applications peuvent diffuser de l'audio en flux via le point de terminaison /v1/audio/speech, compatible OpenAI.",
+            "en": "Apps can stream audio through the OpenAI-compatible /v1/audio/speech endpoint."
+          },
+          "quote": "apps can stream audio through the OpenAI-compatible /v1/audio/speech endpoint.",
+          "url": "https://github.com/ollama/ollama/releases/tag/v0.40.11"
+        },
+        {
+          "id": "0a4225397bdc-2",
+          "text": {
+            "fr": "La famille de modèles d3 propose des tailles 2B, 4B, 9B et 27B.",
+            "en": "The d3 model family includes 2B, 4B, 9B, and 27B sizes."
+          },
+          "quote": "The family includes 2B, 4B, 9B, and 27B sizes.",
+          "url": "https://github.com/ollama/ollama/releases/tag/v0.40.11"
+        },
+        {
+          "id": "0a4225397bdc-3",
+          "text": {
+            "fr": "d3 apporte à Ollama les modèles de décision du vLLM Semantic Router.",
+            "en": "d3 brings vLLM Semantic Router's decision models to Ollama."
+          },
+          "quote": "d3 brings vLLM Semantic Router's decision models to Ollama.",
+          "url": "https://github.com/ollama/ollama/releases/tag/v0.40.11"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "battledrones v14 : une carte à quatre joueurs conçue avec Claude Opus 5.5",
+        "en": "battledrones v14: a four-player map built with Claude Opus 5.5"
+      },
+      "url": "https://simonwillison.net/2026/Oct/24/battledrones/",
+      "source": "Simon Willison",
+      "summary": {
+        "fr": "Claude Opus 5.5 a ajouté une carte nommée « Compass Rose » et modifié le code réseau WebSocket pour prendre en charge jusqu'à quatre joueurs sur cette carte, avec des liens de partage ou des QR codes. Les nouvelles équipes utilisent des robots violets et verts, qui rejoignent les designs bleu et rouge existants.",
+        "en": "Claude Opus 5.5 added a map called \"Compass Rose\" and modified the WebSockets multiplayer network code to support up to four players on that map, joining via share links or QR codes. The new teams use purple and green robots, joining the existing blue and red designs."
+      },
+      "why": {
+        "fr": "Cet exemple illustre une modification touchant à la fois le contenu et le code réseau d'un jeu multijoueur, ce qui intéresse ceux qui évaluent l'assistance au code sur des changements transversaux.",
+        "en": "This example shows a change spanning both content and the networking code of a multiplayer game, which is relevant to anyone assessing coding assistance on cross-cutting changes."
+      },
+      "claims": [
+        {
+          "id": "3812b4d599bb-1",
+          "text": {
+            "fr": "Claude Opus 5.5 a ajouté une carte nommée « Compass Rose » et modifié le code réseau WebSocket pour prendre en charge jusqu'à quatre joueurs sur cette carte, avec des liens de partage ou des QR codes.",
+            "en": "Claude Opus 5.5 added a map called \"Compass Rose\" and modified the WebSockets multiplayer network code to support up to four players on that map, joining via share links or QR codes."
+          },
+          "quote": "Claude Opus 5.5 added a new map called \"Compass Rose\" and modified the WebSockets multiplayer network code to support up to four players for that map, joining via share links or QR codes.",
+          "url": "https://simonwillison.net/2026/Oct/24/battledrones/"
+        },
+        {
+          "id": "3812b4d599bb-2",
+          "text": {
+            "fr": "Les nouvelles équipes utilisent des robots violets et verts, qui rejoignent les designs bleu et rouge existants.",
+            "en": "The new teams use purple and green robots, joining the existing blue and red designs."
+          },
+          "quote": "The new teams use robots themed in purple and green, joining the existing blue and red designs.",
+          "url": "https://simonwillison.net/2026/Oct/24/battledrones/"
+        }
+      ]
+    }
+  ]
+}

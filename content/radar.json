@@ -351,6 +351,76 @@
           "ring": "attendre"
         }
       ]
+    },
+    {
+      "name": "d3",
+      "ring": "evaluer",
+      "rationale": {
+        "fr": "D'après les notes de version d'Ollama, la famille de modèles d3 apporte à Ollama les modèles de décision du vLLM Semantic Router, en tailles 2B, 4B, 9B et 27B. C'est une option à suivre de près pour le routage, mais la seule source est Ollama et les faits ne donnent aucun résultat de qualité.",
+        "en": "According to Ollama's release notes, the d3 model family brings vLLM Semantic Router's decision models to Ollama, in 2B, 4B, 9B and 27B sizes. It is an option worth watching closely for routing, but the only source is Ollama and the facts give no quality results."
+      },
+      "evidence": [
+        {
+          "id": "0a4225397bdc-2",
+          "text": {
+            "fr": "La famille de modèles d3 propose des tailles 2B, 4B, 9B et 27B.",
+            "en": "The d3 model family includes 2B, 4B, 9B, and 27B sizes."
+          },
+          "quote": "The family includes 2B, 4B, 9B, and 27B sizes.",
+          "url": "https://github.com/ollama/ollama/releases/tag/v0.40.11"
+        },
+        {
+          "id": "0a4225397bdc-3",
+          "text": {
+            "fr": "d3 apporte à Ollama les modèles de décision du vLLM Semantic Router.",
+            "en": "d3 brings vLLM Semantic Router's decision models to Ollama."
+          },
+          "quote": "d3 brings vLLM Semantic Router's decision models to Ollama.",
+          "url": "https://github.com/ollama/ollama/releases/tag/v0.40.11"
+        }
+      ],
+      "since": "2026-10-25",
+      "history": [
+        {
+          "date": "2026-10-25",
+          "ring": "evaluer"
+        }
+      ]
+    },
+    {
+      "name": "Ollama",
+      "ring": "evaluer",
+      "rationale": {
+        "fr": "D'après les notes de version d'Ollama, Ollama peut désormais générer de la parole sur macOS, et les applications peuvent diffuser l'audio en flux via le point de terminaison /v1/audio/speech, compatible OpenAI. C'est une piste à suivre pour la synthèse vocale locale, en gardant à l'esprit que la seule source est Ollama et que seul macOS est mentionné.",
+        "en": "According to Ollama's release notes, Ollama can now generate speech on macOS, and apps can stream audio through the OpenAI-compatible /v1/audio/speech endpoint. It is a lead worth watching for local speech synthesis, bearing in mind that the only source is Ollama and that only macOS is mentioned."
+      },
+      "evidence": [
+        {
+          "id": "0a4225397bdc-0",
+          "text": {
+            "fr": "Ollama peut désormais générer de la parole sur macOS.",
+            "en": "Ollama can now generate speech on macOS."
+          },
+          "quote": "Ollama can now generate speech on macOS.",
+          "url": "https://github.com/ollama/ollama/releases/tag/v0.40.11"
+        },
+        {
+          "id": "0a4225397bdc-1",
+          "text": {
+            "fr": "Les applications peuvent diffuser de l'audio en flux via le point de terminaison /v1/audio/speech, compatible OpenAI.",
+            "en": "Apps can stream audio through the OpenAI-compatible /v1/audio/speech endpoint."
+          },
+          "quote": "apps can stream audio through the OpenAI-compatible /v1/audio/speech endpoint.",
+          "url": "https://github.com/ollama/ollama/releases/tag/v0.40.11"
+        }
+      ],
+      "since": "2026-10-25",
+      "history": [
+        {
+          "date": "2026-10-25",
+          "ring": "evaluer"
+        }
+      ]
     }
   ]
 }
