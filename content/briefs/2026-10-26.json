@@ -1,0 +1,144 @@
+{
+  "date": "2026-10-26",
+  "headline": {
+    "fr": "Les formateurs de sortie d'outils peuvent induire en erreur les agents et leurs vérificateurs ; Tampered ML : les modèles de pointe jugent mal la rigueur méthodologique ; Lois d'échelle pour la réécriture de données synthétiques sous contrainte de calcul",
+    "en": "Tool output formatters can mislead agents and their verifiers; Tampered ML: frontier models judge methodological soundness poorly; Scaling laws for synthetic data rewriting under compute constraints"
+  },
+  "items": [
+    {
+      "title": {
+        "fr": "Les formateurs de sortie d'outils peuvent induire en erreur les agents et leurs vérificateurs",
+        "en": "Tool output formatters can mislead agents and their verifiers"
+      },
+      "url": "https://arxiv.org/abs/2610.32110",
+      "source": "arXiv cs.AI",
+      "summary": {
+        "fr": "Dans un système RAG de production utilisé par le Pilsudski Institute à New York, des formateurs de sortie d'outils ont conduit un agent à donner des informations fausses ou incomplètes aux utilisateurs. Un prompt d'audit appliqué à OpenClaw et Hermes a trouvé des formateurs déformés dans les deux ; des PR ont été ouvertes et celle d'OpenClaw a déjà été fusionnée. Dans un test, des vérificateurs sont passés de l'acceptation de réponses incorrectes 90 fois sur 90 à leur rejet 90 fois sur 90.",
+        "en": "In a production RAG research system used by the Pilsudski Institute in New York, tool output formatters misled an agent into giving wrong or incomplete information to users. An audit prompt pointed at OpenClaw and Hermes found warped formatters in both; PRs were opened and the OpenClaw fix has already been merged. In one test, verifiers went from accepting incorrect answers 90 out of 90 times to rejecting them 90 out of 90 times."
+      },
+      "why": {
+        "fr": "Analyse : quand un agent donne une réponse erronée, la couche de mise en forme des sorties d'outils est un endroit à inspecter, au même titre que le modèle lui-même.",
+        "en": "Analysis: when an agent gives a wrong answer, the layer that formats tool outputs is a place to inspect, alongside the model itself."
+      },
+      "claims": [
+        {
+          "id": "7c4ecc392ed1-0",
+          "text": {
+            "fr": "Dans un test, les vérificateurs sont passés de l'acceptation de réponses incorrectes 90 fois sur 90 à leur rejet 90 fois sur 90.",
+            "en": "In one test, verifiers went from accepting incorrect answers 90 out of 90 times to rejecting them 90 out of 90 times."
+          },
+          "quote": "In one test, verifiers went from accepting incorrect answers 90 out of 90 times to rejecting them 90 out of 90 times.",
+          "url": "https://arxiv.org/abs/2610.32110"
+        },
+        {
+          "id": "7c4ecc392ed1-1",
+          "text": {
+            "fr": "Dans un système RAG de production utilisé par le Pilsudski Institute à New York, les formateurs de sortie des outils ont conduit un agent à donner des informations fausses ou incomplètes aux utilisateurs.",
+            "en": "In a production RAG research system used by the Pilsudski Institute in New York, tool output formatters misled an agent into giving wrong or incomplete information to users."
+          },
+          "quote": "We saw this happen in a production RAG research system used by the Pilsudski Institute in New York, where tool output formatters misled an agent into giving wrong or incomplete information to users.",
+          "url": "https://arxiv.org/abs/2610.32110"
+        },
+        {
+          "id": "7c4ecc392ed1-3",
+          "text": {
+            "fr": "Un prompt d'audit appliqué à OpenClaw et Hermes a trouvé des formateurs déformés dans les deux ; des PR ont été ouvertes pour les deux et celle d'OpenClaw a déjà été fusionnée.",
+            "en": "An audit prompt pointed at OpenClaw and Hermes found warped formatters in both; PRs were opened for both and the OpenClaw fix has already been merged."
+          },
+          "quote": "When pointed at OpenClaw and Hermes, two of the best-known open-source agentic systems, it found warped formatters in both. We opened PRs to fix both, and the OpenClaw fix has already been merged.",
+          "url": "https://arxiv.org/abs/2610.32110"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Tampered ML : les modèles de pointe jugent mal la rigueur méthodologique",
+        "en": "Tampered ML: frontier models judge methodological soundness poorly"
+      },
+      "url": "https://arxiv.org/abs/2610.32114",
+      "source": "arXiv cs.CL",
+      "summary": {
+        "fr": "Tampered ML compte 1 858 paires d'items, chacune associant une proposition d'expérience reconstruite à partir d'un article publié et un contrefactuel minimalement modifié qui introduit un défaut méthodologique ciblé. Les modèles de pointe font mieux que le hasard mais restent loin d'être fiables, Opus 5 atteignant 77,9 % de précision. Ils sont très sensibles à l'ordre de présentation et favorisent les conceptions défectueuses qui paraissent plus spécifiques, transparentes ou conventionnelles.",
+        "en": "Tampered ML contains 1,858 item-pairs, each consisting of an experiment proposal reconstructed from a published paper and a minimally edited counterfactual that introduces a targeted methodological flaw. Frontier models perform above chance but remain far from reliable, with Opus 5 achieving 77.9% accuracy. They are highly sensitive to the order of presentation and favor flawed designs that appear more specific, transparent, or conventional."
+      },
+      "why": {
+        "fr": "Analyse : utiliser un LLM pour relire des plans d'expériences suppose de ne pas se fier à un seul ordre de présentation, ni à l'apparence de précision d'une proposition.",
+        "en": "Analysis: using an LLM to review experiment plans means not relying on a single presentation order, nor on how precise a proposal looks."
+      },
+      "claims": [
+        {
+          "id": "177cb9c7a02c-0",
+          "text": {
+            "fr": "Tampered ML est un benchmark de 1 858 paires d'items, chacune associant une proposition d'expérience reconstruite à partir d'un article d'apprentissage automatique publié et un contrefactuel minimalement modifié qui introduit un défaut méthodologique ciblé.",
+            "en": "Tampered ML is a benchmark of 1,858 item-pairs, each consisting of an experiment proposal reconstructed from a published machine learning paper and a minimally edited counterfactual that introduces a targeted methodological flaw."
+          },
+          "quote": "we introduce Tampered ML, a benchmark of 1,858 item-pairs, each consisting of an experiment proposal reconstructed from a published machine learning paper and a minimally edited counterfactual that introduces a targeted methodological flaw",
+          "url": "https://arxiv.org/abs/2610.32114"
+        },
+        {
+          "id": "177cb9c7a02c-2",
+          "text": {
+            "fr": "Opus 5 atteint 77,9 % de précision ; les modèles de pointe font mieux que le hasard mais restent loin d'être fiables.",
+            "en": "Frontier models perform above chance but remain far from reliable, with Opus 5 achieving 77.9% accuracy."
+          },
+          "quote": "Frontier models perform above chance but remain far from reliable (with Opus 5 achieving 77.9% accuracy).",
+          "url": "https://arxiv.org/abs/2610.32114"
+        },
+        {
+          "id": "177cb9c7a02c-3",
+          "text": {
+            "fr": "Les modèles sont très sensibles à l'ordre de présentation et favorisent les conceptions défectueuses qui paraissent plus spécifiques, transparentes ou conventionnelles.",
+            "en": "Models are highly sensitive to the order of presentation and favor flawed designs that appear more specific, transparent, or conventional."
+          },
+          "quote": "They are highly sensitive to the order of presentation and favor flawed designs that appear more specific, transparent, or conventional.",
+          "url": "https://arxiv.org/abs/2610.32114"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Lois d'échelle pour la réécriture de données synthétiques sous contrainte de calcul",
+        "en": "Scaling laws for synthetic data rewriting under compute constraints"
+      },
+      "url": "https://arxiv.org/abs/2610.31867",
+      "source": "arXiv cs.LG",
+      "summary": {
+        "fr": "Dans le cadre limité en calcul, la fraction optimale estimée de réécritures passe de moins de 10 % à 3×10^18 FLOPs à 32 % à 10^22 FLOPs. La prévision de la loi d'échelle extrapole d'un facteur 33 en FLOPs pour entraîner un modèle de 22B paramètres, dont la perte finale est à moins de 1,1 % de la prédiction. Ce modèle obtient un meilleur BPB que son réécrivain sur plusieurs domaines web, avec un dixième du calcul d'entraînement du réécrivain.",
+        "en": "In the compute-limited setting, the estimated optimal rewrite fraction increases with compute, from under 10% at 3×10^18 FLOPs to 32% at 10^22 FLOPs. The scaling forecast extrapolates 33× in FLOPs to train a 22B-parameter model, whose final loss is within 1.1% of the prediction. This model achieves a better BPB than its rewriter on several web domains at one-tenth the rewriter's training compute."
+      },
+      "why": {
+        "fr": "Analyse : pour un budget de calcul donné, la part de données réécrites à viser n'est pas fixe, ce qui invite à la calibrer plutôt qu'à reprendre une proportion unique.",
+        "en": "Analysis: for a given compute budget, the rewrite share to aim for is not fixed, which suggests calibrating it rather than reusing a single proportion."
+      },
+      "claims": [
+        {
+          "id": "c88cf357225f-0",
+          "text": {
+            "fr": "Dans le cadre limité en calcul, la fraction optimale estimée de réécritures augmente avec le calcul, de moins de 10 % à 3×10^18 FLOPs à 32 % à 10^22 FLOPs.",
+            "en": "In the compute-limited setting, the estimated optimal rewrite fraction increases with compute, from under 10% at 3×10^18 FLOPs to 32% at 10^22 FLOPs."
+          },
+          "quote": "We find that the estimated optimal rewrite fraction increases with compute, from under $10\\%$ at $3\\times10^{18}$ FLOPs to $32\\%$ at $10^{22}$ FLOPs.",
+          "url": "https://arxiv.org/abs/2610.31867"
+        },
+        {
+          "id": "c88cf357225f-1",
+          "text": {
+            "fr": "La prévision de la loi d'échelle extrapole d'un facteur 33 en FLOPs pour entraîner un modèle de 22B paramètres, dont la perte finale est à moins de 1,1 % de la prédiction.",
+            "en": "The scaling forecast extrapolates 33× in FLOPs to train a 22B-parameter model, whose final loss is within 1.1% of the prediction."
+          },
+          "quote": "Our scaling forecast extrapolates $33\\times$ in FLOPs to train a 22B-parameter model, whose final loss is within $1.1\\%$ of our prediction.",
+          "url": "https://arxiv.org/abs/2610.31867"
+        },
+        {
+          "id": "c88cf357225f-2",
+          "text": {
+            "fr": "Ce modèle de 22B obtient un meilleur BPB que son réécrivain sur plusieurs domaines web, avec un dixième du calcul d'entraînement du réécrivain.",
+            "en": "This 22B model achieves a better BPB than its rewriter on several web domains at one-tenth the rewriter's training compute."
+          },
+          "quote": "This model achieves a better BPB than its rewriter on several web domains at one-tenth the rewriter's training compute.",
+          "url": "https://arxiv.org/abs/2610.31867"
+        }
+      ]
+    }
+  ]
+}
