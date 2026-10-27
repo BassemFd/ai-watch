@@ -421,6 +421,138 @@
           "ring": "evaluer"
         }
       ]
+    },
+    {
+      "name": "Prompt caching",
+      "ring": "essayer",
+      "rationale": {
+        "fr": "D'après AWS Machine Learning, GPT-6 Astra a coûté environ 62 % de moins en entrée qu'sans cache sur une charge de six tours. Les écritures en cache coûtent 1,25 fois le tarif d'entrée, le préfixe doit compter au moins 1 024 tokens, il reste réutilisable au moins 30 minutes, et la réutilisation exige le même modèle, le même compte AWS et la même Région. Cela justifie un pilote sur les agents multi-tours, mais ce chiffre ne vient que de cette seule publication.",
+        "en": "According to AWS Machine Learning, GPT-6 Astra had about 62 percent lower input cost than without caching on a six-turn workload. Cache writes cost 1.25 times the input rate, the prefix must have at least 1,024 tokens, it stays reusable for at least 30 minutes, and reuse requires the same model, AWS account and Region. This justifies a pilot for multi-turn agents, but the figure comes from this single publication only."
+      },
+      "evidence": [
+        {
+          "id": "d44490076cdc-0",
+          "text": {
+            "fr": "Un préfixe réutilisable doit contenir au moins 1 024 tokens pour être éligible au prompt caching.",
+            "en": "A cacheable prefix must contain at least 1,024 tokens to qualify for prompt caching."
+          },
+          "quote": "A cacheable prefix must contain at least 1,024 tokens.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/"
+        },
+        {
+          "id": "d44490076cdc-1",
+          "text": {
+            "fr": "Les préfixes mis en cache restent éligibles à la réutilisation pendant au moins 30 minutes après leur dernière écriture ou réutilisation réussie.",
+            "en": "Cached prefixes remain eligible for reuse for at least 30 minutes after their latest write or successful reuse."
+          },
+          "quote": "Cached prefixes remain eligible for reuse for at least 30 minutes after their latest write or successful reuse.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/"
+        },
+        {
+          "id": "d44490076cdc-2",
+          "text": {
+            "fr": "Les écritures dans le cache coûtent 1,25 fois le tarif normal d'entrée.",
+            "en": "Cache writes cost 1.25 times the normal input rate."
+          },
+          "quote": "Cache writes cost 1.25 times the normal input rate.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/"
+        },
+        {
+          "id": "d44490076cdc-3",
+          "text": {
+            "fr": "Sur une charge de travail de six tours, GPT-6 Astra a égalé le meilleur résultat implicite, avec environ 62 % de coût d'entrée en moins que sans cache.",
+            "en": "On a six-turn workload, GPT-6 Astra tied for the best implicit result, with about 62 percent lower input cost than running without caching."
+          },
+          "quote": "GPT-6 Astra tied for the best implicit result in this six-turn workload: about 62 percent lower input cost than running without caching.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/"
+        },
+        {
+          "id": "d44490076cdc-5",
+          "text": {
+            "fr": "La réutilisation d'un contenu en cache exige le même modèle, le même compte AWS et la même Région, ainsi qu'un préfixe correspondant disponible.",
+            "en": "Reuse of existing cache content requires the same model, AWS account, and Region, and an available matching prefix."
+          },
+          "quote": "Reuse of existing cache content requires the same model, AWS account, and Region, and an available matching prefix.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/"
+        }
+      ],
+      "since": "2026-10-27",
+      "history": [
+        {
+          "date": "2026-10-27",
+          "ring": "essayer"
+        }
+      ]
+    },
+    {
+      "name": "GPT-6.1 Terra",
+      "ring": "evaluer",
+      "rationale": {
+        "fr": "OpenAI présente GPT-6.1 Terra comme un modèle rapide et efficace, combinant raisonnement visuel détaillé et usage précis de l'ordinateur, et comme un net progrès par rapport à GPT-5.6 Terra, au prix de 1 $ par million de tokens en entrée et 5 $ en sortie. À suivre de près, car ces affirmations ne viennent que de l'éditeur, sans mesure indépendante.",
+        "en": "OpenAI presents GPT-6.1 Terra as a fast, efficient model combining detailed visual reasoning and precise computer use, and as a significant step up from GPT-5.6 Terra, priced at $1 per million input tokens and $5 per million output tokens. Worth watching closely, since these claims come only from the vendor, with no independent measurement."
+      },
+      "evidence": [
+        {
+          "id": "1758535ac6be-0",
+          "text": {
+            "fr": "GPT-6.1 Terra est tarifé à 1 $ par million de tokens en entrée et 5 $ par million en sortie.",
+            "en": "GPT-6.1 Terra is priced at $1 per million input tokens and $5 per million output tokens."
+          },
+          "quote": "GPT-6.1 Terra is priced at $1/million input tokens and $5/million output",
+          "url": "https://simonwillison.net/2026/Oct/26/gpt-61-terra/"
+        },
+        {
+          "id": "1758535ac6be-1",
+          "text": {
+            "fr": "OpenAI présente GPT-6.1 Terra comme un modèle rapide et efficace, qui combine raisonnement visuel détaillé et usage précis de l'ordinateur, avec une écriture plus claire et plus naturelle.",
+            "en": "OpenAI introduces GPT-6.1 Terra as a fast, efficient model combining detailed visual reasoning and precise computer use with clearer, more natural writing."
+          },
+          "quote": "We’re introducing GPT-6.1 Terra , a fast, efficient model that combines detailed visual reasoning and precise computer use alongside clearer, more natural writing.",
+          "url": "https://simonwillison.net/2026/Oct/26/gpt-61-terra/"
+        },
+        {
+          "id": "1758535ac6be-2",
+          "text": {
+            "fr": "Le billet décrit GPT-6.1 Terra comme un net progrès par rapport à GPT-5.6 Terra.",
+            "en": "The post describes GPT-6.1 Terra as a significant step up from GPT-5.6 Terra."
+          },
+          "quote": "A significant step up from GPT‑5.6 Terra, it excels at the communication and computer-based tasks that fill the workday",
+          "url": "https://simonwillison.net/2026/Oct/26/gpt-61-terra/"
+        }
+      ],
+      "since": "2026-10-27",
+      "history": [
+        {
+          "date": "2026-10-27",
+          "ring": "evaluer"
+        }
+      ]
+    },
+    {
+      "name": "Pocket TTS",
+      "ring": "evaluer",
+      "rationale": {
+        "fr": "D'après les notes de version v5.21.0 de Transformers, Pocket TTS est le modèle de synthèse vocale de 100M de paramètres de Kyutai, qui tourne plus vite que le temps réel sur CPU. C'est une piste à suivre pour la synthèse vocale sans GPU, mais la seule source est ces notes de version et les faits ne donnent aucun résultat de qualité.",
+        "en": "According to the Transformers v5.21.0 release notes, Pocket TTS is Kyutai's 100M-parameter text-to-speech model, which runs faster than real time on CPU. It is an option worth watching for GPU-free speech synthesis, but the only source is these release notes and the facts give no quality results."
+      },
+      "evidence": [
+        {
+          "id": "d697659cc377-5",
+          "text": {
+            "fr": "Pocket TTS est le modèle de synthèse vocale de 100M de paramètres de Kyutai, qui tourne plus vite que le temps réel sur CPU.",
+            "en": "Pocket TTS is Kyutai's 100M-parameter text-to-speech model, which runs faster than real time on CPU."
+          },
+          "quote": "Pocket TTS is Kyutai's 100M-parameter text-to-speech model, built as a Continuous Audio Language Model that runs faster than real time on CPU.",
+          "url": "https://github.com/huggingface/transformers/releases/tag/v5.21"
+        }
+      ],
+      "since": "2026-10-27",
+      "history": [
+        {
+          "date": "2026-10-27",
+          "ring": "evaluer"
+        }
+      ]
     }
   ]
 }

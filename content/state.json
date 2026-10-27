@@ -650,6 +650,81 @@
           "url": "https://arxiv.org/abs/2610.31867"
         }
       ]
+    },
+    {
+      "date": "2026-10-27",
+      "sectionId": "evals",
+      "text": {
+        "fr": "Une étude contrôlée (WhoWins, 1 080 scénarios, 14 modèles à poids ouverts de 0,6B à 122B) montre qu'au sein d'un même message, la première de deux lignes contradictoires l'emporte dans 72,42 à 94,66 % des cas.",
+        "en": "A controlled study (WhoWins, 1,080 scenarios, 14 open-weight models from 0.6B to 122B) shows that inside one message the first of two conflicting lines wins 72.42 to 94.66% of the time."
+      },
+      "evidence": [
+        {
+          "id": "c6f9af02542a-0",
+          "text": {
+            "fr": "WhoWins comprend 1 080 scénarios notés par code, répartis en cinq types de tâches, chacun avec jusqu'à cinq instructions mutuellement exclusives.",
+            "en": "WhoWins consists of 1,080 code-scored scenarios in five task types, each with up to five mutually exclusive instructions."
+          },
+          "quote": "we build WhoWins, 1,080 code-scored scenarios in five task types, each with up to five mutually exclusive instructions",
+          "url": "https://arxiv.org/abs/2610.33201"
+        },
+        {
+          "id": "c6f9af02542a-1",
+          "text": {
+            "fr": "L'étude porte sur 14 modèles à poids ouverts (0,6B à 122B, raisonnement désactivé et activé), soit 1 887 356 réponses notées.",
+            "en": "The study covers 14 open-weight models (0.6B to 122B, thinking off and on) over 1,887,356 scored replies."
+          },
+          "quote": "we study 14 open-weight models (0.6B to 122B, thinking off and on) over 1,887,356 scored replies",
+          "url": "https://arxiv.org/abs/2610.33201"
+        },
+        {
+          "id": "c6f9af02542a-2",
+          "text": {
+            "fr": "Au sein d'un même message, la première de deux lignes contradictoires l'emporte dans 72,42 à 94,66 % des cas ; entre messages, elle est retenue dans 22,95 à 62,65 % des cas.",
+            "en": "Inside one message the first of two conflicting lines wins 72.42 to 94.66% of the time, and across messages it keeps 22.95 to 62.65%."
+          },
+          "quote": "Inside one message the first of two conflicting lines wins 72.42 to 94.66%, and across messages it keeps 22.95 to 62.65%.",
+          "url": "https://arxiv.org/abs/2610.33201"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-27",
+      "sectionId": "outils",
+      "text": {
+        "fr": "Sur Amazon Bedrock, avec une charge de six tours, GPT-6 Astra a égalé le meilleur résultat implicite en réduisant d'environ 62 % le coût d'entrée par rapport à une exécution sans cache.",
+        "en": "On Amazon Bedrock, on a six-turn workload, GPT-6 Astra tied for the best implicit result with about 62 percent lower input cost than running without caching."
+      },
+      "evidence": [
+        {
+          "id": "d44490076cdc-3",
+          "text": {
+            "fr": "Sur une charge de travail de six tours, GPT-6 Astra a égalé le meilleur résultat implicite, avec environ 62 % de coût d'entrée en moins que sans cache.",
+            "en": "On a six-turn workload, GPT-6 Astra tied for the best implicit result, with about 62 percent lower input cost than running without caching."
+          },
+          "quote": "GPT-6 Astra tied for the best implicit result in this six-turn workload: about 62 percent lower input cost than running without caching.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-27",
+      "sectionId": "open",
+      "text": {
+        "fr": "GHARP, une méthode d'animation de têtes gaussiennes, atteint un état de l'art en qualité sur le benchmark Ava-256, jusqu'à 13 fois plus vite sur GPU A100 et avec 8 fois moins de gaussiennes.",
+        "en": "GHARP, a Gaussian head animation method, achieves state-of-the-art quality on the Ava-256 benchmark, running up to 13× faster on an A100 GPU with 8× fewer Gaussians."
+      },
+      "evidence": [
+        {
+          "id": "4cd82f931931-4",
+          "text": {
+            "fr": "GHARP atteint un état de l'art en qualité sur le benchmark Ava-256, avec une exécution jusqu'à 13 fois plus rapide sur GPU A100 et 8 fois moins de gaussiennes.",
+            "en": "GHARP achieves state-of-the-art quality on the Ava-256 benchmark while running up to 13× faster on an A100 GPU with 8× fewer Gaussians."
+          },
+          "quote": "Our method achieves state-of-the-art quality on the Ava-256 benchmark while running up to 13× faster on an A100 GPU with 8× fewer Gaussians.",
+          "url": "https://machinelearning.apple.com/research/gharp-head-animation"
+        }
+      ]
     }
   ]
 }

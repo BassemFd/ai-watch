@@ -1,0 +1,229 @@
+{
+  "date": "2026-10-27",
+  "headline": {
+    "fr": "OpenAI présente GPT-6.1 Terra ; Prompt caching des modèles OpenAI sur Amazon Bedrock ; GHARP : animation de têtes gaussiennes en temps réel ; Transformers v5.21.0 : parallélisme tenseur et FP8",
+    "en": "OpenAI introduces GPT-6.1 Terra; Prompt caching for OpenAI models on Amazon Bedrock; GHARP: real-time Gaussian head animation; Transformers v5.21.0: tensor parallelism and FP8"
+  },
+  "items": [
+    {
+      "title": {
+        "fr": "OpenAI présente GPT-6.1 Terra",
+        "en": "OpenAI introduces GPT-6.1 Terra"
+      },
+      "url": "https://openai.com/index/introducing-gpt-6-1-terra",
+      "source": "OpenAI",
+      "primary": true,
+      "summary": {
+        "fr": "OpenAI présente GPT-6.1 Terra comme un modèle rapide et efficace, qui combine raisonnement visuel détaillé et usage précis de l'ordinateur, avec une écriture plus claire et plus naturelle. Le billet le décrit comme un net progrès par rapport à GPT-5.6 Terra. Il est tarifé à 1 $ par million de tokens en entrée et 5 $ par million en sortie.",
+        "en": "OpenAI introduces GPT-6.1 Terra as a fast, efficient model combining detailed visual reasoning and precise computer use with clearer, more natural writing. The post describes it as a significant step up from GPT-5.6 Terra. It is priced at $1 per million input tokens and $5 per million output tokens."
+      },
+      "why": {
+        "fr": "Analyse : ces éléments sont des affirmations d'OpenAI et un tarif ; le gain réel par rapport à GPT-5.6 Terra reste à mesurer sur vos propres charges de travail.",
+        "en": "Analysis: these are OpenAI's own claims plus a price list; the actual gain over GPT-5.6 Terra remains to be measured on your own workloads."
+      },
+      "claims": [
+        {
+          "id": "1758535ac6be-0",
+          "text": {
+            "fr": "GPT-6.1 Terra est tarifé à 1 $ par million de tokens en entrée et 5 $ par million en sortie.",
+            "en": "GPT-6.1 Terra is priced at $1 per million input tokens and $5 per million output tokens."
+          },
+          "quote": "GPT-6.1 Terra is priced at $1/million input tokens and $5/million output",
+          "url": "https://simonwillison.net/2026/Oct/26/gpt-61-terra/"
+        },
+        {
+          "id": "1758535ac6be-1",
+          "text": {
+            "fr": "OpenAI présente GPT-6.1 Terra comme un modèle rapide et efficace, qui combine raisonnement visuel détaillé et usage précis de l'ordinateur, avec une écriture plus claire et plus naturelle.",
+            "en": "OpenAI introduces GPT-6.1 Terra as a fast, efficient model combining detailed visual reasoning and precise computer use with clearer, more natural writing."
+          },
+          "quote": "We’re introducing GPT-6.1 Terra , a fast, efficient model that combines detailed visual reasoning and precise computer use alongside clearer, more natural writing.",
+          "url": "https://simonwillison.net/2026/Oct/26/gpt-61-terra/"
+        },
+        {
+          "id": "1758535ac6be-2",
+          "text": {
+            "fr": "Le billet décrit GPT-6.1 Terra comme un net progrès par rapport à GPT-5.6 Terra.",
+            "en": "The post describes GPT-6.1 Terra as a significant step up from GPT-5.6 Terra."
+          },
+          "quote": "A significant step up from GPT‑5.6 Terra, it excels at the communication and computer-based tasks that fill the workday",
+          "url": "https://simonwillison.net/2026/Oct/26/gpt-61-terra/"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Prompt caching des modèles OpenAI sur Amazon Bedrock",
+        "en": "Prompt caching for OpenAI models on Amazon Bedrock"
+      },
+      "url": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/",
+      "source": "AWS Machine Learning",
+      "primary": true,
+      "summary": {
+        "fr": "Un préfixe doit contenir au moins 1 024 tokens pour être éligible au cache, et il reste réutilisable au moins 30 minutes après sa dernière écriture ou réutilisation réussie. Les écritures coûtent 1,25 fois le tarif normal d'entrée, et la réutilisation exige le même modèle, le même compte AWS et la même Région. Sur une charge de six tours, GPT-6 Astra a égalé le meilleur résultat implicite, avec environ 62 % de coût d'entrée en moins que sans cache.",
+        "en": "A prefix must contain at least 1,024 tokens to qualify for caching, and it stays reusable for at least 30 minutes after its latest write or successful reuse. Writes cost 1.25 times the normal input rate, and reuse requires the same model, AWS account and Region. On a six-turn workload, GPT-6 Astra tied for the best implicit result, with about 62 percent lower input cost than running without caching."
+      },
+      "why": {
+        "fr": "Analyse : le seuil de 1 024 tokens, la surcote d'écriture et les conditions de réutilisation font de la structure des prompts d'un agent un levier de coût à concevoir explicitement.",
+        "en": "Analysis: the 1,024-token threshold, the write premium and the reuse conditions make an agent's prompt structure a cost lever that has to be designed deliberately."
+      },
+      "claims": [
+        {
+          "id": "d44490076cdc-0",
+          "text": {
+            "fr": "Un préfixe réutilisable doit contenir au moins 1 024 tokens pour être éligible au prompt caching.",
+            "en": "A cacheable prefix must contain at least 1,024 tokens to qualify for prompt caching."
+          },
+          "quote": "A cacheable prefix must contain at least 1,024 tokens.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/"
+        },
+        {
+          "id": "d44490076cdc-1",
+          "text": {
+            "fr": "Les préfixes mis en cache restent éligibles à la réutilisation pendant au moins 30 minutes après leur dernière écriture ou réutilisation réussie.",
+            "en": "Cached prefixes remain eligible for reuse for at least 30 minutes after their latest write or successful reuse."
+          },
+          "quote": "Cached prefixes remain eligible for reuse for at least 30 minutes after their latest write or successful reuse.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/"
+        },
+        {
+          "id": "d44490076cdc-2",
+          "text": {
+            "fr": "Les écritures dans le cache coûtent 1,25 fois le tarif normal d'entrée.",
+            "en": "Cache writes cost 1.25 times the normal input rate."
+          },
+          "quote": "Cache writes cost 1.25 times the normal input rate.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/"
+        },
+        {
+          "id": "d44490076cdc-3",
+          "text": {
+            "fr": "Sur une charge de travail de six tours, GPT-6 Astra a égalé le meilleur résultat implicite, avec environ 62 % de coût d'entrée en moins que sans cache.",
+            "en": "On a six-turn workload, GPT-6 Astra tied for the best implicit result, with about 62 percent lower input cost than running without caching."
+          },
+          "quote": "GPT-6 Astra tied for the best implicit result in this six-turn workload: about 62 percent lower input cost than running without caching.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/"
+        },
+        {
+          "id": "d44490076cdc-5",
+          "text": {
+            "fr": "La réutilisation d'un contenu en cache exige le même modèle, le même compte AWS et la même Région, ainsi qu'un préfixe correspondant disponible.",
+            "en": "Reuse of existing cache content requires the same model, AWS account, and Region, and an available matching prefix."
+          },
+          "quote": "Reuse of existing cache content requires the same model, AWS account, and Region, and an available matching prefix.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "GHARP : animation de têtes gaussiennes en temps réel",
+        "en": "GHARP: real-time Gaussian head animation"
+      },
+      "url": "https://machinelearning.apple.com/research/gharp-head-animation",
+      "source": "Apple Machine Learning Research",
+      "primary": true,
+      "summary": {
+        "fr": "GHARP sépare le problème en une étape d'identité, construite hors ligne, et une étape d'animation, qui prédit à l'exécution des résidus dépendant de l'expression avec un réseau léger optimisé pour les appareils mobiles. Il fusionne plusieurs vues d'entrée en une représentation gaussienne canonique compacte de taille fixe. Il atteint un état de l'art en qualité sur le benchmark Ava-256, jusqu'à 13 fois plus vite sur GPU A100 et avec 8 fois moins de gaussiennes.",
+        "en": "GHARP splits the problem into an identity stage built offline and an animation stage that predicts expression-dependent residuals at runtime with a lightweight network optimized for mobile devices. It fuses multiple input views into a compact, fixed-size canonical Gaussian representation. It achieves state-of-the-art quality on the Ava-256 benchmark, running up to 13× faster on an A100 GPU with 8× fewer Gaussians."
+      },
+      "why": {
+        "fr": "Analyse : la séparation entre un calcul d'identité hors ligne et un réseau d'animation léger est un schéma à considérer pour les avatars qui doivent tourner sur appareil.",
+        "en": "Analysis: splitting an offline identity computation from a lightweight animation network is a pattern worth considering for avatars that must run on-device."
+      },
+      "claims": [
+        {
+          "id": "4cd82f931931-0",
+          "text": {
+            "fr": "GHARP sépare le problème en une étape d'identité, qui construit hors ligne une représentation de la géométrie et de l'apparence du sujet, et une étape d'animation, qui prédit à l'exécution des résidus dépendant de l'expression.",
+            "en": "GHARP splits the problem into an identity stage that builds a representation of the subject's geometry and appearance offline, and an animation stage that predicts expression-dependent residuals at runtime."
+          },
+          "quote": "We decouple the problem into an identity stage that builds a representation of the subject’s geometry and appearance offline, and an animation stage that predicts expression-dependent residuals on top of it at runtime.",
+          "url": "https://machinelearning.apple.com/research/gharp-head-animation"
+        },
+        {
+          "id": "4cd82f931931-1",
+          "text": {
+            "fr": "L'étape d'animation de GHARP utilise un réseau léger, optimisé pour les appareils mobiles.",
+            "en": "GHARP's animation stage runs a lightweight network optimized for mobile devices."
+          },
+          "quote": "the animation stage runs a lightweight network, optimized for mobile devices",
+          "url": "https://machinelearning.apple.com/research/gharp-head-animation"
+        },
+        {
+          "id": "4cd82f931931-2",
+          "text": {
+            "fr": "GHARP fusionne plusieurs vues d'entrée en une représentation gaussienne canonique compacte de taille fixe.",
+            "en": "GHARP fuses multiple input views into a compact, fixed-size canonical Gaussian representation."
+          },
+          "quote": "allowing fusion of multiple input views into a compact, fixed-size canonical Gaussian representation",
+          "url": "https://machinelearning.apple.com/research/gharp-head-animation"
+        },
+        {
+          "id": "4cd82f931931-4",
+          "text": {
+            "fr": "GHARP atteint un état de l'art en qualité sur le benchmark Ava-256, avec une exécution jusqu'à 13 fois plus rapide sur GPU A100 et 8 fois moins de gaussiennes.",
+            "en": "GHARP achieves state-of-the-art quality on the Ava-256 benchmark while running up to 13× faster on an A100 GPU with 8× fewer Gaussians."
+          },
+          "quote": "Our method achieves state-of-the-art quality on the Ava-256 benchmark while running up to 13× faster on an A100 GPU with 8× fewer Gaussians.",
+          "url": "https://machinelearning.apple.com/research/gharp-head-animation"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Transformers v5.21.0 : parallélisme tenseur et FP8",
+        "en": "Transformers v5.21.0: tensor parallelism and FP8"
+      },
+      "url": "https://github.com/huggingface/transformers/releases/tag/v5.21",
+      "source": "Transformers (releases)",
+      "primary": true,
+      "summary": {
+        "fr": "Le parallélisme tenseur dispose d'un style dédié aux embeddings et shard par défaut les embeddings d'entrée de tous les modèles ; ColwiseParallel et RowwiseParallel ne s'appliquent plus qu'aux couches linéaires. Chaque plan TP et EP pour MoE shard désormais ses experts, ce qu'un nouveau test impose. FineGrainedFP8Config gagne une option expert_dtype (\"fp8\" par défaut, ou \"fp4\"), et la version ajoute Pocket TTS, le modèle de synthèse vocale de 100M de paramètres de Kyutai.",
+        "en": "Tensor parallelism now has a dedicated embedding style and shards every model's input embeddings by default; ColwiseParallel and RowwiseParallel now apply only to linear layers. Every MoE TP and EP plan now shards its experts, which a new test enforces. FineGrainedFP8Config gains an expert_dtype option (\"fp8\" by default, or \"fp4\"), and the release adds Pocket TTS, Kyutai's 100M-parameter text-to-speech model."
+      },
+      "why": {
+        "fr": "Analyse : le changement de comportement par défaut des embeddings en parallélisme tenseur mérite une vérification avant de mettre à jour une configuration multi-GPU existante.",
+        "en": "Analysis: the new default for embeddings under tensor parallelism is worth checking before upgrading an existing multi-GPU setup."
+      },
+      "claims": [
+        {
+          "id": "d697659cc377-1",
+          "text": {
+            "fr": "Le parallélisme tenseur dispose désormais d'un style dédié aux embeddings et shard par défaut les embeddings d'entrée de tous les modèles ; ColwiseParallel et RowwiseParallel ne s'appliquent plus qu'aux couches linéaires.",
+            "en": "Tensor parallelism now has a dedicated embedding style and shards every model's input embeddings by default; ColwiseParallel and RowwiseParallel now apply only to linear layers."
+          },
+          "quote": "Tensor parallelism now has a dedicated embedding style, shards every model's input embeddings by default, and supports widths that aren't divisible by the TP size, so ColwiseParallel and RowwiseParallel now apply only to linear layers",
+          "url": "https://github.com/huggingface/transformers/releases/tag/v5.21"
+        },
+        {
+          "id": "d697659cc377-2",
+          "text": {
+            "fr": "Chaque plan TP et EP pour MoE shard désormais ses experts, et un nouveau test test_moe_parallel_plans_shard_experts l'impose.",
+            "en": "Every MoE TP and EP plan now shards its experts, and a new test_moe_parallel_plans_shard_experts test enforces this."
+          },
+          "quote": "Every MoE TP and EP plan now shards its experts, so models no longer keep all experts on every rank, and a new test_moe_parallel_plans_shard_experts test enforces this",
+          "url": "https://github.com/huggingface/transformers/releases/tag/v5.21"
+        },
+        {
+          "id": "d697659cc377-3",
+          "text": {
+            "fr": "FineGrainedFP8Config gagne une option expert_dtype (\"fp8\" par défaut, ou \"fp4\").",
+            "en": "FineGrainedFP8Config gains an expert_dtype option (\"fp8\" by default, or \"fp4\")."
+          },
+          "quote": "FineGrainedFP8Config gains an expert_dtype option (\"fp8\" by default, or \"fp4\")",
+          "url": "https://github.com/huggingface/transformers/releases/tag/v5.21"
+        },
+        {
+          "id": "d697659cc377-5",
+          "text": {
+            "fr": "Pocket TTS est le modèle de synthèse vocale de 100M de paramètres de Kyutai, qui tourne plus vite que le temps réel sur CPU.",
+            "en": "Pocket TTS is Kyutai's 100M-parameter text-to-speech model, which runs faster than real time on CPU."
+          },
+          "quote": "Pocket TTS is Kyutai's 100M-parameter text-to-speech model, built as a Continuous Audio Language Model that runs faster than real time on CPU.",
+          "url": "https://github.com/huggingface/transformers/releases/tag/v5.21"
+        }
+      ]
+    }
+  ]
+}

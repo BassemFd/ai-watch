@@ -1,0 +1,240 @@
+{
+  "date": "2026-10-27",
+  "startedAt": "2026-10-27T09:51:54.111Z",
+  "durationMs": 68197,
+  "status": "published",
+  "counts": {
+    "collectes": 195,
+    "nouveaux": 57,
+    "retenus": 5,
+    "faitsProposes": 25,
+    "faitsCites": 25,
+    "faitsValides": 23,
+    "confirmationsCitees": 0,
+    "confirmationsValides": 0,
+    "sujetsRecoupes": 0,
+    "mouvementsRadar": 3,
+    "publies": 11
+  },
+  "stages": [
+    {
+      "stage": "triage",
+      "model": "claude-haiku-5-5",
+      "ms": 8371,
+      "inputTokens": 11073,
+      "outputTokens": 1693,
+      "costUsd": 0.0019538
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1368,
+      "inputTokens": 2457,
+      "outputTokens": 73,
+      "costUsd": 0.005644
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1397,
+      "inputTokens": 2473,
+      "outputTokens": 65,
+      "costUsd": 0.005596
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1784,
+      "inputTokens": 2516,
+      "outputTokens": 144,
+      "costUsd": 0.006472
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 2176,
+      "inputTokens": 2482,
+      "outputTokens": 71,
+      "costUsd": 0.005674
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 2304,
+      "inputTokens": 2530,
+      "outputTokens": 115,
+      "costUsd": 0.00621
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 3860,
+      "inputTokens": 3910,
+      "outputTokens": 590,
+      "costUsd": 0.01372
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 5858,
+      "inputTokens": 4486,
+      "outputTokens": 987,
+      "costUsd": 0.018842
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 5709,
+      "inputTokens": 3939,
+      "outputTokens": 1003,
+      "costUsd": 0.017908
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 7511,
+      "inputTokens": 14056,
+      "outputTokens": 1311,
+      "costUsd": 0.041222
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 7813,
+      "inputTokens": 13233,
+      "outputTokens": 1384,
+      "costUsd": 0.040306
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 7679,
+      "inputTokens": 6988,
+      "outputTokens": 1265,
+      "costUsd": 0.026626
+    },
+    {
+      "stage": "curate",
+      "model": "claude-opus-5-5",
+      "ms": 17820,
+      "inputTokens": 7469,
+      "outputTokens": 1802,
+      "costUsd": 0.065916
+    },
+    {
+      "stage": "write",
+      "model": "claude-sonnet-5-5",
+      "ms": 25817,
+      "inputTokens": 5113,
+      "outputTokens": 4490,
+      "costUsd": 0.055126
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 8837,
+      "inputTokens": 11136,
+      "outputTokens": 1484,
+      "costUsd": 0.037112
+    }
+  ],
+  "gates": [
+    {
+      "name": "literal_quotes",
+      "pass": true,
+      "detail": "25/25"
+    },
+    {
+      "name": "supported_claims",
+      "pass": true,
+      "detail": "23/25"
+    },
+    {
+      "name": "verifier",
+      "pass": true,
+      "detail": "11/11 (>= 50%)"
+    },
+    {
+      "name": "volume",
+      "pass": true,
+      "detail": "radar 3, state 3 (max 3)"
+    },
+    {
+      "name": "budget",
+      "pass": true,
+      "detail": "0.348/2 USD"
+    }
+  ],
+  "rejected": [
+    {
+      "what": {
+        "fr": "Latent Space",
+        "en": "Latent Space"
+      },
+      "reason": "feed_unreadable",
+      "detail": "redirected off-host to latent.space"
+    },
+    {
+      "what": {
+        "fr": "Transformers v5.21.0 ajoute un backend « fp8 » à QuantizedCache, qui stocke les états KV en torch.float8_e4m3fn avec une seule échelle par tenseur.",
+        "en": "Transformers v5.21.0 adds an \"fp8\" backend to QuantizedCache that stores KV states in torch.float8_e4m3fn with a single scale per tensor."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not say this was added in v5.21.0 specifically beyond the release page, but it does match the backend details; the version attribution is only implied by the URL, which cannot be used as evidence."
+    },
+    {
+      "what": {
+        "fr": "Le modèle Flint route chaque token vers 6 experts sur 256 par score sigmoïde et ajoute un expert partagé non gaté.",
+        "en": "In the Flint model, each sparse layer routes a token to 6 of 256 experts by sigmoid score and adds an ungated shared expert."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not mention the Flint model, so the attribution to it is not established by the quote alone."
+    }
+  ],
+  "toolCalls": [
+    {
+      "tool": "fetch_page",
+      "input": "https://arxiv.org/abs/2610.33201",
+      "ok": true,
+      "ms": 105,
+      "item": "https://arxiv.org/abs/2610.33201"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://openai.com/index/introducing-gpt-6-1-terra",
+      "ok": false,
+      "detail": "HTTP 403",
+      "ms": 37,
+      "item": "https://openai.com/index/introducing-gpt-6-1-terra"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://simonwillison.net/2026/Oct/26/gpt-61-terra/",
+      "ok": true,
+      "ms": 38,
+      "item": "https://openai.com/index/introducing-gpt-6-1-terra"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://github.com/huggingface/transformers/releases/tag/v5.21",
+      "ok": true,
+      "ms": 683,
+      "item": "https://github.com/huggingface/transformers/releases/tag/v5.21"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://machinelearning.apple.com/research/gharp-head-animation",
+      "ok": true,
+      "ms": 57,
+      "item": "https://machinelearning.apple.com/research/gharp-head-animation"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/",
+      "ok": true,
+      "ms": 124,
+      "item": "https://aws.amazon.com/blogs/machine-learning/groundhog-day-for-ai-agents-prompt-caching-patterns-for-using-openai-models-on-amazon-bedrock/"
+    }
+  ],
+  "costUsd": 0.3483278
+}
