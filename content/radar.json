@@ -553,6 +553,50 @@
           "ring": "evaluer"
         }
       ]
+    },
+    {
+      "name": "SageMaker serverless fine-tuning",
+      "ring": "essayer",
+      "rationale": {
+        "fr": "D'après AWS Machine Learning, un Qwen3-1.7B affiné atteint 0,911 de macro-F1 sur un triage d'alarmes en périphérie (320 cas de test), devant toutes les références frontier. Son entraînement sur le fine-tuning serverless de SageMaker a pris environ 32 minutes pour environ 20 à 25 $, et un Qwen3-14B affiné dépasse Claude Opus 4.7 de +0,35 de macro-F1 pour un coût par 1 000 réponses environ 49 fois inférieur (0,60 $ contre 29,26 $). Un pilote se justifie sur des tâches ciblées, mais ces résultats portent sur une seule tâche et ne viennent que de cette publication.",
+        "en": "According to AWS Machine Learning, a fine-tuned Qwen3-1.7B reaches 0.911 macro-F1 on edge alarm triage (320 test cases), ahead of every frontier baseline. Training it on SageMaker serverless fine-tuning took about 32 minutes for roughly $20–$25, and a fine-tuned Qwen3-14B beats Claude Opus 4.7 by +0.35 macro-F1 at about 49× lower cost per 1,000 answers ($0.60 compared to $29.26). A pilot is warranted for targeted tasks, but these results cover a single task and come only from this one publication."
+      },
+      "evidence": [
+        {
+          "id": "0d159fe4bfec-1",
+          "text": {
+            "fr": "Le Qwen3-1.7B affiné atteint 0,911 de macro-F1 sur le triage d'alarmes en périphérie (320 cas de test), devant toutes les références frontier.",
+            "en": "The fine-tuned Qwen3-1.7B reaches 0.911 macro-F1 on edge alarm triage (320 test cases), ahead of every frontier baseline."
+          },
+          "quote": "the fine-tuned Qwen3-1.7B went from a model that couldn’t produce a valid answer to 0.911 macro-F1 with 320 test cases, ahead of every frontier baseline",
+          "url": "https://aws.amazon.com/blogs/machine-learning/exowatt-beats-frontier-models-on-accuracy-with-sagemaker-serverless-model-customization/"
+        },
+        {
+          "id": "0d159fe4bfec-2",
+          "text": {
+            "fr": "Le Qwen3-14B affiné dépasse Claude Opus 4.7 de +0,35 de macro-F1, pour un coût par 1 000 réponses d'environ 49 fois inférieur (0,60 $ contre 29,26 $).",
+            "en": "The fine-tuned Qwen3-14B beats Claude Opus 4.7 by +0.35 macro-F1 at about 49× lower cost per 1,000 answers ($0.60 compared to $29.26)."
+          },
+          "quote": "+0.35 macro-F1 over Claude Opus 4.7 (95 percent confidence interval 0.324 to 0.371) at about 49× lower cost per 1,000 answers ($0.60 compared to $29.26)",
+          "url": "https://aws.amazon.com/blogs/machine-learning/exowatt-beats-frontier-models-on-accuracy-with-sagemaker-serverless-model-customization/"
+        },
+        {
+          "id": "0d159fe4bfec-3",
+          "text": {
+            "fr": "L'entraînement du Qwen3-1.7B sur le fine-tuning serverless de SageMaker a pris environ 32 minutes pour environ 20 à 25 $.",
+            "en": "Training the Qwen3-1.7B on SageMaker serverless fine-tuning took about 32 minutes for roughly $20–$25."
+          },
+          "quote": "Training completed in about 32 minutes on SageMaker serverless fine-tuning for roughly $20–$25.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/exowatt-beats-frontier-models-on-accuracy-with-sagemaker-serverless-model-customization/"
+        }
+      ],
+      "since": "2026-10-28",
+      "history": [
+        {
+          "date": "2026-10-28",
+          "ring": "essayer"
+        }
+      ]
     }
   ]
 }

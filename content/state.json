@@ -725,6 +725,62 @@
           "url": "https://machinelearning.apple.com/research/gharp-head-animation"
         }
       ]
+    },
+    {
+      "date": "2026-10-28",
+      "sectionId": "modeles",
+      "text": {
+        "fr": "Sur une tâche de triage d'alarmes en périphérie (320 cas de test), un Qwen3-1.7B affiné atteint 0,911 de macro-F1, devant toutes les références frontier de l'étude Exowatt ; le Qwen3-14B affiné dépasse Claude Opus 4.7 de +0,35 de macro-F1.",
+        "en": "On an edge alarm triage task (320 test cases), a fine-tuned Qwen3-1.7B reaches 0.911 macro-F1, ahead of every frontier baseline in the Exowatt study; the fine-tuned Qwen3-14B beats Claude Opus 4.7 by +0.35 macro-F1."
+      },
+      "evidence": [
+        {
+          "id": "0d159fe4bfec-1",
+          "text": {
+            "fr": "Le Qwen3-1.7B affiné atteint 0,911 de macro-F1 sur le triage d'alarmes en périphérie (320 cas de test), devant toutes les références frontier.",
+            "en": "The fine-tuned Qwen3-1.7B reaches 0.911 macro-F1 on edge alarm triage (320 test cases), ahead of every frontier baseline."
+          },
+          "quote": "the fine-tuned Qwen3-1.7B went from a model that couldn’t produce a valid answer to 0.911 macro-F1 with 320 test cases, ahead of every frontier baseline",
+          "url": "https://aws.amazon.com/blogs/machine-learning/exowatt-beats-frontier-models-on-accuracy-with-sagemaker-serverless-model-customization/"
+        },
+        {
+          "id": "0d159fe4bfec-2",
+          "text": {
+            "fr": "Le Qwen3-14B affiné dépasse Claude Opus 4.7 de +0,35 de macro-F1, pour un coût par 1 000 réponses d'environ 49 fois inférieur (0,60 $ contre 29,26 $).",
+            "en": "The fine-tuned Qwen3-14B beats Claude Opus 4.7 by +0.35 macro-F1 at about 49× lower cost per 1,000 answers ($0.60 compared to $29.26)."
+          },
+          "quote": "+0.35 macro-F1 over Claude Opus 4.7 (95 percent confidence interval 0.324 to 0.371) at about 49× lower cost per 1,000 answers ($0.60 compared to $29.26)",
+          "url": "https://aws.amazon.com/blogs/machine-learning/exowatt-beats-frontier-models-on-accuracy-with-sagemaker-serverless-model-customization/"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-28",
+      "sectionId": "evals",
+      "text": {
+        "fr": "ClaimNov détecte 97 % des articles déguisés avec 1,5 % de fausses alarmes, et son profil de nouveauté au niveau des assertions fait passer les fausses alarmes du juge LLM de 11,8 % à 1,5 %.",
+        "en": "ClaimNov catches 97% of disguised papers at a 1.5% false-alarm rate, and its claim-level novelty profile cuts the LLM judge's false alarms from 11.8% to 1.5%."
+      },
+      "evidence": [
+        {
+          "id": "cc2dc2971884-2",
+          "text": {
+            "fr": "ClaimNov détecte 97 % des articles déguisés avec un taux de fausses alarmes de 1,5 %.",
+            "en": "ClaimNov catches 97% of disguised papers at a 1.5% false-alarm rate."
+          },
+          "quote": "ClaimNov catches 97% of disguised papers at a 1.5% false-alarm rate",
+          "url": "https://arxiv.org/abs/2610.36511"
+        },
+        {
+          "id": "cc2dc2971884-3",
+          "text": {
+            "fr": "Le profil de nouveauté au niveau des assertions de ClaimNov fait passer les fausses alarmes du juge LLM de 11,8 % à 1,5 %.",
+            "en": "ClaimNov's claim-level novelty profile cuts the LLM judge's false alarms from 11.8% to 1.5%."
+          },
+          "quote": "its claim-level novelty profile cuts the LLM judge's false alarms from 11.8% to 1.5%",
+          "url": "https://arxiv.org/abs/2610.36511"
+        }
+      ]
     }
   ]
 }
