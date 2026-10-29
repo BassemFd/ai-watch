@@ -1,0 +1,200 @@
+{
+  "date": "2026-10-29",
+  "headline": {
+    "fr": "Google DeepMind présente Gemini 4 Carbon ; NVIDIA Nemotron 3.5 Transcribe : transcription multilingue en 40 langues ; Artificial Analysis v5 et le dilemme du benchmarker ; GitHub Octoverse 2026 : l'activité sur la plateforme s'accélère",
+    "en": "Google DeepMind introduces Gemini 4 Carbon; NVIDIA Nemotron 3.5 Transcribe: multilingual transcription in 40 languages; Artificial Analysis v5 and the benchmarker's dilemma; GitHub Octoverse 2026: platform activity accelerates"
+  },
+  "items": [
+    {
+      "title": {
+        "fr": "Google DeepMind présente Gemini 4 Carbon",
+        "en": "Google DeepMind introduces Gemini 4 Carbon"
+      },
+      "url": "https://deepmind.google/blog/gemini-4-carbon-our-next-frontier-model/",
+      "source": "Google DeepMind",
+      "primary": true,
+      "summary": {
+        "fr": "Gemini 4 Carbon se classe n°1 sur la version 5.0 mise à jour de l'Artificial Analysis Intelligence Index, avec un score de 59. Il obtient 88,2 % sur SEC-bench Pro, 54,8 % sur ExploitGym et 71,0 % sur CWE-bench de Collinear. Il gagne 89 points Elo sur WebDev Arena et s'y classe 4e avec 1768.",
+        "en": "Gemini 4 Carbon ranks #1 on the recently updated v5.0 of the Artificial Analysis Intelligence Index, with a score of 59. It scores 88.2% on SEC-bench Pro, 54.8% on ExploitGym and 71.0% on Collinear's CWE-bench. It gains 89 Elo points on WebDev Arena, where it ranks #4 at 1768."
+      },
+      "why": {
+        "fr": "Pour une équipe qui choisit un modèle, ces résultats donnent des points de comparaison sur la sécurité et le développement web, à confronter à ses propres cas d'usage.",
+        "en": "For a team choosing a model, these results provide comparison points on security and web development, to be checked against its own use cases."
+      },
+      "claims": [
+        {
+          "id": "b0da25ea6c1a-0",
+          "text": {
+            "fr": "Gemini 4 Carbon se classe n°1 sur la version 5.0 mise à jour de l'Artificial Analysis Intelligence Index, avec un score de 59.",
+            "en": "Gemini 4 Carbon ranks #1 on the recently updated v5.0 of the Artificial Analysis Intelligence Index, with a score of 59."
+          },
+          "quote": "Carbon ranks #1 on the recently updated v5.0 of Artificial Analysis Intelligence Index at 59.",
+          "url": "https://deepmind.google/blog/gemini-4-carbon-our-next-frontier-model/"
+        },
+        {
+          "id": "b0da25ea6c1a-1",
+          "text": {
+            "fr": "Carbon obtient 88,2 % sur SEC-bench Pro, 54,8 % sur ExploitGym et 71,0 % sur CWE-bench de Collinear.",
+            "en": "Carbon scores 88.2% on SEC-bench Pro, 54.8% on ExploitGym and 71.0% on Collinear's CWE-bench."
+          },
+          "quote": "landing a firm lead in SEC-bench Pro (88.2%) for finding vulnerabilities, ExploitGym (54.8%) for exploitation, and CWE-bench (71.0%) for patching.",
+          "url": "https://deepmind.google/blog/gemini-4-carbon-our-next-frontier-model/"
+        },
+        {
+          "id": "b0da25ea6c1a-2",
+          "text": {
+            "fr": "Carbon gagne 89 points Elo sur WebDev Arena et se classe 4e avec 1768.",
+            "en": "Carbon jumps +89 Elo points to land at #4 (1768) on WebDev Arena."
+          },
+          "quote": "Carbon jumps +89 elo points to land at #4 (1768) on WebDev Arena",
+          "url": "https://deepmind.google/blog/gemini-4-carbon-our-next-frontier-model/"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "NVIDIA Nemotron 3.5 Transcribe : transcription multilingue en 40 langues",
+        "en": "NVIDIA Nemotron 3.5 Transcribe: multilingual transcription in 40 languages"
+      },
+      "url": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary",
+      "source": "Hugging Face",
+      "primary": true,
+      "summary": {
+        "fr": "Nemotron 3.5 Transcribe transcrit 40 langues, traduit 31 d'entre elles vers ou depuis l'anglais et attribue les locuteurs dans 13 langues. Il associe son encodeur vocal à un modèle de langage hybride Mamba–Transformer en mélange d'experts, avec environ 4B de ses 30B paramètres actifs par token. Sur la piste anglaise de l'Open ASR Leaderboard de Hugging Face, il est premier parmi les modèles à poids ouverts, avec un WER moyen de 5,33 %.",
+        "en": "Nemotron 3.5 Transcribe transcribes 40 languages, translates 31 of them to or from English, and attributes speakers in 13. It pairs its speech encoder with a hybrid Mamba–Transformer mixture-of-experts language model, so only about 4B of its 30B parameters are active per token. On the Hugging Face Open ASR Leaderboard English track, it is first among open-weight models at 5.33% average WER."
+      },
+      "why": {
+        "fr": "Pour qui construit des produits vocaux, un modèle à poids ouverts qui couvre transcription, traduction et attribution des locuteurs est une option à évaluer sur ses propres langues et données.",
+        "en": "For anyone building voice products, an open-weight model covering transcription, translation and speaker attribution is an option to evaluate on their own languages and data."
+      },
+      "claims": [
+        {
+          "id": "7ae8eb20550e-0",
+          "text": {
+            "fr": "Nemotron 3.5 Transcribe transcrit 40 langues, traduit 31 d'entre elles vers ou depuis l'anglais et attribue les locuteurs dans 13 langues.",
+            "en": "Nemotron 3.5 Transcribe transcribes 40 languages, translates 31 of them to or from English, and attributes speakers in 13."
+          },
+          "quote": "it transcribes 40 languages, translates 31 of them to or from English, and attributes speakers in 13.",
+          "url": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary"
+        },
+        {
+          "id": "7ae8eb20550e-1",
+          "text": {
+            "fr": "Nemotron 3.5 Transcribe associe son encodeur vocal à un modèle de langage hybride Mamba–Transformer en mélange d'experts, avec environ 4B de ses 30B paramètres actifs par token.",
+            "en": "Nemotron 3.5 Transcribe pairs its speech encoder with a hybrid Mamba–Transformer mixture-of-experts language model, so only about 4B of its 30B parameters are active per token."
+          },
+          "quote": "Transcribe pairs its speech encoder with a hybrid Mamba–Transformer mixture-of-experts language model, so only about 4B of its 30B parameters are active per token.",
+          "url": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary"
+        },
+        {
+          "id": "7ae8eb20550e-2",
+          "text": {
+            "fr": "Sur la piste anglaise de l'Open ASR Leaderboard de Hugging Face, Nemotron 3.5 Transcribe est premier parmi les modèles à poids ouverts, avec un WER moyen de 5,33 %.",
+            "en": "On the Hugging Face Open ASR Leaderboard English track, Nemotron 3.5 Transcribe is first among open-weight models at 5.33% average WER."
+          },
+          "quote": "English: first among open-weight models at 5.33% average WER (Figure 1).",
+          "url": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Artificial Analysis v5 et le dilemme du benchmarker",
+        "en": "Artificial Analysis v5 and the benchmarker's dilemma"
+      },
+      "url": "https://www.interconnects.ai/p/artificial-analysis-v5-and-the-benchmarkers",
+      "source": "Interconnects",
+      "summary": {
+        "fr": "Dans l'Intelligence Index v5, les catégories Coding, Science et Knowledge Work pèsent chacune 25 %. Selon l'article, l'annonce d'AA passe à des « benchmarks privés » dont les prompts ne sont pas publics. Le graphique open vs fermé montre 8 modèles fermés devant le meilleur modèle open-weight à venir, Kimi K3.1 Pro.",
+        "en": "In Intelligence Index v5, the Coding, Science and Knowledge Work categories each weigh 25%. The article says the AA announcement shifts to \"private benchmarks\", where the prompts are not public. The open vs closed plot shows 8 closed models beating the best to-be open-weight model, Kimi K3.1 Pro."
+      },
+      "why": {
+        "fr": "Le poids des catégories et le caractère non public des prompts sont deux éléments à garder en tête pour interpréter un score global de l'index.",
+        "en": "The category weights and the non-public prompts are two things to keep in mind when interpreting an overall index score."
+      },
+      "claims": [
+        {
+          "id": "45f878f3f6da-0",
+          "text": {
+            "fr": "Dans l'Intelligence Index v5 d'Artificial Analysis, la catégorie Coding pèse 25 % : FrontierCode 2.0 (15 %) et Terminal-Bench 4.0 (10 %).",
+            "en": "In Artificial Analysis's Intelligence Index v5, the Coding category weighs 25%: FrontierCode 2.0 (15%) and Terminal-Bench 4.0 (10%)."
+          },
+          "quote": "Coding (25%): FrontierCode 2.0 (15%) and Terminal-Bench 4.0 (10%)",
+          "url": "https://www.interconnects.ai/p/artificial-analysis-v5-and-the-benchmarkers"
+        },
+        {
+          "id": "45f878f3f6da-1",
+          "text": {
+            "fr": "Dans l'Intelligence Index v5, la catégorie Science pèse 25 % : Terminal-Bench-Science (15 %) et le sous-ensemble difficile de CritPT v2 (10 %).",
+            "en": "In Intelligence Index v5, the Science category weighs 25%: Terminal-Bench-Science (15%) and the CritPT v2 hard subset (10%)."
+          },
+          "quote": "Science (25%): Terminal-Bench-Science (15%) and CritPT v2 hard subset (10%)",
+          "url": "https://www.interconnects.ai/p/artificial-analysis-v5-and-the-benchmarkers"
+        },
+        {
+          "id": "45f878f3f6da-2",
+          "text": {
+            "fr": "Dans l'Intelligence Index v5, la catégorie Knowledge Work pèse 25 % : AA-Briefcase (15 %), AutomationBench-AA (5 %) et GDP.pdf (5 %).",
+            "en": "In Intelligence Index v5, the Knowledge Work category weighs 25%: AA-Briefcase (15%), AutomationBench-AA (5%) and GDP.pdf (5%)."
+          },
+          "quote": "Knowledge Work (25%): AA-Briefcase (15%), AutomationBench-AA (5%), and GDP.pdf (5%)",
+          "url": "https://www.interconnects.ai/p/artificial-analysis-v5-and-the-benchmarkers"
+        },
+        {
+          "id": "45f878f3f6da-3",
+          "text": {
+            "fr": "Le graphique open vs fermé montre 8 modèles fermés devant le meilleur modèle open-weight à venir, Kimi K3.1 Pro.",
+            "en": "The plot shows 8 closed models beating the best to-be open-weight model, Kimi K3.1 Pro."
+          },
+          "quote": "This plot shows 8 closed models beating the best to-be open-weight model, Kimi K3.1 Pro (which isn’t colored blue).",
+          "url": "https://www.interconnects.ai/p/artificial-analysis-v5-and-the-benchmarkers"
+        },
+        {
+          "id": "45f878f3f6da-4",
+          "text": {
+            "fr": "Selon l'article, l'annonce d'AA passe à des « benchmarks privés » dont les prompts ne sont pas publics.",
+            "en": "The article says the announcement shifts to \"private benchmarks\", where the prompts are not public."
+          },
+          "quote": "Another part of this announcement is shifting to “private benchmarks”, where the prompts are not public",
+          "url": "https://www.interconnects.ai/p/artificial-analysis-v5-and-the-benchmarkers"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "GitHub Octoverse 2026 : l'activité sur la plateforme s'accélère",
+        "en": "GitHub Octoverse 2026: platform activity accelerates"
+      },
+      "url": "https://simonwillison.net/2026/Oct/28/github-octoverse-2026/",
+      "source": "Simon Willison",
+      "summary": {
+        "fr": "En 2026, les pull requests fusionnées ont triplé en moins d'un an pour atteindre 220 millions par mois sur GitHub. Le rythme de création de nouveaux dépôts a doublé cette année, à 30,3 millions par mois.",
+        "en": "In 2026, merged pull requests on GitHub tripled in less than a year to 220 million per month. The new repository rate doubled this year, to 30.3 million per month."
+      },
+      "why": {
+        "fr": "Ces volumes indiquent que la charge de revue et d'intégration augmente, ce qui pèse sur les processus d'équipe, sans que ces chiffres n'en donnent la cause.",
+        "en": "These volumes point to a growing review and integration load that affects team processes, though the figures do not give the cause."
+      },
+      "claims": [
+        {
+          "id": "d8f853e661d6-0",
+          "text": {
+            "fr": "En 2026, les pull requests fusionnées ont triplé en moins d'un an pour atteindre 220 millions par mois sur GitHub.",
+            "en": "In 2026, merged pull requests on GitHub tripled in less than a year to 220 million per month."
+          },
+          "quote": "In 2026, merged pull requests tripled in less than a year to 220 million per month.",
+          "url": "https://simonwillison.net/2026/Oct/28/github-octoverse-2026/"
+        },
+        {
+          "id": "d8f853e661d6-2",
+          "text": {
+            "fr": "Le rythme de création de nouveaux dépôts a doublé cette année, à 30,3 millions par mois.",
+            "en": "The new repository rate doubled this year, to 30.3 million per month."
+          },
+          "quote": "New repository rate doubled this year, to 30.3 million per month.",
+          "url": "https://simonwillison.net/2026/Oct/28/github-octoverse-2026/"
+        }
+      ]
+    }
+  ]
+}

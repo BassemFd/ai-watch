@@ -781,6 +781,80 @@
           "url": "https://arxiv.org/abs/2610.36511"
         }
       ]
+    },
+    {
+      "date": "2026-10-29",
+      "sectionId": "evals",
+      "text": {
+        "fr": "Dans l'Intelligence Index v5 d'Artificial Analysis, Coding, Science et Knowledge Work pèsent chacun 25 % ; selon l'article d'Interconnects, l'annonce d'AA passe à des « benchmarks privés » dont les prompts ne sont pas publics.",
+        "en": "In Artificial Analysis's Intelligence Index v5, Coding, Science and Knowledge Work each weigh 25%; according to the Interconnects article, the AA announcement shifts to \"private benchmarks\" whose prompts are not public."
+      },
+      "evidence": [
+        {
+          "id": "45f878f3f6da-0",
+          "text": {
+            "fr": "Dans l'Intelligence Index v5 d'Artificial Analysis, la catégorie Coding pèse 25 % : FrontierCode 2.0 (15 %) et Terminal-Bench 4.0 (10 %).",
+            "en": "In Artificial Analysis's Intelligence Index v5, the Coding category weighs 25%: FrontierCode 2.0 (15%) and Terminal-Bench 4.0 (10%)."
+          },
+          "quote": "Coding (25%): FrontierCode 2.0 (15%) and Terminal-Bench 4.0 (10%)",
+          "url": "https://www.interconnects.ai/p/artificial-analysis-v5-and-the-benchmarkers"
+        },
+        {
+          "id": "45f878f3f6da-1",
+          "text": {
+            "fr": "Dans l'Intelligence Index v5, la catégorie Science pèse 25 % : Terminal-Bench-Science (15 %) et le sous-ensemble difficile de CritPT v2 (10 %).",
+            "en": "In Intelligence Index v5, the Science category weighs 25%: Terminal-Bench-Science (15%) and the CritPT v2 hard subset (10%)."
+          },
+          "quote": "Science (25%): Terminal-Bench-Science (15%) and CritPT v2 hard subset (10%)",
+          "url": "https://www.interconnects.ai/p/artificial-analysis-v5-and-the-benchmarkers"
+        },
+        {
+          "id": "45f878f3f6da-2",
+          "text": {
+            "fr": "Dans l'Intelligence Index v5, la catégorie Knowledge Work pèse 25 % : AA-Briefcase (15 %), AutomationBench-AA (5 %) et GDP.pdf (5 %).",
+            "en": "In Intelligence Index v5, the Knowledge Work category weighs 25%: AA-Briefcase (15%), AutomationBench-AA (5%) and GDP.pdf (5%)."
+          },
+          "quote": "Knowledge Work (25%): AA-Briefcase (15%), AutomationBench-AA (5%), and GDP.pdf (5%)",
+          "url": "https://www.interconnects.ai/p/artificial-analysis-v5-and-the-benchmarkers"
+        },
+        {
+          "id": "45f878f3f6da-4",
+          "text": {
+            "fr": "Selon l'article, l'annonce d'AA passe à des « benchmarks privés » dont les prompts ne sont pas publics.",
+            "en": "The article says the announcement shifts to \"private benchmarks\", where the prompts are not public."
+          },
+          "quote": "Another part of this announcement is shifting to “private benchmarks”, where the prompts are not public",
+          "url": "https://www.interconnects.ai/p/artificial-analysis-v5-and-the-benchmarkers"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-29",
+      "sectionId": "open",
+      "text": {
+        "fr": "Nemotron 3.5 Transcribe, modèle de 30B paramètres dont environ 4B actifs par token, est premier parmi les modèles à poids ouverts sur la piste anglaise de l'Open ASR Leaderboard de Hugging Face, avec un WER moyen de 5,33 %.",
+        "en": "Nemotron 3.5 Transcribe, a 30B-parameter model with about 4B active per token, is first among open-weight models on the Hugging Face Open ASR Leaderboard English track, at 5.33% average WER."
+      },
+      "evidence": [
+        {
+          "id": "7ae8eb20550e-1",
+          "text": {
+            "fr": "Nemotron 3.5 Transcribe associe son encodeur vocal à un modèle de langage hybride Mamba–Transformer en mélange d'experts, avec environ 4B de ses 30B paramètres actifs par token.",
+            "en": "Nemotron 3.5 Transcribe pairs its speech encoder with a hybrid Mamba–Transformer mixture-of-experts language model, so only about 4B of its 30B parameters are active per token."
+          },
+          "quote": "Transcribe pairs its speech encoder with a hybrid Mamba–Transformer mixture-of-experts language model, so only about 4B of its 30B parameters are active per token.",
+          "url": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary"
+        },
+        {
+          "id": "7ae8eb20550e-2",
+          "text": {
+            "fr": "Sur la piste anglaise de l'Open ASR Leaderboard de Hugging Face, Nemotron 3.5 Transcribe est premier parmi les modèles à poids ouverts, avec un WER moyen de 5,33 %.",
+            "en": "On the Hugging Face Open ASR Leaderboard English track, Nemotron 3.5 Transcribe is first among open-weight models at 5.33% average WER."
+          },
+          "quote": "English: first among open-weight models at 5.33% average WER (Figure 1).",
+          "url": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary"
+        }
+      ]
     }
   ]
 }

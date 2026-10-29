@@ -597,6 +597,59 @@
           "ring": "essayer"
         }
       ]
+    },
+    {
+      "name": "Nemotron 3.5 Transcribe",
+      "ring": "evaluer",
+      "rationale": {
+        "fr": "D'après Hugging Face, Nemotron 3.5 Transcribe transcrit 40 langues, en traduit 31 vers ou depuis l'anglais et attribue les locuteurs dans 13, avec un modèle de langage hybride Mamba–Transformer en mélange d'experts dont environ 4B des 30B paramètres sont actifs par token. Il est premier parmi les modèles à poids ouverts sur la piste anglaise de l'Open ASR Leaderboard (WER moyen de 5,33 %) et obtient le plus bas taux d'erreur de diarisation sur le classement de David AI (18,26 %). À suivre de près pour la transcription multilingue, la seule source étant cette publication.",
+        "en": "According to Hugging Face, Nemotron 3.5 Transcribe transcribes 40 languages, translates 31 of them to or from English and attributes speakers in 13, using a hybrid Mamba–Transformer mixture-of-experts language model with about 4B of its 30B parameters active per token. It is first among open-weight models on the Open ASR Leaderboard English track (5.33% average WER) and posts the lowest diarization error rate on David AI's leaderboard (18.26%). Worth watching closely for multilingual transcription, as the only source is this publication."
+      },
+      "evidence": [
+        {
+          "id": "7ae8eb20550e-0",
+          "text": {
+            "fr": "Nemotron 3.5 Transcribe transcrit 40 langues, traduit 31 d'entre elles vers ou depuis l'anglais et attribue les locuteurs dans 13 langues.",
+            "en": "Nemotron 3.5 Transcribe transcribes 40 languages, translates 31 of them to or from English, and attributes speakers in 13."
+          },
+          "quote": "it transcribes 40 languages, translates 31 of them to or from English, and attributes speakers in 13.",
+          "url": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary"
+        },
+        {
+          "id": "7ae8eb20550e-1",
+          "text": {
+            "fr": "Nemotron 3.5 Transcribe associe son encodeur vocal à un modèle de langage hybride Mamba–Transformer en mélange d'experts, avec environ 4B de ses 30B paramètres actifs par token.",
+            "en": "Nemotron 3.5 Transcribe pairs its speech encoder with a hybrid Mamba–Transformer mixture-of-experts language model, so only about 4B of its 30B parameters are active per token."
+          },
+          "quote": "Transcribe pairs its speech encoder with a hybrid Mamba–Transformer mixture-of-experts language model, so only about 4B of its 30B parameters are active per token.",
+          "url": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary"
+        },
+        {
+          "id": "7ae8eb20550e-2",
+          "text": {
+            "fr": "Sur la piste anglaise de l'Open ASR Leaderboard de Hugging Face, Nemotron 3.5 Transcribe est premier parmi les modèles à poids ouverts, avec un WER moyen de 5,33 %.",
+            "en": "On the Hugging Face Open ASR Leaderboard English track, Nemotron 3.5 Transcribe is first among open-weight models at 5.33% average WER."
+          },
+          "quote": "English: first among open-weight models at 5.33% average WER (Figure 1).",
+          "url": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary"
+        },
+        {
+          "id": "7ae8eb20550e-3",
+          "text": {
+            "fr": "Sur le classement de diarisation de David AI (21 langues), Nemotron 3.5 Transcribe obtient le taux d'erreur de diarisation le plus bas, 18,26 %, devant Nemotron 3 Diarization à 18,38 %.",
+            "en": "On David AI's 21-language diarization leaderboard, Nemotron 3.5 Transcribe posts the lowest diarization error rate, 18.26%, ahead of Nemotron 3 Diarization at 18.38%."
+          },
+          "quote": "Nemotron 3.5 Transcribe posts the lowest overall diarization error rate (DER), 18.26% across 21 languages, followed by Nemotron 3 Diarization at 18.38%.",
+          "url": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary"
+        }
+      ],
+      "since": "2026-10-29",
+      "history": [
+        {
+          "date": "2026-10-29",
+          "ring": "evaluer"
+        }
+      ]
     }
   ]
 }
