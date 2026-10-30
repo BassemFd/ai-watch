@@ -855,6 +855,44 @@
           "url": "https://huggingface.co/blog/nvidia/nemotron-transcribe-granary"
         }
       ]
+    },
+    {
+      "date": "2026-10-30",
+      "sectionId": "agents",
+      "text": {
+        "fr": "Sur l'Artificial Analysis Coding Agent Index, Mistral Large 4 obtient 48 %, à égalité avec GLM-5.3, en utilisant en moyenne 47 % de tokens en moins par tâche.",
+        "en": "On the Artificial Analysis Coding Agent Index, Mistral Large 4 scores 48%, effectively tied with GLM-5.3, while using 47% fewer tokens per task on average."
+      },
+      "evidence": [
+        {
+          "id": "fb0dc092962c-5",
+          "text": {
+            "fr": "Sur l'Artificial Analysis Coding Agent Index, Mistral Large 4 obtient 48 %, à égalité avec GLM-5.3, en utilisant en moyenne 47 % de tokens en moins par tâche.",
+            "en": "On the Artificial Analysis Coding Agent Index, Mistral Large 4 scores 48%, effectively tied with GLM-5.3, while using 47% fewer tokens per task on average."
+          },
+          "quote": "On the Artificial Analysis Coding Agent Index, Mistral Large 4 scores 48%, effectively tied with the leading open-weight model, GLM-5.3, while using 47% fewer tokens per task on average.",
+          "url": "https://mistral.ai/news/mistral-large-4-oss/"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-30",
+      "sectionId": "modeles",
+      "text": {
+        "fr": "Dans le rapport sur Nemotron 3.5, la quantification NVFP4 retrouve 99,62 % de la précision médiane par rapport à BF16.",
+        "en": "In the Nemotron 3.5 report, NVFP4 quantization achieves 99.62% median accuracy recovery relative to BF16."
+      },
+      "evidence": [
+        {
+          "id": "b5f975bc6763-2",
+          "text": {
+            "fr": "La quantification NVFP4 retrouve 99,62 % de la précision médiane par rapport à BF16.",
+            "en": "NVFP4 quantization achieves 99.62% median accuracy recovery relative to BF16."
+          },
+          "quote": "NVFP4 quantization achieves 99.62% median accuracy recovery relative to BF16.",
+          "url": "https://arxiv.org/abs/2610.38095"
+        }
+      ]
     }
   ]
 }

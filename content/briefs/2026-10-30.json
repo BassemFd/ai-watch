@@ -1,0 +1,100 @@
+{
+  "date": "2026-10-30",
+  "headline": {
+    "fr": "Un moteur de migration PHP-vers-Java reproductible avec Kiro ; Nemotron 3.5 Super et Lightning : résultats sur SWE-bench Pro, quantification et débit",
+    "en": "A repeatable PHP-to-Java migration engine with Kiro; Nemotron 3.5 Super and Lightning: SWE-bench Pro, quantization and throughput results"
+  },
+  "items": [
+    {
+      "title": {
+        "fr": "Un moteur de migration PHP-vers-Java reproductible avec Kiro",
+        "en": "A repeatable PHP-to-Java migration engine with Kiro"
+      },
+      "url": "https://aws.amazon.com/blogs/machine-learning/build-a-repeatable-php-to-java-migration-engine-with-kiro/",
+      "source": "AWS Machine Learning",
+      "primary": true,
+      "summary": {
+        "fr": "Le moteur repose sur un flux de travail en huit phases, un scanner de découverte mécanique et une méthodologie partagée. Le scanner discover-models.php est un outil PHP en ligne de commande, en un seul fichier et sans dépendances, qui n'exécute pas le code cible. La phase 1 construit le harnais de parité avant l'écriture du Java, en rejouant des paires requête/réponse contre l'original PHP et le portage Java.",
+        "en": "The engine is built on an eight-phase workflow, a mechanical discovery scanner, and a shared methodology. The scanner discover-models.php is a single-file, dependency-free PHP command-line tool that does not execute the target code. Phase 1 builds the parity harness before Java is written, replaying request/response pairs against both the PHP original and the Java port."
+      },
+      "why": {
+        "fr": "Analyse : placer le harnais de parité avant l'écriture du code cible met la vérification du comportement au début d'une migration assistée par IA plutôt qu'à la fin.",
+        "en": "Analysis: building the parity harness before the target code is written puts behavior verification at the start of an AI-assisted migration rather than at the end."
+      },
+      "claims": [
+        {
+          "id": "1d9d3dc95e9d-0",
+          "text": {
+            "fr": "Le moteur de migration repose sur un flux de travail en huit phases, un scanner de découverte mécanique et une méthodologie partagée.",
+            "en": "The migration engine is built on an eight-phase workflow, a mechanical discovery scanner, and a shared methodology."
+          },
+          "quote": "a reusable engine: a shared methodology, a mechanical discovery scanner, and an eight-phase workflow.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/build-a-repeatable-php-to-java-migration-engine-with-kiro/"
+        },
+        {
+          "id": "1d9d3dc95e9d-1",
+          "text": {
+            "fr": "Le scanner discover-models.php est un outil en ligne de commande PHP, en un seul fichier et sans dépendances, qui n'exécute pas le code cible.",
+            "en": "The scanner discover-models.php is a single-file, dependency-free PHP command-line tool that does not execute the target code."
+          },
+          "quote": "The scanner is discover-models.php, a single-file, dependency-free PHP command-line tool that doesn’t execute the target code.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/build-a-repeatable-php-to-java-migration-engine-with-kiro/"
+        },
+        {
+          "id": "1d9d3dc95e9d-3",
+          "text": {
+            "fr": "La phase 1 construit le harnais de parité avant l'écriture du Java ; il rejoue des paires requête/réponse contre l'original PHP et le portage Java.",
+            "en": "Phase 1 builds the parity harness before Java is written, replaying request/response pairs against both the PHP original and the Java port."
+          },
+          "quote": "Phase 1 builds the parity harness before Java is written, replaying request/response pairs against both the PHP original and the Java port.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/build-a-repeatable-php-to-java-migration-engine-with-kiro/"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Nemotron 3.5 Super et Lightning : résultats sur SWE-bench Pro, quantification et débit",
+        "en": "Nemotron 3.5 Super and Lightning: SWE-bench Pro, quantization and throughput results"
+      },
+      "url": "https://arxiv.org/abs/2610.38095",
+      "source": "arXiv cs.CL",
+      "summary": {
+        "fr": "Le modèle Super post-entraîné atteint 51,78 % sur SWE-bench Pro et dépasse Nemotron 3 Ultra avec environ 4,6 fois moins de paramètres actifs. La quantification NVFP4 retrouve 99,62 % de la précision médiane par rapport à BF16. Les optimisations d'inférence permettent jusqu'à 4 856 tokens de sortie/s/GPU sur GB200, avec au moins 50 tokens/s par utilisateur.",
+        "en": "The post-trained Super model achieves 51.78% on SWE-bench Pro, surpassing Nemotron 3 Ultra while using approximately 4.6x fewer active parameters. NVFP4 quantization achieves 99.62% median accuracy recovery relative to BF16. Inference optimizations enable up to 4,856 output tokens/s/GPU on GB200 while sustaining at least 50 tokens/s/user."
+      },
+      "why": {
+        "fr": "Analyse : le papier mêle résultats de qualité, quantification et débit d'inférence, trois dimensions à examiner ensemble pour juger du coût de déploiement d'un modèle agentique.",
+        "en": "Analysis: the paper reports quality, quantization and inference throughput together, three dimensions to weigh jointly when assessing the deployment cost of an agentic model."
+      },
+      "claims": [
+        {
+          "id": "b5f975bc6763-1",
+          "text": {
+            "fr": "Le modèle Super post-entraîné atteint 51,78 % sur SWE-bench Pro. Il dépasse ainsi Nemotron 3 Ultra avec environ 4,6 fois moins de paramètres actifs.",
+            "en": "The post-trained Super model achieves 51.78% on SWE-bench Pro, surpassing Nemotron 3 Ultra while using approximately 4.6x fewer active parameters."
+          },
+          "quote": "The post-trained Super model achieves 51.78% on SWE-bench Pro, surpassing Nemotron 3 Ultra despite using approximately 4.6x fewer active parameters.",
+          "url": "https://arxiv.org/abs/2610.38095"
+        },
+        {
+          "id": "b5f975bc6763-2",
+          "text": {
+            "fr": "La quantification NVFP4 retrouve 99,62 % de la précision médiane par rapport à BF16.",
+            "en": "NVFP4 quantization achieves 99.62% median accuracy recovery relative to BF16."
+          },
+          "quote": "NVFP4 quantization achieves 99.62% median accuracy recovery relative to BF16.",
+          "url": "https://arxiv.org/abs/2610.38095"
+        },
+        {
+          "id": "b5f975bc6763-3",
+          "text": {
+            "fr": "Les optimisations d'inférence permettent jusqu'à 4 856 tokens de sortie/s/GPU sur GB200, tout en maintenant au moins 50 tokens/s par utilisateur.",
+            "en": "Inference optimizations enable up to 4,856 output tokens/s/GPU on GB200 while sustaining at least 50 tokens/s/user."
+          },
+          "quote": "Inference optimizations enable up to 4,856 output tokens/s/GPU on GB200 while sustaining at least 50 tokens/s/user.",
+          "url": "https://arxiv.org/abs/2610.38095"
+        }
+      ]
+    }
+  ]
+}

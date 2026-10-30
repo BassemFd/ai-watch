@@ -1,0 +1,256 @@
+{
+  "date": "2026-10-30",
+  "startedAt": "2026-10-30T10:54:21.909Z",
+  "durationMs": 68203,
+  "status": "published",
+  "counts": {
+    "collectes": 187,
+    "nouveaux": 114,
+    "retenus": 4,
+    "faitsProposes": 18,
+    "faitsCites": 18,
+    "faitsValides": 14,
+    "confirmationsCitees": 3,
+    "confirmationsValides": 0,
+    "sujetsRecoupes": 0,
+    "mouvementsRadar": 1,
+    "publies": 4
+  },
+  "stages": [
+    {
+      "stage": "triage",
+      "model": "claude-haiku-5-5",
+      "ms": 7384,
+      "inputTokens": 22615,
+      "outputTokens": 763,
+      "costUsd": 0.002643
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4075,
+      "inputTokens": 2495,
+      "outputTokens": 96,
+      "costUsd": 0.00595
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4565,
+      "inputTokens": 2461,
+      "outputTokens": 74,
+      "costUsd": 0.005662
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4605,
+      "inputTokens": 2632,
+      "outputTokens": 183,
+      "costUsd": 0.007094
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4936,
+      "inputTokens": 2536,
+      "outputTokens": 142,
+      "costUsd": 0.006492
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1082,
+      "inputTokens": 2552,
+      "outputTokens": 10,
+      "costUsd": 0.005204
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 7842,
+      "inputTokens": 9637,
+      "outputTokens": 1341,
+      "costUsd": 0.032684
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 8629,
+      "inputTokens": 16215,
+      "outputTokens": 1405,
+      "costUsd": 0.04648
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 8506,
+      "inputTokens": 15115,
+      "outputTokens": 1450,
+      "costUsd": 0.04473
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 9681,
+      "inputTokens": 6610,
+      "outputTokens": 1187,
+      "costUsd": 0.02509
+    },
+    {
+      "stage": "curate",
+      "model": "claude-opus-5-5",
+      "ms": 14930,
+      "inputTokens": 7498,
+      "outputTokens": 1360,
+      "costUsd": 0.057192
+    },
+    {
+      "stage": "write",
+      "model": "claude-sonnet-5-5",
+      "ms": 20992,
+      "inputTokens": 3829,
+      "outputTokens": 3085,
+      "costUsd": 0.038508
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 7390,
+      "inputTokens": 6886,
+      "outputTokens": 1121,
+      "costUsd": 0.024982
+    }
+  ],
+  "gates": [
+    {
+      "name": "literal_quotes",
+      "pass": true,
+      "detail": "18/18"
+    },
+    {
+      "name": "supported_claims",
+      "pass": true,
+      "detail": "14/18"
+    },
+    {
+      "name": "verifier",
+      "pass": true,
+      "detail": "4/6 (>= 50%)"
+    },
+    {
+      "name": "volume",
+      "pass": true,
+      "detail": "radar 1, state 2 (max 3)"
+    },
+    {
+      "name": "budget",
+      "pass": true,
+      "detail": "0.303/2 USD"
+    }
+  ],
+  "rejected": [
+    {
+      "what": {
+        "fr": "Latent Space",
+        "en": "Latent Space"
+      },
+      "reason": "feed_unreadable",
+      "detail": "redirected off-host to latent.space"
+    },
+    {
+      "what": {
+        "fr": "L'exemple laravel-eloquent-sample migre les modèles Book, Chapter, Page et User vers Spring Boot 3.4.1 sur Java 21 avec Maven et une base H2 en mémoire.",
+        "en": "The laravel-eloquent-sample project migrates the Book, Chapter, Page, and User models to Spring Boot 3.4.1 on Java 21 with Maven and an in-memory H2 database."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not name the laravel-eloquent-sample project, so the claim goes beyond the quote."
+    },
+    {
+      "what": {
+        "fr": "Nemotron 3.5 Super est un modèle multimodal de 120 milliards de paramètres dont 12 milliards sont actifs. Nemotron 3.5 Lightning est un modèle texte plus petit, de 30 milliards de paramètres dont 3 mi",
+        "en": "Nemotron 3.5 Super is a multimodal model with 120B parameters, 12B of them active. Nemotron 3.5 Lightning is a smaller text model with 30B parameters, 3B of them active."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not name Nemotron 3.5 Super or Lightning, and the confirmation covers only the 120B/12B figures, not the Lightning model or its 30B/3B figures."
+    },
+    {
+      "what": {
+        "fr": "Nemotron 3.5 Super VL propose des checkpoints BF16 et NVFP4 et une longueur de contexte allant jusqu'à 1M de tokens.",
+        "en": "Nemotron 3.5 Super VL offers BF16 and NVFP4 checkpoints and a context length of up to 1M tokens."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not name Nemotron 3.5 Super VL, and the claim ties the checkpoints and context length to that specific model."
+    },
+    {
+      "what": {
+        "fr": "Mistral Large 4 est publié sous la licence Mistral Ecosystem Open-Weight, une version modifiée de la licence MIT, et exploiter un service Model-as-a-Service exige une licence commerciale distincte aup",
+        "en": "Mistral Large 4 is released under the Mistral Ecosystem Open-Weight License, a modified version of the MIT license, and operating a Model-as-a-Service business requires a separate commercial license f"
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote only covers the commercial license requirement for Model-as-a-Service, not the license name or its status as a modified MIT license."
+    },
+    {
+      "what": {
+        "fr": "Mistral Large 4 : un MoE d'environ 1 000 milliards de paramètres",
+        "en": "Mistral Large 4: a Mixture-of-Experts model with 1 trillion parameters"
+      },
+      "reason": "statement_unsupported",
+      "detail": "The statement says approximately 1,000 billion parameters in French and exactly 1 trillion in English, relying on claim fb0dc092962c-0 where the versions differ."
+    },
+    {
+      "what": {
+        "fr": "Mistral Large 4",
+        "en": "Mistral Large 4"
+      },
+      "reason": "statement_unsupported",
+      "detail": "The French says about 1,000 billion in a way that differs in precision from the cited claim's exact figure, and the 'single source' assertion plus 'evaluer' ring are not covered; the hedge mismatch makes it unsupported."
+    }
+  ],
+  "toolCalls": [
+    {
+      "tool": "fetch_page",
+      "input": "https://aws.amazon.com/blogs/machine-learning/build-a-repeatable-php-to-java-migration-engine-with-kiro/",
+      "ok": true,
+      "ms": 176,
+      "item": "https://aws.amazon.com/blogs/machine-learning/build-a-repeatable-php-to-java-migration-engine-with-kiro/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://openai.com/index/how-we-detect-frontier-model-misalignment",
+      "ok": false,
+      "detail": "HTTP 403",
+      "ms": 76,
+      "item": "https://openai.com/index/how-we-detect-frontier-model-misalignment"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://arxiv.org/abs/2610.38095",
+      "ok": true,
+      "ms": 178,
+      "item": "https://arxiv.org/abs/2610.38095"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://aws.amazon.com/blogs/machine-learning/accelerate-agentic-ai-with-nvidia-nemotron-models-on-amazon-eks-and-sagemaker-hyperpod-eks/",
+      "ok": true,
+      "ms": 111,
+      "item": "https://arxiv.org/abs/2610.38095"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://github.com/huggingface/transformers/releases/tag/v5.22.0",
+      "ok": true,
+      "ms": 585,
+      "item": "https://github.com/huggingface/transformers/releases/tag/v5.22.0"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://mistral.ai/news/mistral-large-4-oss/",
+      "ok": true,
+      "ms": 257,
+      "item": "https://github.com/huggingface/transformers/releases/tag/v5.22.0"
+    }
+  ],
+  "costUsd": 0.302711
+}
