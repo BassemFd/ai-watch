@@ -893,6 +893,62 @@
           "url": "https://arxiv.org/abs/2610.38095"
         }
       ]
+    },
+    {
+      "date": "2026-10-31",
+      "sectionId": "evals",
+      "text": {
+        "fr": "Microsoft Research décrit des environnements d'entreprise synthétiques, chacun avec des centaines d'utilisateurs et des historiques de communication complets dans trois secteurs, ancrés dans O*NET, des offres d'emploi en ligne et des documents SEC.",
+        "en": "Microsoft Research describes synthetic enterprise environments, each with hundreds of users and complete communication histories across three industry verticals, grounded in O*NET data, online job postings, and SEC filings."
+      },
+      "evidence": [
+        {
+          "id": "fd4521a18599-2",
+          "text": {
+            "fr": "Chaque environnement synthétique contient désormais des centaines d'utilisateurs avec des historiques de communication complets, dans trois secteurs.",
+            "en": "Each synthetic environment now contains hundreds of users with complete communication histories across three industry verticals."
+          },
+          "quote": "each synthetic environment now contains hundreds of users with complete communication histories across three industry verticals",
+          "url": "https://www.microsoft.com/en-us/research/blog/from-synthetic-enterprise-data-evaluations-to-real-microsoft-copilot-ai-confidence/"
+        },
+        {
+          "id": "fd4521a18599-3",
+          "text": {
+            "fr": "Les environnements sont ancrés dans des sources publiques : données professionnelles O*NET, offres d'emploi en ligne et documents déposés auprès de la SEC.",
+            "en": "The environments are grounded in publicly available sources: O*NET occupational data, online job postings, and SEC filings."
+          },
+          "quote": "publicly available real-world data sources such as O*NET occupational data, online job postings, and SEC filings",
+          "url": "https://www.microsoft.com/en-us/research/blog/from-synthetic-enterprise-data-evaluations-to-real-microsoft-copilot-ai-confidence/"
+        }
+      ]
+    },
+    {
+      "date": "2026-10-31",
+      "sectionId": "open",
+      "text": {
+        "fr": "Drew Breunig a intégré un émulateur fonctionnel du CPU 6502 de la NES dans les poids de Qwen3.5-4B ; des ROM comme Super Mario Bros peuvent y tourner, très lentement.",
+        "en": "Drew Breunig baked a working emulator of the NES's 6502 CPU into the weights of Qwen3.5-4B; ROMs such as Super Mario Bros can run inside it, very slowly."
+      },
+      "evidence": [
+        {
+          "id": "1649c5dd0704-0",
+          "text": {
+            "fr": "Drew Breunig a intégré dans les poids de Qwen3.5-4B un émulateur fonctionnel du processeur 6502 de la Nintendo Entertainment System.",
+            "en": "Drew Breunig baked a working emulator of the Nintendo Entertainment System's 6502 CPU into the weights of Qwen3.5-4B."
+          },
+          "quote": "Drew Breunig baked a working emulator for a Nintendo Entertainment System 6502 CPU into the weights of Qwen3.5-4B.",
+          "url": "https://simonwillison.net/2026/Oct/30/nesformer/"
+        },
+        {
+          "id": "1649c5dd0704-2",
+          "text": {
+            "fr": "On peut jouer à des ROM NES comme Super Mario Bros, très lentement, en les faisant tourner dans Qwen.",
+            "en": "NES ROMs such as Super Mario Bros can be played, very slowly, running inside Qwen."
+          },
+          "quote": "You can now play NES ROMs such as Super Mario Bros (very slowly) running inside Qwen!",
+          "url": "https://simonwillison.net/2026/Oct/30/nesformer/"
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,209 @@
+{
+  "date": "2026-10-31",
+  "headline": {
+    "fr": "AgentCore runtime : des URL de session pour prévisualiser les applications d'un agent ; Microsoft Research : des environnements d'entreprise synthétiques pour évaluer Copilot ; L'extension VS Code d'Anthropic compromise sur la place de marché de Cursor ; nesformer : un émulateur de CPU 6502 intégré aux poids de Qwen3.5-4B",
+    "en": "AgentCore runtime: session URLs to preview an agent's web apps; Microsoft Research: synthetic enterprise environments for evaluating Copilot; Anthropic's VS Code extension backdoored on Cursor's marketplace; nesformer: a 6502 CPU emulator baked into Qwen3.5-4B's weights"
+  },
+  "items": [
+    {
+      "title": {
+        "fr": "AgentCore runtime : des URL de session pour prévisualiser les applications d'un agent",
+        "en": "AgentCore runtime: session URLs to preview an agent's web apps"
+      },
+      "url": "https://aws.amazon.com/blogs/machine-learning/preview-web-apps-live-as-your-coding-agent-builds-them-with-amazon-bedrock-agentcore-runtime/",
+      "source": "AWS Machine Learning",
+      "primary": true,
+      "summary": {
+        "fr": "Les Session endpoints d'AgentCore runtime donnent à chaque session une URL authentifiée qui transmet la méthode HTTP, le chemin, la query string et le corps de chaque requête, ainsi que les connexions WebSocket, vers les ports autorisés. Avec un runtime IAM, chaque requête HTTP, flux HTTP/2 et handshake WebSocket porte une signature SigV4. Un port absent de allowedPorts reçoit un 403 AccessDenied ; un port autorisé sans processus à l'écoute renvoie un 502 PortNotReachable.",
+        "en": "AgentCore runtime Session endpoints give each session an authenticated URL that forwards each request's HTTP method, path, query string, and body, and WebSocket connections, to the ports you allow. For a runtime that uses IAM, each HTTP request, HTTP/2 stream, and WebSocket handshake carries a SigV4 signature. A request to a port not in allowedPorts is refused with 403 AccessDenied, and an allowed port with nothing listening returns 502 PortNotReachable."
+      },
+      "why": {
+        "fr": "Analyse : la liste de ports explicite et la signature SigV4 limitent ce qui est exposé, mais l'absence de PrivateLink en entrée et la limite aux runtimes microVM sont à vérifier avant d'adopter la fonction.",
+        "en": "Analysis: the explicit port list and SigV4 signing limit what is exposed, but the lack of inbound PrivateLink support and the restriction to microVM runtimes should be checked before adopting the feature."
+      },
+      "claims": [
+        {
+          "id": "168738aae15d-0",
+          "text": {
+            "fr": "Les Session endpoints d'AgentCore runtime donnent à chaque session une URL authentifiée qui transmet la méthode HTTP, le chemin, la query string et le corps de chaque requête, ainsi que les connexions WebSocket, vers les ports autorisés.",
+            "en": "AgentCore runtime Session endpoints give each session an authenticated URL that forwards each request's HTTP method, path, query string, and body, and WebSocket connections, to the ports you allow."
+          },
+          "quote": "Session Endpoints give each session an authenticated URL that forwards each request’s HTTP method, path, query string, and body, and WebSocket connections, to the ports you allow.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/preview-web-apps-live-as-your-coding-agent-builds-them-with-amazon-bedrock-agentcore-runtime/"
+        },
+        {
+          "id": "168738aae15d-2",
+          "text": {
+            "fr": "Pour un runtime utilisant IAM, chaque requête HTTP, flux HTTP/2 et handshake WebSocket porte une signature SigV4.",
+            "en": "For a runtime that uses IAM, each HTTP request, HTTP/2 stream, and WebSocket handshake carries a SigV4 signature."
+          },
+          "quote": "For a runtime that uses AWS Identity and Access Management (IAM) , each HTTP request, HTTP/2 stream, and WebSocket handshake carries a Signature Version 4 (SigV4) signature.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/preview-web-apps-live-as-your-coding-agent-builds-them-with-amazon-bedrock-agentcore-runtime/"
+        },
+        {
+          "id": "168738aae15d-3",
+          "text": {
+            "fr": "Les Session endpoints fonctionnent avec les runtimes microVM, pas avec le type de calcul Instances, et AWS PrivateLink n'est pas pris en charge pour les connexions entrantes.",
+            "en": "Session endpoints work with microVM runtimes, not with the Instances compute type, and AWS PrivateLink isn't supported for inbound connections."
+          },
+          "quote": "Session endpoints work with microVM runtimes, not with the Instances compute type, and Session endpoint URLs are reachable over public HTTPS. AWS PrivateLink isn’t supported for inbound connections.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/preview-web-apps-live-as-your-coding-agent-builds-them-with-amazon-bedrock-agentcore-runtime/"
+        },
+        {
+          "id": "168738aae15d-4",
+          "text": {
+            "fr": "Une requête vers un port absent de allowedPorts est refusée par le runtime avec 403 AccessDenied, et un port autorisé sans processus à l'écoute renvoie 502 PortNotReachable.",
+            "en": "A request to a port not in allowedPorts is refused by the runtime with 403 AccessDenied, and an allowed port with nothing listening returns 502 PortNotReachable."
+          },
+          "quote": "A port that isn’t in allowedPorts 403 AccessDenied A request without valid credentials 403 AccessDenied or 401 AuthenticationRequired An allowed port with nothing listening on it 502 PortNotReachable",
+          "url": "https://aws.amazon.com/blogs/machine-learning/preview-web-apps-live-as-your-coding-agent-builds-them-with-amazon-bedrock-agentcore-runtime/"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "Microsoft Research : des environnements d'entreprise synthétiques pour évaluer Copilot",
+        "en": "Microsoft Research: synthetic enterprise environments for evaluating Copilot"
+      },
+      "url": "https://www.microsoft.com/en-us/research/blog/from-synthetic-enterprise-data-evaluations-to-real-microsoft-copilot-ai-confidence/",
+      "source": "Microsoft Research",
+      "primary": true,
+      "summary": {
+        "fr": "Chaque environnement synthétique contient désormais des centaines d'utilisateurs avec des historiques de communication complets, dans trois secteurs. Les environnements sont ancrés dans des sources publiques : données professionnelles O*NET, offres d'emploi en ligne et documents déposés auprès de la SEC. Microsoft estime l'économie à environ 100 000 $ par jeu de données d'évaluation et 300 000 $ au total pour le projet.",
+        "en": "Each synthetic environment now contains hundreds of users with complete communication histories across three industry verticals. The environments are grounded in publicly available sources: O*NET occupational data, online job postings, and SEC filings. Microsoft estimates savings of approximately $100,000 per evaluation dataset and $300,000 in total project savings."
+      },
+      "why": {
+        "fr": "Analyse : ancrer des données d'évaluation synthétiques dans des sources publiques est une piste pour qui ne peut pas utiliser de données d'entreprise réelles, l'économie chiffrée restant une estimation de Microsoft.",
+        "en": "Analysis: grounding synthetic evaluation data in public sources is one option for teams that cannot use real enterprise data, the cost saving remaining Microsoft's own estimate."
+      },
+      "claims": [
+        {
+          "id": "fd4521a18599-2",
+          "text": {
+            "fr": "Chaque environnement synthétique contient désormais des centaines d'utilisateurs avec des historiques de communication complets, dans trois secteurs.",
+            "en": "Each synthetic environment now contains hundreds of users with complete communication histories across three industry verticals."
+          },
+          "quote": "each synthetic environment now contains hundreds of users with complete communication histories across three industry verticals",
+          "url": "https://www.microsoft.com/en-us/research/blog/from-synthetic-enterprise-data-evaluations-to-real-microsoft-copilot-ai-confidence/"
+        },
+        {
+          "id": "fd4521a18599-3",
+          "text": {
+            "fr": "Les environnements sont ancrés dans des sources publiques : données professionnelles O*NET, offres d'emploi en ligne et documents déposés auprès de la SEC.",
+            "en": "The environments are grounded in publicly available sources: O*NET occupational data, online job postings, and SEC filings."
+          },
+          "quote": "publicly available real-world data sources such as O*NET occupational data, online job postings, and SEC filings",
+          "url": "https://www.microsoft.com/en-us/research/blog/from-synthetic-enterprise-data-evaluations-to-real-microsoft-copilot-ai-confidence/"
+        },
+        {
+          "id": "fd4521a18599-4",
+          "text": {
+            "fr": "Microsoft estime l'économie à environ 100 000 $ par jeu de données d'évaluation et 300 000 $ au total pour le projet.",
+            "en": "Microsoft estimates savings of approximately $100,000 per evaluation dataset and $300,000 in total project savings."
+          },
+          "quote": "We estimate savings of approximately $100,000 per evaluation dataset and $300,000 in total project savings.",
+          "url": "https://www.microsoft.com/en-us/research/blog/from-synthetic-enterprise-data-evaluations-to-real-microsoft-copilot-ai-confidence/"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "L'extension VS Code d'Anthropic compromise sur la place de marché de Cursor",
+        "en": "Anthropic's VS Code extension backdoored on Cursor's marketplace"
+      },
+      "url": "https://arstechnica.com/security/2026/10/anthropic-vs-code-extension-on-cursor-backdoored-for-nearly-12-hours/",
+      "source": "Ars Technica (IA)",
+      "summary": {
+        "fr": "La version malveillante 2.1.313 de l'extension VS Code d'Anthropic sur la place de marché de Cursor a touché « au plus 5 000 utilisateurs », selon Cursor. Elle tente d'installer une porte dérobée SSH persistante : ajout d'une clé SSH de l'attaquant, activation du service SSH local et ouverture d'un tunnel SSH inversé. On ignore encore comment les attaquants ont obtenu l'accès au compte Cursor vérifié d'Anthropic.",
+        "en": "The malicious version 2.1.313 of Anthropic's VS Code extension on Cursor's marketplace affected \"at most 5,000 users\", according to Cursor. It attempts to install a persistent SSH backdoor using an added attacker-controlled SSH key, enabling the local SSH service, and opening a reverse SSH tunnel. It is still unknown how attackers got access to Anthropic's verified Cursor account."
+      },
+      "why": {
+        "fr": "Analyse : l'incident suggère que les extensions d'éditeur, même publiées depuis un compte vérifié, méritent d'être traitées comme une surface d'attaque des postes de développement.",
+        "en": "Analysis: the incident suggests that editor extensions, even when published from a verified account, deserve to be treated as an attack surface on developer machines."
+      },
+      "claims": [
+        {
+          "id": "ce0cce9f3bc5-0",
+          "text": {
+            "fr": "La version malveillante 2.1.313 de l'extension VS Code d'Anthropic sur la place de marché de Cursor a touché « au plus 5 000 utilisateurs », selon Cursor.",
+            "en": "The malicious version 2.1.313 of Anthropic's VS Code extension on Cursor's marketplace affected \"at most 5,000 users\", according to Cursor."
+          },
+          "quote": "The malicious version, 2.1.313, subsequently affected “at most 5,000 users,”",
+          "url": "https://arstechnica.com/security/2026/10/anthropic-vs-code-extension-on-cursor-backdoored-for-nearly-12-hours/"
+        },
+        {
+          "id": "ce0cce9f3bc5-1",
+          "text": {
+            "fr": "Cursor indique que l'extension malveillante tente d'installer une porte dérobée SSH persistante : ajout d'une clé SSH de l'attaquant, activation du service SSH local et ouverture d'un tunnel SSH inversé.",
+            "en": "Cursor said the malicious extension attempts to install a persistent SSH backdoor using an added attacker-controlled SSH key, enabling the local SSH service, and opening a reverse SSH tunnel."
+          },
+          "quote": "Cursor said that the malicious extension attempts to install a persistent SSH backdoor using an added attacker-controlled SSH key, enabling the local SSH service, and opening a reverse SSH tunnel.",
+          "url": "https://arstechnica.com/security/2026/10/anthropic-vs-code-extension-on-cursor-backdoored-for-nearly-12-hours/"
+        },
+        {
+          "id": "ce0cce9f3bc5-2",
+          "text": {
+            "fr": "On ignore encore comment les attaquants ont obtenu l'accès au compte Cursor vérifié d'Anthropic.",
+            "en": "It is still unknown how attackers got access to Anthropic's verified Cursor account."
+          },
+          "quote": "It’s still unknown how attackers got access to Anthropic’s verified Cursor account.",
+          "url": "https://arstechnica.com/security/2026/10/anthropic-vs-code-extension-on-cursor-backdoored-for-nearly-12-hours/"
+        }
+      ]
+    },
+    {
+      "title": {
+        "fr": "nesformer : un émulateur de CPU 6502 intégré aux poids de Qwen3.5-4B",
+        "en": "nesformer: a 6502 CPU emulator baked into Qwen3.5-4B's weights"
+      },
+      "url": "https://simonwillison.net/2026/Oct/30/nesformer/",
+      "source": "Simon Willison",
+      "summary": {
+        "fr": "Drew Breunig a intégré dans les poids de Qwen3.5-4B un émulateur fonctionnel du processeur 6502 de la Nintendo Entertainment System. On peut jouer à des ROM NES comme Super Mario Bros, très lentement, en les faisant tourner dans Qwen. Le projet s'inspire de qwenputer de Divyansh Agrawal, et Opus a trouvé puis utilisé une collection de tests de conformité du CPU de la NES publiée il y a 15 ans par Christopher Pow.",
+        "en": "Drew Breunig baked a working emulator of the Nintendo Entertainment System's 6502 CPU into the weights of Qwen3.5-4B. NES ROMs such as Super Mario Bros can be played, very slowly, running inside Qwen. The project was inspired by qwenputer by Divyansh Agrawal, and Opus found and then used a collection of NES CPU conformance tests released 15 years ago by Christopher Pow."
+      },
+      "why": {
+        "fr": "Analyse : l'expérience illustre ce qu'on peut encoder dans les poids d'un petit modèle, même si la lenteur signalée la cantonne à la démonstration.",
+        "en": "Analysis: the experiment illustrates what can be encoded in the weights of a small model, although the reported slowness keeps it at the demonstration stage."
+      },
+      "claims": [
+        {
+          "id": "1649c5dd0704-0",
+          "text": {
+            "fr": "Drew Breunig a intégré dans les poids de Qwen3.5-4B un émulateur fonctionnel du processeur 6502 de la Nintendo Entertainment System.",
+            "en": "Drew Breunig baked a working emulator of the Nintendo Entertainment System's 6502 CPU into the weights of Qwen3.5-4B."
+          },
+          "quote": "Drew Breunig baked a working emulator for a Nintendo Entertainment System 6502 CPU into the weights of Qwen3.5-4B.",
+          "url": "https://simonwillison.net/2026/Oct/30/nesformer/"
+        },
+        {
+          "id": "1649c5dd0704-1",
+          "text": {
+            "fr": "Le projet s'inspire de qwenputer de Divyansh Agrawal.",
+            "en": "The project was inspired by qwenputer by Divyansh Agrawal."
+          },
+          "quote": "Inspired by qwenputer by Divyansh Agrawal",
+          "url": "https://simonwillison.net/2026/Oct/30/nesformer/"
+        },
+        {
+          "id": "1649c5dd0704-2",
+          "text": {
+            "fr": "On peut jouer à des ROM NES comme Super Mario Bros, très lentement, en les faisant tourner dans Qwen.",
+            "en": "NES ROMs such as Super Mario Bros can be played, very slowly, running inside Qwen."
+          },
+          "quote": "You can now play NES ROMs such as Super Mario Bros (very slowly) running inside Qwen!",
+          "url": "https://simonwillison.net/2026/Oct/30/nesformer/"
+        },
+        {
+          "id": "1649c5dd0704-3",
+          "text": {
+            "fr": "Opus a trouvé puis utilisé une collection de tests de conformité du CPU de la NES publiée il y a 15 ans par Christopher Pow.",
+            "en": "Opus found and then used a collection of NES CPU conformance tests released 15 years ago by Christopher Pow."
+          },
+          "quote": "Apparently Opus found and then used this collection of conformance tests for the NES CPU released 15 years ago by Christopher Pow.",
+          "url": "https://simonwillison.net/2026/Oct/30/nesformer/"
+        }
+      ]
+    }
+  ]
+}

@@ -650,6 +650,59 @@
           "ring": "evaluer"
         }
       ]
+    },
+    {
+      "name": "Anthropic VS Code extension",
+      "ring": "attendre",
+      "rationale": {
+        "fr": "D'après Ars Technica, la version malveillante 2.1.313 de l'extension VS Code d'Anthropic sur la place de marché de Cursor tente d'installer une porte dérobée SSH persistante et a touché « au plus 5 000 utilisateurs », selon Cursor. Toute personne l'ayant installée ou mise à jour depuis Cursor entre 5 h 27 et 16 h 35 (heure de l'Est) jeudi doit se considérer comme affectée. Comme on ignore encore comment les attaquants ont obtenu l'accès au compte Cursor vérifié d'Anthropic, mieux vaut attendre avant d'installer ou de mettre à jour cette extension depuis Cursor, sachant que ces faits viennent d'une seule source.",
+        "en": "According to Ars Technica, the malicious version 2.1.313 of Anthropic's VS Code extension on Cursor's marketplace attempts to install a persistent SSH backdoor and affected \"at most 5,000 users\", according to Cursor. Anyone who installed or updated it from Cursor between 5:27 am and 4:35 pm ET on Thursday should consider themselves affected. Since it is still unknown how attackers got access to Anthropic's verified Cursor account, it is better to wait before installing or updating this extension from Cursor, bearing in mind these facts come from a single source."
+      },
+      "evidence": [
+        {
+          "id": "ce0cce9f3bc5-0",
+          "text": {
+            "fr": "La version malveillante 2.1.313 de l'extension VS Code d'Anthropic sur la place de marché de Cursor a touché « au plus 5 000 utilisateurs », selon Cursor.",
+            "en": "The malicious version 2.1.313 of Anthropic's VS Code extension on Cursor's marketplace affected \"at most 5,000 users\", according to Cursor."
+          },
+          "quote": "The malicious version, 2.1.313, subsequently affected “at most 5,000 users,”",
+          "url": "https://arstechnica.com/security/2026/10/anthropic-vs-code-extension-on-cursor-backdoored-for-nearly-12-hours/"
+        },
+        {
+          "id": "ce0cce9f3bc5-1",
+          "text": {
+            "fr": "Cursor indique que l'extension malveillante tente d'installer une porte dérobée SSH persistante : ajout d'une clé SSH de l'attaquant, activation du service SSH local et ouverture d'un tunnel SSH inversé.",
+            "en": "Cursor said the malicious extension attempts to install a persistent SSH backdoor using an added attacker-controlled SSH key, enabling the local SSH service, and opening a reverse SSH tunnel."
+          },
+          "quote": "Cursor said that the malicious extension attempts to install a persistent SSH backdoor using an added attacker-controlled SSH key, enabling the local SSH service, and opening a reverse SSH tunnel.",
+          "url": "https://arstechnica.com/security/2026/10/anthropic-vs-code-extension-on-cursor-backdoored-for-nearly-12-hours/"
+        },
+        {
+          "id": "ce0cce9f3bc5-2",
+          "text": {
+            "fr": "On ignore encore comment les attaquants ont obtenu l'accès au compte Cursor vérifié d'Anthropic.",
+            "en": "It is still unknown how attackers got access to Anthropic's verified Cursor account."
+          },
+          "quote": "It’s still unknown how attackers got access to Anthropic’s verified Cursor account.",
+          "url": "https://arstechnica.com/security/2026/10/anthropic-vs-code-extension-on-cursor-backdoored-for-nearly-12-hours/"
+        },
+        {
+          "id": "ce0cce9f3bc5-3",
+          "text": {
+            "fr": "Les personnes ayant installé ou mis à jour l'extension VS Code d'Anthropic depuis Cursor entre 5 h 27 (heure de l'Est) et 16 h 35 jeudi doivent se considérer comme affectées.",
+            "en": "Anyone who installed or updated Anthropic's VS Code extension from Cursor between 5:27 am ET and 4:35 pm on Thursday should consider themselves affected."
+          },
+          "quote": "Anyone who installed or updated Anthropic’s VS Code extension from Cursor between 5:27 am ET and 4:35 pm on Thursday should consider themselves affected",
+          "url": "https://arstechnica.com/security/2026/10/anthropic-vs-code-extension-on-cursor-backdoored-for-nearly-12-hours/"
+        }
+      ],
+      "since": "2026-10-31",
+      "history": [
+        {
+          "date": "2026-10-31",
+          "ring": "attendre"
+        }
+      ]
     }
   ]
 }

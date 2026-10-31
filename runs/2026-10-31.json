@@ -1,0 +1,264 @@
+{
+  "date": "2026-10-31",
+  "startedAt": "2026-10-31T10:26:04.676Z",
+  "durationMs": 60398,
+  "status": "published",
+  "counts": {
+    "collectes": 126,
+    "nouveaux": 22,
+    "retenus": 5,
+    "faitsProposes": 26,
+    "faitsCites": 26,
+    "faitsValides": 20,
+    "confirmationsCitees": 0,
+    "confirmationsValides": 0,
+    "sujetsRecoupes": 0,
+    "mouvementsRadar": 1,
+    "publies": 7
+  },
+  "stages": [
+    {
+      "stage": "triage",
+      "model": "claude-haiku-5-5",
+      "ms": 3443,
+      "inputTokens": 3940,
+      "outputTokens": 623,
+      "costUsd": 0.0007055
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1279,
+      "inputTokens": 2503,
+      "outputTokens": 100,
+      "costUsd": 0.006006
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1433,
+      "inputTokens": 2468,
+      "outputTokens": 77,
+      "costUsd": 0.005706
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1449,
+      "inputTokens": 2457,
+      "outputTokens": 72,
+      "costUsd": 0.005634
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1467,
+      "inputTokens": 2512,
+      "outputTokens": 107,
+      "costUsd": 0.006094
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 2428,
+      "inputTokens": 2523,
+      "outputTokens": 114,
+      "costUsd": 0.006186
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4218,
+      "inputTokens": 3390,
+      "outputTokens": 686,
+      "costUsd": 0.01364
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 5370,
+      "inputTokens": 6558,
+      "outputTokens": 854,
+      "costUsd": 0.021656
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 7605,
+      "inputTokens": 5289,
+      "outputTokens": 1346,
+      "costUsd": 0.024038
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 7032,
+      "inputTokens": 8223,
+      "outputTokens": 1220,
+      "costUsd": 0.028646
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 8896,
+      "inputTokens": 10990,
+      "outputTokens": 1677,
+      "costUsd": 0.03875
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 9108,
+      "inputTokens": 7532,
+      "outputTokens": 1412,
+      "costUsd": 0.029184
+    },
+    {
+      "stage": "curate",
+      "model": "claude-opus-5-5",
+      "ms": 14121,
+      "inputTokens": 8364,
+      "outputTokens": 1451,
+      "costUsd": 0.062476
+    },
+    {
+      "stage": "write",
+      "model": "claude-sonnet-5-5",
+      "ms": 23663,
+      "inputTokens": 4689,
+      "outputTokens": 4053,
+      "costUsd": 0.049908
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 5391,
+      "inputTokens": 8956,
+      "outputTokens": 943,
+      "costUsd": 0.027342
+    }
+  ],
+  "gates": [
+    {
+      "name": "literal_quotes",
+      "pass": true,
+      "detail": "26/26"
+    },
+    {
+      "name": "supported_claims",
+      "pass": true,
+      "detail": "20/26"
+    },
+    {
+      "name": "verifier",
+      "pass": true,
+      "detail": "7/7 (>= 50%)"
+    },
+    {
+      "name": "volume",
+      "pass": true,
+      "detail": "radar 1, state 2 (max 3)"
+    },
+    {
+      "name": "budget",
+      "pass": true,
+      "detail": "0.326/2 USD"
+    }
+  ],
+  "rejected": [
+    {
+      "what": {
+        "fr": "Latent Space",
+        "en": "Latent Space"
+      },
+      "reason": "feed_unreadable",
+      "detail": "redirected off-host to latent.space"
+    },
+    {
+      "what": {
+        "fr": "Nathan Lambert estime que, si Claude Mythos avait été publié par accident en open-weight, le monde aurait été à peu près indemne, avec une accélération plutôt qu'un changement de palier du risque.",
+        "en": "Nathan Lambert argues that if Claude Mythos had been accidentally released as open-weight, the world would have been more or less fine, with an acceleration rather than a step change in risk."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote only says the world would have been more or less fine; the 'acceleration rather than a step change in risk' part is not in the quote."
+    },
+    {
+      "what": {
+        "fr": "Epoch AI a utilisé GLM 5.3 pour créer un site web qui, dès qu'un utilisateur de Firefox le visite et sans autre interaction, permettait à l'attaquant d'exfiltrer des fichiers de l'ordinateur de l'util",
+        "en": "Epoch AI used GLM 5.3 to create a website that, simply when visited by a Firefox user and without further interaction, let the attacker exfiltrate files from the user's computer."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote says 'We used GLM 5.3', but nothing in it identifies the speaker as Epoch AI; the attribution is not established by the quote alone."
+    },
+    {
+      "what": {
+        "fr": "Cursor a retiré la version compromise de la place de marché et bloqué sa distribution ultérieure.",
+        "en": "Cursor removed the backdoored version from the marketplace and blocked further distribution."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote says 'Personnel' removed the version, and nothing in it identifies Cursor as the actor."
+    },
+    {
+      "what": {
+        "fr": "Microsoft a généré trois environnements d'entreprise synthétiques couvrant plusieurs secteurs pour évaluer Copilot.",
+        "en": "Microsoft generated three synthetic enterprise environments across multiple industries to evaluate Copilot."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not mention Microsoft or Copilot evaluation explicitly; it only says three synthetic environments were generated across industries."
+    },
+    {
+      "what": {
+        "fr": "Le score de qualité composite des données synthétiques a progressé de 39 % par rapport à l'approche de génération initiale.",
+        "en": "The composite quality score of the synthetic data improved 39% compared to the initial generation approach."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote says 'scores improved 39%' without stating it is the composite quality score of the synthetic data."
+    },
+    {
+      "what": {
+        "fr": "La plateforme a été publiée dans un catalogue interne partagé et érigée en première référence d'évaluation standardisée pour Microsoft Copilot.",
+        "en": "The platform was published to an internal shared catalog and established as the first standardized evaluation baseline for Microsoft Copilot."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not say what was published; 'the platform' is not established, and the quote refers to unspecified items."
+    }
+  ],
+  "toolCalls": [
+    {
+      "tool": "fetch_page",
+      "input": "https://www.interconnects.ai/p/was-i-wrong-about-open-models-and",
+      "ok": true,
+      "ms": 39,
+      "item": "https://www.interconnects.ai/p/was-i-wrong-about-open-models-and"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://simonwillison.net/2026/Oct/30/nesformer/",
+      "ok": true,
+      "ms": 42,
+      "item": "https://simonwillison.net/2026/Oct/30/nesformer/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://arstechnica.com/security/2026/10/anthropic-vs-code-extension-on-cursor-backdoored-for-nearly-12-hours/",
+      "ok": true,
+      "ms": 215,
+      "item": "https://arstechnica.com/security/2026/10/anthropic-vs-code-extension-on-cursor-backdoored-for-nearly-12-hours/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://www.microsoft.com/en-us/research/blog/from-synthetic-enterprise-data-evaluations-to-real-microsoft-copilot-ai-confidence/",
+      "ok": true,
+      "ms": 731,
+      "item": "https://www.microsoft.com/en-us/research/blog/from-synthetic-enterprise-data-evaluations-to-real-microsoft-copilot-ai-confidence/"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://aws.amazon.com/blogs/machine-learning/preview-web-apps-live-as-your-coding-agent-builds-them-with-amazon-bedrock-agentcore-runtime/",
+      "ok": true,
+      "ms": 250,
+      "item": "https://aws.amazon.com/blogs/machine-learning/preview-web-apps-live-as-your-coding-agent-builds-them-with-amazon-bedrock-agentcore-runtime/"
+    }
+  ],
+  "costUsd": 0.32597149999999997
+}
