@@ -1,0 +1,139 @@
+{
+  "date": "2026-11-01",
+  "startedAt": "2026-11-01T11:20:04.749Z",
+  "durationMs": 36333,
+  "status": "rejected",
+  "counts": {
+    "collectes": 97,
+    "nouveaux": 2,
+    "retenus": 1,
+    "faitsProposes": 5,
+    "faitsCites": 5,
+    "faitsValides": 4,
+    "confirmationsCitees": 0,
+    "confirmationsValides": 0,
+    "sujetsRecoupes": 0,
+    "mouvementsRadar": 0
+  },
+  "stages": [
+    {
+      "stage": "triage",
+      "model": "claude-haiku-5-5",
+      "ms": 2820,
+      "inputTokens": 1264,
+      "outputTokens": 118,
+      "costUsd": 0.0001854
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4279,
+      "inputTokens": 2476,
+      "outputTokens": 85,
+      "costUsd": 0.005802
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 6730,
+      "inputTokens": 3661,
+      "outputTokens": 1077,
+      "costUsd": 0.018092
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 4715,
+      "inputTokens": 2581,
+      "outputTokens": 424,
+      "costUsd": 0.009402
+    },
+    {
+      "stage": "curate",
+      "model": "claude-opus-5-5",
+      "ms": 3773,
+      "inputTokens": 6302,
+      "outputTokens": 115,
+      "costUsd": 0.027508
+    },
+    {
+      "stage": "write",
+      "model": "claude-sonnet-5-5",
+      "ms": 7575,
+      "inputTokens": 2302,
+      "outputTokens": 776,
+      "costUsd": 0.012364
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 3896,
+      "inputTokens": 3072,
+      "outputTokens": 444,
+      "costUsd": 0.010584
+    }
+  ],
+  "gates": [
+    {
+      "name": "literal_quotes",
+      "pass": true,
+      "detail": "5/5"
+    },
+    {
+      "name": "supported_claims",
+      "pass": true,
+      "detail": "4/5"
+    },
+    {
+      "name": "verifier",
+      "pass": false,
+      "detail": "0/1 (>= 50%)"
+    },
+    {
+      "name": "volume",
+      "pass": true,
+      "detail": "radar 0, state 0 (max 3)"
+    },
+    {
+      "name": "budget",
+      "pass": true,
+      "detail": "0.084/2 USD"
+    }
+  ],
+  "rejected": [
+    {
+      "what": {
+        "fr": "Latent Space",
+        "en": "Latent Space"
+      },
+      "reason": "feed_unreadable",
+      "detail": "redirected off-host to latent.space"
+    },
+    {
+      "what": {
+        "fr": "Les règles CSP d'OpenAI autorisaient le chargement de scripts depuis quelques domaines, dont YouTube, et l'endpoint oEmbed de YouTube pouvait renvoyer du JavaScript de façon à ce qu'il s'exécute.",
+        "en": "OpenAI's CSP rules allowed script loading from a handful of domains, one of which was YouTube, and the YouTube oEmbed endpoint could be used to reflect JavaScript back in a way that executed it."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote only says one of the allowed domains was YouTube and its oEmbed endpoint could reflect JavaScript; it does not establish that OpenAI's CSP allowed script loading from 'a handful of domains' as stated."
+    },
+    {
+      "what": {
+        "fr": "ChatGPT : une chaîne de failles via MathLive exposait les comptes",
+        "en": "ChatGPT: a MathLive-based flaw chain exposed accounts"
+      },
+      "reason": "statement_unsupported",
+      "detail": "The statement's factual content is covered by the cited claims, but the headline's 'flaw chain exposed accounts' goes beyond them, and the 'graph support' detail from claim 0 is unsupported by its quote, so the statement is refused under the doubt-means-refusal rule."
+    }
+  ],
+  "toolCalls": [
+    {
+      "tool": "fetch_page",
+      "input": "https://simonwillison.net/2026/Oct/31/how-we-took-over-chatgpt-accounts/",
+      "ok": true,
+      "ms": 48,
+      "item": "https://simonwillison.net/2026/Oct/31/how-we-took-over-chatgpt-accounts/"
+    }
+  ],
+  "costUsd": 0.0839374
+}
