@@ -1,0 +1,73 @@
+{
+  "date": "2026-11-02",
+  "headline": {
+    "fr": "Crawl4AI vers Bedrock Knowledge Bases : contraintes d'ingestion",
+    "en": "Crawl4AI to Bedrock Knowledge Bases: ingestion constraints"
+  },
+  "items": [
+    {
+      "title": {
+        "fr": "Crawl4AI vers Bedrock Knowledge Bases : contraintes d'ingestion",
+        "en": "Crawl4AI to Bedrock Knowledge Bases: ingestion constraints"
+      },
+      "url": "https://aws.amazon.com/blogs/machine-learning/prepare-web-content-for-amazon-bedrock-knowledge-bases-with-crawl4ai/",
+      "source": "AWS Machine Learning",
+      "primary": true,
+      "summary": {
+        "fr": "Amazon Bedrock limite chaque fichier sidecar de métadonnées à 10 Ko, et ce fichier doit porter le nom complet du fichier source suivi de .metadata.json (page.md.metadata.json pour page.md). La stratégie de découpage se choisit à la connexion de la source de données et ne peut plus être modifiée ensuite. Les envois vers S3 sont additifs : retirer une URL ou manquer une page lors d'un crawl ultérieur ne supprime pas les objets existants. Un job d'ingestion peut indiquer COMPLETE alors que certains documents ont échoué, et la tâche se termine alors avec le code 0.",
+        "en": "Amazon Bedrock limits each metadata sidecar to 10 KB, and the sidecar must carry the complete source filename followed by .metadata.json (page.md.metadata.json for page.md). The chunking strategy is selected when the data source is connected and cannot be changed afterward. Uploads to S3 are additive: removing a URL or missing a page during a later crawl does not delete existing objects. An ingestion job can report COMPLETE even when some documents fail to ingest, and the task then exits with code 0."
+      },
+      "why": {
+        "fr": "Analyse : un code de sortie 0 ne prouvant pas que tous les documents sont ingérés, un pipeline automatisé gagne à vérifier lui-même le résultat de l'ingestion, et le choix du découpage mérite d'être arrêté avant la connexion de la source.",
+        "en": "Analysis: since an exit code of 0 does not show that every document was ingested, an automated pipeline should check the ingestion outcome itself, and the chunking choice is worth settling before the data source is connected."
+      },
+      "claims": [
+        {
+          "id": "cb7e6c407ee3-0",
+          "text": {
+            "fr": "Amazon Bedrock limite chaque fichier annexe de métadonnées (sidecar) à 10 Ko.",
+            "en": "Amazon Bedrock limits each metadata sidecar to 10 KB."
+          },
+          "quote": "Amazon Bedrock limits each metadata sidecar to 10 KB.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/prepare-web-content-for-amazon-bedrock-knowledge-bases-with-crawl4ai/"
+        },
+        {
+          "id": "cb7e6c407ee3-2",
+          "text": {
+            "fr": "Pour page.md, le fichier sidecar doit s'appeler page.md.metadata.json, c'est-à-dire le nom complet du fichier source avec .metadata.json ajouté.",
+            "en": "For page.md, the sidecar must be named page.md.metadata.json, the complete source filename with .metadata.json appended."
+          },
+          "quote": "For page.md , the sidecar must be named page.md.metadata.json , the complete source filename with .metadata.json appended.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/prepare-web-content-for-amazon-bedrock-knowledge-bases-with-crawl4ai/"
+        },
+        {
+          "id": "cb7e6c407ee3-3",
+          "text": {
+            "fr": "La stratégie de découpage se choisit à la connexion de la source de données et ne peut plus être modifiée ensuite.",
+            "en": "The chunking strategy is selected when you connect the data source and cannot be changed afterward."
+          },
+          "quote": "You select the chunking strategy when you connect the data source. You can’t change it afterward",
+          "url": "https://aws.amazon.com/blogs/machine-learning/prepare-web-content-for-amazon-bedrock-knowledge-bases-with-crawl4ai/"
+        },
+        {
+          "id": "cb7e6c407ee3-4",
+          "text": {
+            "fr": "Les envois vers S3 sont additifs : retirer une URL ou manquer une page lors d'un crawl ultérieur ne supprime pas les objets S3 existants.",
+            "en": "Uploads are additive: removing a URL or missing a page during a later crawl does not delete its existing S3 objects."
+          },
+          "quote": "Uploads are additive: removing a URL or missing a page during a later crawl doesn’t delete its existing S3 objects.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/prepare-web-content-for-amazon-bedrock-knowledge-bases-with-crawl4ai/"
+        },
+        {
+          "id": "cb7e6c407ee3-5",
+          "text": {
+            "fr": "Un job d'ingestion peut indiquer COMPLETE alors que certains documents n'ont pas été ingérés, et la tâche se termine alors avec le code 0.",
+            "en": "An ingestion job can report COMPLETE even when some documents fail to ingest, and the task then exits with code 0."
+          },
+          "quote": "An ingestion job can also report COMPLETE when some documents fail to ingest, and the task then exits with code 0.",
+          "url": "https://aws.amazon.com/blogs/machine-learning/prepare-web-content-for-amazon-bedrock-knowledge-bases-with-crawl4ai/"
+        }
+      ]
+    }
+  ]
+}
