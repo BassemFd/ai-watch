@@ -1,15 +1,15 @@
 {
   "date": "2026-11-02",
-  "startedAt": "2026-11-02T12:32:42.183Z",
-  "durationMs": 62680,
+  "startedAt": "2026-11-02T16:31:11.115Z",
+  "durationMs": 48642,
   "status": "rejected",
   "counts": {
-    "collectes": 187,
-    "nouveaux": 93,
-    "retenus": 4,
-    "faitsProposes": 18,
-    "faitsCites": 18,
-    "faitsValides": 14,
+    "collectes": 189,
+    "nouveaux": 4,
+    "retenus": 2,
+    "faitsProposes": 12,
+    "faitsCites": 12,
+    "faitsValides": 10,
     "confirmationsCitees": 0,
     "confirmationsValides": 0,
     "sujetsRecoupes": 0,
@@ -19,133 +19,101 @@
     {
       "stage": "triage",
       "model": "claude-haiku-5-5",
-      "ms": 5496,
-      "inputTokens": 19809,
-      "outputTokens": 655,
-      "costUsd": 0.0023084
+      "ms": 2688,
+      "inputTokens": 1577,
+      "outputTokens": 207,
+      "costUsd": 0.00026120000000000006
     },
     {
       "stage": "research",
       "model": "claude-sonnet-5-5",
-      "ms": 4070,
-      "inputTokens": 2466,
-      "outputTokens": 78,
-      "costUsd": 0.005712
+      "ms": 1261,
+      "inputTokens": 2493,
+      "outputTokens": 76,
+      "costUsd": 0.005746
     },
     {
       "stage": "research",
       "model": "claude-sonnet-5-5",
-      "ms": 4354,
-      "inputTokens": 2483,
-      "outputTokens": 65,
-      "costUsd": 0.005616
+      "ms": 3192,
+      "inputTokens": 2504,
+      "outputTokens": 97,
+      "costUsd": 0.005978
     },
     {
       "stage": "research",
       "model": "claude-sonnet-5-5",
-      "ms": 4842,
-      "inputTokens": 2483,
-      "outputTokens": 65,
-      "costUsd": 0.005616
+      "ms": 7100,
+      "inputTokens": 3964,
+      "outputTokens": 1238,
+      "costUsd": 0.020308
     },
     {
       "stage": "research",
       "model": "claude-sonnet-5-5",
-      "ms": 5173,
-      "inputTokens": 2466,
-      "outputTokens": 77,
-      "costUsd": 0.005702
-    },
-    {
-      "stage": "research",
-      "model": "claude-sonnet-5-5",
-      "ms": 2928,
-      "inputTokens": 3142,
-      "outputTokens": 419,
-      "costUsd": 0.010474
-    },
-    {
-      "stage": "research",
-      "model": "claude-sonnet-5-5",
-      "ms": 5414,
-      "inputTokens": 4683,
-      "outputTokens": 890,
-      "costUsd": 0.018266
-    },
-    {
-      "stage": "research",
-      "model": "claude-sonnet-5-5",
-      "ms": 6786,
-      "inputTokens": 5467,
-      "outputTokens": 1120,
-      "costUsd": 0.022134
-    },
-    {
-      "stage": "research",
-      "model": "claude-sonnet-5-5",
-      "ms": 7107,
-      "inputTokens": 4739,
-      "outputTokens": 1253,
-      "costUsd": 0.022008
+      "ms": 7434,
+      "inputTokens": 7689,
+      "outputTokens": 1303,
+      "costUsd": 0.028408
     },
     {
       "stage": "verify",
       "model": "claude-sonnet-5-5",
-      "ms": 10250,
-      "inputTokens": 5303,
-      "outputTokens": 1210,
-      "costUsd": 0.022706
+      "ms": 5251,
+      "inputTokens": 4134,
+      "outputTokens": 784,
+      "costUsd": 0.016108
     },
     {
       "stage": "curate",
       "model": "claude-opus-5-5",
-      "ms": 4095,
-      "inputTokens": 7929,
-      "outputTokens": 133,
-      "costUsd": 0.034376
+      "ms": 3593,
+      "inputTokens": 7213,
+      "outputTokens": 160,
+      "costUsd": 0.032052
     },
     {
       "stage": "write",
       "model": "claude-sonnet-5-5",
-      "ms": 20101,
-      "inputTokens": 3918,
-      "outputTokens": 2853,
-      "costUsd": 0.036366
+      "ms": 13319,
+      "inputTokens": 3212,
+      "outputTokens": 2260,
+      "costUsd": 0.029024
     },
     {
       "stage": "verify",
       "model": "claude-sonnet-5-5",
-      "ms": 7059,
-      "inputTokens": 5918,
-      "outputTokens": 874,
-      "costUsd": 0.020576
+      "ms": 7823,
+      "inputTokens": 6256,
+      "outputTokens": 1105,
+      "costUsd": 0.023562
     }
   ],
   "gates": [
     {
       "name": "literal_quotes",
       "pass": true,
-      "detail": "18/18"
+      "detail": "12/12"
     },
     {
       "name": "supported_claims",
       "pass": true,
-      "detail": "14/18"
+      "detail": "10/12"
     },
     {
       "name": "verifier",
       "pass": false,
-      "detail": "1/4 (>= 50%)"
+      "detail": "2/5 (>= 50%)"
     },
     {
       "name": "volume",
       "pass": true,
-      "detail": "radar 0, state 1 (max 3)"
+      "detail": "radar 0, state 2 (max 3)"
     },
     {
       "name": "budget",
       "pass": true,
-      "detail": "0.212/2 USD"
+      "detail": "0.161/2 USD"
     }
   ],
   "rejected": [
@@ -159,90 +127,60 @@
     },
     {
       "what": {
-        "fr": "CLR-Bench (Curriculum of Latent Rules) est un benchmark où chaque chaîne ajoute une règle cachée par niveau au-dessus des précédentes ; 20 chaînes couvrant 10 domaines sont publiées.",
-        "en": "CLR-Bench (Curriculum of Latent Rules) is a benchmark where each chain adds one hidden rule per level on top of the earlier ones; 20 chains over 10 domains are released."
+        "fr": "L'agent est optimisé avec PPO à estimation d'avantage au niveau de chaque étape, avec un LLM-juge fournissant des récompenses denses par étape et une récompense terminale.",
+        "en": "The agent is optimized with PPO using step-level advantage estimation, with an LLM-as-a-Judge providing dense step-level rewards plus a terminal reward."
       },
       "reason": "claim_unsupported",
-      "detail": "The quote only supports that each chain adds one hidden rule per level; the benchmark name expansion and the release of 20 chains over 10 domains are not in the quote."
+      "detail": "The quote only mentions PPO with step-level advantage estimation; the LLM-as-a-Judge dense and terminal rewards are not in the quote."
     },
     {
       "what": {
-        "fr": "Avec le modèle certifié, les six méthodes d'auto-évolution évaluées apprennent à peine : au mieux +5 points par rapport à un agent figé.",
-        "en": "With the certifying model, the six self-evolution methods evaluated barely learn: the best gain at most 5 points over a frozen agent."
+        "fr": "Selon la DIA, la Chine a plus que triplé ses lancements spatiaux annuels en dix ans : 22 en 2016 et 93 en 2025.",
+        "en": "The DIA writes that China has more than tripled its space launches per year in the past decade, with 22 launches in 2016 and 93 in 2025."
       },
       "reason": "claim_unsupported",
-      "detail": "The quote does not mention six methods or that the methods were evaluated, so the count 'six' is not established, and the quote is also truncated."
+      "detail": "The quote does not attribute the claim to the DIA; the attribution is not established by the quote alone."
     },
     {
       "what": {
-        "fr": "Quand la pratique expose un membre absent de la liste, les états des agents ajoutent ce membre à la liste.",
-        "en": "When practice exposes a member the list misses, the agents' states add that member to the list."
-      },
-      "reason": "claim_unsupported",
-      "detail": "The quote says 'they add that member to the list' with an unclear referent, and 'the agents' states' is not established by the quote alone."
-    },
-    {
-      "what": {
-        "fr": "PlanAssist entre dans une phase bêta de 12 mois sur des demandes réelles, avec douze conseils supplémentaires intégrés en trois cohortes, pour un total de 15.",
-        "en": "PlanAssist is moving into a 12-month Beta phase using live applications, with twelve more councils onboarded in three cohorts, bringing the total to 15."
-      },
-      "reason": "claim_unsupported",
-      "detail": "The quote only supports twelve more councils in three cohorts totaling 15; the 12-month Beta phase on live applications is not in the quote."
-    },
-    {
-      "what": {
-        "fr": "CoFiBreak : une récompense de diversité pour les jailbreaks multi-tours",
-        "en": "CoFiBreak: a diversity reward for multi-turn jailbreaks"
+        "fr": "Un cadre RL en ligne pour la navigation d'interfaces sur de vraies applications iOS",
+        "en": "An online RL framework for UI navigation on live iOS apps"
       },
       "reason": "statement_unsupported",
-      "detail": "The statement says attacks were trained with Llama3.1-8B-Instruct as the victim and mentions HarmBench, neither of which is in the cited claims."
+      "detail": "The closing recommendation introduces unsupported facts: that the 8B model gets 'close to' proprietary models (it outperformed one and tied another) and that this comes at the cost of substantial emulation infrastructure."
     },
     {
       "what": {
-        "fr": "Kyle Kingsbury sur la confiance à l'ère des LLM",
-        "en": "Kyle Kingsbury on trust in the age of LLMs"
+        "fr": "Realtime-Bench : l'écart entre horloge réelle et horloge en pause",
+        "en": "Realtime-Bench: the gap between wall clock and paused clock"
       },
       "reason": "statement_unsupported",
-      "detail": "The statement relies on claim 835fd1406315-0, which was not established as supported, and the Jepsen/ParticleDB context is not covered by its quote."
+      "detail": "The closing claim that thinking time can weigh on success as much as raw capability is a causal inference not found in the cited facts, which only report scores under the two settings."
     },
     {
       "what": {
-        "fr": "CoFiBreak, une récompense de diversité pour GRPO appliquée aux seules attaques dépassant un seuil d'efficacité, a atteint 98,8 % d'ASR@10 sur AdvBench. Entraînée avec Llama3.1-8B-Instruct comme victim",
-        "en": "CoFiBreak, a diversity reward for GRPO applied only to attacks exceeding an effectiveness threshold, reached 98.8% ASR@10 on AdvBench. Trained with Llama3.1-8B-Instruct as the victim, it reached 71.0%"
+        "fr": "Genie 4 en préversion de recherche",
+        "en": "Genie 4 in research preview"
       },
       "reason": "statement_unsupported",
-      "detail": "The Llama3.1-8B-Instruct training victim detail is not present in any of the cited claims."
+      "detail": "The statement that restricted access limits independent evaluation by teams is a new claim not contained in the cited facts."
     }
   ],
   "toolCalls": [
     {
       "tool": "fetch_page",
-      "input": "https://deepmind.google/blog/speeding-up-planning-decisions-with-ai/",
+      "input": "https://machinelearning.apple.com/research/planning-grounding-ui-navigation",
       "ok": true,
-      "ms": 42,
-      "item": "https://deepmind.google/blog/speeding-up-planning-decisions-with-ai/"
+      "ms": 64,
+      "item": "https://machinelearning.apple.com/research/planning-grounding-ui-navigation"
     },
     {
       "tool": "fetch_page",
-      "input": "https://arxiv.org/abs/2610.40926",
+      "input": "https://jack-clark.net/2026/11/02/import-ai-479-spacewar-low-latency-tasks-versus-llms-genie-4/",
       "ok": true,
-      "ms": 78,
-      "item": "https://arxiv.org/abs/2610.40926"
-    },
-    {
-      "tool": "fetch_page",
-      "input": "https://arxiv.org/abs/2610.40758",
-      "ok": true,
-      "ms": 4,
-      "item": "https://arxiv.org/abs/2610.40758"
-    },
-    {
-      "tool": "fetch_page",
-      "input": "https://simonwillison.net/2026/Nov/1/kyle-kingsbury/",
-      "ok": true,
-      "ms": 52,
-      "item": "https://simonwillison.net/2026/Nov/1/kyle-kingsbury/"
+      "ms": 116,
+      "item": "https://jack-clark.net/2026/11/02/import-ai-479-spacewar-low-latency-tasks-versus-llms-genie-4/"
     }
   ],
-  "costUsd": 0.21186040000000003
+  "costUsd": 0.16144719999999999
 }
