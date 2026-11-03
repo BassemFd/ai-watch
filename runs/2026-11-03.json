@@ -1,0 +1,256 @@
+{
+  "date": "2026-11-03",
+  "startedAt": "2026-11-03T11:59:40.418Z",
+  "durationMs": 76832,
+  "status": "rejected",
+  "counts": {
+    "collectes": 185,
+    "nouveaux": 102,
+    "retenus": 5,
+    "faitsProposes": 21,
+    "faitsCites": 21,
+    "faitsValides": 20,
+    "confirmationsCitees": 0,
+    "confirmationsValides": 0,
+    "sujetsRecoupes": 0,
+    "mouvementsRadar": 0
+  },
+  "stages": [
+    {
+      "stage": "triage",
+      "model": "claude-haiku-5-5",
+      "ms": 10632,
+      "inputTokens": 20737,
+      "outputTokens": 1714,
+      "costUsd": 0.0029307
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4180,
+      "inputTokens": 2454,
+      "outputTokens": 67,
+      "costUsd": 0.005578
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 4950,
+      "inputTokens": 2457,
+      "outputTokens": 76,
+      "costUsd": 0.005674
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 5053,
+      "inputTokens": 2455,
+      "outputTokens": 74,
+      "costUsd": 0.00565
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 5397,
+      "inputTokens": 2486,
+      "outputTokens": 65,
+      "costUsd": 0.005622
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 1239,
+      "inputTokens": 2538,
+      "outputTokens": 10,
+      "costUsd": 0.005176
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 6013,
+      "inputTokens": 2451,
+      "outputTokens": 70,
+      "costUsd": 0.005602
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 5277,
+      "inputTokens": 4619,
+      "outputTokens": 836,
+      "costUsd": 0.017598
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 5550,
+      "inputTokens": 3575,
+      "outputTokens": 897,
+      "costUsd": 0.01612
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 6579,
+      "inputTokens": 4012,
+      "outputTokens": 1243,
+      "costUsd": 0.020454
+    },
+    {
+      "stage": "research",
+      "model": "claude-sonnet-5-5",
+      "ms": 8066,
+      "inputTokens": 7734,
+      "outputTokens": 1448,
+      "costUsd": 0.029948
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 9970,
+      "inputTokens": 6098,
+      "outputTokens": 1208,
+      "costUsd": 0.024276
+    },
+    {
+      "stage": "curate",
+      "model": "claude-opus-5-5",
+      "ms": 8725,
+      "inputTokens": 8874,
+      "outputTokens": 522,
+      "costUsd": 0.045936
+    },
+    {
+      "stage": "write",
+      "model": "claude-sonnet-5-5",
+      "ms": 25892,
+      "inputTokens": 4866,
+      "outputTokens": 3828,
+      "costUsd": 0.048012
+    },
+    {
+      "stage": "verify",
+      "model": "claude-sonnet-5-5",
+      "ms": 8532,
+      "inputTokens": 7803,
+      "outputTokens": 1301,
+      "costUsd": 0.028616
+    }
+  ],
+  "gates": [
+    {
+      "name": "literal_quotes",
+      "pass": true,
+      "detail": "21/21"
+    },
+    {
+      "name": "supported_claims",
+      "pass": true,
+      "detail": "20/21"
+    },
+    {
+      "name": "verifier",
+      "pass": false,
+      "detail": "1/5 (>= 50%)"
+    },
+    {
+      "name": "volume",
+      "pass": true,
+      "detail": "radar 0, state 1 (max 3)"
+    },
+    {
+      "name": "budget",
+      "pass": true,
+      "detail": "0.267/2 USD"
+    }
+  ],
+  "rejected": [
+    {
+      "what": {
+        "fr": "Latent Space",
+        "en": "Latent Space"
+      },
+      "reason": "feed_unreadable",
+      "detail": "redirected off-host to latent.space"
+    },
+    {
+      "what": {
+        "fr": "BYPASS, le système déployé, garde les enregistrements dans l'état de session, traduit les questions de suivi en arguments d'un filtre déterministe et livre les lignes par un canal latéral typé.",
+        "en": "BYPASS, the deployed system, keeps records in session state, translates follow-ups into arguments for a deterministic filter, and delivers rows over a typed side channel."
+      },
+      "reason": "claim_unsupported",
+      "detail": "The quote does not say BYPASS is the deployed system; the fact adds this detail beyond the quote."
+    },
+    {
+      "what": {
+        "fr": "Claude Code v2.1.317 : hooks bloquants, rapport de coûts et confirmation avant envoi de l'e-mail",
+        "en": "Claude Code v2.1.317: blocking hooks, cost report and confirmation before sending the account email"
+      },
+      "reason": "statement_unsupported",
+      "detail": "The statement says claude -p exits 1 'when a transcript or ~/.claude.json write is lost', omitting the full disk or quota cause, and adds the unsupported claim that these changes make failures easier to detect for pipelines."
+    },
+    {
+      "what": {
+        "fr": "Ollama v0.40.14 : les endpoints compatibles OpenAI ne remplacent plus les valeurs d'échantillonnage du modèle",
+        "en": "Ollama v0.40.14: OpenAI-compatible endpoints no longer override the model's sampler defaults"
+      },
+      "reason": "statement_unsupported",
+      "detail": "The statement adds the unsupported factual assertion that outputs may change after the update, which goes beyond what the cited claims establish."
+    },
+    {
+      "what": {
+        "fr": "La fidélité des réponses chute avec la taille des tables, pas avec le nombre de tours",
+        "en": "Answer fidelity collapses with table size, not turn count"
+      },
+      "reason": "statement_unsupported",
+      "detail": "The headline claims fidelity collapses with table size, not turn count, which is the paper's title but the statement's recommendation also presents it as established; more importantly, 'if your agent returns large tabular results' advice is acceptable, yet the title-based headline is not covered by the cited claims beyond the title, so with doubt it is refused."
+    },
+    {
+      "what": {
+        "fr": "LLM 0.37 : nouveaux modèles, commande pour endpoints compatibles OpenAI et nouveau modèle par défaut",
+        "en": "LLM 0.37: new models, a command for OpenAI-compatible endpoints and a new default model"
+      },
+      "reason": "statement_unsupported",
+      "detail": "The statement asserts that scripts relying on the default will change model and cost with this update, a consequence not stated in the cited claims."
+    }
+  ],
+  "toolCalls": [
+    {
+      "tool": "fetch_page",
+      "input": "https://openai.com/index/scaling-git-at-openai",
+      "ok": false,
+      "detail": "HTTP 403",
+      "ms": 42,
+      "item": "https://openai.com/index/scaling-git-at-openai"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://github.com/anthropics/claude-code/releases/tag/v2.1.317",
+      "ok": true,
+      "ms": 633,
+      "item": "https://github.com/anthropics/claude-code/releases/tag/v2.1.317"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://github.com/ollama/ollama/releases/tag/v0.40.14",
+      "ok": true,
+      "ms": 544,
+      "item": "https://github.com/ollama/ollama/releases/tag/v0.40.14"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://arxiv.org/abs/2611.00442",
+      "ok": true,
+      "ms": 240,
+      "item": "https://arxiv.org/abs/2611.00442"
+    },
+    {
+      "tool": "fetch_page",
+      "input": "https://simonwillison.net/2026/Nov/2/llm/",
+      "ok": true,
+      "ms": 51,
+      "item": "https://simonwillison.net/2026/Nov/2/llm/"
+    }
+  ],
+  "costUsd": 0.2671927
+}
