@@ -333,6 +333,22 @@ test("run publié : le fait inventé est écarté, le reste est écrit, le rerun
   assert.equal(json(root, `runs/${DATE}.json`).status, "published");
 });
 
+test("run en erreur : aucune trace écrite, celle du run publié du jour reste intacte", async () => {
+  const root = mkdtempSync(join(tmpdir(), "veille-"));
+  await run(options(root, true));
+  const before = readFileSync(join(root, `runs/${DATE}.json`), "utf8");
+
+  const o = options(root, true);
+  const down = { ...o, replay: true, llm: { ...o.llm, call: () => { throw new Error("credit balance is too low"); } } } as typeof o;
+  const { trace } = await run(down);
+  assert.equal(trace.status, "error");
+  assert.equal(readFileSync(join(root, `runs/${DATE}.json`), "utf8"), before);
+
+  const fresh = mkdtempSync(join(tmpdir(), "veille-"));
+  await run({ ...options(fresh, true), llm: down.llm });
+  assert.equal(existsSync(join(fresh, `runs/${DATE}.json`)), false);
+});
+
 test("run publié : le titre de l'édition écrite reprend les titres publiés, dans les deux langues", async () => {
   const root = tmpRoot();
   await run(options(root, true));

@@ -345,9 +345,11 @@ export async function run(o: Options): Promise<{ trace: Trace; brief?: Brief }> 
       if (trace.status !== "error") {
         writeJson(join(o.root, "data/seen.json"), [...seen, ...fresh.map((i) => i.id)].slice(-5000));
       }
+      // Une erreur (API, crédits, réseau) n'est jamais écrite : elle écraserait un run réussi du jour et exposerait
+      // le message brut sur le site. Elle reste dans le journal du workflow, qui échoue (exit 1).
       // Un rerun le même jour qui ne trouve rien de neuf ne doit pas écraser la trace du run publié.
       const tracePath = join(o.root, `runs/${o.date}.json`);
-      if (trace.status !== "empty" || !existsSync(tracePath)) writeJson(tracePath, trace);
+      if (trace.status !== "error" && (trace.status !== "empty" || !existsSync(tracePath))) writeJson(tracePath, trace);
     }
   }
 }
