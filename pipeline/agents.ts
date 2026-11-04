@@ -7,7 +7,7 @@ import type { Conversation, ToolSpec } from "./loop.ts";
 import { VerifyOut, type Statement, type Text } from "./schema.ts";
 
 export type Stage = "triage" | "research" | "write" | "curate" | "verify";
-export type Call = { stage: string; model: string; ms: number; inputTokens: number; outputTokens: number; costUsd: number };
+export type Call = { stage: string; model: string; ms: number; inputTokens: number; outputTokens: number; cacheReadTokens: number; costUsd: number };
 
 /** Le seul point de contact avec un modèle : texte en entrée, JSON validé en sortie. */
 export interface Llm {
@@ -34,13 +34,22 @@ export const prompt = (stage: Stage) => readFileSync(join(import.meta.dirname, "
 /** Refus, troncature ou JSON invalide : l'étape échoue, rien n'est publié. */
 export const unusable = (stage: Stage, why: string | null) => new Error(`stage ${stage}: unusable response (${why})`);
 
+/** Copie des messages avec un point de cache sur le dernier bloc : tout l'historique précédent est relu à 0,1×.
+ *  Le dernier message est toujours un `user`. Un seul point, donc jamais de cumul au fil des tours. */
+function withCacheBreakpoint(messages: Anthropic.MessageParam[]): Anthropic.MessageParam[] {
+  const last = messages[messages.length - 1];
+  const blocks: Anthropic.ContentBlockParam[] = typeof last.content === "string" ? [{ type: "text", text: last.content }] : [...last.content];
+  blocks[blocks.length - 1] = { ...blocks[blocks.length - 1], cache_control: { type: "ephemeral" } } as Anthropic.ContentBlockParam;
+  return [...messages.slice(0, -1), { ...last, content: blocks }];
+}
+
 export function makeLlm(budgetUsd: number): Llm {
   const client = new Anthropic();
   const calls: Call[] = [];
   let spent = 0;
 
   /** Un appel au modèle : plafond vérifié avant, coût compté après. */
-  async function ask<S extends z.ZodType>(stage: Stage, schema: S, messages: Anthropic.MessageParam[], tools?: Anthropic.Tool[]) {
+  async function ask<S extends z.ZodType>(stage: Stage, schema: S, messages: Anthropic.MessageParam[], tools?: Anthropic.Tool[], cache = false) {
     // ponytail: le plafond est vérifié avant chaque appel, donc dépassable d'un appel au plus.
     if (spent >= budgetUsd) throw new Error(`run budget exceeded (${spent.toFixed(2)} USD)`);
     const role = ROLES[stage];
@@ -49,18 +58,23 @@ export function makeLlm(budgetUsd: number): Llm {
       model: role.model,
       max_tokens: 16000,
       system: prompt(stage),
-      messages,
+      messages: cache ? withCacheBreakpoint(messages) : messages,
       tools,
       output_config: { effort: role.effort, format: zodOutputFormat(schema) },
     });
-    const costUsd = (res.usage.input_tokens * role.price[0] + res.usage.output_tokens * role.price[1]) / 1e6;
+    // input_tokens exclut le cache : lecture à 0,1× le prix d'entrée, écriture à 1,25×.
+    const { input_tokens, output_tokens } = res.usage;
+    const read = res.usage.cache_read_input_tokens ?? 0;
+    const write = res.usage.cache_creation_input_tokens ?? 0;
+    const costUsd = ((input_tokens + read * 0.1 + write * 1.25) * role.price[0] + output_tokens * role.price[1]) / 1e6;
     spent += costUsd;
     calls.push({
       stage,
       model: role.model,
       ms: Date.now() - t0,
-      inputTokens: res.usage.input_tokens,
-      outputTokens: res.usage.output_tokens,
+      inputTokens: input_tokens + read + write,
+      outputTokens: output_tokens,
+      cacheReadTokens: read,
       costUsd,
     });
     return res;
@@ -89,7 +103,7 @@ export function makeLlm(budgetUsd: number): Llm {
               content: results.map((r) => ({ type: "tool_result" as const, tool_use_id: r.id, content: r.content, is_error: r.isError })),
             });
           }
-          const res = await ask(stage, schema, messages, tools);
+          const res = await ask(stage, schema, messages, tools, true);
           messages.push({ role: "assistant", content: res.content });
           if (res.stop_reason !== "end_turn" && res.stop_reason !== "tool_use") throw unusable(stage, res.stop_reason);
           return {
